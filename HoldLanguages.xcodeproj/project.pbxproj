@@ -1,0 +1,281 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
+		BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D5164E318E007EBEAB /* Foundation.framework */; };
+		BE82F6D8164E318E007EBEAB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
+		BE82F6DE164E318E007EBEAB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6DC164E318E007EBEAB /* InfoPlist.strings */; };
+		BE82F6E0164E318E007EBEAB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE82F6DF164E318E007EBEAB /* main.m */; };
+		BE82F6E4164E318E007EBEAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE82F6E3164E318E007EBEAB /* AppDelegate.m */; };
+		BE82F6E6164E318E007EBEAB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E5164E318E007EBEAB /* Default.png */; };
+		BE82F6E8164E318E007EBEAB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E7164E318E007EBEAB /* Default@2x.png */; };
+		BE82F6EA164E318E007EBEAB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BE82F6CF164E318E007EBEAB /* HoldLanguages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoldLanguages.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE82F6D3164E318E007EBEAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BE82F6D5164E318E007EBEAB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BE82F6DB164E318E007EBEAB /* HoldLanguages-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoldLanguages-Info.plist"; sourceTree = "<group>"; };
+		BE82F6DD164E318E007EBEAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BE82F6DF164E318E007EBEAB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BE82F6E1164E318E007EBEAB /* HoldLanguages-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HoldLanguages-Prefix.pch"; sourceTree = "<group>"; };
+		BE82F6E2164E318E007EBEAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BE82F6E3164E318E007EBEAB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BE82F6E5164E318E007EBEAB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		BE82F6E7164E318E007EBEAB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE82F6CC164E318E007EBEAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */,
+				BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */,
+				BE82F6D8164E318E007EBEAB /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE82F6C4164E318E007EBEAB = {
+			isa = PBXGroup;
+			children = (
+				BE82F6D9164E318E007EBEAB /* HoldLanguages */,
+				BE82F6D2164E318E007EBEAB /* Frameworks */,
+				BE82F6D0164E318E007EBEAB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BE82F6D0164E318E007EBEAB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE82F6CF164E318E007EBEAB /* HoldLanguages.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE82F6D2164E318E007EBEAB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE82F6D3164E318E007EBEAB /* UIKit.framework */,
+				BE82F6D5164E318E007EBEAB /* Foundation.framework */,
+				BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE82F6D9164E318E007EBEAB /* HoldLanguages */ = {
+			isa = PBXGroup;
+			children = (
+				BE82F6E2164E318E007EBEAB /* AppDelegate.h */,
+				BE82F6E3164E318E007EBEAB /* AppDelegate.m */,
+				BE82F6DA164E318E007EBEAB /* Supporting Files */,
+			);
+			path = HoldLanguages;
+			sourceTree = "<group>";
+		};
+		BE82F6DA164E318E007EBEAB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE82F6DB164E318E007EBEAB /* HoldLanguages-Info.plist */,
+				BE82F6DC164E318E007EBEAB /* InfoPlist.strings */,
+				BE82F6DF164E318E007EBEAB /* main.m */,
+				BE82F6E1164E318E007EBEAB /* HoldLanguages-Prefix.pch */,
+				BE82F6E5164E318E007EBEAB /* Default.png */,
+				BE82F6E7164E318E007EBEAB /* Default@2x.png */,
+				BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE82F6CE164E318E007EBEAB /* HoldLanguages */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE82F6ED164E318E007EBEAB /* Build configuration list for PBXNativeTarget "HoldLanguages" */;
+			buildPhases = (
+				BE82F6CB164E318E007EBEAB /* Sources */,
+				BE82F6CC164E318E007EBEAB /* Frameworks */,
+				BE82F6CD164E318E007EBEAB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HoldLanguages;
+			productName = HoldLanguages;
+			productReference = BE82F6CF164E318E007EBEAB /* HoldLanguages.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE82F6C6164E318E007EBEAB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Coder Dreamer";
+			};
+			buildConfigurationList = BE82F6C9164E318E007EBEAB /* Build configuration list for PBXProject "HoldLanguages" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BE82F6C4164E318E007EBEAB;
+			productRefGroup = BE82F6D0164E318E007EBEAB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE82F6CE164E318E007EBEAB /* HoldLanguages */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BE82F6CD164E318E007EBEAB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE82F6DE164E318E007EBEAB /* InfoPlist.strings in Resources */,
+				BE82F6E6164E318E007EBEAB /* Default.png in Resources */,
+				BE82F6E8164E318E007EBEAB /* Default@2x.png in Resources */,
+				BE82F6EA164E318E007EBEAB /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE82F6CB164E318E007EBEAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE82F6E0164E318E007EBEAB /* main.m in Sources */,
+				BE82F6E4164E318E007EBEAB /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BE82F6DC164E318E007EBEAB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE82F6DD164E318E007EBEAB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BE82F6EB164E318E007EBEAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BE82F6EC164E318E007EBEAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BE82F6EE164E318E007EBEAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
+				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BE82F6EF164E318E007EBEAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
+				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE82F6C9164E318E007EBEAB /* Build configuration list for PBXProject "HoldLanguages" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE82F6EB164E318E007EBEAB /* Debug */,
+				BE82F6EC164E318E007EBEAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE82F6ED164E318E007EBEAB /* Build configuration list for PBXNativeTarget "HoldLanguages" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE82F6EE164E318E007EBEAB /* Debug */,
+				BE82F6EF164E318E007EBEAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE82F6C6164E318E007EBEAB /* Project object */;
+}
