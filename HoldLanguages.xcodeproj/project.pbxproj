@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
+		BE2C11EC164F68C000B4F330 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE2C11EA164F68C000B4F330 /* MainViewController.xib */; };
+		BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
 		BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
 		BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D5164E318E007EBEAB /* Foundation.framework */; };
 		BE82F6D8164E318E007EBEAB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
@@ -16,11 +19,18 @@
 		BE82F6E6164E318E007EBEAB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E5164E318E007EBEAB /* Default.png */; };
 		BE82F6E8164E318E007EBEAB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E7164E318E007EBEAB /* Default@2x.png */; };
 		BE82F6EA164E318E007EBEAB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */; };
+		BE950E69164FC74A00C51C45 /* CDAudioSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE950E68164FC74A00C51C45 /* CDAudioSharer.m */; };
+		BE9781AF164F74E7002B9A8D /* CDAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781AE164F74E7002B9A8D /* CDAudioPlayer.m */; };
+		BE9781B3164F7519002B9A8D /* CDiPodPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */; };
 		BED5B0E8164E937100A8216F /* CDHorizontalScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */; };
 		BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE2C11E8164F68C000B4F330 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		BE2C11E9164F68C000B4F330 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		BE2C11EA164F68C000B4F330 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		BE82F6CF164E318E007EBEAB /* HoldLanguages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoldLanguages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE82F6D3164E318E007EBEAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BE82F6D5164E318E007EBEAB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -34,6 +44,12 @@
 		BE82F6E5164E318E007EBEAB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		BE82F6E7164E318E007EBEAB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		BE950E67164FC74A00C51C45 /* CDAudioSharer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioSharer.h; sourceTree = "<group>"; };
+		BE950E68164FC74A00C51C45 /* CDAudioSharer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioSharer.m; sourceTree = "<group>"; };
+		BE9781AD164F74E7002B9A8D /* CDAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioPlayer.h; sourceTree = "<group>"; };
+		BE9781AE164F74E7002B9A8D /* CDAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioPlayer.m; sourceTree = "<group>"; };
+		BE9781B1164F7519002B9A8D /* CDiPodPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDiPodPlayer.h; sourceTree = "<group>"; };
+		BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDiPodPlayer.m; sourceTree = "<group>"; };
 		BED5B0DE164E8BA100A8216F /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		BED5B0E6164E937100A8216F /* CDHorizontalScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDHorizontalScrollView.h; sourceTree = "<group>"; };
 		BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDHorizontalScrollView.m; sourceTree = "<group>"; };
@@ -49,12 +65,34 @@
 				BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */,
 				BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */,
 				BE82F6D8164E318E007EBEAB /* CoreGraphics.framework in Frameworks */,
+				BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE2C11EE164F68CF00B4F330 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEFEE95A164E65DF00994116 /* CDHolder.h */,
+				BEFEE95B164E65DF00994116 /* CDHolder.m */,
+				BED5B0E6164E937100A8216F /* CDHorizontalScrollView.h */,
+				BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BE2C11EF164F68DB00B4F330 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE2C11E8164F68C000B4F330 /* MainViewController.h */,
+				BE2C11E9164F68C000B4F330 /* MainViewController.m */,
+				BE2C11EA164F68C000B4F330 /* MainViewController.xib */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		BE82F6C4164E318E007EBEAB = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +116,7 @@
 				BE82F6D3164E318E007EBEAB /* UIKit.framework */,
 				BE82F6D5164E318E007EBEAB /* Foundation.framework */,
 				BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */,
+				BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -88,10 +127,9 @@
 				BE82F6E2164E318E007EBEAB /* AppDelegate.h */,
 				BE82F6E3164E318E007EBEAB /* AppDelegate.m */,
 				BED5B0DE164E8BA100A8216F /* Header.h */,
-				BEFEE95A164E65DF00994116 /* CDHolder.h */,
-				BEFEE95B164E65DF00994116 /* CDHolder.m */,
-				BED5B0E6164E937100A8216F /* CDHorizontalScrollView.h */,
-				BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */,
+				BE9781B0164F74F0002B9A8D /* Players */,
+				BE2C11EF164F68DB00B4F330 /* Controllers */,
+				BE2C11EE164F68CF00B4F330 /* Views */,
 				BE82F6DA164E318E007EBEAB /* Supporting Files */,
 			);
 			path = HoldLanguages;
@@ -109,6 +147,19 @@
 				BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE9781B0164F74F0002B9A8D /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				BE950E67164FC74A00C51C45 /* CDAudioSharer.h */,
+				BE950E68164FC74A00C51C45 /* CDAudioSharer.m */,
+				BE9781AD164F74E7002B9A8D /* CDAudioPlayer.h */,
+				BE9781AE164F74E7002B9A8D /* CDAudioPlayer.m */,
+				BE9781B1164F7519002B9A8D /* CDiPodPlayer.h */,
+				BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */,
+			);
+			name = Players;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +217,7 @@
 				BE82F6E6164E318E007EBEAB /* Default.png in Resources */,
 				BE82F6E8164E318E007EBEAB /* Default@2x.png in Resources */,
 				BE82F6EA164E318E007EBEAB /* Default-568h@2x.png in Resources */,
+				BE2C11EC164F68C000B4F330 /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +232,10 @@
 				BE82F6E4164E318E007EBEAB /* AppDelegate.m in Sources */,
 				BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */,
 				BED5B0E8164E937100A8216F /* CDHorizontalScrollView.m in Sources */,
+				BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */,
+				BE9781AF164F74E7002B9A8D /* CDAudioPlayer.m in Sources */,
+				BE9781B3164F7519002B9A8D /* CDiPodPlayer.m in Sources */,
+				BE950E69164FC74A00C51C45 /* CDAudioSharer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +262,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chi Wei (237U4CZ4BJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -221,7 +278,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "A3CAC820-F762-43DA-BBBE-4A8E8D16CBEE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -234,6 +294,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chi Wei (237U4CZ4BJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -242,6 +303,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "A3CAC820-F762-43DA-BBBE-4A8E8D16CBEE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -43,7 +43,7 @@
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     _tapGesture.numberOfTapsRequired = 2;
     [self addGestureRecognizer:_tapGesture];
-
+    
     _swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     _swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
     [self addGestureRecognizer:_swipeLeftGesture];
@@ -56,26 +56,24 @@
 #pragma mark - Handle Gesture
 - (void)handleTap:(UITapGestureRecognizer *)tapGesture {
     if (tapGesture.state == UIGestureRecognizerStateEnded){
-        NSLog(@"Double Tap");
+        [_delegate holderTapDouble:self];
     }
 }
 
 - (void)handleSwipe:(UISwipeGestureRecognizer*)swipeGesture {
     /*
-    switch (swipeGesture.direction) {
-        case UISwipeGestureRecognizerDirectionLeft:{
-            NSLog(@"Left");
-        }break;
-        case UISwipeGestureRecognizerDirectionRight:{
-            NSLog(@"Right");
-        }break;
-        default:
-            break;
-    }
+     switch (swipeGesture.direction) {
+     case UISwipeGestureRecognizerDirectionLeft:{
+     NSLog(@"Left");
+     }break;
+     case UISwipeGestureRecognizerDirectionRight:{
+     NSLog(@"Right");
+     }break;
+     default:
+     break;
+     }
      */
-    if ([_delegate respondsToSelector:@selector(holder:swipeHorizontallyToDirection:)]) {
-        [_delegate holder:self swipeHorizontallyToDirection:swipeGesture.direction];
-    }
+    [_delegate holder:self swipeHorizontallyToDirection:swipeGesture.direction];
     _swipedHorizontally = YES;
 }
 
@@ -83,38 +81,30 @@
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint startLocation = [touch locationInView:self];
     _startY = startLocation.y;
-    if ([_delegate respondsToSelector:@selector(holderBeginSwipingVertically:)]) {
-        [_delegate holderBeginSwipingVertically:self];
-    }
-    NSLog(@"begin");
+    [_delegate holderBeginSwipingVertically:self];
     return YES;
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-    if ([_delegate respondsToSelector:@selector(holder:swipeHorizontallyFor:)]) {
-        CGPoint location = [touch locationInView:self];
-        CGFloat increament = location.y - _startY;
-        [_delegate holder:self swipeVerticallyFor:increament];
-    }
+    CGPoint location = [touch locationInView:self];
+    CGFloat increament = location.y - _startY;
+    [_delegate holder:self swipeVerticallyFor:increament];
+    
     return YES;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-    if ([_delegate respondsToSelector:@selector(holderEndSwipingHorizontally:)]) {
-        [_delegate holderEndSwipingVertically:self];
-    }
+    CGPoint location = [touch locationInView:self];
+    CGFloat increament = location.y - _startY;
+    [_delegate holder:self endSwipingVerticallyAt:increament];
     
     [self endOrCancelTracking];
-    NSLog(@"end");
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event {
-    if ([_delegate respondsToSelector:@selector(holderCancelSwipingHorizontally:)] && _swipedHorizontally) {
-        [_delegate holderCancelSwipingVertically:self];
-    }
+    [_delegate holderCancelSwipingVertically:self];
     
     [self endOrCancelTracking];
-    NSLog(@"cancel with y offset:");
 }
 
 - (void)endOrCancelTracking {
