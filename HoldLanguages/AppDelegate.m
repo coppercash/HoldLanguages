@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "CDHolder.h"
 
 @implementation AppDelegate
 
@@ -14,8 +15,13 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor grayColor];
     [self.window makeKeyAndVisible];
+    
+    
+    CDHolder* holder = [[CDHolder alloc] initWithFrame:self.window.bounds];
+    [self.window addSubview:holder];
+    
     return YES;
 }
 
