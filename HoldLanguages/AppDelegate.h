@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class MainViewController;
-
+@class MainViewController, CDAudioSharer;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) MainViewController *mainViewController;
+@property(strong, nonatomic) UIWindow *window;
+@property(strong, nonatomic) MainViewController* mainViewController;
+@property(strong, nonatomic) CDAudioSharer* audioSharer;
 
 @end

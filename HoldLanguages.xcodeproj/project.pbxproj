@@ -10,6 +10,7 @@
 		BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
 		BE2C11EC164F68C000B4F330 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE2C11EA164F68C000B4F330 /* MainViewController.xib */; };
 		BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
+		BE56E8A316514C75006E086F /* Breathing.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BE56E8A216514C75006E086F /* Breathing.lrc */; };
 		BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
 		BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D5164E318E007EBEAB /* Foundation.framework */; };
 		BE82F6D8164E318E007EBEAB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
@@ -22,6 +23,11 @@
 		BE950E69164FC74A00C51C45 /* CDAudioSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE950E68164FC74A00C51C45 /* CDAudioSharer.m */; };
 		BE9781AF164F74E7002B9A8D /* CDAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781AE164F74E7002B9A8D /* CDAudioPlayer.m */; };
 		BE9781B3164F7519002B9A8D /* CDiPodPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */; };
+		BE987BF61650D42F00077D30 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE987BF81650D42F00077D30 /* Localizable.strings */; };
+		BE987C001650DE4600077D30 /* CDLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987BFF1650DE4600077D30 /* CDLyrics.m */; };
+		BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C031650DE8000077D30 /* CDLRCLyrics.m */; };
+		BE987C061650F57400077D30 /* qbd.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BE987C051650F57400077D30 /* qbd.lrc */; };
+		BE987C091650F9F700077D30 /* CDString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C081650F9F700077D30 /* CDString.m */; };
 		BED5B0E8164E937100A8216F /* CDHorizontalScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */; };
 		BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 /* End PBXBuildFile section */
@@ -31,6 +37,7 @@
 		BE2C11E9164F68C000B4F330 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BE2C11EA164F68C000B4F330 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		BE56E8A216514C75006E086F /* Breathing.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Breathing.lrc; sourceTree = "<group>"; };
 		BE82F6CF164E318E007EBEAB /* HoldLanguages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoldLanguages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE82F6D3164E318E007EBEAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BE82F6D5164E318E007EBEAB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,6 +57,16 @@
 		BE9781AE164F74E7002B9A8D /* CDAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioPlayer.m; sourceTree = "<group>"; };
 		BE9781B1164F7519002B9A8D /* CDiPodPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDiPodPlayer.h; sourceTree = "<group>"; };
 		BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDiPodPlayer.m; sourceTree = "<group>"; };
+		BE987BF31650D27800077D30 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		BE987BF71650D42F00077D30 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BE987BF91650D43300077D30 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		BE987BFE1650DE4500077D30 /* CDLyrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLyrics.h; sourceTree = "<group>"; };
+		BE987BFF1650DE4600077D30 /* CDLyrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyrics.m; sourceTree = "<group>"; };
+		BE987C021650DE8000077D30 /* CDLRCLyrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLRCLyrics.h; sourceTree = "<group>"; };
+		BE987C031650DE8000077D30 /* CDLRCLyrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLRCLyrics.m; sourceTree = "<group>"; };
+		BE987C051650F57400077D30 /* qbd.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = qbd.lrc; sourceTree = "<group>"; };
+		BE987C071650F9F700077D30 /* CDString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDString.h; sourceTree = "<group>"; };
+		BE987C081650F9F700077D30 /* CDString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDString.m; sourceTree = "<group>"; };
 		BED5B0DE164E8BA100A8216F /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		BED5B0E6164E937100A8216F /* CDHorizontalScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDHorizontalScrollView.h; sourceTree = "<group>"; };
 		BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDHorizontalScrollView.m; sourceTree = "<group>"; };
@@ -93,6 +110,15 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		BE56E8A516514C7E006E086F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE987C051650F57400077D30 /* qbd.lrc */,
+				BE56E8A216514C75006E086F /* Breathing.lrc */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		BE82F6C4164E318E007EBEAB = {
 			isa = PBXGroup;
 			children = (
@@ -127,9 +153,12 @@
 				BE82F6E2164E318E007EBEAB /* AppDelegate.h */,
 				BE82F6E3164E318E007EBEAB /* AppDelegate.m */,
 				BED5B0DE164E8BA100A8216F /* Header.h */,
+				BE987C0A1650F9FC00077D30 /* Categories */,
+				BE987C011650DE5500077D30 /* Lyrics */,
 				BE9781B0164F74F0002B9A8D /* Players */,
 				BE2C11EF164F68DB00B4F330 /* Controllers */,
 				BE2C11EE164F68CF00B4F330 /* Views */,
+				BE56E8A516514C7E006E086F /* Resources */,
 				BE82F6DA164E318E007EBEAB /* Supporting Files */,
 			);
 			path = HoldLanguages;
@@ -140,6 +169,7 @@
 			children = (
 				BE82F6DB164E318E007EBEAB /* HoldLanguages-Info.plist */,
 				BE82F6DC164E318E007EBEAB /* InfoPlist.strings */,
+				BE987BF81650D42F00077D30 /* Localizable.strings */,
 				BE82F6DF164E318E007EBEAB /* main.m */,
 				BE82F6E1164E318E007EBEAB /* HoldLanguages-Prefix.pch */,
 				BE82F6E5164E318E007EBEAB /* Default.png */,
@@ -160,6 +190,26 @@
 				BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */,
 			);
 			name = Players;
+			sourceTree = "<group>";
+		};
+		BE987C011650DE5500077D30 /* Lyrics */ = {
+			isa = PBXGroup;
+			children = (
+				BE987BFE1650DE4500077D30 /* CDLyrics.h */,
+				BE987BFF1650DE4600077D30 /* CDLyrics.m */,
+				BE987C021650DE8000077D30 /* CDLRCLyrics.h */,
+				BE987C031650DE8000077D30 /* CDLRCLyrics.m */,
+			);
+			name = Lyrics;
+			sourceTree = "<group>";
+		};
+		BE987C0A1650F9FC00077D30 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				BE987C071650F9F700077D30 /* CDString.h */,
+				BE987C081650F9F700077D30 /* CDString.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +247,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = BE82F6C4164E318E007EBEAB;
 			productRefGroup = BE82F6D0164E318E007EBEAB /* Products */;
@@ -218,6 +269,9 @@
 				BE82F6E8164E318E007EBEAB /* Default@2x.png in Resources */,
 				BE82F6EA164E318E007EBEAB /* Default-568h@2x.png in Resources */,
 				BE2C11EC164F68C000B4F330 /* MainViewController.xib in Resources */,
+				BE987BF61650D42F00077D30 /* Localizable.strings in Resources */,
+				BE987C061650F57400077D30 /* qbd.lrc in Resources */,
+				BE56E8A316514C75006E086F /* Breathing.lrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +290,9 @@
 				BE9781AF164F74E7002B9A8D /* CDAudioPlayer.m in Sources */,
 				BE9781B3164F7519002B9A8D /* CDiPodPlayer.m in Sources */,
 				BE950E69164FC74A00C51C45 /* CDAudioSharer.m in Sources */,
+				BE987C001650DE4600077D30 /* CDLyrics.m in Sources */,
+				BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */,
+				BE987C091650F9F700077D30 /* CDString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,8 +303,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				BE82F6DD164E318E007EBEAB /* en */,
+				BE987BF31650D27800077D30 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BE987BF81650D42F00077D30 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE987BF71650D42F00077D30 /* en */,
+				BE987BF91650D43300077D30 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -6,6 +6,9 @@
 //  Copyright (c) 2012 Coder Dreamer. All rights reserved.
 //
 
+#import "CDString.h"
+
+
 #define kMissLocalizedString @"MissLocalizedString"
 
 #define DEBUG_MODE

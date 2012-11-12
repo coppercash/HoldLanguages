@@ -7,6 +7,8 @@
 //
 
 #import "CDiPodPlayer.h"
+#import "Header.h"
+#import "CDAudioSharer.h"
 
 @interface CDiPodPlayer ()
 - (void)initialize;
@@ -24,7 +26,10 @@
 }
 
 - (void)initialize{
-    self.audioPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    //self.audioPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    self.audioPlayer = [MPMusicPlayerController applicationMusicPlayer];
+    self.audioPlayer.shuffleMode = MPMusicShuffleModeOff;
+    self.audioPlayer.repeatMode = MPMusicRepeatModeOne;
 }
 
 #pragma mark - Play Control
@@ -41,6 +46,10 @@
     [self.audioPlayer pause];
 }
 
+- (void)stop{
+    [self pause];
+}
+
 - (void)playOrPause{
 	MPMusicPlaybackState playbackState = self.audioPlayer.playbackState;
 	if (playbackState == MPMusicPlaybackStateStopped || playbackState == MPMusicPlaybackStatePaused) {
@@ -55,6 +64,18 @@
     NSTimeInterval currentPlaybackTime = self.audioPlayer.currentPlaybackTime;
     NSTimeInterval destinationPlaybackTime = currentPlaybackTime + playbackTime;
     self.audioPlayer.currentPlaybackTime = destinationPlaybackTime;
+}
+
+- (NSTimeInterval)currentDuration{
+    //Get current playing duration.
+    MPMediaItem* currentAudio = self.audioPlayer.nowPlayingItem;
+    
+    NSString *string = [currentAudio valueForKey:MPMediaItemPropertyPlaybackDuration];
+    
+    NSTimeInterval currentDuration = string.floatValue;
+    _currentDuration = currentDuration;
+    
+    return _currentDuration;
 }
 
 @end

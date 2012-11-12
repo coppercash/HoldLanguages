@@ -9,11 +9,12 @@
 #import "CDAudioPlayer.h"
 
 @implementation CDAudioPlayer
-@synthesize currentPlaybackTime = _currentPlaybackTime;
+@synthesize currentPlaybackTime = _currentPlaybackTime, currentDuration = _currentDuration;
 
 - (void)openAudios{}
 - (void)play{}
 - (void)pause{}
+- (void)stop{}
 - (void)playOrPause{}
 - (void)playbackFor:(NSTimeInterval)playbackTime{}
 

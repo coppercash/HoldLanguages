@@ -16,6 +16,8 @@
 + (CDAudioSharer*)sharedAudioPlayer;
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
 - (void)playOrPause;
+- (void)stop;
 - (void)playbackFor:(NSTimeInterval)playbackTime;
+- (float)playbackRate;
 
 @end

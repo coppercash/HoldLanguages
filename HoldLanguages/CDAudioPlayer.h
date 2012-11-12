@@ -8,13 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CDAudioPlayer : NSObject
+@interface CDAudioPlayer : NSObject {
+    NSTimeInterval _currentDuration;
+}
 
 @property(nonatomic) NSTimeInterval currentPlaybackTime;
+@property(nonatomic, readonly) NSTimeInterval currentDuration;
 
 - (void)openAudios;
 - (void)play;
 - (void)pause;
+- (void)stop;
 - (void)playOrPause;
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 
