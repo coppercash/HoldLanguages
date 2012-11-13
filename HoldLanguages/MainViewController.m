@@ -57,22 +57,7 @@
     [self.view addSubview:button];
     [button addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
     
-    /*
-    NSString* string = @"[00:53.81]只是可怜 瘦马未得好歇 ";
-    NSCharacterSet* set = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
-    NSArray* cos = [string componentsSeparatedByCharactersInSet:set];
-    for (NSString* co in cos) {
-        DLog(@"%@", co);
-    }
-     */
-    /*
-    NSString* testString = @"00:53.81";
-    NSString* string = @"[00:53.81]只是可怜 瘦马未得好歇 ";
-    NSRange range = [string rangeOfString:testString];
-    NSString* h = [string substringWithRange:NSMakeRange(range.location, 1)];
-    NSString* t = [string substringWithRange:NSMakeRange(range.location + range.length, 1)];
-     */
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"Breathing" ofType:@"lrc"];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"qbd" ofType:@"lrc"];
     CDLRCLyrics* lyrics = [[CDLRCLyrics alloc] initWithFile:path];
 }
 

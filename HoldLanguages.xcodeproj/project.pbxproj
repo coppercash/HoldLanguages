@@ -29,6 +29,7 @@
 		BE987C061650F57400077D30 /* qbd.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BE987C051650F57400077D30 /* qbd.lrc */; };
 		BE987C091650F9F700077D30 /* CDString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C081650F9F700077D30 /* CDString.m */; };
 		BED5B0E8164E937100A8216F /* CDHorizontalScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */; };
+		BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
 		BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,8 @@
 		BED5B0DE164E8BA100A8216F /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		BED5B0E6164E937100A8216F /* CDHorizontalScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDHorizontalScrollView.h; sourceTree = "<group>"; };
 		BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDHorizontalScrollView.m; sourceTree = "<group>"; };
+		BEDB7DEB1651BCF900CAF26A /* CDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStack.h; sourceTree = "<group>"; };
+		BEDB7DEC1651BCF900CAF26A /* CDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStack.m; sourceTree = "<group>"; };
 		BEFEE95A164E65DF00994116 /* CDHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDHolder.h; sourceTree = "<group>"; };
 		BEFEE95B164E65DF00994116 /* CDHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDHolder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,6 +211,8 @@
 			children = (
 				BE987C071650F9F700077D30 /* CDString.h */,
 				BE987C081650F9F700077D30 /* CDString.m */,
+				BEDB7DEB1651BCF900CAF26A /* CDStack.h */,
+				BEDB7DEC1651BCF900CAF26A /* CDStack.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -293,6 +298,7 @@
 				BE987C001650DE4600077D30 /* CDLyrics.m in Sources */,
 				BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */,
 				BE987C091650F9F700077D30 /* CDString.m in Sources */,
+				BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
