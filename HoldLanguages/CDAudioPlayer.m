@@ -15,7 +15,9 @@
 - (void)play{}
 - (void)pause{}
 - (void)stop{}
-- (void)playOrPause{}
+- (BOOL)isPlaying{
+    return NO;
+}
 - (void)playbackFor:(NSTimeInterval)playbackTime{}
-
+- (void)playbackAt:(NSTimeInterval)playbackTime{}
 @end

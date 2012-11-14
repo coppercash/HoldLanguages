@@ -61,18 +61,6 @@
 }
 
 - (void)handleSwipe:(UISwipeGestureRecognizer*)swipeGesture {
-    /*
-     switch (swipeGesture.direction) {
-     case UISwipeGestureRecognizerDirectionLeft:{
-     NSLog(@"Left");
-     }break;
-     case UISwipeGestureRecognizerDirectionRight:{
-     NSLog(@"Right");
-     }break;
-     default:
-     break;
-     }
-     */
     [_delegate holder:self swipeHorizontallyToDirection:swipeGesture.direction];
     _swipedHorizontally = YES;
 }
@@ -81,13 +69,15 @@
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint startLocation = [touch locationInView:self];
     _startY = startLocation.y;
+    _lastY = startLocation.y;
     [_delegate holderBeginSwipingVertically:self];
     return YES;
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint location = [touch locationInView:self];
-    CGFloat increament = location.y - _startY;
+    CGFloat increament = location.y - _lastY;
+    _lastY = location.y;
     [_delegate holder:self swipeVerticallyFor:increament];
     
     return YES;
@@ -95,9 +85,9 @@
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint location = [touch locationInView:self];
-    CGFloat increament = location.y - _startY;
-    [_delegate holder:self endSwipingVerticallyAt:increament];
-    
+    CGFloat increament = location.y - _lastY;
+    CGFloat distance = location.y - _startY;
+    [_delegate holder:self endSwipingVerticallyFor:increament fromStart:distance];
     [self endOrCancelTracking];
 }
 
@@ -109,6 +99,7 @@
 
 - (void)endOrCancelTracking {
     _startY = 0.0f;
+    _lastY = 0.0f;
     _swipedHorizontally = NO;
 }
 

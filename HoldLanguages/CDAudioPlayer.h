@@ -19,7 +19,7 @@
 - (void)play;
 - (void)pause;
 - (void)stop;
-- (void)playOrPause;
+- (BOOL)isPlaying;
 - (void)playbackFor:(NSTimeInterval)playbackTime;
-
+- (void)playbackAt:(NSTimeInterval)playbackTime;
 @end

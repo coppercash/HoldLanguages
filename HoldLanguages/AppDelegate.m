@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "CDAudioSharer.h"
+#import "Header.h"
 
 @implementation AppDelegate
 
@@ -17,9 +18,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    //self.audioSharer = [CDAudioSharer sharedAudioPlayer];
+    self.audioSharer = [CDAudioSharer sharedAudioPlayer];
     
     self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    DLogRect(self.mainViewController.view.frame);
+    
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
     
@@ -52,6 +55,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (CGRect)windowBounds{
+    return self.window.bounds;
 }
 
 @end

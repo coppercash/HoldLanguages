@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface CDLyrics : NSObject
-
+@property(nonatomic, readonly) NSUInteger numberOfLyricsRows;
 - (id)initWithFile:(NSString*)filePath;
-
+- (NSString*)contentAtIndex:(NSUInteger)index;
+- (NSTimeInterval)timeAtIndex:(NSUInteger)index;
+- (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time;
 @end

@@ -9,19 +9,19 @@
 #import "CDLyrics.h"
 
 @interface CDLRCLyrics : CDLyrics
-@property(nonatomic, strong) NSArray* timeStamps;
-@property(nonatomic, strong) NSArray* otherStamps;
+@property(nonatomic, readonly,strong) NSArray* timeStamps;
+@property(nonatomic, readonly,strong) NSArray* otherStamps;
 @end
 
 @interface CDLRCTimeStamp : NSObject
-@property(nonatomic) NSTimeInterval time;
-@property(nonatomic, strong) NSString* content;
+@property(nonatomic, readonly) NSTimeInterval time;
+@property(nonatomic, readonly, strong) NSString* content;
 - (id)initWithTime:(NSString*)timeInString content:(NSString*)content;
 @end
 
 @interface CDLRCOtherStamp : NSObject
-@property(nonatomic, copy) NSString* type;
-@property(nonatomic, copy) NSString* content;
+@property(nonatomic, readonly, copy) NSString* type;
+@property(nonatomic, readonly, copy) NSString* content;
 - (id)initWithStamp:(NSString*)stamp;
 @end
 

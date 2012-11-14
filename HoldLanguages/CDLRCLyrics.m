@@ -14,31 +14,126 @@
 #import "CDLRCLyrics.h"
 #import "Header.h"
 
+@interface CDLRCLyrics ()
+- (NSUInteger)seekIndexOfStampBeforeTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index;
+- (NSUInteger)seekIndexOfStampNextToTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index;
+@end
 @implementation CDLRCLyrics
 @synthesize timeStamps = _timeStamps, otherStamps = _otherStamps;
 
 - (id)initWithFile:(NSString *)filePath{
     self = [super init];
     if (self) {
-        /*
-        CDLRCParser* parser = [[CDLRCParser alloc] initWithFile:filePath];
-        self.timeStamps = parser.timeStamps;
-        self.otherStamps = [[NSArray alloc] initWithArray:parser.otherStamps];
-        */
-        
         NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] initWithCapacity:4];
         [CDLRCParser parseFile:filePath intoDictionary:dictionary];
-        self.timeStamps = [dictionary objectForKey:kTimeStamps];
-        self.otherStamps = [dictionary objectForKey:kOtherStamps];
+        _timeStamps = [dictionary objectForKey:kTimeStamps];
+        _otherStamps = [dictionary objectForKey:kOtherStamps];
         
-        for (CDLRCTimeStamp* stamp in self.timeStamps) {
-            DLog(@"%f\t%@", stamp.time, stamp.content);
-        }
-        for (CDLRCOtherStamp* stamp in self.otherStamps) {
-            DLog(@"%@\t%@", stamp.type, stamp.content);
-        }
+        /*
+         for (CDLRCTimeStamp* stamp in self.timeStamps) {
+         DLog(@"%f\t%@", stamp.time, stamp.content);
+         }
+         for (CDLRCOtherStamp* stamp in self.otherStamps) {
+         DLog(@"%@\t%@", stamp.type, stamp.content);
+         }
+         */
     }
     return self;
+}
+
+- (NSUInteger)numberOfLyricsRows{
+    NSUInteger numberOfLyricsRows = [self.timeStamps count];
+    return numberOfLyricsRows;
+}
+
+- (NSString*)contentAtIndex:(NSUInteger)index{
+    CDLRCTimeStamp* stamp = [self.timeStamps objectAtIndex:index];
+    NSString* content = stamp.content;
+    return content;
+}
+
+- (NSTimeInterval)timeAtIndex:(NSUInteger)index{
+    CDLRCTimeStamp* stamp = [self.timeStamps objectAtIndex:index];
+    NSTimeInterval time = stamp.time;
+    return time;
+}
+
+- (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time{
+    static NSUInteger index = 0;
+    @try {
+        NSTimeInterval currentTime = [self timeAtIndex:index];
+        NSUInteger newIndex = 0;
+        if(time > currentTime){
+            newIndex = [self seekIndexOfStampNextToTime:time forwardFromIndex:index];
+        }else{
+            newIndex = [self seekIndexOfStampBeforeTime:time backwardFromIndex:index];
+        }
+        index = newIndex;
+        return index;
+    }
+    @catch (NSException *exception) {
+        return NSUIntegerMax;
+    }
+}
+
+- (NSUInteger)seekIndexOfStampBeforeTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index{
+    if (index == 0) return 0;
+    NSUInteger backwardIndex = index - 1;
+    NSTimeInterval backwardTime = [self timeAtIndex:backwardIndex];
+    if (time < backwardTime) {
+        return [self seekIndexOfStampBeforeTime:time backwardFromIndex:backwardIndex];
+    }else{
+        return backwardIndex;
+    }
+}
+
+- (NSUInteger)seekIndexOfStampNextToTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index{
+    if (index >= self.timeStamps.lastIndex) return self.timeStamps.lastIndex;
+    NSUInteger forwardIndex = index + 1;
+    NSTimeInterval forwardTime = [self timeAtIndex:forwardIndex];
+    if (time > forwardTime) {
+        return [self seekIndexOfStampNextToTime:time forwardFromIndex:forwardIndex];
+    }else{
+        return index;
+    }
+}
+
+#pragma mark - Don't delete, there will be a variable about "degree".
+- (NSUInteger)seekIndexOfStampNearTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index{
+    if (index == 0) return 0;
+    NSUInteger backwardIndex = index - 1;
+    NSTimeInterval backwardTime = [self timeAtIndex:backwardIndex];
+    NSTimeInterval forwardTime = [self timeAtIndex:index];
+    if (time < backwardTime) {
+        return [self seekIndexOfStampNearTime:time backwardFromIndex:backwardIndex];
+    }else{
+        if (time - backwardTime < forwardTime - time) {
+            return backwardIndex;
+        }else{
+            return index;
+        }
+    }
+}
+
+- (NSUInteger)seekIndexOfStampNearTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index{
+    if (index >= self.timeStamps.lastIndex) return self.timeStamps.lastIndex;
+    NSUInteger forwardIndex = index + 1;
+    NSTimeInterval backwardTime = [self timeAtIndex:index];
+    NSTimeInterval forwardTime = [self timeAtIndex:forwardIndex];
+    if (time > forwardTime) {
+        return [self seekIndexOfStampNearTime:time forwardFromIndex:forwardIndex];
+    }else{
+        if (time - backwardTime > forwardTime - time) {
+            return forwardIndex;
+        }else{
+            return index;
+        }
+    }
+}
+
+bool isCloserToPrevious(NSTimeInterval reciever, NSTimeInterval previous, NSTimeInterval next){
+    bool isCloser = (reciever - previous) < (next - reciever);
+    return isCloser;
 }
 
 @end
@@ -58,12 +153,12 @@
             
             NSTimeInterval time = minute.doubleValue * 60 + second.doubleValue + subSecond.doubleValue / 100;
             
-            self.time = time;
-            self.content = content;
+            _time = time;
+            _content = content;
         }
         @catch (NSException *exception) {
-            self.time = 0.0f;
-            self.content = @"Error Timp Stamp";
+            _time = 0.0f;
+            _content = @"Error Timp Stamp";
         }
     }
     return self;
@@ -89,12 +184,12 @@
         @try {
             NSCharacterSet* separeters = [NSCharacterSet characterSetWithCharactersInString:@":"];
             NSArray* components = [stamp componentsSeparatedByCharactersInSet:separeters];
-            self.type = [components objectAtIndex:0];
-            self.content = [components objectAtIndex:1];
+            _type = [components objectAtIndex:0];
+            _content = [components objectAtIndex:1];
         }
         @catch (NSException *exception) {
-            self.type = @"Error Other Stamp";
-            self.content = @"Error Other Stamp";
+            _type = @"Error Other Stamp";
+            _content = @"Error Other Stamp";
         }
     }
     return self;

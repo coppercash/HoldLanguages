@@ -11,6 +11,7 @@
 
 @interface CDHolder : UIControl {
     CGFloat _startY;
+    CGFloat _lastY;
     BOOL _swipedHorizontally;
 }
 
@@ -26,8 +27,8 @@
 @protocol CDHolderDelegate
 @required
 - (void)holderBeginSwipingVertically:(CDHolder*)holder;
-- (void)holder:(CDHolder*)holder swipeVerticallyFor:(CGFloat)distance;
-- (void)holder:(CDHolder*)holder endSwipingVerticallyAt:(CGFloat)distance;
+- (void)holder:(CDHolder*)holder swipeVerticallyFor:(CGFloat)increament;
+- (void)holder:(CDHolder*)holder endSwipingVerticallyFor:(CGFloat)increament fromStart:(CGFloat)distance;
 - (void)holderCancelSwipingVertically:(CDHolder*)holder;
 - (void)holder:(CDHolder*)holder swipeHorizontallyToDirection:(UISwipeGestureRecognizerDirection)direction;
 - (void)holderTapDouble:(CDHolder *)holder;

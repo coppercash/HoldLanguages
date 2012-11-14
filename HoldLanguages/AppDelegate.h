@@ -15,4 +15,6 @@
 @property(strong, nonatomic) MainViewController* mainViewController;
 @property(strong, nonatomic) CDAudioSharer* audioSharer;
 
+@property(nonatomic, readonly)CGRect windowBounds;
+
 @end

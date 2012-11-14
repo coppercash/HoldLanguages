@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import "CDHolder.h"
+#import "CDLyricsView.h"
+#import "CDAudioSharer.h"
 
-@class CDAudioSharer;
-@interface MainViewController : UIViewController <MPMediaPickerControllerDelegate, CDHolderDelegate>
+@class CDAudioSharer, CDLyrics;
+@interface MainViewController : UIViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate>
 
+@property(nonatomic, strong)CDLyricsView* lyricsView;
 @property(nonatomic, strong)CDAudioSharer* audioSharer;
-
+@property(nonatomic, strong)CDLyrics* lyrics;
 @end

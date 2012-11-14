@@ -8,17 +8,14 @@
 
 #import "MainViewController.h"
 #import "Header.h"
-#import "CDHolder.h"
-#import "CDiPodPlayer.h"
-#import "CDAudioSharer.h"
-
+#import "CDLyrics.h"
 #import "CDLRCLyrics.h"
 
 @interface MainViewController ()
+- (BOOL)isLyricsUsable;
 @end
-
 @implementation MainViewController
-@synthesize audioSharer = _audioSharer;
+@synthesize audioSharer = _audioSharer, lyrics = _lyrics;
 
 - (void)test{
     MPMediaPickerController *picker =
@@ -39,7 +36,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        //self.audioSharer = [CDAudioSharer sharedAudioPlayer];
+        self.audioSharer = [CDAudioSharer sharedAudioPlayer];
+        [self.audioSharer registAsDelegate:self];
     }
     return self;
 }
@@ -47,7 +45,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    CGRect windowBounds = appDelegate.windowBounds;
+    self.view.frame = CGRectMake(windowBounds.origin.x, windowBounds.origin.y - 20.0f, windowBounds.size.width, windowBounds.size.height);
+    
+    
     // Do any additional setup after loading the view from its nib.
+    self.lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:self.lyricsView];
+    self.lyricsView.lyricsSource = self;
+    DLogRect(self.view.bounds);
+    
     CDHolder* holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:holder];
     holder.delegate = self;
@@ -57,8 +65,8 @@
     [self.view addSubview:button];
     [button addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
     
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"qbd" ofType:@"lrc"];
-    CDLRCLyrics* lyrics = [[CDLRCLyrics alloc] initWithFile:path];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"笑红尘" ofType:@"lrc"];
+    self.lyrics = [[CDLRCLyrics alloc] initWithFile:path];
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,14 +99,21 @@
     
 }
 
-- (void)holder:(CDHolder*)holder swipeVerticallyFor:(CGFloat)distance{
-    
+- (void)holder:(CDHolder*)holder swipeVerticallyFor:(CGFloat)increament{
+    [self.lyricsView scrollFor:-increament animated:NO];
 }
 
-- (void)holder:(CDHolder *)holder endSwipingVerticallyAt:(CGFloat)distance{
-    float rate = self.audioSharer.playbackRate;
-    NSTimeInterval playbackTime = - rate * distance;
-    [self.audioSharer playbackFor:playbackTime];
+- (void)holder:(CDHolder*)holder endSwipingVerticallyFor:(CGFloat)increament fromStart:(CGFloat)distance{
+    if (self.isLyricsUsable) {
+        [self.lyricsView scrollFor:-increament animated:NO];
+        NSUInteger focusIndex = self.lyricsView.focusIndex;
+        NSTimeInterval playbackTime = [self.lyrics timeAtIndex:focusIndex];
+        [self.audioSharer playbackAt:playbackTime];
+    }else{
+        float rate = self.audioSharer.playbackRate;
+        NSTimeInterval playbackTime = - rate * distance;
+        [self.audioSharer playbackFor:playbackTime];
+    }
 }
 
 - (void)holderCancelSwipingVertically:(CDHolder*)holder{
@@ -111,6 +126,28 @@
 
 - (void)holderTapDouble:(CDHolder *)holder{
     [self.audioSharer playOrPause];
+}
+
+#pragma mark - CDLyricsViewLyricsSource
+- (NSUInteger)numberOfLyricsRowsInView:(CDLyricsView *)lyricsView{
+    NSUInteger number = self.lyrics.numberOfLyricsRows;
+    return number;
+}
+
+- (NSString*)lyricsView:(CDLyricsView *)lyricsView stringForRowAtIndex:(NSUInteger)index{
+    NSString* string = [self.lyrics contentAtIndex:index];
+    return string;
+}
+
+#pragma mark - CDAudioPlayerDelegate
+- (void)audioSharer:(CDAudioSharer *)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime{
+    NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
+    [self.lyricsView setFocusIndex:focusIndex];
+}
+
+#pragma mark - Lyrics
+- (BOOL)isLyricsUsable{
+    return YES;
 }
 
 @end

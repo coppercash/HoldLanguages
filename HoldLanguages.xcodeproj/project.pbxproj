@@ -21,6 +21,8 @@
 		BE82F6E8164E318E007EBEAB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E7164E318E007EBEAB /* Default@2x.png */; };
 		BE82F6EA164E318E007EBEAB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */; };
 		BE950E69164FC74A00C51C45 /* CDAudioSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE950E68164FC74A00C51C45 /* CDAudioSharer.m */; };
+		BE95E967165278FF00ACBB16 /* 笑红尘.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BE95E966165278FF00ACBB16 /* 笑红尘.lrc */; };
+		BE95E96B1652953300ACBB16 /* CDArray.m in Sources */ = {isa = PBXBuildFile; fileRef = BE95E96A1652953300ACBB16 /* CDArray.m */; };
 		BE9781AF164F74E7002B9A8D /* CDAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781AE164F74E7002B9A8D /* CDAudioPlayer.m */; };
 		BE9781B3164F7519002B9A8D /* CDiPodPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */; };
 		BE987BF61650D42F00077D30 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE987BF81650D42F00077D30 /* Localizable.strings */; };
@@ -28,6 +30,8 @@
 		BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C031650DE8000077D30 /* CDLRCLyrics.m */; };
 		BE987C061650F57400077D30 /* qbd.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BE987C051650F57400077D30 /* qbd.lrc */; };
 		BE987C091650F9F700077D30 /* CDString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C081650F9F700077D30 /* CDString.m */; };
+		BE990BE01651EC4900A03885 /* CDLyricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE990BDF1651EC4900A03885 /* CDLyricsView.m */; };
+		BE9FE15416521CCE0054CDEE /* CDLyricsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */; };
 		BED5B0E8164E937100A8216F /* CDHorizontalScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */; };
 		BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
 		BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
@@ -54,6 +58,9 @@
 		BE82F6E9164E318E007EBEAB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BE950E67164FC74A00C51C45 /* CDAudioSharer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioSharer.h; sourceTree = "<group>"; };
 		BE950E68164FC74A00C51C45 /* CDAudioSharer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioSharer.m; sourceTree = "<group>"; };
+		BE95E966165278FF00ACBB16 /* 笑红尘.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "笑红尘.lrc"; sourceTree = "<group>"; };
+		BE95E9691652953300ACBB16 /* CDArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDArray.h; sourceTree = "<group>"; };
+		BE95E96A1652953300ACBB16 /* CDArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDArray.m; sourceTree = "<group>"; };
 		BE9781AD164F74E7002B9A8D /* CDAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioPlayer.h; sourceTree = "<group>"; };
 		BE9781AE164F74E7002B9A8D /* CDAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioPlayer.m; sourceTree = "<group>"; };
 		BE9781B1164F7519002B9A8D /* CDiPodPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDiPodPlayer.h; sourceTree = "<group>"; };
@@ -68,6 +75,10 @@
 		BE987C051650F57400077D30 /* qbd.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = qbd.lrc; sourceTree = "<group>"; };
 		BE987C071650F9F700077D30 /* CDString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDString.h; sourceTree = "<group>"; };
 		BE987C081650F9F700077D30 /* CDString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDString.m; sourceTree = "<group>"; };
+		BE990BDE1651EC4900A03885 /* CDLyricsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLyricsView.h; sourceTree = "<group>"; };
+		BE990BDF1651EC4900A03885 /* CDLyricsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyricsView.m; sourceTree = "<group>"; };
+		BE9FE15216521CCE0054CDEE /* CDLyricsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLyricsViewCell.h; sourceTree = "<group>"; };
+		BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyricsViewCell.m; sourceTree = "<group>"; };
 		BED5B0DE164E8BA100A8216F /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		BED5B0E6164E937100A8216F /* CDHorizontalScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDHorizontalScrollView.h; sourceTree = "<group>"; };
 		BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDHorizontalScrollView.m; sourceTree = "<group>"; };
@@ -97,6 +108,10 @@
 			children = (
 				BEFEE95A164E65DF00994116 /* CDHolder.h */,
 				BEFEE95B164E65DF00994116 /* CDHolder.m */,
+				BE990BDE1651EC4900A03885 /* CDLyricsView.h */,
+				BE990BDF1651EC4900A03885 /* CDLyricsView.m */,
+				BE9FE15216521CCE0054CDEE /* CDLyricsViewCell.h */,
+				BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */,
 				BED5B0E6164E937100A8216F /* CDHorizontalScrollView.h */,
 				BED5B0E7164E937100A8216F /* CDHorizontalScrollView.m */,
 			);
@@ -118,6 +133,7 @@
 			children = (
 				BE987C051650F57400077D30 /* qbd.lrc */,
 				BE56E8A216514C75006E086F /* Breathing.lrc */,
+				BE95E966165278FF00ACBB16 /* 笑红尘.lrc */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -213,6 +229,8 @@
 				BE987C081650F9F700077D30 /* CDString.m */,
 				BEDB7DEB1651BCF900CAF26A /* CDStack.h */,
 				BEDB7DEC1651BCF900CAF26A /* CDStack.m */,
+				BE95E9691652953300ACBB16 /* CDArray.h */,
+				BE95E96A1652953300ACBB16 /* CDArray.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -277,6 +295,7 @@
 				BE987BF61650D42F00077D30 /* Localizable.strings in Resources */,
 				BE987C061650F57400077D30 /* qbd.lrc in Resources */,
 				BE56E8A316514C75006E086F /* Breathing.lrc in Resources */,
+				BE95E967165278FF00ACBB16 /* 笑红尘.lrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +318,9 @@
 				BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */,
 				BE987C091650F9F700077D30 /* CDString.m in Sources */,
 				BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */,
+				BE990BE01651EC4900A03885 /* CDLyricsView.m in Sources */,
+				BE9FE15416521CCE0054CDEE /* CDLyricsViewCell.m in Sources */,
+				BE95E96B1652953300ACBB16 /* CDArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

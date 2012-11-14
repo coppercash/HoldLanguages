@@ -50,20 +50,24 @@
     [self pause];
 }
 
-- (void)playOrPause{
-	MPMusicPlaybackState playbackState = self.audioPlayer.playbackState;
-	if (playbackState == MPMusicPlaybackStateStopped || playbackState == MPMusicPlaybackStatePaused) {
-		[self play];
-	} else if (playbackState == MPMusicPlaybackStatePlaying) {
-		[self pause];
+- (BOOL)isPlaying{
+    MPMusicPlaybackState playbackState = self.audioPlayer.playbackState;
+    if (playbackState == MPMusicPlaybackStatePlaying) {
+        return YES;
+    }else if (playbackState == MPMusicPlaybackStateStopped || playbackState == MPMusicPlaybackStatePaused) {
+		return NO;
 	}
+    return NO;
 }
-
 
 - (void)playbackFor:(NSTimeInterval)playbackTime{
     NSTimeInterval currentPlaybackTime = self.audioPlayer.currentPlaybackTime;
     NSTimeInterval destinationPlaybackTime = currentPlaybackTime + playbackTime;
-    self.audioPlayer.currentPlaybackTime = destinationPlaybackTime;
+    [self playbackAt:destinationPlaybackTime];
+}
+
+- (void)playbackAt:(NSTimeInterval)playbackTime{
+    self.audioPlayer.currentPlaybackTime = playbackTime;
 }
 
 - (NSTimeInterval)currentDuration{
@@ -76,6 +80,12 @@
     _currentDuration = currentDuration;
     
     return _currentDuration;
+}
+
+
+- (NSTimeInterval)currentPlaybackTime{
+    NSTimeInterval playbackTime = self.audioPlayer.currentPlaybackTime;
+    return playbackTime;
 }
 
 @end

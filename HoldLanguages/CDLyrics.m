@@ -9,10 +9,17 @@
 #import "CDLyrics.h"
 
 @implementation CDLyrics
-
 - (id)initWithFile:(NSString*)filePath{
     self = [super init];
     return self;
 }
-
+- (NSString*)contentAtIndex:(NSUInteger)index{
+    return @"CDLyrics is a abstract Class";
+}
+- (NSTimeInterval)timeAtIndex:(NSUInteger)index{
+    return 0.0f;
+}
+- (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time{
+    return NSUIntegerMax;
+}
 @end
