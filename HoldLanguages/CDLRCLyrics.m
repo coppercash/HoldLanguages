@@ -58,6 +58,13 @@
     return time;
 }
 
+- (BOOL)isReady{
+    BOOL isReady = YES;
+    if (self.timeStamps == nil) isReady = NO;
+    if (self.timeStamps.count == 0) isReady = NO;
+    return isReady;
+}
+
 - (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time{
     static NSUInteger index = 0;
     @try {
@@ -197,6 +204,7 @@ bool isCloserToPrevious(NSTimeInterval reciever, NSTimeInterval previous, NSTime
 @end
 
 @interface CDLRCParser ()
+NSString* stringFromFile(NSString* filePath);
 bool isStamp(NSString* subString, NSString* string);
 bool isTimeStamp(NSString* stamp);
 
@@ -212,12 +220,26 @@ bool isTimeStamp(NSString* stamp);
 @implementation CDLRCParser
 @synthesize lines = _lines, stampDictionaries = _stampDictionaries, timeStamps = _timeStamps, otherStamps = _otherStamps;
 
+NSString* stringFromFile(NSString* filePath){
+    /*Mainly take care encoding problems.*/
+    
+    NSError* error = [[NSError alloc] init];
+    NSString* fileInString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+    
+    NSNumber* encErrorNumber = [error.userInfo objectForKey:@"NSStringEncoding"];
+    if (encErrorNumber.integerValue == 4) {
+        NSStringEncoding gb2312 = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        fileInString = [NSString stringWithContentsOfFile:filePath encoding:gb2312 error:&error];
+    }
+    return fileInString;
+}
+
 + (void)parseFile:(NSString*)filePath intoDictionary:(NSMutableDictionary*)dictionary{
     if (filePath == nil || dictionary == nil) return;
     
     /*File to string*/
-    NSError* error = [[NSError alloc] init];
-    NSString* fileInString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+    NSString* fileInString = stringFromFile(filePath);
+    if (fileInString == nil || fileInString.length == 0) return;
     
     /*String to lines*/
     NSString* lineBreak = @"\n";
@@ -287,7 +309,7 @@ bool isTimeStamp(NSString* stamp){
 }
 
 
-
+//Old version of LRC parse functions below
 - (id)initWithFile:(NSString*)filePath{
     self = [super init];
     if (self) {

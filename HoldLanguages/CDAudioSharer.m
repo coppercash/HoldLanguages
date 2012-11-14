@@ -17,7 +17,7 @@
 @end
 
 @implementation CDAudioSharer
-@synthesize delegates = _delegates, audioPlayer = _audioPlayer, processTimer = _processTimer;
+@synthesize delegates = _delegates, audioPlayer = _audioPlayer, processTimer = _processTimer, audioName = _audioName;
 
 - (id)init{
     self = [super init];
@@ -87,9 +87,13 @@
 }
 
 #pragma mark - Control Types of Players
-- (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
+- (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
     CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)self.audioPlayer;
     [iPodPlayer openQueueWithItemCollection:itemCollection];
+    
+    MPMediaItem* firstItem = [itemCollection.items objectAtIndex:0];
+    NSString* itemName = [firstItem valueForKey:MPMediaItemPropertyTitle];
+    return itemName;    //The first item will be played.
 }
 
 - (void)play{
@@ -140,6 +144,9 @@
     return playbackRate;
 }
 
-
+#pragma mark - Getter
+- (NSString*)audioName{
+    return self.audioPlayer.audioName;
+}
 
 @end

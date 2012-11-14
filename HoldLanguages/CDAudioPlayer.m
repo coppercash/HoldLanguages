@@ -9,7 +9,7 @@
 #import "CDAudioPlayer.h"
 
 @implementation CDAudioPlayer
-@synthesize currentPlaybackTime = _currentPlaybackTime, currentDuration = _currentDuration;
+@synthesize currentPlaybackTime = _currentPlaybackTime, currentDuration = _currentDuration, audioName = _audioName;
 
 - (void)openAudios{}
 - (void)play{}

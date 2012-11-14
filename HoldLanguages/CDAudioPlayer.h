@@ -14,6 +14,7 @@
 
 @property(nonatomic) NSTimeInterval currentPlaybackTime;
 @property(nonatomic, readonly) NSTimeInterval currentDuration;
+@property(nonatomic, readonly, copy) NSString* audioName;
 
 - (void)openAudios;
 - (void)play;
@@ -22,4 +23,5 @@
 - (BOOL)isPlaying;
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 - (void)playbackAt:(NSTimeInterval)playbackTime;
+
 @end

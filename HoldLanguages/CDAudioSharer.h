@@ -13,12 +13,13 @@
 
 @property(nonatomic, readonly, strong)NSArray* delegates;
 @property(nonatomic, strong)CDAudioPlayer* audioPlayer;
-@property(nonatomic, readonly, strong) NSTimer* processTimer;
+@property(nonatomic, readonly, strong)NSTimer* processTimer;
+@property(nonatomic, readonly, copy)NSString* audioName;
 
 + (CDAudioSharer*)sharedAudioPlayer;
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate;
 - (void)removeDelegate:(id<CDAudioPlayerDelegate>)delegate;
-- (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+- (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
 - (void)play;
 - (void)pause;
 - (void)playOrPause;

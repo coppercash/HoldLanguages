@@ -31,16 +31,25 @@
 }
 
 - (void)initialize{
+    
+    
     _lyricsTable = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     [self addSubview:_lyricsTable];
     _lyricsTable.dataSource = self;
     _lyricsTable.delegate = self;
     _lyricsTable.allowsSelection = NO;
+    _lyricsTable.backgroundColor = [UIColor blackColor];
+    _lyricsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _cursor = [[UIImageView alloc] init];
     [self addSubview:_cursor];
     _cursor.frame = CGRectMake(self.bounds.origin.x, self.bounds.size.height / 2, self.bounds.size.width, 1.0f);
     _cursor.backgroundColor = [UIColor blueColor];
+}
+
+- (void)reloadData{
+    [self.lyricsTable reloadData];
+    [self setYOffset:0.0f animated:NO];
 }
 
 #pragma mark - Focus

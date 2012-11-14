@@ -39,6 +39,7 @@
 }
 
 - (void)play{
+    [self.audioPlayer prepareToPlay];
     [self.audioPlayer play];
 }
 
@@ -86,6 +87,12 @@
 - (NSTimeInterval)currentPlaybackTime{
     NSTimeInterval playbackTime = self.audioPlayer.currentPlaybackTime;
     return playbackTime;
+}
+
+- (NSString*)audioName{
+    MPMediaItem* currentAudio = self.audioPlayer.nowPlayingItem;
+    NSString *string = [currentAudio valueForKey:MPMediaItemPropertyTitle];
+    return string;
 }
 
 @end

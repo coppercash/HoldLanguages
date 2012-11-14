@@ -9,6 +9,7 @@
 #import "CDLyrics.h"
 
 @implementation CDLyrics
+@synthesize isReady = _isReady;
 - (id)initWithFile:(NSString*)filePath{
     self = [super init];
     return self;

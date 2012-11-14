@@ -24,6 +24,7 @@
 }
 
 - (void)initialize{
+    self.contentView.backgroundColor = [UIColor clearColor];
     switch (self.style) {
         case CDLyricsViewCellStyleHeader:{
             
@@ -32,11 +33,13 @@
             _content = [[UILabel alloc] init];
             [self.contentView addSubview:_content];
             _content.frame = self.contentView.bounds;
-            
-            _content.backgroundColor = kDebugColor;
+            _content.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            _content.textAlignment = NSTextAlignmentCenter;
+            _content.backgroundColor = [UIColor clearColor];
+            _content.textColor = [UIColor whiteColor];
         }break;
         case CDLyricsViewCellStyleFooter:{
-            self.contentView.backgroundColor = [UIColor blackColor];
+            
         }break;
         default:
             break;

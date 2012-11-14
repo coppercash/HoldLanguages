@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#define kLRCExtension @"lrc"
+
 @interface CDLyrics : NSObject
 @property(nonatomic, readonly) NSUInteger numberOfLyricsRows;
+@property(nonatomic, readonly) BOOL isReady;
 - (id)initWithFile:(NSString*)filePath;
 - (NSString*)contentAtIndex:(NSUInteger)index;
 - (NSTimeInterval)timeAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time;
+
 @end

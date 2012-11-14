@@ -10,8 +10,10 @@
 #import "Header.h"
 #import "CDLyrics.h"
 #import "CDLRCLyrics.h"
+#import "CDiTunesFinder.h"
 
 @interface MainViewController ()
+- (void)openedAudioNamed:(NSString*)audioName;
 - (BOOL)isLyricsUsable;
 @end
 @implementation MainViewController
@@ -28,7 +30,6 @@
 	[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated:YES];
 	[self presentModalViewController: picker animated: YES];
 }
-
 
 #pragma mark - ViewController Methods
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -65,8 +66,8 @@
     [self.view addSubview:button];
     [button addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
     
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"笑红尘" ofType:@"lrc"];
-    self.lyrics = [[CDLRCLyrics alloc] initWithFile:path];
+    //NSString* path = [[NSBundle mainBundle] pathForResource:@"笑红尘" ofType:@"lrc"];
+    //self.lyrics = [[CDLRCLyrics alloc] initWithFile:path];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,18 +77,14 @@
 }
 
 #pragma mark - MPMediaPickerControllerDelegate
-- (void) mediaPicker: (MPMediaPickerController *) mediaPicker didPickMediaItems: (MPMediaItemCollection *) mediaItemCollection {
-    
+- (void)mediaPicker:(MPMediaPickerController*)mediaPicker didPickMediaItems:(MPMediaItemCollection*) mediaItemCollection {
 	[self dismissModalViewControllerAnimated: YES];
-	//[self.delegate updatePlayerQueueWithMediaCollection: mediaItemCollection];
-	//[self.mediaItemCollectionTable reloadData];
-    
-    [self.audioSharer openQueueWithItemCollection:mediaItemCollection];
-    
-	[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque animated:YES];
+    NSString* itemName = [self.audioSharer openQueueWithItemCollection:mediaItemCollection];
+    [self openedAudioNamed:itemName];
+	//[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque animated:YES];
 }
 
-- (void) mediaPickerDidCancel: (MPMediaPickerController *) mediaPicker {
+- (void)mediaPickerDidCancel: (MPMediaPickerController *) mediaPicker {
     
 	[self dismissModalViewControllerAnimated: YES];
     
@@ -147,7 +144,30 @@
 
 #pragma mark - Lyrics
 - (BOOL)isLyricsUsable{
-    return YES;
+    BOOL isUsable = YES;
+    if (self.lyrics == nil) isUsable = NO;
+    if (!self.lyrics.isReady) isUsable = NO;
+    return isUsable;
 }
+
+- (void)setLyrics:(CDLyrics *)lyrics{
+    _lyrics = lyrics;
+    [self.lyricsView reloadData];
+}
+
+#pragma mark - Events
+- (void)openedAudioNamed:(NSString*)audioName{
+    [self.audioSharer stop];
+    [self.audioSharer play];
+    
+    NSString* lyricsPath = [CDiTunesFinder findFileWithName:audioName ofType:kLRCExtension];
+    if (lyricsPath == nil) {
+        self.lyrics = nil;
+    }else{
+        CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
+        self.lyrics = newLyrics;
+    }
+}
+
 
 @end
