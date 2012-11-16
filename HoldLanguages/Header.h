@@ -10,9 +10,13 @@
 #import "CDString.h"
 #import "CDStack.h"
 #import "CDArray.h"
+#import "CDFormatter.h"
+#import "CDCategories.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kMissLocalizedString @"MissLocalizedString"
 #define kDebugColor [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f]
+#define kViewAutoresizingNoMarginSurround UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
 
 #define DEBUG_MODE
 #ifdef DEBUG_MODE

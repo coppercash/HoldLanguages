@@ -16,8 +16,9 @@
 
 @implementation CDHolder
 
-@synthesize tapGesture = _tapGesture, swipeLeftGesture = _swipeLeftGesture, swipeRightGesture = _swipeRightGesture;
+@synthesize tapGesture = _tapGesture, swipeLeftGesture = _swipeLeftGesture, swipeRightGesture = _swipeRightGesture, longPressGesture = _longPressGesture;
 @synthesize delegate = _delegate;
+@synthesize isBeingTouched = _isBeingTouched;
 
 #pragma mark - UIView methods
 - (id)initWithFrame:(CGRect)frame
@@ -51,6 +52,10 @@
     _swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     _swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self addGestureRecognizer:_swipeRightGesture];
+    
+    _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    _longPressGesture.minimumPressDuration = 1.0f;
+    [self addGestureRecognizer:_longPressGesture];
 }
 
 #pragma mark - Handle Gesture
@@ -65,8 +70,15 @@
     _swipedHorizontally = YES;
 }
 
+- (void)handleLongPress:(UILongPressGestureRecognizer*)longPressGesture {
+    if ([longPressGesture state] == UIGestureRecognizerStateBegan) {
+        [_delegate holderLongPressed:self];
+    }
+}
+
 #pragma mark - Tracking
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    _isBeingTouched = YES;
     CGPoint startLocation = [touch locationInView:self];
     _startY = startLocation.y;
     _lastY = startLocation.y;
@@ -98,6 +110,7 @@
 }
 
 - (void)endOrCancelTracking {
+    _isBeingTouched = NO;
     _startY = 0.0f;
     _lastY = 0.0f;
     _swipedHorizontally = NO;

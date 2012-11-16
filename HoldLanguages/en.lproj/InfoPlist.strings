@@ -1,2 +1,4 @@
-/* Localized versions of Info.plist keys */
-CFBundleDisplayName = "Hold Langs"; 
+{
+	CFBundleDisplayName = "Hold Langs";
+	"Display bundle name" = "Hold Langs";
+}

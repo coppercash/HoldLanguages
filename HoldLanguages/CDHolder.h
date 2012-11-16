@@ -12,12 +12,16 @@
 @interface CDHolder : UIControl {
     CGFloat _startY;
     CGFloat _lastY;
+    BOOL _isBeingTouched;
     BOOL _swipedHorizontally;
 }
+
+@property(nonatomic, readonly)BOOL isBeingTouched;
 
 @property(nonatomic, readonly, strong)UITapGestureRecognizer* tapGesture;
 @property(nonatomic, readonly, strong)UISwipeGestureRecognizer* swipeLeftGesture;
 @property(nonatomic, readonly, strong)UISwipeGestureRecognizer* swipeRightGesture;
+@property(nonatomic, readonly, strong)UILongPressGestureRecognizer* longPressGesture;
 
 @property(nonatomic, weak)id<CDHolderDelegate> delegate;
 
@@ -31,5 +35,6 @@
 - (void)holder:(CDHolder*)holder endSwipingVerticallyFor:(CGFloat)increament fromStart:(CGFloat)distance;
 - (void)holderCancelSwipingVertically:(CDHolder*)holder;
 - (void)holder:(CDHolder*)holder swipeHorizontallyToDirection:(UISwipeGestureRecognizerDirection)direction;
-- (void)holderTapDouble:(CDHolder *)holder;
+- (void)holderTapDouble:(CDHolder*)holder;
+- (void)holderLongPressed:(CDHolder*)holder;
 @end

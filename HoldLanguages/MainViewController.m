@@ -15,85 +15,133 @@
 @interface MainViewController ()
 - (void)openedAudioNamed:(NSString*)audioName;
 - (BOOL)isLyricsUsable;
+- (void)switchBarsHidden;
 @end
 @implementation MainViewController
+@synthesize holder = _holder, lyricsView = _lyricsView;
 @synthesize audioSharer = _audioSharer, lyrics = _lyrics;
+@synthesize mediaPicker = _mediaPicker;
 
 - (void)test{
-    MPMediaPickerController *picker =
-    [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
-	
-	picker.delegate						= self;
-	//picker.allowsPickingMultipleItems	= YES;
-	picker.prompt						= NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
-	
-	[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated:YES];
-	[self presentModalViewController: picker animated: YES];
+    /*
+     MPMediaPickerController *picker =
+     [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
+     
+     picker.delegate						= self;
+     //picker.allowsPickingMultipleItems	= YES;
+     picker.prompt						= NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
+     
+     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated:YES];
+     [self presentModalViewController: picker animated: YES];
+     */
+    
+    
+    if (self.barsHidden) {
+        [self setBarsHidden:NO animated:YES];
+    }else{
+        [self setBarsHidden:YES animated:YES];
+    }
+    /*
+    if ([[UIApplication sharedApplication] isStatusBarHidden]) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+        [self setBarsHidden:NO animated:YES];
+    }else{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+        [self setBarsHidden:YES animated:YES];
+    }
+    */
 }
 
 #pragma mark - ViewController Methods
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.audioSharer = [CDAudioSharer sharedAudioPlayer];
+        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+        self.audioSharer = appDelegate.audioSharer;
         [self.audioSharer registAsDelegate:self];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
-    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    CGRect windowBounds = appDelegate.windowBounds;
-    self.view.frame = CGRectMake(windowBounds.origin.x, windowBounds.origin.y - 20.0f, windowBounds.size.width, windowBounds.size.height);
-    
-    
     // Do any additional setup after loading the view from its nib.
+    self.wantsFullScreenLayout = YES;
+    //self.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
+
     self.lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.lyricsView];
     self.lyricsView.lyricsSource = self;
-    DLogRect(self.view.bounds);
+    self.lyricsView.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
-    CDHolder* holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:holder];
-    holder.delegate = self;
+    self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:self.holder];
+    self.holder.delegate = self;
+    self.holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
+    _mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
+    _mediaPicker.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    /*
     UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = CGRectMake(10.0f, 10.0f, 100.0f, 100.0f);
     [self.view addSubview:button];
     [button addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
     
-    //NSString* path = [[NSBundle mainBundle] pathForResource:@"笑红尘" ofType:@"lrc"];
-    //self.lyrics = [[CDLRCLyrics alloc] initWithFile:path];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"笑红尘" ofType:@"lrc"];
+    self.lyrics = [[CDLRCLyrics alloc] initWithFile:path];
+    self.view.backgroundColor = [UIColor blueColor];
+    */
+    [self endOfViewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)viewDidAppear:(BOOL)animated {
+    [self becomeFirstResponder];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
+    if (event.type == UIEventSubtypeMotionShake)
+    {
+        [self switchBarsHidden];        
+    }
+}
+
+#pragma mark - CDPullViewController Methods
+- (void)loadPulledView:(UIView *)pulledView{
+    if (_mediaPicker == nil) {
+        _mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
+        _mediaPicker.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    }
+    _mediaPicker.view.frame = pulledView.bounds;
+	_mediaPicker.delegate = self;
+	_mediaPicker.prompt = NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
+	
+    [pulledView addSubview:_mediaPicker.view];
+}
+
 #pragma mark - MPMediaPickerControllerDelegate
 - (void)mediaPicker:(MPMediaPickerController*)mediaPicker didPickMediaItems:(MPMediaItemCollection*) mediaItemCollection {
-	[self dismissModalViewControllerAnimated: YES];
+    [self setPullViewPresented:NO animated:YES];
+    
     NSString* itemName = [self.audioSharer openQueueWithItemCollection:mediaItemCollection];
     [self openedAudioNamed:itemName];
-	//[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque animated:YES];
 }
 
 - (void)mediaPickerDidCancel: (MPMediaPickerController *) mediaPicker {
-    
-	[self dismissModalViewControllerAnimated: YES];
-    
-	[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque animated:YES];
+    [self setPullViewPresented:NO animated:YES];
 }
 
 #pragma mark - CDHolderDelegate
 - (void)holderBeginSwipingVertically:(CDHolder*)holder{
-    
 }
 
 - (void)holder:(CDHolder*)holder swipeVerticallyFor:(CGFloat)increament{
@@ -114,15 +162,17 @@
 }
 
 - (void)holderCancelSwipingVertically:(CDHolder*)holder{
-    
 }
 
 - (void)holder:(CDHolder*)holder swipeHorizontallyToDirection:(UISwipeGestureRecognizerDirection)direction{
-    
 }
 
 - (void)holderTapDouble:(CDHolder *)holder{
     [self.audioSharer playOrPause];
+}
+
+- (void)holderLongPressed:(CDHolder *)holder{
+    [self switchBarsHidden];
 }
 
 #pragma mark - CDLyricsViewLyricsSource
@@ -138,8 +188,10 @@
 
 #pragma mark - CDAudioPlayerDelegate
 - (void)audioSharer:(CDAudioSharer *)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime{
-    NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
-    [self.lyricsView setFocusIndex:focusIndex];
+    if (!self.holder.isBeingTouched) {
+        NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
+        [self.lyricsView setFocusIndex:focusIndex];
+    }
 }
 
 #pragma mark - Lyrics
@@ -166,6 +218,14 @@
     }else{
         CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
         self.lyrics = newLyrics;
+    }
+}
+
+- (void)switchBarsHidden{
+    if (self.barsHidden) {
+        [self setBarsHidden:!self.barsHidden animated:YES];
+    }else{
+        [self setBarsHidden:!self.barsHidden animated:YES];
     }
 }
 

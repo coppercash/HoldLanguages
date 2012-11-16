@@ -8,6 +8,7 @@
 
 #import "CDLyricsView.h"
 #import "CDLyricsViewCell.h"
+#import "Header.h"
 
 @interface CDLyricsView ()
 - (void)initialize;
@@ -40,11 +41,13 @@
     _lyricsTable.allowsSelection = NO;
     _lyricsTable.backgroundColor = [UIColor blackColor];
     _lyricsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _lyricsTable.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
     _cursor = [[UIImageView alloc] init];
     [self addSubview:_cursor];
     _cursor.frame = CGRectMake(self.bounds.origin.x, self.bounds.size.height / 2, self.bounds.size.width, 1.0f);
     _cursor.backgroundColor = [UIColor blueColor];
+    _cursor.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
 - (void)reloadData{

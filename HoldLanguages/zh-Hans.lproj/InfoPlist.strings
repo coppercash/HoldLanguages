@@ -1,2 +1,4 @@
-/* Localized versions of Info.plist keys */
-CFBundleDisplayName = "Hold外语"; 
+{
+	CFBundleDisplayName = "Hold\U5916\U8bed";
+	"Display bundle name" = "Hold\U5916\U8bed";
+}

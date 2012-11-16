@@ -20,11 +20,12 @@
     
     self.audioSharer = [CDAudioSharer sharedAudioPlayer];
     
-    self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
-    DLogRect(self.mainViewController.view.frame);
-    
+    self.mainViewController = [[MainViewController alloc] init];
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
+    
+    //self.mainViewController.view.frame = self.window.bounds;
+
     
     return YES;
 }
@@ -55,10 +56,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-- (CGRect)windowBounds{
-    return self.window.bounds;
 }
 
 @end
