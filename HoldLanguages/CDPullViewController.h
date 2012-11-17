@@ -7,28 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CDPullTopBar.h"
+#import "CDPullBottomBar.h"
 
-#define kTopBarVisualHeight 44.0f
-#define kTopBarPullButtonHeight 20.0f
-#define kPullButtonEffectiveWidth 40.0f
-#define kPullButtonEffectiveHeight 40.0f
-@protocol CDPullTopBarDelegate;
-@interface CDPullTopBar : UIControl
-@property(nonatomic, weak)id<CDPullTopBarDelegate> delegate;
-@end
-@protocol CDPullTopBarDelegate
-@required
-- (void)topBarTouchedDown:(CDPullTopBar*)topBar;
-- (void)topBarTouchedUpInside:(CDPullTopBar*)topBar;
-@end
-
-#define kBottomBarHeight 100.0f
-#define kBottomProgressHeight 20.0f
-@interface CDPullBottomBar : UIView
-
-@end
-
-@interface CDPullViewController : UIViewController <CDPullTopBarDelegate>
+@interface CDPullViewController : UIViewController <CDPullTopBarDelegate, CDPullBottomBarDelegate>
 @property(nonatomic)BOOL barsHidden;
 @property(nonatomic)BOOL pulledViewPresented;
 @property(nonatomic, readonly, strong)UIView* pulledView;

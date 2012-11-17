@@ -146,7 +146,11 @@
 }
 
 - (void)setYOffset:(CGFloat)yOffset animated:(BOOL)animated{
-    if (0.0f > yOffset || yOffset > _lyricsTable.contentSize.height - _lyricsTable.bounds.size.height) return;
+    //if (0.0f > yOffset || yOffset > _lyricsTable.contentSize.height - _lyricsTable.bounds.size.height) return;
+    if (yOffset < 0.0f) yOffset = 0.0f;
+    CGFloat maxYOffset = yOffset > _lyricsTable.contentSize.height - _lyricsTable.bounds.size.height;
+    if (yOffset > maxYOffset) yOffset = maxYOffset;
+    
     CGPoint offset = CGPointMake(0.0f, yOffset);
     [_lyricsTable setContentOffset:offset animated:animated];
 }

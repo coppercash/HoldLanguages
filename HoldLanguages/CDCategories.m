@@ -20,3 +20,14 @@
     return [UIColor colorWithRed:red green:green blue:blue alpha:opacity];
 }
 @end
+
+@implementation UIImageView (CDImageView)
+- (id)initWithPathForResource:(NSString *)name ofType:(NSString *)extension{
+    NSString* imagePath = [[NSBundle mainBundle] pathForResource:name ofType:extension];
+    UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
+    self = [self initWithImage:image];
+    return self;
+}
+
+
+@end

@@ -80,7 +80,7 @@
     self.holder.delegate = self;
     self.holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
-    _mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
+    //_mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
     _mediaPicker.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
     /*
     UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -126,6 +126,10 @@
 	_mediaPicker.prompt = NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
 	
     [pulledView addSubview:_mediaPicker.view];
+}
+
+- (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
+
 }
 
 #pragma mark - MPMediaPickerControllerDelegate

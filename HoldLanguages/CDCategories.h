@@ -12,3 +12,8 @@
 + (UIColor*) colorWithHex:(long)hexColor;
 + (UIColor *)colorWithHex:(long)hexColor alpha:(float)opacity;
 @end
+
+
+@interface UIImageView (CDImageView)
+- (id)initWithPathForResource:(NSString *)name ofType:(NSString *)extension;
+@end
