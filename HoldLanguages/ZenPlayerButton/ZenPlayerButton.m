@@ -89,7 +89,7 @@
         self.layerBackground = [ZenLayerBackground layerWithFrame:self.bounds];
         self.layerBackground.position=CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
 
-        CGFloat scale = 140.0f / 208.0f;
+        CGFloat scale = 200.0f / 208.0f;
         CGRect frameContainer = CGRectMake(0.0, 0.0, self.bounds.size.width * scale, self.bounds.size.height * scale);
         self.layerContainer = [ZenLayerContainer layerWithFrame:frameContainer];
         self.layerContainer.position=CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);

@@ -120,7 +120,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
         frame = CGRectInset(frame, - kSliderProgressThumbWidth / 2, 0.0f);
     }else{
         frame = CGRectInset(self.sliderThumbFrame,
-                            abs(kThumbWidth - kSliderProgressThumbWidth) / 2,
+                            (kThumbWidth - kSliderProgressThumbWidth) / 2,
                             0.0f);
         frame = CGRectMake(frame.origin.x, kSliderProgressViewOffsetY, frame.size.width, kSliderProgressViewHeight);
     }
@@ -128,10 +128,9 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 }
 
 - (CGRect)sliderThumbFrame{
-    CGFloat offsetYFromProgressView = 5.0f;
-    CGRect frame = CGRectMake(kSliderMargin,
-                              kSliderProgressViewOffsetY + offsetYFromProgressView,
-                              self.bounds.size.width - 2 * kSliderMargin,
+    CGRect frame = CGRectMake(kSliderLeftAndRightMargin,
+                              kSliderProgressViewOffsetY - (kThumbHeight - kSliderProgressViewHeight) / 2,
+                              self.bounds.size.width - 2 * kSliderLeftAndRightMargin,
                               kThumbHeight);
     return frame;
 }

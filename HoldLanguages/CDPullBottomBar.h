@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "CDAudioSharer.h"
 
-#define kPlayButtonTopMargin 5.0f
-#define kPlayButtonSize 70.0f
+#define kPlayButtonTopMargin 10.0f
+#define kPlayButtonSize 80.0f
 #define kOtherButtonsGapFromPlayButton 20.0f
 #define kOtherButtonsSize 60.0f
 
-#define kSliderMargin 45.0f
+#define kSliderLeftAndRightMargin 60.0f
 #define kSliderProgressViewHeight 10.0f
-#define kSliderProgressViewOffsetY 90.0f
+#define kSliderProgressViewOffsetY 110.0f
 
 #define kBottomBarHeight 130.0f
 #define kBottomProgressHeight kSliderProgressViewHeight
