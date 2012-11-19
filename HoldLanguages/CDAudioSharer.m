@@ -8,12 +8,14 @@
 
 #import "CDAudioSharer.h"
 #import "CDiPodPlayer.h"
+#import "Header.h"
 
 @interface CDAudioSharer ()
 - (void)initialize;
 - (void)refresh;
 - (void)resumeTimerWithTimeInterval:(NSTimeInterval)timeInterval;
 - (void)invalidateTimer;
+- (void)handlePlaybackStateChanged:(id)notification;
 @end
 
 @implementation CDAudioSharer
@@ -41,6 +43,25 @@
     return sharedAudioPlayer;
 }
 
+#pragma mark - Players
+- (void)setAudioPlayer:(CDAudioPlayer *)audioPlayer{
+    if ([_audioPlayer isKindOfClass:[CDiPodPlayer class]]) {
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter removeObserver:self name:MPMusicPlayerControllerPlaybackStateDidChangeNotification object:_audioPlayer];
+    }
+    
+    if ([audioPlayer isKindOfClass:[CDiPodPlayer class]]) {
+        CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)audioPlayer;
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver: self
+                               selector: @selector (handlePlaybackStateChanged:)
+                                   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                                 object: iPodPlayer.audioPlayer];
+        [iPodPlayer.audioPlayer beginGeneratingPlaybackNotifications];
+    }
+    _audioPlayer = audioPlayer;
+}
+
 #pragma mark - Delegates
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate{
     NSMutableArray* delegates = nil;
@@ -66,6 +87,7 @@
         [_processTimer invalidate];
     }
     _processTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(refresh) userInfo:nil repeats:YES];
+    DLogCurrentMethod;
 }
 
 - (void)invalidateTimer{
@@ -73,13 +95,10 @@
         [_processTimer invalidate];
         _processTimer = nil;
     }
+    DLogCurrentMethod;
 }
 
 - (void)refresh{
-    if (!self.audioPlayer.isPlaying) {
-        [self invalidateTimer];
-        return;
-    }
     NSTimeInterval playbackTime = self.audioPlayer.currentPlaybackTime;
     for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
         [delegate audioSharer:self refreshPlaybackTime:playbackTime];
@@ -87,23 +106,12 @@
 }
 
 #pragma mark - Control Types of Players
-- (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
-    CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)self.audioPlayer;
-    [iPodPlayer openQueueWithItemCollection:itemCollection];
-    
-    MPMediaItem* firstItem = [itemCollection.items objectAtIndex:0];
-    NSString* itemName = [firstItem valueForKey:MPMediaItemPropertyTitle];
-    return itemName;    //The first item will be played.
-}
-
 - (void)play{
     [self.audioPlayer play];
-    [self resumeTimerWithTimeInterval:0.5];
 }
 
 - (void)pause{
     [self.audioPlayer pause];
-    [self invalidateTimer];
 }
 
 - (void)playOrPause{
@@ -116,7 +124,6 @@
 
 - (void)stop{
     [self.audioPlayer stop];
-    [self invalidateTimer];
 }
 
 - (void)playbackFor:(NSTimeInterval)playbackTime{
@@ -147,6 +154,49 @@
 #pragma mark - Getter
 - (NSString*)audioName{
     return self.audioPlayer.audioName;
+}
+
+- (NSTimeInterval)currentDuration{
+    return self.audioPlayer.currentDuration;
+}
+
+#pragma mark - iPod Player
+- (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
+    CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)self.audioPlayer;
+    [iPodPlayer openQueueWithItemCollection:itemCollection];
+    
+    MPMediaItem* firstItem = [itemCollection.items objectAtIndex:0];
+    NSString* itemName = [firstItem valueForKey:MPMediaItemPropertyTitle];
+    return itemName;    //The first item will be played.
+}
+
+- (void)handlePlaybackStateChanged:(id)notification{
+    DLogCurrentMethod;
+    CDiPodPlayer* audioPlayer = (CDiPodPlayer*)self.audioPlayer;
+	MPMusicPlaybackState playbackState = audioPlayer.audioPlayer.playbackState;
+    
+    switch (playbackState) {
+        case MPMusicPlaybackStatePaused:{
+            [self invalidateTimer];
+            for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
+                [delegate audioSharer:self stateDidChange:CDAudioPlayerStatePaused];
+            }
+        }break;
+        case MPMusicPlaybackStatePlaying:{
+            [self resumeTimerWithTimeInterval:0.5];
+            for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
+                [delegate audioSharer:self stateDidChange:CDAudioPlayerStatePlaying];
+            }
+        }break;
+        case MPMusicPlaybackStateStopped:{
+            [self invalidateTimer];
+            for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
+                [delegate audioSharer:self stateDidChange:CDAudioPlayerStateStopped];
+            }
+        }break;
+        default:
+            break;
+    }
 }
 
 @end

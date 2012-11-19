@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BJRangeSliderWithProgress/BJRangeSliderWithProgress.h"
+#import "BJRangeSliderWithProgress.h"
+
+#define kSliderProgressThumbWidth BJRANGESLIDER_THUMB_SIZE 
 
 @interface CDSliderProgressView : BJRangeSliderWithProgress
 - (void)setProgress:(float)value;

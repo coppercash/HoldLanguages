@@ -7,6 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+
+typedef enum {
+    CDAudioPlayerStatePlaying,
+    CDAudioPlayerStatePaused,
+    CDAudioPlayerStateStopped
+}CDAudioPlayerState;
+
 @protocol CDAudioPlayerDelegate;
 @class CDAudioPlayer, MPMediaItemCollection;
 @interface CDAudioSharer : NSObject
@@ -15,6 +22,7 @@
 @property(nonatomic, strong)CDAudioPlayer* audioPlayer;
 @property(nonatomic, readonly, strong)NSTimer* processTimer;
 @property(nonatomic, readonly, copy)NSString* audioName;
+@property(nonatomic, readonly) NSTimeInterval currentDuration;
 
 + (CDAudioSharer*)sharedAudioPlayer;
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate;
@@ -33,4 +41,5 @@
 @protocol CDAudioPlayerDelegate
 @required
 - (void)audioSharer:(CDAudioSharer*)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime;
+- (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state;
 @end

@@ -16,6 +16,7 @@
 - (void)openedAudioNamed:(NSString*)audioName;
 - (BOOL)isLyricsUsable;
 - (void)switchBarsHidden;
+- (NSTimeInterval)playbackTimeByButton;
 @end
 @implementation MainViewController
 @synthesize holder = _holder, lyricsView = _lyricsView;
@@ -129,7 +130,28 @@
 }
 
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
+    NSTimeInterval playbackTime = sliderValue * self.audioSharer.currentDuration;
+    [self.audioSharer playbackAt:playbackTime];
+}
 
+- (void)bottomBar:(CDPullBottomBar *)bottomButton buttonFire:(CDBottomBarButtonType)buttonType{
+    switch (buttonType) {
+        case CDBottomBarButtonTypePlay:{
+            [self.audioSharer playOrPause];
+        }break;
+        case CDBottomBarButtonTypeBackward:{
+            [self.audioSharer playbackFor:- self.playbackTimeByButton];
+        }break;
+        case CDBottomBarButtonTypeForward:{
+            [self.audioSharer playbackFor:self.playbackTimeByButton];
+        }break;
+        default:
+            break;
+    }
+}
+
+- (NSTimeInterval)bottomBarAskForDuration:(CDPullBottomBar*)bottomButton{
+    return self.audioSharer.currentDuration;
 }
 
 #pragma mark - MPMediaPickerControllerDelegate
@@ -192,9 +214,28 @@
 
 #pragma mark - CDAudioPlayerDelegate
 - (void)audioSharer:(CDAudioSharer *)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime{
-    if (!self.holder.isBeingTouched) {
+    if (self.isLyricsUsable && !self.holder.isBeingTouched) {
         NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
         [self.lyricsView setFocusIndex:focusIndex];
+    }
+    float sliderValue = playbackTime / self.audioSharer.currentDuration;
+    [self.bottomBar setSliderValue:sliderValue];
+    [self.bottomBar setLabelsPlaybackTime:playbackTime];
+}
+
+- (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state{
+    switch (state) {
+        case CDAudioPlayerStatePlaying:{
+            self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePlaying;
+        }break;
+        case CDAudioPlayerStatePaused:{
+            self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
+        }break;
+        case CDAudioPlayerStateStopped:{
+            self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
+        }break;
+        default:
+            break;
     }
 }
 
@@ -233,5 +274,10 @@
     }
 }
 
+#pragma mark - Other Methods
+- (NSTimeInterval)playbackTimeByButton{
+    NSTimeInterval playbackTime = [self.audioSharer playbackRate] * self.view.bounds.size.height * 0.5;
+    return playbackTime;
+}
 
 @end

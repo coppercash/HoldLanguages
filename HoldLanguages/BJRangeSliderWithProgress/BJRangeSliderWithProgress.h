@@ -46,6 +46,5 @@ typedef enum {
 @property (nonatomic, assign) BOOL showRange;
 
 - (void)setDisplayMode:(BJRangeSliderWithProgressDisplayMode)mode;
-- (void)setup ;
 
 @end

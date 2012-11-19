@@ -7,23 +7,59 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CDAudioSharer.h"
 
-#define kBottomBarHeight 100.0f
-#define kBottomProgressHeight 20.0f
-#define kSliderMargin 15.0f
+#define kPlayButtonTopMargin 5.0f
+#define kPlayButtonSize 70.0f
+#define kOtherButtonsGapFromPlayButton 20.0f
+#define kOtherButtonsSize 60.0f
+
+#define kSliderMargin 45.0f
 #define kSliderProgressViewHeight 10.0f
-#define kSliderProgressViewOffsetY 70.0f
-@class CDSliderProgressView, CDSliderThumb;
+#define kSliderProgressViewOffsetY 90.0f
+
+#define kBottomBarHeight 130.0f
+#define kBottomProgressHeight kSliderProgressViewHeight
+
+#define kLabelHorizontalMargin 5.0f
+#define kLabelWidth 52.0f
+#define kLabelHeight kSliderProgressViewHeight + 3.0f
+
+typedef enum{
+    CDBottomBarButtonTypePlay,
+    CDBottomBarButtonTypeBackward,
+    CDBottomBarButtonTypeForward
+}CDBottomBarButtonType;
+
+typedef enum{
+    CDBottomBarPlayButtonStatePlaying,
+    CDBottomBarPlayButtonStatePaused,
+}CDBottomBarPlayButtonState;
+
+@class CDSliderProgressView, CDSliderThumb, CDPlayButton;
 @protocol CDPullBottomBarDelegate;
 @interface CDPullBottomBar : UIView
+@property(nonatomic)BOOL hidden;
+
 @property(nonatomic, readonly, strong)CDSliderProgressView* progressView;
 @property(nonatomic, readonly, strong)CDSliderThumb* sliderThumb;
+
+@property(nonatomic, readonly, strong)CDPlayButton* playButton;
+@property(nonatomic, readonly, strong)UIButton* backwardButton;
+@property(nonatomic, readonly, strong)UIButton* forwardButton;
+@property(nonatomic, readonly, strong)UILabel* playbackTimeLabel;
+@property(nonatomic, readonly, strong)UILabel* remainingTimeLabel;
+
 @property(nonatomic, weak)id<CDPullBottomBarDelegate> delegate;
+@property(nonatomic) CDBottomBarPlayButtonState playButtonState;
 - (void)setSliderValue:(float)sliderValue;
+- (void)setLabelsPlaybackTime:(NSTimeInterval)playbackTime;
 @end
 
 @protocol CDPullBottomBarDelegate
 @required
-- (BOOL)bottomBarAskForHiddenState:(CDPullBottomBar*)bottomButton;
+- (NSTimeInterval)bottomBarAskForDuration:(CDPullBottomBar*)bottomButton;
 - (void)bottomBar:(CDPullBottomBar*)bottomButton sliderValueChangedAs:(float)sliderValue;
+- (void)bottomBar:(CDPullBottomBar*)bottomButton buttonFire:(CDBottomBarButtonType)buttonType;
+
 @end

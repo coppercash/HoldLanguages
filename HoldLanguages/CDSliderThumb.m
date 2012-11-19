@@ -14,6 +14,7 @@
 - (void)endOrCancelTracking;
 @end
 @implementation CDSliderThumb
+@synthesize thumbOn = _thumbOn;
 
 #pragma mark - UIControl Methods
 - (id)initWithFrame:(CGRect)frame
@@ -39,7 +40,6 @@
     if (value > 1) value = 1;
     [self updateThumbLocationWithValue:value];
     _value = value;
-    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 - (void)updateThumbLocationWithValue:(float)value{
@@ -63,6 +63,7 @@
     CGPoint touchPoint = [touch locationInView:self];
     float newValue = (touchPoint.x - kThumbWidth / 2) / (self.bounds.size.width - kThumbWidth);
     self.value = newValue;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
     return YES;
 }
 
@@ -70,7 +71,8 @@
     CGPoint touchPoint = [touch locationInView:self];
     float newValue = (touchPoint.x - kThumbWidth / 2) / (self.bounds.size.width - kThumbWidth);
     self.value = newValue;
-    [self endOrCancelTracking];
+    [self endOrCancelTracking]; //Must do this before next command
+    [self sendActionsForControlEvents:UIControlEventValueChanged];  //Only when thumbOn is NO the value of slider can be sent to instance outside. 
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event{

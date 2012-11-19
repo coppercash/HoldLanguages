@@ -16,5 +16,5 @@
     UIImageView* _thumbImageView;               // the slide knob
 }
 @property(nonatomic) float value;               // default 0.0. this value will be pinned to min/max
-
+@property(nonatomic) BOOL thumbOn;
 @end

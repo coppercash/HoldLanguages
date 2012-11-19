@@ -9,9 +9,6 @@
 #import "CDPullViewController.h"
 #import "Header.h"
 
-
-
-
 @interface CDPullViewController ()
 - (void)initialize;
 - (CGRect)topBarFrameWithHidding:(BOOL)hidding;
@@ -76,11 +73,11 @@
 
 #pragma mark - Bars
 - (void)setBarsHidden:(BOOL)barsHidden{
+    _barsHidden = barsHidden;
     [[UIApplication sharedApplication] setStatusBarHidden:barsHidden withAnimation:UIStatusBarAnimationSlide];
     _topBar.frame = [self topBarFrameWithHidding:barsHidden];
     _bottomBar.frame = [self bottomBarFrameWithHidding:barsHidden];
-    _barsHidden = barsHidden;
-    
+    [_bottomBar setHidden:barsHidden];
 }
 
 - (void)setBarsHidden:(BOOL)barsHidden animated:(BOOL)animated{
@@ -138,12 +135,18 @@
 }
 
 #pragma mark - CDPullBottomBarDelegate
-- (BOOL)bottomBarAskForHiddenState:(CDPullBottomBar*)bottomButton{
-    return self.barsHidden;
+- (NSTimeInterval)bottomBarAskForDuration:(CDPullBottomBar*)bottomButton{
+    return 0.;
+}
+
+- (NSTimeInterval)bottomBarAskForPlaybackTime:(CDPullBottomBar*)bottomButton{
+    return 0.;
 }
 
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
-    
+}
+
+- (void)bottomBar:(CDPullBottomBar*)bottomButton buttonFire:(CDBottomBarButtonType)buttonType{
 }
 
 #pragma mark - Pulled View
