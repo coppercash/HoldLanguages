@@ -11,8 +11,12 @@
 
 #define kPlayButtonTopMargin 10.0f
 #define kPlayButtonSize 80.0f
-#define kOtherButtonsGapFromPlayButton 20.0f
+#define kOtherButtonsGapFromPlayButton 40.0f
 #define kOtherButtonsSize 60.0f
+#define kBackwardButtonName @"BackwardButton"
+#define kBackwardButtonDownName @"BackwardButtonDown"
+#define kForwardButtonName @"ForwardButton"
+#define kForwardButtonDownName @"ForwardButtonDown"
 
 #define kSliderLeftAndRightMargin 60.0f
 #define kSliderProgressViewHeight 10.0f

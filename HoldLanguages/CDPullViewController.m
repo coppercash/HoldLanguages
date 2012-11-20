@@ -56,7 +56,7 @@
     _bottomBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     _bottomBar.delegate = self;
     
-    _topBar.backgroundColor = kDebugColor;
+    //_topBar.backgroundColor = kDebugColor;
     _bottomBar.backgroundColor = kDebugColor;
     
 }

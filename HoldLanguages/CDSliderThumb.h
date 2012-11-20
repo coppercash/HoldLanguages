@@ -8,9 +8,10 @@
 
 
 #import <UIKit/UIKit.h>
-#define kThumbImageName @"thumb"
-#define kThumbHeight 20.0f
-#define kThumbWidth 91.f * kThumbHeight / 98.f
+#define kThumbImageName @"SliderThumb"
+#define kThumbHeight 25.0f
+#define kThumbWidth kThumbHeight
+//#define kThumbWidth 91.f * kThumbHeight / 98.f
 @interface CDSliderThumb : UIControl{
     BOOL _thumbOn;                              // track the current touch state of the slider
     UIImageView* _thumbImageView;               // the slide knob

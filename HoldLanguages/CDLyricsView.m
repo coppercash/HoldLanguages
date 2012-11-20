@@ -43,10 +43,9 @@
     _lyricsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _lyricsTable.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
-    _cursor = [[UIImageView alloc] init];
+    _cursor = [[UIImageView alloc] initWithPNGImageNamed:kCursorImageName];
     [self addSubview:_cursor];
-    _cursor.frame = CGRectMake(self.bounds.origin.x, self.bounds.size.height / 2, self.bounds.size.width, 1.0f);
-    _cursor.backgroundColor = [UIColor blueColor];
+    _cursor.frame = CGRectMake(self.bounds.origin.x, (self.bounds.size.height - kCursorHeight) / 2, self.bounds.size.width, kCursorHeight);
     _cursor.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 

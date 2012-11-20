@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+#define kLayerCircleNormalColor [UIColor cyanColor].CGColor
+#define kLayerCirclePlayingColor [UIColor cyanColor].CGColor
+#define kPlayButtonImageName @"PlayButton"
+#define kPauseButtonImageName @"PauseButton"
 
 @class ZenLayerBackground;
 @class ZenLayerContainer;

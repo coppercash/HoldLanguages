@@ -16,4 +16,9 @@
 
 @interface UIImageView (CDImageView)
 - (id)initWithPathForResource:(NSString *)name ofType:(NSString *)extension;
+- (id)initWithPNGImageNamed:(NSString *)imageName;
+@end
+
+@interface UIImage (CDImage)
++ (UIImage*)pngImageWithName:(NSString*)imageName;
 @end

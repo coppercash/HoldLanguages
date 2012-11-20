@@ -7,6 +7,7 @@
 //
 
 #import "ZenPlayerButton.h"
+#import "Header.h"
 
 @interface ZenPlayerButton ()
 {
@@ -47,7 +48,7 @@
 
 @synthesize layerBackground=_layerBackground;
 @synthesize layerContainer=_layerContainer;
-@synthesize state=_state;
+@synthesize buttonState = _buttonState;
 @synthesize progress=_progress;
 
 - (id)initWithFrame:(CGRect)frame
@@ -154,7 +155,7 @@
  */
 - (void) tapBegan
 {
-    switch (self.state)
+    switch (self.buttonState)
     {
         case ZenPlayerButtonStateNormal:
             [self.layerContainer.layerPlayButton shrink];
@@ -213,14 +214,14 @@
 
             {
                 CABasicAnimation* a = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-                a.toValue = (id)[UIColor cyanColor].CGColor;
+                a.toValue = (id)kLayerCirclePlayingColor;
                 a.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
                 a.fillMode = kCAFillModeForwards;
                 a.removedOnCompletion = NO;
                 [self.layerContainer.layerCircle addAnimation:a forKey:@"backgroundColor"];
             }
 
-            self->_state = state;
+            self->_buttonState = state;
             break;
             
         case ZenPlayerButtonStateLoading:
@@ -228,9 +229,9 @@
             [self.layerContainer.layerPauseButton fadeUp];
             [self.layerContainer.layerCircle rotateBack];
             [self.layerContainer.layerCircle bulge];
-            self.layerContainer.layerCircle.backgroundColor = [UIColor greenColor].CGColor;
+            self.layerContainer.layerCircle.backgroundColor = kLayerCircleNormalColor;
             
-            self->_state = state;
+            self->_buttonState = state;
             break;
 
         case ZenPlayerButtonStateNormal:
@@ -239,9 +240,9 @@
             [self.layerContainer.layerPauseButton fadeOut];
             [self.layerContainer.layerCircle shrink];
             [self.layerContainer.layerCircle stopRotation];
-            self.layerContainer.layerCircle.backgroundColor = [UIColor greenColor].CGColor;
+            self.layerContainer.layerCircle.backgroundColor = kLayerCircleNormalColor;
             
-            self->_state = state;
+            self->_buttonState = state;
             break;
 
         default:
@@ -422,7 +423,7 @@
         instance.originalSize = frame.size;
         instance.needsDisplayOnBoundsChange = YES;
         instance.imgCircle = [UIImage imageNamed:@"zenpb_circle.png"];
-        instance.backgroundColor = [UIColor greenColor].CGColor;
+        instance.backgroundColor = kLayerCircleNormalColor;
         instance.contents = (id)instance.imgCircle.CGImage;
         instance.contentsScale = [[UIScreen mainScreen] scale];
 
@@ -654,7 +655,9 @@
  */
 - (void) stopRotation
 {
-    [self removeAllAnimations];
+    [self removeAnimationForKey:self.rotateForwardKey];
+    [self removeAnimationForKey:self.rotateBackKey];
+    //[self removeAllAnimations];
 }
 
 @end
@@ -807,7 +810,8 @@
         instance.frame = frame;
         instance.originalSize = frame.size;
         instance.needsDisplayOnBoundsChange = YES;
-        instance.imgPlayButton = [UIImage imageNamed:@"zenpb_playbutton.png"];
+        NSString* imagePath = [[NSBundle mainBundle] pathForResource:kPlayButtonImageName ofType:@"png"];
+        instance.imgPlayButton = [UIImage imageWithContentsOfFile:imagePath];
         instance.tintColor = [UIColor clearColor];
         instance.contentsScale = [[UIScreen mainScreen] scale];
     }
@@ -936,7 +940,7 @@
     {
         instance.frame = frame;
         instance.needsDisplayOnBoundsChange = YES;
-        instance.imgPauseButton = [UIImage imageNamed:@"zenpb_pausebutton.png"];
+        instance.imgPauseButton = [UIImage pngImageWithName:kPauseButtonImageName];
     }
     return instance;
 }

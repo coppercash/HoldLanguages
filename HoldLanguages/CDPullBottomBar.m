@@ -58,14 +58,18 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     _playButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_playButton addTarget:self action:@selector(buttonTouchedUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
-    _backwardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _backwardButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _backwardButton.frame = self.backwardButtonFrame;
+    [_backwardButton setImage:[UIImage pngImageWithName:kBackwardButtonName] forState:UIControlStateNormal];
+    [_backwardButton setImage:[UIImage pngImageWithName:kBackwardButtonDownName] forState:UIControlStateHighlighted];
     [self addSubview:_backwardButton];
     _backwardButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_backwardButton addTarget:self action:@selector(buttonTouchedUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
-    _forwardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _forwardButton = [UIButton buttonWithType:UIButtonTypeCustom];    
     _forwardButton.frame = self.forwardButtonFrame;
+    [_forwardButton setImage:[UIImage pngImageWithName:kForwardButtonName] forState:UIControlStateNormal];
+    [_forwardButton setImage:[UIImage pngImageWithName:kForwardButtonDownName] forState:UIControlStateHighlighted];
     [self addSubview:_forwardButton];
     _forwardButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_forwardButton addTarget:self action:@selector(buttonTouchedUpInside:) forControlEvents:UIControlEventTouchUpInside];
@@ -90,7 +94,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     _remainingTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     _remainingTimeLabel.text = @"-00:00:00";
     configureLabel(_remainingTimeLabel);
-    
+
     _progressView.backgroundColor = kDebugColor;
     
 }
@@ -152,6 +156,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     if (!_sliderThumb.thumbOn) {
         [_progressView setProgress:sliderValue];    //When thumbOn is NO, the progress depends on player.
         _sliderThumb.value = sliderValue;   //When thumbOn is NO, the value can be set by outside instance.
+        
     }
 }
 
@@ -202,22 +207,25 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 
 #pragma mark - Labels
 - (CGRect)playbackTimeLabelFrame{
-    CGRect progressView = self.progressView.frame;
-    CGRect frame = CGRectMake(kLabelHorizontalMargin, progressView.origin.y, kLabelWidth, kLabelHeight);
+    CGPoint progressViewCenter = self.progressView.center;
+    CGRect frame = CGRectMake(kLabelHorizontalMargin,
+                              progressViewCenter.y - (kLabelHeight) / 2,
+                              kLabelWidth, kLabelHeight);
     return frame;
 }
 
 - (CGRect)remainingTimeLabelFrame{
-    CGRect progressView = self.progressView.frame;
+    CGPoint progressViewCenter = self.progressView.center;
     CGRect frame = CGRectMake(self.bounds.size.width - kLabelHorizontalMargin - kLabelWidth,
-                              progressView.origin.y, kLabelWidth, kLabelHeight);
+                              progressViewCenter.y - (kLabelHeight) / 2,
+                              kLabelWidth, kLabelHeight);
     return frame;
 }
 
 void configureLabel(UILabel* label){
     label.textColor = [UIColor whiteColor];
     label.backgroundColor = kDebugColor;
-    UIFont* font = [UIFont fontWithName:@"Arial" size:12.0f];
+    UIFont* font = [UIFont boldSystemFontOfSize:12.0f];
     label.font = font;
     label.textAlignment = NSTextAlignmentCenter;
 }

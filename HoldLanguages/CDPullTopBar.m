@@ -17,13 +17,26 @@
 - (void)touchPullButtonUpOutside;
 @end
 @implementation CDPullTopBar
+@synthesize pullButton = _pullButton;
 @synthesize delegate = _delegate;
 #pragma mark - UIView Method
 - (void)initialize{
+    _pullButton = [[UIImageView alloc] initWithPNGImageNamed:kPullButtonImageName];
+    _pullButton.frame = self.pullButtonFrame;
+    [self addSubview:_pullButton];
+    _pullButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
 }
 
 - (id)init{
     self = [super init];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if (self) {
         [self initialize];
     }
@@ -46,8 +59,11 @@
                                 0);
     CGGradientRelease(gradient);
     
-    CGContextFillRect(context, self.pullButtonFrame);
-    CGContextSetFillColorWithColor(context, kDebugColor.CGColor);
+    //NSString* pullButtonPath = [[NSBundle mainBundle] pathForResource:@"PullButton" ofType:@"png"];
+    //UIImage* pullButton = [[UIImage alloc] initWithContentsOfFile:pullButtonPath];
+    //[pullButton drawInRect:self.pullButtonFrame];
+    //CGContextFillRect(context, self.pullButtonFrame);
+    //CGContextSetFillColorWithColor(context, kDebugColor.CGColor);
 }
 
 #pragma mark - Touch

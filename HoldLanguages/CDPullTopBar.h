@@ -12,8 +12,10 @@
 #define kTopBarPullButtonHeight 20.0f
 #define kPullButtonEffectiveWidth 40.0f
 #define kPullButtonEffectiveHeight 40.0f
+#define kPullButtonImageName @"PullButton"
 @protocol CDPullTopBarDelegate;
 @interface CDPullTopBar : UIControl
+@property(nonatomic, strong)UIImageView* pullButton;
 @property(nonatomic, weak)id<CDPullTopBarDelegate> delegate;
 @end
 @protocol CDPullTopBarDelegate

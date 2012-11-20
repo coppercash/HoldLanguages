@@ -29,5 +29,19 @@
     return self;
 }
 
+- (id)initWithPNGImageNamed:(NSString *)imageName{
+    NSString* imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"png"];
+    UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
+    self = [self initWithImage:image];
+    return self;
+}
 
+@end
+
+@implementation UIImage (CDImage)
++ (UIImage*)pngImageWithName:(NSString*)imageName{
+    NSString* imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"png"];
+    UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
+    return image;
+}
 @end

@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#define kCursorHeight 10.0f
+#define kCursorImageName @"Cursor"
+
 @protocol CDLyricsViewLyricsSource;
 
 @interface CDLyricsView : UIView <UITableViewDataSource, UITableViewDelegate>
