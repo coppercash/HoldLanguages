@@ -116,6 +116,22 @@
     }
 }
 
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
+    return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) return YES;
+    if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) return YES;
+    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) return YES;
+    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) return YES;
+    return NO;
+}
+
 #pragma mark - CDPullViewController Methods
 - (void)loadPulledView:(UIView *)pulledView{
     if (_mediaPicker == nil) {

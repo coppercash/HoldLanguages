@@ -26,8 +26,8 @@
 }
 
 - (void)initialize{
-    //self.audioPlayer = [MPMusicPlayerController iPodMusicPlayer];
-    self.audioPlayer = [MPMusicPlayerController applicationMusicPlayer];
+    self.audioPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    //self.audioPlayer = [MPMusicPlayerController applicationMusicPlayer];
     self.audioPlayer.shuffleMode = MPMusicShuffleModeOff;
     self.audioPlayer.repeatMode = MPMusicRepeatModeOne;
 }
