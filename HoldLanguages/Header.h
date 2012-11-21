@@ -12,6 +12,7 @@
 #import "CDArray.h"
 #import "CDFormatter.h"
 #import "CDCategories.h"
+#import "CDColorFinder.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kMissLocalizedString @"MissLocalizedString"

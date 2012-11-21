@@ -10,7 +10,8 @@
 
 @interface UIColor (CDColor)
 + (UIColor*) colorWithHex:(long)hexColor;
-+ (UIColor *)colorWithHex:(long)hexColor alpha:(float)opacity;
++ (UIColor*)colorWithHex:(long)hexColor alpha:(float)opacity;
++ (UIColor*)color255WithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end
 
 

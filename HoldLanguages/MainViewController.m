@@ -11,6 +11,7 @@
 #import "CDLyrics.h"
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"
+#import "CDBackgroundView.h"
 
 @interface MainViewController ()
 - (void)openedAudioNamed:(NSString*)audioName;
@@ -19,7 +20,7 @@
 - (NSTimeInterval)playbackTimeByButton;
 @end
 @implementation MainViewController
-@synthesize holder = _holder, lyricsView = _lyricsView;
+@synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView;
 @synthesize audioSharer = _audioSharer, lyrics = _lyrics;
 @synthesize mediaPicker = _mediaPicker;
 
@@ -69,7 +70,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.wantsFullScreenLayout = YES;
-    //self.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    _backgroundView = [[CDBackgroundView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_backgroundView];
+    _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
 
     self.lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.lyricsView];
@@ -81,8 +84,7 @@
     self.holder.delegate = self;
     self.holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
-    //_mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
-    _mediaPicker.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    
     /*
     UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = CGRectMake(10.0f, 10.0f, 100.0f, 100.0f);
@@ -117,6 +119,7 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations{
+    //return UIInterfaceOrientationMaskAll;
     return UIInterfaceOrientationMaskPortrait;
 }
 

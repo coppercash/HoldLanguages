@@ -39,7 +39,7 @@
     _lyricsTable.dataSource = self;
     _lyricsTable.delegate = self;
     _lyricsTable.allowsSelection = NO;
-    _lyricsTable.backgroundColor = [UIColor blackColor];
+    _lyricsTable.backgroundColor = [UIColor clearColor];
     _lyricsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _lyricsTable.autoresizingMask = kViewAutoresizingNoMarginSurround;
     

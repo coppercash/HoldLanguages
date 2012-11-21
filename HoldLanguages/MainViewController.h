@@ -13,11 +13,12 @@
 #import "CDLyricsView.h"
 #import "CDAudioSharer.h"
 
-@class CDAudioSharer, CDLyrics;
+@class CDAudioSharer, CDLyrics, CDBackgroundView;
 @interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate>
 
 @property(nonatomic, strong)CDHolder* holder;
 @property(nonatomic, strong)CDLyricsView* lyricsView;
+@property(nonatomic, readonly, strong)CDBackgroundView* backgroundView;
 @property(nonatomic, strong)CDAudioSharer* audioSharer;
 @property(nonatomic, strong)CDLyrics* lyrics;
 @property(nonatomic, strong)MPMediaPickerController* mediaPicker;

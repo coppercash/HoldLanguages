@@ -19,6 +19,12 @@
     float blue = ((float)(hexColor & 0xFF))/255.0;
     return [UIColor colorWithRed:red green:green blue:blue alpha:opacity];
 }
+
++ (UIColor*)color255WithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha{
+    UIColor* color = [UIColor colorWithRed:red / 255.0f green:green / 255.0f blue:blue / 255.0f alpha:alpha];
+    return color;
+}
+
 @end
 
 @implementation UIImageView (CDImageView)

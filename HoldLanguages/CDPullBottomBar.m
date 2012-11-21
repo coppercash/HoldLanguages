@@ -102,8 +102,11 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 - (void)drawRect:(CGRect)rect{
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    UIColor* startColor = [UIColor colorWithHex:0x4a4b4a];
-    UIColor* endColor = [UIColor colorWithHex:0x282928];
+    CDColorFinder* colorFinder = [[CDColorFinder alloc] init];
+    UIColor * startColor = colorFinder.colorOfBarDark;
+    UIColor * endColor = colorFinder.colorOfBarLight;
+    //UIColor* startColor = [UIColor colorWithHex:0x4a4b4a];
+    //UIColor* endColor = [UIColor colorWithHex:0x282928];
     NSArray* colors = [NSArray arrayWithObjects:(id)[startColor CGColor], (id)[endColor CGColor], nil];
     CGGradientRef gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(),
                                                         (__bridge CFArrayRef)colors,

@@ -71,6 +71,8 @@
 		BEB58B92165C612F002426E4 /* BackwardButtonDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB58B90165C612F002426E4 /* BackwardButtonDown.png */; };
 		BEB58B93165C612F002426E4 /* ForwardButtonDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB58B91165C612F002426E4 /* ForwardButtonDown.png */; };
 		BEB58B9A165C6505002426E4 /* Cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB58B99165C6505002426E4 /* Cursor.png */; };
+		BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */; };
+		BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9F165C88E9002426E4 /* CDColorFinder.m */; };
 		BEB9E438165B73CB00359064 /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB9E434165B73CB00359064 /* ForwardButton.png */; };
 		BEB9E439165B73CB00359064 /* BackwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB9E435165B73CB00359064 /* BackwardButton.png */; };
 		BEB9E441165B7DDF00359064 /* PauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB9E440165B7DDF00359064 /* PauseButton.png */; };
@@ -176,6 +178,10 @@
 		BEB58B91165C612F002426E4 /* ForwardButtonDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ForwardButtonDown.png; sourceTree = "<group>"; };
 		BEB58B96165C6222002426E4 /* ARCMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCMacro.h; sourceTree = "<group>"; };
 		BEB58B99165C6505002426E4 /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cursor.png; sourceTree = "<group>"; };
+		BEB58B9B165C79D1002426E4 /* CDBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBackgroundView.h; sourceTree = "<group>"; };
+		BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBackgroundView.m; sourceTree = "<group>"; };
+		BEB58B9E165C88E9002426E4 /* CDColorFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDColorFinder.h; sourceTree = "<group>"; };
+		BEB58B9F165C88E9002426E4 /* CDColorFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDColorFinder.m; sourceTree = "<group>"; };
 		BEB9E434165B73CB00359064 /* ForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ForwardButton.png; sourceTree = "<group>"; };
 		BEB9E435165B73CB00359064 /* BackwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackwardButton.png; sourceTree = "<group>"; };
 		BEB9E440165B7DDF00359064 /* PauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PauseButton.png; sourceTree = "<group>"; };
@@ -213,6 +219,8 @@
 				BE96AC87165735DE0010F8E0 /* CDSlider */,
 				BE96AC83165733770010F8E0 /* CDPlayButton.h */,
 				BE96AC84165733770010F8E0 /* CDPlayButton.m */,
+				BEB58B9B165C79D1002426E4 /* CDBackgroundView.h */,
+				BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -333,6 +341,8 @@
 			children = (
 				BE963C0A165378EA00FAB2B1 /* CDiTunesFinder.h */,
 				BE963C0B165378EA00FAB2B1 /* CDiTunesFinder.m */,
+				BEB58B9E165C88E9002426E4 /* CDColorFinder.h */,
+				BEB58B9F165C88E9002426E4 /* CDColorFinder.m */,
 			);
 			name = Finder;
 			sourceTree = "<group>";
@@ -593,6 +603,8 @@
 				BE96AC85165733770010F8E0 /* CDPlayButton.m in Sources */,
 				BEB58B8B165C5CDB002426E4 /* YLBackgroundView.m in Sources */,
 				BEB58B8C165C5CDB002426E4 /* YLProgressBar.m in Sources */,
+				BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */,
+				BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
