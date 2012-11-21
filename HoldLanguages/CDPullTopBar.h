@@ -13,13 +13,24 @@
 #define kPullButtonEffectiveWidth 40.0f
 #define kPullButtonEffectiveHeight 40.0f
 #define kPullButtonImageName @"PullButton"
-@protocol CDPullTopBarDelegate;
+@protocol CDPullTopBarDelegate, CDPullTopBarDataSource;
 @interface CDPullTopBar : UIControl
-@property(nonatomic, strong)UIImageView* pullButton;
+@property(nonatomic, readonly, strong)IBOutlet UILabel* artist;
+@property(nonatomic, readonly, strong)IBOutlet UILabel* title;
+@property(nonatomic, readonly, strong)IBOutlet UILabel* albumTitle;
+@property(nonatomic, readonly, strong)UIImageView* pullButton;
 @property(nonatomic, weak)id<CDPullTopBarDelegate> delegate;
+@property(nonatomic, weak)id<CDPullTopBarDataSource> dataSource;
+- (void)reloadData;
 @end
 @protocol CDPullTopBarDelegate
 @required
 - (void)topBarTouchedDown:(CDPullTopBar*)topBar;
 - (void)topBarTouchedUpInside:(CDPullTopBar*)topBar;
+@end
+@protocol CDPullTopBarDataSource
+- (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar;
+- (NSString*)topBarNeedsTitle:(CDPullTopBar*)topBar;
+- (NSString*)topBarNeedsAlbumTitle:(CDPullTopBar*)topBar;
+@required
 @end

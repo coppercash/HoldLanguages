@@ -17,15 +17,20 @@
 - (void)touchPullButtonUpOutside;
 @end
 @implementation CDPullTopBar
-@synthesize pullButton = _pullButton;
-@synthesize delegate = _delegate;
+@synthesize artist = _artist, title = _title, albumTitle = _albumTitle, pullButton = _pullButton;
+@synthesize delegate = _delegate, dataSource = _dataSource;
 #pragma mark - UIView Method
 - (void)initialize{
     self.backgroundColor = [UIColor clearColor];
+    self.layer.shadowColor = UIColor.blackColor.CGColor;
+    self.layer.shadowOffset = CGSizeMake(0., 5.);
+    self.layer.shadowOpacity = .8;
+    
     _pullButton = [[UIImageView alloc] initWithPNGImageNamed:kPullButtonImageName];
     _pullButton.frame = self.pullButtonFrame;
     [self addSubview:_pullButton];
     _pullButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    _pullButton.alpha = kBarAlpha;
 }
 
 - (id)init{
@@ -37,8 +42,10 @@
 }
 
 - (id)initWithFrame:(CGRect)frame{
+    DLogRect(frame);
     self = [super initWithFrame:frame];
     if (self) {
+        [self loadSubviewsFromXibNamed:@"CDPullTopBar"];
         [self initialize];
     }
     return self;
@@ -117,6 +124,13 @@
 
 - (void)touchPullButtonUpOutside{
     
+}
+
+#pragma mark - Reload
+- (void)reloadData{
+    [_artist setNonemptyText:[_dataSource topBarNeedsArtist:self]];
+    [_title setNonemptyText:[_dataSource topBarNeedsTitle:self]];
+    [_albumTitle setNonemptyText:[_dataSource topBarNeedsAlbumTitle:self]];
 }
 
 @end

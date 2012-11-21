@@ -20,4 +20,7 @@
 }
 - (void)playbackFor:(NSTimeInterval)playbackTime{}
 - (void)playbackAt:(NSTimeInterval)playbackTime{}
+- (NSString*)valueForProperty:(NSString *)property{
+    return @"CDAudioPlayer is an Abstract class.";
+}
 @end

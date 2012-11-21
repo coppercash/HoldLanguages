@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define kBarAlpha 0.8f
+#define kBarAlpha 0.7f
 
 @interface CDColorFinder : NSObject
 - (UIColor*)colorOfBarLight;

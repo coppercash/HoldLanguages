@@ -8,7 +8,7 @@
 
 #import "CDView.h"
 #import "Header.h"
-
+/*
 @implementation UIView (CDView)
 - (void)setBackgroundLayer:(CALayer *)backgroundLayer;
 {
@@ -20,3 +20,4 @@
     }
 }
 @end
+*/

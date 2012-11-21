@@ -26,7 +26,7 @@
 #define kBottomProgressHeight kSliderProgressViewHeight
 
 #define kLabelHorizontalMargin 5.0f
-#define kLabelWidth 52.0f
+#define kLabelWidth 53.0f
 #define kLabelHeight kSliderProgressViewHeight + 3.0f
 
 typedef enum{
@@ -58,6 +58,7 @@ typedef enum{
 @property(nonatomic) CDBottomBarPlayButtonState playButtonState;
 - (void)setSliderValue:(float)sliderValue;
 - (void)setLabelsPlaybackTime:(NSTimeInterval)playbackTime;
+- (void)reloadData;
 @end
 
 @protocol CDPullBottomBarDelegate

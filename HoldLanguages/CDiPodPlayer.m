@@ -95,4 +95,10 @@
     return string;
 }
 
+- (NSString*)valueForProperty:(NSString *)property{
+    MPMediaItem* currentAudio = self.audioPlayer.nowPlayingItem;
+    NSString *value = [currentAudio valueForKey:property];
+    return value;
+}
+
 @end

@@ -35,11 +35,13 @@ typedef enum {
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 - (void)playbackAt:(NSTimeInterval)playbackTime;
 - (float)playbackRate;
+- (NSString*)valueForProperty:(NSString *)property;
 
 @end
 
 @protocol CDAudioPlayerDelegate
 @required
 - (void)audioSharer:(CDAudioSharer*)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime;
-- (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state;
+- (void)audioSharer:(CDAudioSharer*)audioSharer stateDidChange:(CDAudioPlayerState)state;
+- (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer;
 @end

@@ -16,6 +16,7 @@
 - (void)resumeTimerWithTimeInterval:(NSTimeInterval)timeInterval;
 - (void)invalidateTimer;
 - (void)handlePlaybackStateChanged:(id)notification;
+- (void)handleNowPlayingItemChanged:(id)notification;
 @end
 
 @implementation CDAudioSharer
@@ -46,8 +47,11 @@
 #pragma mark - Players
 - (void)setAudioPlayer:(CDAudioPlayer *)audioPlayer{
     if ([_audioPlayer isKindOfClass:[CDiPodPlayer class]]) {
+        CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)audioPlayer;
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter removeObserver:self name:MPMusicPlayerControllerPlaybackStateDidChangeNotification object:_audioPlayer];
+        [notificationCenter removeObserver:self name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:_audioPlayer];
+        [iPodPlayer.audioPlayer endGeneratingPlaybackNotifications];
     }
     
     if ([audioPlayer isKindOfClass:[CDiPodPlayer class]]) {
@@ -56,6 +60,10 @@
         [notificationCenter addObserver: self
                                selector: @selector (handlePlaybackStateChanged:)
                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                                 object: iPodPlayer.audioPlayer];
+        [notificationCenter addObserver: self
+                               selector: @selector (handlePlaybackStateChanged:)
+                                   name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
                                  object: iPodPlayer.audioPlayer];
         [iPodPlayer.audioPlayer beginGeneratingPlaybackNotifications];
     }
@@ -160,6 +168,11 @@
     return self.audioPlayer.currentDuration;
 }
 
+- (NSString*)valueForProperty:(NSString *)property{
+    NSString* value = [self.audioPlayer valueForProperty:property];
+    return value;
+}
+
 #pragma mark - iPod Player
 - (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
     CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)self.audioPlayer;
@@ -196,6 +209,12 @@
         }break;
         default:
             break;
+    }
+}
+
+- (void)handleNowPlayingItemChanged:(id)notification{
+    for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
+        [delegate audioSharerNowPlayingItemDidChange:self];
     }
 }
 

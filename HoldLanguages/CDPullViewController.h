@@ -10,7 +10,7 @@
 #import "CDPullTopBar.h"
 #import "CDPullBottomBar.h"
 
-@interface CDPullViewController : UIViewController <CDPullTopBarDelegate, CDPullBottomBarDelegate>
+@interface CDPullViewController : UIViewController <CDPullTopBarDelegate, CDPullTopBarDataSource, CDPullBottomBarDelegate>
 @property(nonatomic)BOOL barsHidden;
 @property(nonatomic)BOOL pulledViewPresented;
 @property(nonatomic, readonly, strong)UIView* pulledView;

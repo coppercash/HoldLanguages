@@ -12,6 +12,7 @@
 		BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
 		BE2C11EC164F68C000B4F330 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE2C11EA164F68C000B4F330 /* MainViewController.xib */; };
 		BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
+		BE7D3801165CB69C0018E8E8 /* CDPullTopBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE7D3800165CB69C0018E8E8 /* CDPullTopBar.xib */; };
 		BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
 		BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D5164E318E007EBEAB /* Foundation.framework */; };
 		BE82F6D8164E318E007EBEAB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
@@ -89,6 +90,7 @@
 		BE2C11E9164F68C000B4F330 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BE2C11EA164F68C000B4F330 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		BE7D3800165CB69C0018E8E8 /* CDPullTopBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDPullTopBar.xib; sourceTree = "<group>"; };
 		BE82F6CF164E318E007EBEAB /* HoldLanguages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoldLanguages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE82F6D3164E318E007EBEAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BE82F6D5164E318E007EBEAB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -383,6 +385,7 @@
 				BE964E8616549A06000DDB28 /* CDPullViewController.m */,
 				BE9735FB165661AC006718F8 /* CDPullTopBar.h */,
 				BE9735FC165661AC006718F8 /* CDPullTopBar.m */,
+				BE7D3800165CB69C0018E8E8 /* CDPullTopBar.xib */,
 				BE9735FE16566238006718F8 /* CDPullBottomBar.h */,
 				BE9735FF16566238006718F8 /* CDPullBottomBar.m */,
 			);
@@ -565,6 +568,7 @@
 				BEB58B92165C612F002426E4 /* BackwardButtonDown.png in Resources */,
 				BEB58B93165C612F002426E4 /* ForwardButtonDown.png in Resources */,
 				BEB58B9A165C6505002426E4 /* Cursor.png in Resources */,
+				BE7D3801165CB69C0018E8E8 /* CDPullTopBar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

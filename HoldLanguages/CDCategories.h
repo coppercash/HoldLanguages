@@ -23,3 +23,12 @@
 @interface UIImage (CDImage)
 + (UIImage*)pngImageWithName:(NSString*)imageName;
 @end
+
+@interface UIView (CDView)
+- (void)setBackgroundLayer:(CALayer *)backgroundLayer;
+- (void)loadSubviewsFromXibNamed:(NSString*)xibName;
+@end
+
+@interface UILabel (CDLabel)
+- (void)setNonemptyText:(NSString *)text;
+@end

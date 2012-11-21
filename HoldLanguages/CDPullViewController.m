@@ -50,6 +50,7 @@
     [self.view addSubview:_topBar];
     _topBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     _topBar.delegate = self;
+    _topBar.dataSource = self;
     
     _bottomBar = [[CDPullBottomBar alloc] initWithFrame:[self bottomBarFrameWithHidding:NO]];
     [self.view addSubview:_bottomBar];
@@ -134,6 +135,19 @@
     }
 }
 
+#pragma mark - CDPullTopBarDataSource
+- (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{
+    return @"CDPullViewController";
+}
+
+- (NSString*)topBarNeedsTitle:(CDPullTopBar*)topBar{
+    return @"CDPullViewController";
+}
+
+- (NSString*)topBarNeedsAlbumTitle:(CDPullTopBar*)topBar{
+    return @"CDPullViewController";
+}
+
 #pragma mark - CDPullBottomBarDelegate
 - (NSTimeInterval)bottomBarAskForDuration:(CDPullBottomBar*)bottomButton{
     return 0.;
@@ -200,5 +214,7 @@
         [self destroyPulledView];
      }
 }
+
+
 
 @end

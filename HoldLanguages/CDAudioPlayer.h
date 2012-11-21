@@ -23,5 +23,6 @@
 - (BOOL)isPlaying;
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 - (void)playbackAt:(NSTimeInterval)playbackTime;
+- (NSString*)valueForProperty:(NSString *)property;
 
 @end

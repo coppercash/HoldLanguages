@@ -119,7 +119,7 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations{
-    //return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskAll;
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -146,6 +146,23 @@
 	_mediaPicker.prompt = NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
 	
     [pulledView addSubview:_mediaPicker.view];
+}
+
+- (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{
+    NSString* artist = [self.audioSharer valueForProperty:MPMediaItemPropertyArtist];
+    if (artist == nil) 
+        artist = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumArtist];
+    return artist;
+}
+
+- (NSString*)topBarNeedsTitle:(CDPullTopBar*)topBar{
+    NSString* title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+    return title;
+}
+
+- (NSString*)topBarNeedsAlbumTitle:(CDPullTopBar*)topBar{
+    NSString* albumTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumTitle];
+    return albumTitle;
 }
 
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
@@ -256,6 +273,11 @@
         default:
             break;
     }
+}
+
+- (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer{
+    [self.topBar reloadData];
+    [self.bottomBar reloadData];
 }
 
 #pragma mark - Lyrics

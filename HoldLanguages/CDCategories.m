@@ -7,6 +7,7 @@
 //
 
 #import "CDCategories.h"
+#import "Header.h"
 
 @implementation UIColor (CDColor)
 + (UIColor*) colorWithHex:(long)hexColor{
@@ -49,5 +50,34 @@
     NSString* imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"png"];
     UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
     return image;
+}
+@end
+
+@implementation UIView (CDView)
+- (void)setBackgroundLayer:(CALayer *)backgroundLayer;
+{
+    CALayer * oldBackground = [[self.layer sublayers] objectAtIndex:0];
+    if (oldBackground){
+        [self.layer replaceSublayer:oldBackground with:backgroundLayer];
+    }else{
+        [self.layer insertSublayer:backgroundLayer atIndex:0];
+    }
+}
+
+- (void)loadSubviewsFromXibNamed:(NSString*)xibName{
+    NSArray* xibViews = [[NSBundle mainBundle] loadNibNamed:xibName owner:self options:nil];
+    if (xibViews.count != 1) NSLog(@"Wrong number(%d) of xib views.", xibViews.count);
+    UIView *rootView = [xibViews objectAtIndex:0];
+    if (!CGSizeEqualToSize(self.bounds.size, rootView.bounds.size)) NSLog(@"Incompatible bounds between self's %f,%f and xib's %f,%f", self.bounds.size.width, self.bounds.size.height, rootView.bounds.size.width, rootView.bounds.size.height);
+    for (UIView* subview in rootView.subviews) {
+        [self addSubview:subview];
+    }
+}
+@end
+
+@implementation UILabel (CDLabel)
+- (void)setNonemptyText:(NSString *)text{
+    if (text == nil) return;
+    self.text = text;
 }
 @end
