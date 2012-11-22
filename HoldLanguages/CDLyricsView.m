@@ -32,8 +32,6 @@
 }
 
 - (void)initialize{
-    
-    
     _lyricsTable = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     [self addSubview:_lyricsTable];
     _lyricsTable.dataSource = self;
@@ -42,6 +40,7 @@
     _lyricsTable.backgroundColor = [UIColor clearColor];
     _lyricsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _lyricsTable.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    _lyricsTable.scrollsToTop = NO;
     
     _cursor = [[UIImageView alloc] initWithPNGImageNamed:kCursorImageName];
     [self addSubview:_cursor];

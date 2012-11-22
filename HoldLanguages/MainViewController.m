@@ -118,9 +118,13 @@
     }
 }
 
+- (BOOL)shouldAutorotate{
+    BOOL should = !self.topBar.isRotationLocked;
+    return should;
+}
+
 - (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAll;
-    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
@@ -128,11 +132,11 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) return YES;
-    if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) return YES;
-    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) return YES;
-    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) return YES;
-    return NO;
+    if (self.topBar.isRotationLocked) {
+        return toInterfaceOrientation == self.interfaceOrientation;
+    }else{
+        return YES;
+    }
 }
 
 #pragma mark - CDPullViewController Methods
@@ -163,6 +167,10 @@
 - (NSString*)topBarNeedsAlbumTitle:(CDPullTopBar*)topBar{
     NSString* albumTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumTitle];
     return albumTitle;
+}
+
+- (BOOL)topBarShouldLockRotation:(CDPullTopBar *)topBar{
+    return YES;
 }
 
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{

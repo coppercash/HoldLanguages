@@ -62,7 +62,7 @@
                                    name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
                                  object: iPodPlayer.audioPlayer];
         [notificationCenter addObserver: self
-                               selector: @selector (handlePlaybackStateChanged:)
+                               selector: @selector (handleNowPlayingItemChanged:)
                                    name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
                                  object: iPodPlayer.audioPlayer];
         [iPodPlayer.audioPlayer beginGeneratingPlaybackNotifications];

@@ -17,20 +17,31 @@
 - (void)touchPullButtonUpOutside;
 @end
 @implementation CDPullTopBar
-@synthesize artist = _artist, title = _title, albumTitle = _albumTitle, pullButton = _pullButton;
+@synthesize artist = _artist, title = _title, albumTitle = _albumTitle, pullButton = _pullButton, rotationLock = _rotationLock;
 @synthesize delegate = _delegate, dataSource = _dataSource;
 #pragma mark - UIView Method
 - (void)initialize{
+    
     self.backgroundColor = [UIColor clearColor];
+    /*
     self.layer.shadowColor = UIColor.blackColor.CGColor;
     self.layer.shadowOffset = CGSizeMake(0., 5.);
     self.layer.shadowOpacity = .8;
+    UIBezierPath* path = [UIBezierPath bezierPathWithRect:self.bounds];
+    self.layer.shadowPath = path.CGPath;
+    */
     
     _pullButton = [[UIImageView alloc] initWithPNGImageNamed:kPullButtonImageName];
     _pullButton.frame = self.pullButtonFrame;
     [self addSubview:_pullButton];
     _pullButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     _pullButton.alpha = kBarAlpha;
+    
+    [self loadSubviewsFromXibNamed:@"CDPullTopBar"];
+    
+    _rotationLock.delegate = self;
+    [_rotationLock addPNGFilesNormal:@"RotationLock" highlighted:@"RotationLockDown"];
+    [_rotationLock addPNGFilesNormal:@"RotationUnlock" highlighted:@"RotationUnlockDown"];
 }
 
 - (id)init{
@@ -45,7 +56,6 @@
     DLogRect(frame);
     self = [super initWithFrame:frame];
     if (self) {
-        [self loadSubviewsFromXibNamed:@"CDPullTopBar"];
         [self initialize];
     }
     return self;
@@ -124,6 +134,24 @@
 
 - (void)touchPullButtonUpOutside{
     
+}
+
+#pragma mark - Rotation Lock
+- (NSInteger)shouldStateButtonChangedValue:(CDStateButton*)stateButton{
+    BOOL should = [_delegate topBarShouldLockRotation:self];
+    if (should) {
+        return CDStateButtonShouldChangeMaskNext;
+    }else{
+        return CDStateButtonShouldChangeMaskKeep;
+    }
+}
+
+- (BOOL)isRotationLocked{
+    if (_rotationLock.state == 0) {
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 #pragma mark - Reload

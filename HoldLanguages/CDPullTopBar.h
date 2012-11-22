@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CDStateButton.h"
 
 #define kTopBarVisualHeight 44.0f
 #define kTopBarPullButtonHeight 20.0f
@@ -14,10 +15,13 @@
 #define kPullButtonEffectiveHeight 40.0f
 #define kPullButtonImageName @"PullButton"
 @protocol CDPullTopBarDelegate, CDPullTopBarDataSource;
-@interface CDPullTopBar : UIControl
+@class CDStateButton;
+@interface CDPullTopBar : UIControl <CDStateButtonDelegate>
 @property(nonatomic, readonly, strong)IBOutlet UILabel* artist;
 @property(nonatomic, readonly, strong)IBOutlet UILabel* title;
 @property(nonatomic, readonly, strong)IBOutlet UILabel* albumTitle;
+@property(nonatomic, readonly, strong)IBOutlet CDStateButton* rotationLock;
+@property(nonatomic, readonly)BOOL isRotationLocked;
 @property(nonatomic, readonly, strong)UIImageView* pullButton;
 @property(nonatomic, weak)id<CDPullTopBarDelegate> delegate;
 @property(nonatomic, weak)id<CDPullTopBarDataSource> dataSource;
@@ -27,6 +31,7 @@
 @required
 - (void)topBarTouchedDown:(CDPullTopBar*)topBar;
 - (void)topBarTouchedUpInside:(CDPullTopBar*)topBar;
+- (BOOL)topBarShouldLockRotation:(CDPullTopBar*)topBar;
 @end
 @protocol CDPullTopBarDataSource
 - (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar;

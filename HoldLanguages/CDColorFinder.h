@@ -13,4 +13,5 @@
 @interface CDColorFinder : NSObject
 - (UIColor*)colorOfBarLight;
 - (UIColor*)colorOfBarDark;
+- (UIColor*)colorOfRotatingCircle;
 @end

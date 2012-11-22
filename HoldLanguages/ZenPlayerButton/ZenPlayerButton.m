@@ -203,6 +203,7 @@
 
 - (void)setButtonState:(ZenPlayerButtonState)state
 {
+    CDColorFinder* colorFinder = [[CDColorFinder alloc] init];
     switch (state)
     {
         case ZenPlayerButtonStatePlaying:
@@ -229,7 +230,7 @@
             [self.layerContainer.layerPauseButton fadeUp];
             [self.layerContainer.layerCircle rotateBack];
             [self.layerContainer.layerCircle bulge];
-            self.layerContainer.layerCircle.backgroundColor = kLayerCircleNormalColor;
+            self.layerContainer.layerCircle.backgroundColor = colorFinder.colorOfRotatingCircle.CGColor;
             
             self->_buttonState = state;
             break;
@@ -240,7 +241,7 @@
             [self.layerContainer.layerPauseButton fadeOut];
             [self.layerContainer.layerCircle shrink];
             [self.layerContainer.layerCircle stopRotation];
-            self.layerContainer.layerCircle.backgroundColor = kLayerCircleNormalColor;
+            self.layerContainer.layerCircle.backgroundColor = colorFinder.colorOfRotatingCircle.CGColor;
             
             self->_buttonState = state;
             break;
@@ -423,7 +424,8 @@
         instance.originalSize = frame.size;
         instance.needsDisplayOnBoundsChange = YES;
         instance.imgCircle = [UIImage imageNamed:@"zenpb_circle.png"];
-        instance.backgroundColor = kLayerCircleNormalColor;
+        CDColorFinder* colorFinder = [[CDColorFinder alloc] init];
+        instance.backgroundColor = colorFinder.colorOfRotatingCircle.CGColor;
         instance.contents = (id)instance.imgCircle.CGImage;
         instance.contentsScale = [[UIScreen mainScreen] scale];
 

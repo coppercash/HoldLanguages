@@ -53,10 +53,13 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 }
 
 - (void)initialize{
+    
     self.backgroundColor = [UIColor clearColor];
+    /*
     self.layer.shadowColor = UIColor.blackColor.CGColor;
     self.layer.shadowOffset = CGSizeMake(0., -1.);
     self.layer.shadowOpacity = .8;
+    */
     
     _playButton = [[CDPlayButton alloc] initWithFrame:self.playButtonFrame];
     [self addSubview:_playButton];
@@ -272,7 +275,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval){
     NSTimeInterval remainingTime = playbackTime - duration;
     _playbackTimeLabel.text = textWithTimeInterval(playbackTime);
     _remainingTimeLabel.text = textWithTimeInterval(remainingTime);
-    DLog(@"%@   %@",_playbackTimeLabel.text, _remainingTimeLabel.text);
+    //DLog(@"%@   %@",_playbackTimeLabel.text, _remainingTimeLabel.text);
 }
 
 #pragma mark - Reload

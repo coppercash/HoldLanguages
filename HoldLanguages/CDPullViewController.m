@@ -135,6 +135,10 @@
     }
 }
 
+- (BOOL)topBarShouldLockRotation:(CDPullTopBar *)topBar{
+    return YES;
+}
+
 #pragma mark - CDPullTopBarDataSource
 - (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{
     return @"CDPullViewController";

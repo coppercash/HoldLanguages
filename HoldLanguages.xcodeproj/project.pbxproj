@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE027B6B165B16C400EA28BE /* PullButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BE027B6A165B16C400EA28BE /* PullButton.png */; };
 		BE027B6F165B33E600EA28BE /* SliderThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = BE027B6E165B33E600EA28BE /* SliderThumb.png */; };
+		BE10E605165E296E001789EF /* RotationLock.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E603165E296E001789EF /* RotationLock.png */; };
+		BE10E606165E296E001789EF /* RotationUnlock.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E604165E296E001789EF /* RotationUnlock.png */; };
+		BE10E609165E2E15001789EF /* RotationLockDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E607165E2E15001789EF /* RotationLockDown.png */; };
+		BE10E60A165E2E15001789EF /* RotationUnlockDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E608165E2E15001789EF /* RotationUnlockDown.png */; };
+		BE10E60C165E364E001789EF /* PullButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E60B165E364E001789EF /* PullButton.png */; };
 		BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
 		BE2C11EC164F68C000B4F330 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE2C11EA164F68C000B4F330 /* MainViewController.xib */; };
 		BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
@@ -85,8 +89,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE027B6A165B16C400EA28BE /* PullButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PullButton.png; sourceTree = "<group>"; };
 		BE027B6E165B33E600EA28BE /* SliderThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SliderThumb.png; sourceTree = "<group>"; };
+		BE10E603165E296E001789EF /* RotationLock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotationLock.png; sourceTree = "<group>"; };
+		BE10E604165E296E001789EF /* RotationUnlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotationUnlock.png; sourceTree = "<group>"; };
+		BE10E607165E2E15001789EF /* RotationLockDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotationLockDown.png; sourceTree = "<group>"; };
+		BE10E608165E2E15001789EF /* RotationUnlockDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotationUnlockDown.png; sourceTree = "<group>"; };
+		BE10E60B165E364E001789EF /* PullButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PullButton.png; sourceTree = "<group>"; };
 		BE2C11E8164F68C000B4F330 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		BE2C11E9164F68C000B4F330 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BE2C11EA164F68C000B4F330 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -246,7 +254,7 @@
 		BE56E8A516514C7E006E086F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BE027B6A165B16C400EA28BE /* PullButton.png */,
+				BE10E60B165E364E001789EF /* PullButton.png */,
 				BE027B6E165B33E600EA28BE /* SliderThumb.png */,
 				BEB58B8E165C5F30002426E4 /* PlayButton.png */,
 				BEB9E440165B7DDF00359064 /* PauseButton.png */,
@@ -255,6 +263,10 @@
 				BEB58B90165C612F002426E4 /* BackwardButtonDown.png */,
 				BEB58B91165C612F002426E4 /* ForwardButtonDown.png */,
 				BEB58B99165C6505002426E4 /* Cursor.png */,
+				BE10E603165E296E001789EF /* RotationLock.png */,
+				BE10E604165E296E001789EF /* RotationUnlock.png */,
+				BE10E607165E2E15001789EF /* RotationLockDown.png */,
+				BE10E608165E2E15001789EF /* RotationUnlockDown.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -563,7 +575,6 @@
 				BE96AC80165733310010F8E0 /* zenpb_progress@2x.png in Resources */,
 				BEEF05EF165A3F47006A844A /* zenpb_bg.png in Resources */,
 				BEEF05F0165A3F47006A844A /* zenpb_bg@2x.png in Resources */,
-				BE027B6B165B16C400EA28BE /* PullButton.png in Resources */,
 				BE027B6F165B33E600EA28BE /* SliderThumb.png in Resources */,
 				BEB9E438165B73CB00359064 /* ForwardButton.png in Resources */,
 				BEB9E439165B73CB00359064 /* BackwardButton.png in Resources */,
@@ -574,6 +585,11 @@
 				BEB58B93165C612F002426E4 /* ForwardButtonDown.png in Resources */,
 				BEB58B9A165C6505002426E4 /* Cursor.png in Resources */,
 				BE7D3801165CB69C0018E8E8 /* CDPullTopBar.xib in Resources */,
+				BE10E605165E296E001789EF /* RotationLock.png in Resources */,
+				BE10E606165E296E001789EF /* RotationUnlock.png in Resources */,
+				BE10E609165E2E15001789EF /* RotationLockDown.png in Resources */,
+				BE10E60A165E2E15001789EF /* RotationUnlockDown.png in Resources */,
+				BE10E60C165E364E001789EF /* PullButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

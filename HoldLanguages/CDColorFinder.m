@@ -18,4 +18,8 @@
     UIColor* color = [UIColor color255WithRed:38. green:94. blue:129. alpha:kBarAlpha];
     return color;
 }
+- (UIColor*)colorOfRotatingCircle{
+    UIColor* color = [UIColor color255WithRed:77. green:144. blue:153. alpha:kBarAlpha];
+    return color;
+}
 @end
