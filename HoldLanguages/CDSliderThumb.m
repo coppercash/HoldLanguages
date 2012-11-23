@@ -31,7 +31,7 @@
     [self addSubview:_thumbImageView];
     _thumbImageView.frame = CGRectMake(0.0f, 0.0f, kThumbWidth, kThumbHeight);
     
-    self.backgroundColor = kDebugColor;
+    //self.backgroundColor = kDebugColor;
 }
 
 #pragma mark - Value Change

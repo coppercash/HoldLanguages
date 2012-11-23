@@ -7,58 +7,100 @@
 //
 
 #import "CDSliderProgressView.h"
+#import "Header.h"
+#import "ARCMacro.h"
+
+@interface YLProgressBar ()
+@property (nonatomic, assign)               double      progressOffset;
+@property (nonatomic, assign)               CGFloat     cornerRadius;
+@property (nonatomic, SAFE_ARC_PROP_RETAIN) NSTimer*    animationTimer;
+
+/** Init the progress bar. */
+- (void)initializeProgressBar;
+
+/** Build the stripes. */
+- (UIBezierPath *)stripeWithOrigin:(CGPoint)origin bounds:(CGRect)frame;
+
+/** Draw the background (track) of the slider. */
+- (void)drawBackgroundWithRect:(CGRect)rect;
+/** Draw the progress bar. */
+- (void)drawProgressBarWithRect:(CGRect)rect;
+/** Draw the gloss into the given rect. */
+- (void)drawGlossWithRect:(CGRect)rect;
+/** Draw the stipes into the given rect. */
+- (void)drawStripesWithRect:(CGRect)rect;
+
+@end
 
 @implementation CDSliderProgressView
 
-- (void)setProgress:(float)value{
-    self.currentProgressValue = value * 100;
+- (void)initializeProgressBar
+{
+    self.progressOffset     = 0;
+    self.animationTimer     = nil;
+    self.animated           = NO;
 }
 
-- (void)setup{
-    if (maxValue == 0.0) {
-        maxValue = 100.0;
+- (void)drawBackgroundWithRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSaveGState(context);
+    {
+        // Draw the white shadow
+        [[UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.2] set];
+        
+        UIBezierPath* shadow        = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0.5, 0, rect.size.width - 1, rect.size.height - 1)
+                                                                 cornerRadius:cornerRadius];
+        [shadow stroke];
+        
+        // Draw the track
+        CDColorFinder* colorFinder = [[CDColorFinder alloc] init];
+        [colorFinder.colorOfProgressViewBackground set];
+        
+        UIBezierPath* roundedRect   = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, rect.size.width, rect.size.height-1) cornerRadius:cornerRadius];
+        [roundedRect fill];
+        
+        // Draw the inner glow
+        [colorFinder.colorOfProgressViewBackgroundGlow set];
+        
+        CGMutablePathRef glow       = CGPathCreateMutable();
+        CGPathMoveToPoint(glow, NULL, cornerRadius, 0);
+        CGPathAddLineToPoint(glow, NULL, rect.size.width - cornerRadius, 0);
+        CGContextAddPath(context, glow);
+        CGContextDrawPath(context, kCGPathStroke);
+        CGPathRelease(glow);
     }
-    
-    leftValue = minValue;
-    rightValue = maxValue;
-    
-    slider = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"BJRangeSliderGreen.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:4]];
-    [self addSubview:slider];
-    
-    rangeImage = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"BJRangeSliderEmpty.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:4]];
-    [self addSubview:rangeImage];
-    
-    progressImage = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"BJRangeSliderRed.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:4]];
-    [self addSubview:progressImage];
-    
-    [self setDisplayMode:BJRSWPAudioPlayMode];
+    CGContextRestoreGState(context);
 }
 
-- (void)setDisplayMode:(BJRangeSliderWithProgressDisplayMode)mode {
-    switch (mode) {
-        case BJRSWPAudioRecordMode:
-            self.showThumbs = NO;
-            self.showRange = NO;
-            self.showProgress = YES;
-            progressImage.image = [[UIImage imageNamed:@"BJRangeSliderRed.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:4];
-            break;
-            
-        case BJRSWPAudioSetTrimMode:
-            self.showThumbs = YES;
-            self.showRange = YES;
-            self.showProgress = NO;
-            break;
-            
-        case BJRSWPAudioPlayMode:
-            self.showThumbs = NO;
-            self.showRange = YES;
-            self.showProgress = YES;
-            progressImage.image = [[UIImage imageNamed:@"BJRangeSliderBlue.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:4];
-        default:
-            break;
-    }
+- (void)drawProgressBarWithRect:(CGRect)rect
+{
+    CGContextRef context        = UIGraphicsGetCurrentContext();
     
-    [self setNeedsLayout];
+    CGColorSpaceRef colorSpace  = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextSaveGState(context);
+    {
+        UIBezierPath *progressBounds    = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius];
+        CGContextAddPath(context, [progressBounds CGPath]);
+        CGContextClip(context);
+        
+        size_t num_locations            = 2;
+        CGFloat locations[]             = {0.0, 1.0};
+        CDColorFinder* colorFinder = [[CDColorFinder alloc] init];
+        CGFloat progressComponents[8];
+        [colorFinder gradientComponentsProgressView:progressComponents];
+        //CGFloat progressComponents[]    = YLProgressBarGradientProgress;
+        CGGradientRef gradient          = CGGradientCreateWithColorComponents (colorSpace, progressComponents, locations, num_locations);
+        
+        CGContextDrawLinearGradient(context, gradient, CGPointMake(rect.origin.x, rect.origin.y), CGPointMake(rect.origin.x + rect.size.width, rect.origin.y), (kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation));
+        
+        CGGradientRelease(gradient);
+    }
+    CGContextRestoreGState(context);
+    
+    CGColorSpaceRelease(colorSpace);
 }
 
 @end

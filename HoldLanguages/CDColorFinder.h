@@ -14,4 +14,7 @@
 - (UIColor*)colorOfBarLight;
 - (UIColor*)colorOfBarDark;
 - (UIColor*)colorOfRotatingCircle;
+- (UIColor*)colorOfProgressViewBackground;
+- (UIColor*)colorOfProgressViewBackgroundGlow;
+- (void)gradientComponentsProgressView:(CGFloat*)progressComponents;
 @end

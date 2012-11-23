@@ -12,6 +12,7 @@
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"
 #import "CDBackgroundView.h"
+#import "CDSliderProgressView.h"
 
 @interface MainViewController ()
 - (void)openedAudioNamed:(NSString*)audioName;
@@ -271,12 +272,15 @@
     switch (state) {
         case CDAudioPlayerStatePlaying:{
             self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePlaying;
+            self.bottomBar.progressView.animated = YES;
         }break;
         case CDAudioPlayerStatePaused:{
             self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
+            self.bottomBar.progressView.animated = NO;
         }break;
         case CDAudioPlayerStateStopped:{
             self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
+            self.bottomBar.progressView.animated = NO;
         }break;
         default:
             break;

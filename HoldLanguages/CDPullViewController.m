@@ -58,7 +58,7 @@
     _bottomBar.delegate = self;
     
     //_topBar.backgroundColor = kDebugColor;
-    _bottomBar.backgroundColor = kDebugColor;
+    //_bottomBar.backgroundColor = kDebugColor;
     
 }
 
@@ -79,6 +79,8 @@
     _topBar.frame = [self topBarFrameWithHidding:barsHidden];
     _bottomBar.frame = [self bottomBarFrameWithHidding:barsHidden];
     [_bottomBar setHidden:barsHidden];
+    //[_topBar reloadData];
+    //[_bottomBar reloadData];
 }
 
 - (void)setBarsHidden:(BOOL)barsHidden animated:(BOOL)animated{

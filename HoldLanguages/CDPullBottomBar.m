@@ -37,9 +37,12 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     _progressView.frame = [self progressViewFrameWithHidding:hidden];
     if (hidden) {
         _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        _progressView.alpha = kBarAlpha;
     }else{
         _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _progressView.alpha = 1.0f;
     }
+    self.userInteractionEnabled = !hidden;
     _hidden = hidden;
 }
 
@@ -103,7 +106,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     _remainingTimeLabel.text = @"-00:00:00";
     configureLabel(_remainingTimeLabel);
 
-    _progressView.backgroundColor = kDebugColor;
+    //_progressView.backgroundColor = kDebugColor;
     
 }
 
@@ -131,7 +134,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 - (CGRect)progressViewFrameWithHidding:(BOOL)hidding{
     CGRect frame = CGRectZero;
     if (hidding) {
-        frame = CGRectMake(0.0f, 0.0f, self.bounds.size.width, kSliderProgressViewHeight);
+        frame = CGRectMake(0.0f, 1.0f, self.bounds.size.width, kSliderProgressViewHeight);
         frame = CGRectInset(frame, - kSliderProgressThumbWidth / 2, 0.0f);
     }else{
         frame = CGRectInset(self.sliderThumbFrame,
@@ -280,7 +283,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval){
 
 #pragma mark - Reload
 - (void)reloadData{
-    
+
 }
 
 @end
