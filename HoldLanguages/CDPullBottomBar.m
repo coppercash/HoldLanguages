@@ -11,6 +11,7 @@
 #import "CDSliderProgressView.h"
 #import "CDSliderThumb.h"
 #import "CDPlayButton.h"
+#import "CDPullViewController.h"
 
 @interface CDPullBottomBar ()
 - (void)initialize;
@@ -25,6 +26,9 @@
 - (CGRect)remainingTimeLabelFrame;
 void configureLabel(UILabel* label);
 NSString* textWithTimeInterval(NSTimeInterval timeInterval);
+- (CAAnimationGroup*)animationOfProgressViewWithHidden:(BOOL)hidden;
+- (NSString*)keyOfProgressViewAnimation;
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag;
 @end
 @implementation CDPullBottomBar
 @synthesize hidden = _hidden;
@@ -33,6 +37,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 @synthesize delegate = _delegate;
 @synthesize playButtonState = _playButtonState;
 
+#pragma mark - Hidden
 - (void)setHidden:(BOOL)hidden{
     _progressView.frame = [self progressViewFrameWithHidding:hidden];
     if (hidden) {
@@ -44,6 +49,16 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     }
     self.userInteractionEnabled = !hidden;
     _hidden = hidden;
+}
+
+- (void)setHidden:(BOOL)hidden animated:(BOOL)animated{
+    if (animated) {
+        _hidden = hidden;
+        CAAnimationGroup* animationGroup = [self animationOfProgressViewWithHidden:hidden];
+        [_progressView.layer addAnimation:animationGroup forKey:self.keyOfProgressViewAnimation];
+    }else{
+        [self setHidden:hidden];
+    }
 }
 
 #pragma mark - SuperClass Methods
@@ -238,7 +253,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 
 void configureLabel(UILabel* label){
     label.textColor = [UIColor whiteColor];
-    label.backgroundColor = kDebugColor;
+    label.backgroundColor = [UIColor clearColor];
     UIFont* font = [UIFont boldSystemFontOfSize:12.0f];
     label.font = font;
     label.textAlignment = NSTextAlignmentCenter;
@@ -284,6 +299,54 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval){
 #pragma mark - Reload
 - (void)reloadData{
 
+}
+
+#pragma mark - Animation
+- (CAAnimationGroup*)animationOfProgressViewWithHidden:(BOOL)hidden{
+    CAAnimationGroup* animationGroup = [CAAnimationGroup animation];
+    CABasicAnimation* move = [CABasicAnimation animationWithKeyPath:@"position.y"];
+    CABasicAnimation* translation = [CABasicAnimation animationWithKeyPath:@"transform.scale.x"];
+    CABasicAnimation* alpha = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animationGroup.animations = [[NSArray alloc] initWithObjects:move, translation, alpha, nil];
+    animationGroup.duration = kHiddingAniamtionDuration;
+    animationGroup.removedOnCompletion  = NO;
+    animationGroup.delegate = self;
+    animationGroup.fillMode = kCAFillModeForwards;
+    /*
+    move.duration = kHiddingAniamtionDuration;
+    transform.duration = kHiddingAniamtionDuration;
+    alpha.duration = kHiddingAniamtionDuration;
+    move.removedOnCompletion  = NO;
+    transform.removedOnCompletion  = NO;
+    alpha.removedOnCompletion = NO;
+    //move.delegate = transform.delegate = alpha.delegate = self;
+    move.delegate = self;
+    transform.delegate = self;
+    alpha.delegate = self;
+    */
+    CGFloat moveTo = CGRectGetMidY([self progressViewFrameWithHidding:hidden]);
+    move.toValue = [[NSNumber alloc] initWithFloat:moveTo];
+    
+    CGFloat widthFrom = [self progressViewFrameWithHidding:!hidden].size.width;
+    CGFloat widthTo = [self progressViewFrameWithHidding:hidden].size.width;
+    CGFloat translateTo = widthTo / widthFrom;
+    translation.toValue = [[NSNumber alloc] initWithFloat:translateTo];
+        
+    CGFloat alphaTo = hidden ? kBarAlpha : 1.0f;
+    alpha.toValue = [[NSNumber alloc] initWithFloat:alphaTo];
+    
+    return animationGroup;
+}
+
+- (NSString*)keyOfProgressViewAnimation{
+    return @"ProgressViewAnimation";
+}
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag{
+    if (theAnimation == [_progressView.layer animationForKey:self.keyOfProgressViewAnimation]) {
+        [self setHidden:_hidden];
+        [_progressView.layer removeAnimationForKey:self.keyOfProgressViewAnimation];
+    }
 }
 
 @end

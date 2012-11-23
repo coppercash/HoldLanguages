@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CDAudioSharer.h"
+//#import "CDAudioSharer.h"
 
 #define kPlayButtonTopMargin 10.0f
 #define kPlayButtonSize 80.0f
@@ -59,6 +59,7 @@ typedef enum{
 - (void)setSliderValue:(float)sliderValue;
 - (void)setLabelsPlaybackTime:(NSTimeInterval)playbackTime;
 - (void)reloadData;
+- (void)setHidden:(BOOL)hidden animated:(BOOL)animated;
 @end
 
 @protocol CDPullBottomBarDelegate

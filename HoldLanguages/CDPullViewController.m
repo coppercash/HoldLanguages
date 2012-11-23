@@ -16,8 +16,9 @@
 - (CGRect)pulledViewFrameWithPresented:(BOOL)presented;
 - (void)createPulledView;
 - (void)destroyPulledView;
-- (NSString*)topBarAnimationKey;
-- (NSString*)bottomBarAnimationKey;
+- (NSString*)keyOfTopBarAnimation;
+- (NSString*)keyOfBottomBarAnimation;
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag;
 @end
 @implementation CDPullViewController
 @synthesize barsHidden = _barsHidden, pulledViewPresented = _pullViewPresented;
@@ -77,7 +78,6 @@
 #pragma mark - Bars
 - (void)setBarsHidden:(BOOL)barsHidden{
     _barsHidden = barsHidden;
-    [[UIApplication sharedApplication] setStatusBarHidden:barsHidden withAnimation:UIStatusBarAnimationSlide];
     _topBar.frame = [self topBarFrameWithHidding:barsHidden];
     _bottomBar.frame = [self bottomBarFrameWithHidding:barsHidden];
     [_bottomBar setHidden:barsHidden];
@@ -88,15 +88,15 @@
 - (void)setBarsHidden:(BOOL)barsHidden animated:(BOOL)animated{
     if (animated) {
         [[UIApplication sharedApplication] setStatusBarHidden:barsHidden withAnimation:UIStatusBarAnimationSlide];
-
         _barsHidden = barsHidden;
-        CABasicAnimation* topBarAnimation = [self barAnimation:_topBar withHidden:barsHidden];
-        [_topBar.layer addAnimation:topBarAnimation forKey:self.topBarAnimationKey];
-        CABasicAnimation* bottomBarAnimation = [self barAnimation:_bottomBar withHidden:barsHidden];
-        [_bottomBar.layer addAnimation:bottomBarAnimation forKey:self.bottomBarAnimationKey];
-        //[CATransaction commit];
+        CABasicAnimation* topBarAnimation = [self animationOfBar:_topBar withHidden:barsHidden];
+        [_topBar.layer addAnimation:topBarAnimation forKey:self.keyOfTopBarAnimation];
+        CABasicAnimation* bottomBarAnimation = [self animationOfBar:_bottomBar withHidden:barsHidden];
+        [_bottomBar.layer addAnimation:bottomBarAnimation forKey:self.keyOfBottomBarAnimation];
+        [_bottomBar setHidden:_barsHidden animated:YES];
 
     }else{
+        [[UIApplication sharedApplication] setStatusBarHidden:barsHidden];
         [self setBarsHidden:barsHidden];
     }
 }
@@ -236,46 +236,49 @@
 }
 
 #pragma mark - Animation
-- (CABasicAnimation*)barAnimation:(id)target withHidden:(BOOL)barsHidden{
+- (CABasicAnimation*)animationOfBar:(id)target withHidden:(BOOL)barsHidden{
     CABasicAnimation* barAnimation = [CABasicAnimation animationWithKeyPath:@"position.y"];
     CGFloat from, to;
     if (target == _topBar) {
-        from = [self topBarFrameWithHidding:!barsHidden].origin.y;
-        to = [self topBarFrameWithHidding:barsHidden].origin.y;
+        from = CGRectGetMidY([self topBarFrameWithHidding:!barsHidden]);
+        to = CGRectGetMidY([self topBarFrameWithHidding:barsHidden]);
     }else if (target == _bottomBar) {
-        from = [self bottomBarFrameWithHidding:!barsHidden].origin.y;
-        to = [self bottomBarFrameWithHidding:barsHidden].origin.y;
+        from = CGRectGetMidY([self bottomBarFrameWithHidding:!barsHidden]);
+        to = CGRectGetMidY([self bottomBarFrameWithHidding:barsHidden]);
     }
-    NSNumber* fromValue = [[NSNumber alloc] initWithFloat:from];
-    barAnimation.fromValue = fromValue;
+    //NSNumber* fromValue = [[NSNumber alloc] initWithFloat:from];
+    //barAnimation.fromValue = fromValue;
     NSNumber* toValue = [[NSNumber alloc] initWithFloat:to];
     barAnimation.toValue = toValue;
     barAnimation.duration = kHiddingAniamtionDuration;
     barAnimation.removedOnCompletion = NO;
-    barAnimation.fillMode = kCAFillModeForwards;
     barAnimation.delegate = self;
+    barAnimation.fillMode = kCAFillModeForwards;
     //barAnimation.repeatCount = 1;
     //barAnimation.autoreverses = NO;
     return barAnimation;
 }
 
-- (NSString*)topBarAnimationKey{
+- (NSString*)keyOfTopBarAnimation{
     return @"topAnimationKey";
 }
 
-- (NSString*)bottomBarAnimationKey{
+- (NSString*)keyOfBottomBarAnimation{
     return @"bottomAnimationKey";
 }
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag{
-    CAAnimation * topBarAnimation = [_topBar.layer animationForKey:self.topBarAnimationKey];
-    CAAnimation * bottomBarAnimation = [_bottomBar.layer animationForKey:self.bottomBarAnimationKey];
+    CAAnimation * topBarAnimation = [_topBar.layer animationForKey:self.keyOfTopBarAnimation];
+    CAAnimation * bottomBarAnimation = [_bottomBar.layer animationForKey:self.keyOfBottomBarAnimation];
     if (theAnimation == topBarAnimation) {
-        DLogRect(_topBar.layer.frame);
-        DLog(@"%f",_topBar.alpha);
+        //DLogRect(_topBar.layer.frame);
+        _topBar.frame = [self topBarFrameWithHidding:_barsHidden];
+        [_topBar.layer removeAnimationForKey:self.keyOfTopBarAnimation];
     }else if (theAnimation == bottomBarAnimation){
-        DLogRect(_bottomBar.layer.frame);
-        DLog(@"%f",_bottomBar.alpha);
+        //DLogRect(_bottomBar.layer.frame);
+        _bottomBar.frame = [self bottomBarFrameWithHidding:_barsHidden];
+        [_bottomBar.layer removeAnimationForKey:self.keyOfBottomBarAnimation];
+        //[_bottomBar setHidden:_barsHidden animated:YES];
     }
 }
 
