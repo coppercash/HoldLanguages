@@ -18,7 +18,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    self.audioSharer = [CDAudioSharer sharedAudioPlayer];
+    //self.audioSharer = [CDAudioSharer sharedAudioPlayer];
     
     self.mainViewController = [[MainViewController alloc] init];
     self.window.rootViewController = self.mainViewController;

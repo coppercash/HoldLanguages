@@ -27,7 +27,7 @@
 }
 
 - (void)initialize{
-    _thumbImageView = [[UIImageView alloc] initWithPathForResource:kThumbImageName ofType:@"png"];
+    _thumbImageView = [[UIImageView alloc] initWithPNGImageNamed:kThumbImageName];
     [self addSubview:_thumbImageView];
     _thumbImageView.frame = CGRectMake(0.0f, 0.0f, kThumbWidth, kThumbHeight);
     

@@ -10,6 +10,8 @@
 #import "CDPullTopBar.h"
 #import "CDPullBottomBar.h"
 
+#define kHiddingAniamtionDuration 1.0f
+
 @interface CDPullViewController : UIViewController <CDPullTopBarDelegate, CDPullTopBarDataSource, CDPullBottomBarDelegate>
 @property(nonatomic)BOOL barsHidden;
 @property(nonatomic)BOOL pulledViewPresented;
