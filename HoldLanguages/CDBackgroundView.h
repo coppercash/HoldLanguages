@@ -9,6 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "YLBackgroundView.h"
 
-@interface CDBackgroundView : YLBackgroundView
+typedef enum {
+    CDBackgroundViewKeyNone,
+    CDBackgroundViewKeyMissingLyrics,
+}CDBackgroundViewKey;
+@protocol CDBackgroundViewDatasource;
+@interface CDBackgroundView : YLBackgroundView 
+@property(nonatomic, readonly, strong)UIView* missingLyrics;
+@property(nonatomic, weak)id<CDBackgroundViewDatasource> dataSource;
 
+@property(nonatomic, strong)IBOutlet UILabel* audioName;
+
+- (void)switchViewWithKey:(CDBackgroundViewKey)key;
+@end
+
+@protocol CDBackgroundViewDatasource
+- (NSString*)backgroundViewNeedsAudioName:(CDBackgroundView*)backgroundView;
 @end

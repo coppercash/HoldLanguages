@@ -123,18 +123,30 @@
 						<string key="NSFrame">{{270, 7}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="850014887"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="280946915">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+					</object>
+					<object class="IBUIView" id="162634188">
+						<reference key="NSNextResponder" ref="850014887"/>
+						<int key="NSvFlags">297</int>
+						<string key="NSFrame">{{20, 8}, {30, 30}}</string>
+						<reference key="NSSuperview" ref="850014887"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="560764224"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<reference key="IBUIBackgroundColor" ref="280946915"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 44}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="560764224"/>
+				<reference key="NSNextKeyView" ref="162634188"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -178,6 +190,14 @@
 					</object>
 					<int key="connectionID">57</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">assistButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="162634188"/>
+					</object>
+					<int key="connectionID">59</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -206,6 +226,7 @@
 							<reference ref="788881388"/>
 							<reference ref="560764224"/>
 							<reference ref="580212348"/>
+							<reference ref="162634188"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -232,6 +253,11 @@
 						<reference key="object" ref="580212348"/>
 						<reference key="parent" ref="850014887"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">58</int>
+						<reference key="object" ref="162634188"/>
+						<reference key="parent" ref="850014887"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -245,13 +271,15 @@
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="56.CustomClassName">CDStateButton</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="58.CustomClassName">CDStateButton</string>
+				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">57</int>
+			<int key="maxID">59</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -261,6 +289,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="albumTitle">UILabel</string>
 						<string key="artist">UILabel</string>
+						<string key="assistButton">CDStateButton</string>
 						<string key="rotationLock">CDStateButton</string>
 						<string key="title">UILabel</string>
 					</dictionary>
@@ -272,6 +301,10 @@
 						<object class="IBToOneOutletInfo" key="artist">
 							<string key="name">artist</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="assistButton">
+							<string key="name">assistButton</string>
+							<string key="candidateClassName">CDStateButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="rotationLock">
 							<string key="name">rotationLock</string>

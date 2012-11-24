@@ -74,10 +74,8 @@
 - (NSTimeInterval)currentDuration{
     //Get current playing duration.
     MPMediaItem* currentAudio = self.audioPlayer.nowPlayingItem;
-    
-    NSString *string = [currentAudio valueForKey:MPMediaItemPropertyPlaybackDuration];
-    
-    NSTimeInterval currentDuration = string.floatValue;
+    NSNumber *string = [currentAudio valueForKey:MPMediaItemPropertyPlaybackDuration];
+    NSTimeInterval currentDuration = string.doubleValue;
     _currentDuration = currentDuration;
     
     return _currentDuration;

@@ -19,41 +19,13 @@
 - (BOOL)isLyricsUsable;
 - (void)switchBarsHidden;
 - (NSTimeInterval)playbackTimeByButton;
+- (void)createLyricsView;
+- (void)destroyLyricsView;
 @end
 @implementation MainViewController
 @synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView;
 @synthesize audioSharer = _audioSharer, lyrics = _lyrics;
 @synthesize mediaPicker = _mediaPicker;
-
-- (void)test{
-    /*
-     MPMediaPickerController *picker =
-     [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
-     
-     picker.delegate						= self;
-     //picker.allowsPickingMultipleItems	= YES;
-     picker.prompt						= NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
-     
-     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated:YES];
-     [self presentModalViewController: picker animated: YES];
-     */
-    
-    
-    if (self.barsHidden) {
-        [self setBarsHidden:NO animated:YES];
-    }else{
-        [self setBarsHidden:YES animated:YES];
-    }
-    /*
-    if ([[UIApplication sharedApplication] isStatusBarHidden]) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-        [self setBarsHidden:NO animated:YES];
-    }else{
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-        [self setBarsHidden:YES animated:YES];
-    }
-    */
-}
 
 #pragma mark - ViewController Methods
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -74,28 +46,15 @@
     _backgroundView = [[CDBackgroundView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:_backgroundView];
     _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
-
-    self.lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:self.lyricsView];
-    self.lyricsView.lyricsSource = self;
-    self.lyricsView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    _backgroundView.dataSource = self;
+    
+    [self createLyricsView];
     
     self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.holder];
     self.holder.delegate = self;
     self.holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
-    
-    /*
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(10.0f, 10.0f, 100.0f, 100.0f);
-    [self.view addSubview:button];
-    [button addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
-    
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"笑红尘" ofType:@"lrc"];
-    self.lyrics = [[CDLRCLyrics alloc] initWithFile:path];
-    self.view.backgroundColor = [UIColor blueColor];
-    */
     [self endOfViewDidLoad];
 }
 
@@ -138,6 +97,21 @@
     }else{
         return YES;
     }
+}
+
+#pragma mark - Flexible Subviews
+- (void)createLyricsView{
+    if (_lyricsView == nil) {
+        _lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
+        [self.view insertSubview:_lyricsView aboveSubview:_backgroundView];
+    }
+    _lyricsView.lyricsSource = self;
+    _lyricsView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+}
+
+- (void)destroyLyricsView{
+    [_lyricsView removeFromSuperview];
+    _lyricsView = nil;
 }
 
 #pragma mark - CDPullViewController Methods
@@ -290,14 +264,24 @@
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer{
     NSString* lyricsPath = [CDiTunesFinder findFileWithName:self.audioSharer.audioName ofType:kLRCExtension];
     if (lyricsPath == nil) {
+        [self destroyLyricsView];
         self.lyrics = nil;
+        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyMissingLyrics];
     }else{
         CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
         self.lyrics = newLyrics;
+        [self createLyricsView];
+        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
     }
     [self.lyricsView reloadData];
     [self.topBar reloadData];
     [self.bottomBar reloadData];
+}
+
+#pragma mark - CDBackgroundViewDatasource
+- (NSString*)backgroundViewNeedsAudioName:(CDBackgroundView*)backgroundView{
+    NSString* audioName = self.audioSharer.audioName;
+    return audioName;
 }
 
 #pragma mark - Lyrics
@@ -315,18 +299,8 @@
 
 #pragma mark - Events
 - (void)openedAudioNamed:(NSString*)audioName{
-    
     [self.audioSharer stop];
     [self.audioSharer play];
-    /*
-    NSString* lyricsPath = [CDiTunesFinder findFileWithName:audioName ofType:kLRCExtension];
-    if (lyricsPath == nil) {
-        self.lyrics = nil;
-    }else{
-        CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
-        self.lyrics = newLyrics;
-    }
-     */
 }
 
 - (void)switchBarsHidden{

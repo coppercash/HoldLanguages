@@ -66,18 +66,36 @@
 
 - (void)loadSubviewsFromXibNamed:(NSString*)xibName{
     NSArray* xibViews = [[NSBundle mainBundle] loadNibNamed:xibName owner:self options:nil];
-    if (xibViews.count != 1) NSLog(@"Wrong number(%d) of xib views.", xibViews.count);
+    //if (xibViews.count != 1) NSLog(@"Wrong number(%d) of xib views.", xibViews.count);
     UIView *rootView = [xibViews objectAtIndex:0];
-    if (!CGSizeEqualToSize(self.bounds.size, rootView.bounds.size)) NSLog(@"Incompatible bounds between self's %f,%f and xib's %f,%f", self.bounds.size.width, self.bounds.size.height, rootView.bounds.size.width, rootView.bounds.size.height);
+    //if (!CGSizeEqualToSize(self.bounds.size, rootView.bounds.size)) NSLog(@"Incompatible bounds between self's %f,%f and xib's %f,%f", self.bounds.size.width, self.bounds.size.height, rootView.bounds.size.width, rootView.bounds.size.height);
     for (UIView* subview in rootView.subviews) {
         [self addSubview:subview];
     }
 }
+
++ (UIView*)viewFromXibNamed:(NSString*)xibName owner:(id)owner atIndex:(NSUInteger)index{
+    NSArray* xibViews = [[NSBundle mainBundle] loadNibNamed:xibName owner:owner options:nil];
+    UIView* view = [xibViews objectAtIndex:index];
+    return view;
+}
+
++ (UIView*)viewFromXibNamed:(NSString*)xibName owner:(id)owner{
+    UIView* view = [UIView viewFromXibNamed:xibName owner:owner atIndex:0];
+    return  view;
+}
+
 @end
 
 @implementation UILabel (CDLabel)
 - (void)setNonemptyText:(NSString *)text{
     if (text == nil) return;
     self.text = text;
+}
+@end
+
+@implementation NSArray (CDArray)
+- (NSUInteger)lastIndex{
+    return self.count - 1;
 }
 @end

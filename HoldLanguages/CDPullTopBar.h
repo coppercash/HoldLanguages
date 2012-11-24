@@ -21,6 +21,7 @@
 @property(nonatomic, readonly, strong)IBOutlet UILabel* title;
 @property(nonatomic, readonly, strong)IBOutlet UILabel* albumTitle;
 @property(nonatomic, readonly, strong)IBOutlet CDStateButton* rotationLock;
+@property(nonatomic, readonly, strong)IBOutlet CDStateButton* assistButton;
 @property(nonatomic, readonly)BOOL isRotationLocked;
 @property(nonatomic, readonly, strong)UIImageView* pullButton;
 @property(nonatomic, weak)id<CDPullTopBarDelegate> delegate;
@@ -32,6 +33,7 @@
 - (void)topBarTouchedDown:(CDPullTopBar*)topBar;
 - (void)topBarTouchedUpInside:(CDPullTopBar*)topBar;
 - (BOOL)topBarShouldLockRotation:(CDPullTopBar*)topBar;
+- (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar;
 @end
 @protocol CDPullTopBarDataSource
 - (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar;

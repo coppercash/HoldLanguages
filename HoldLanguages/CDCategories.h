@@ -27,8 +27,14 @@
 @interface UIView (CDView)
 - (void)setBackgroundLayer:(CALayer *)backgroundLayer;
 - (void)loadSubviewsFromXibNamed:(NSString*)xibName;
++ (UIView*)viewFromXibNamed:(NSString*)xibName owner:(id)owner atIndex:(NSUInteger)index;
++ (UIView*)viewFromXibNamed:(NSString*)xibName owner:(id)owner;
 @end
 
 @interface UILabel (CDLabel)
 - (void)setNonemptyText:(NSString *)text;
+@end
+
+@interface NSArray (CDArray)
+- (NSUInteger)lastIndex;
 @end

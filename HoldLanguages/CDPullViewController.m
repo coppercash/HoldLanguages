@@ -155,6 +155,10 @@
     return YES;
 }
 
+- (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar{
+    
+}
+
 #pragma mark - CDPullTopBarDataSource
 - (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{
     return @"CDPullViewController";

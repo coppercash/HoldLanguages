@@ -17,7 +17,7 @@
 - (void)touchPullButtonUpOutside;
 @end
 @implementation CDPullTopBar
-@synthesize artist = _artist, title = _title, albumTitle = _albumTitle, pullButton = _pullButton, rotationLock = _rotationLock;
+@synthesize artist = _artist, title = _title, albumTitle = _albumTitle, pullButton = _pullButton, rotationLock = _rotationLock, assistButton = _assistButton;
 @synthesize delegate = _delegate, dataSource = _dataSource;
 #pragma mark - UIView Method
 - (void)initialize{
@@ -42,6 +42,10 @@
     _rotationLock.delegate = self;
     [_rotationLock addPNGFilesNormal:@"RotationLock" highlighted:@"RotationLockDown"];
     [_rotationLock addPNGFilesNormal:@"RotationUnlock" highlighted:@"RotationUnlockDown"];
+    
+    _assistButton.delegate = self;
+    [_assistButton addPNGFilesNormal:@"RotationLock" highlighted:@"RotationLockDown"];
+    [_assistButton addPNGFilesNormal:@"RotationLockDown" highlighted:@"RotationLock"];
 }
 
 - (id)init{
@@ -136,14 +140,20 @@
     
 }
 
-#pragma mark - Rotation Lock
+#pragma mark - Rotation Lock & Assist Button
 - (NSInteger)shouldStateButtonChangedValue:(CDStateButton*)stateButton{
-    BOOL should = [_delegate topBarShouldLockRotation:self];
-    if (should) {
+    if (stateButton == _rotationLock) {
+        BOOL should = [_delegate topBarShouldLockRotation:self];
+        if (should) {
+            return CDStateButtonShouldChangeMaskNext;
+        }else{
+            return CDStateButtonShouldChangeMaskKeep;
+        }
+    } else if (stateButton == _assistButton) {
+        [_delegate topBarLeftButtonTouched:self];
         return CDStateButtonShouldChangeMaskNext;
-    }else{
-        return CDStateButtonShouldChangeMaskKeep;
     }
+    return CDStateButtonShouldChangeMaskKeep;
 }
 
 - (BOOL)isRotationLocked{
