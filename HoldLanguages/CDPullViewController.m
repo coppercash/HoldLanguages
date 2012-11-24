@@ -94,7 +94,7 @@
         CABasicAnimation* bottomBarAnimation = [self animationOfBar:_bottomBar withHidden:barsHidden];
         [_bottomBar.layer addAnimation:bottomBarAnimation forKey:self.keyOfBottomBarAnimation];
         [_bottomBar setHidden:_barsHidden animated:YES];
-
+        
     }else{
         [[UIApplication sharedApplication] setStatusBarHidden:barsHidden];
         [self setBarsHidden:barsHidden];
@@ -140,7 +140,7 @@
 
 #pragma mark - CDPullTopBarDelegate
 - (void)topBarTouchedDown:(CDPullTopBar*)topBar{
- }
+}
 
 - (void)topBarTouchedUpInside:(CDPullTopBar*)topBar{
     if (self.barsHidden) {
@@ -226,13 +226,29 @@
 - (void)setPulledViewPresented:(BOOL)pulledViewPresented{
     _pulledView.frame = [self pulledViewFrameWithPresented:pulledViewPresented];
     _pullViewPresented = pulledViewPresented;
+    if (!pulledViewPresented) {
+        [self destroyPulledView];
+    }
 }
 
 - (void)setPullViewPresented:(BOOL)pullViewPresented animated:(BOOL)animated{
-    [self setPulledViewPresented:pullViewPresented];
-    if (!pullViewPresented) {
-        [self destroyPulledView];
-     }
+    if (animated) {
+        void(^animations)(void) = ^(void){
+            _bottomBar.frame = [self bottomBarFrameWithHidding:pullViewPresented];
+            if (pullViewPresented) {
+                _topBar.frame = CGRectOffset(_topBar.frame, 0.0f, self.view.bounds.size.height - 20.0f);
+            } else {
+                _topBar.frame = [self topBarFrameWithHidding:NO];
+            }
+            _pulledView.frame = [self pulledViewFrameWithPresented:pullViewPresented];
+        };
+        void(^completion)(BOOL) = ^(BOOL finished){
+            [self setPulledViewPresented:pullViewPresented];
+        };
+        [UIView animateWithDuration:0.3f animations:animations completion:completion];
+    } else {
+        [self setPulledViewPresented:pullViewPresented];
+    }
 }
 
 #pragma mark - Animation
@@ -267,18 +283,23 @@
     return @"bottomAnimationKey";
 }
 
+- (NSString*)keyOfPullBarAnimationFirst{
+    return @"keyOfPullBarAnimationFirst";
+}
+
+- (NSString*)keyOfPullBarAnimationSecond{
+    return @"keyOfPullBarAnimationSecond";
+}
+
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag{
     CAAnimation * topBarAnimation = [_topBar.layer animationForKey:self.keyOfTopBarAnimation];
     CAAnimation * bottomBarAnimation = [_bottomBar.layer animationForKey:self.keyOfBottomBarAnimation];
     if (theAnimation == topBarAnimation) {
-        //DLogRect(_topBar.layer.frame);
         _topBar.frame = [self topBarFrameWithHidding:_barsHidden];
         [_topBar.layer removeAnimationForKey:self.keyOfTopBarAnimation];
     }else if (theAnimation == bottomBarAnimation){
-        //DLogRect(_bottomBar.layer.frame);
         _bottomBar.frame = [self bottomBarFrameWithHidding:_barsHidden];
         [_bottomBar.layer removeAnimationForKey:self.keyOfBottomBarAnimation];
-        //[_bottomBar setHidden:_barsHidden animated:YES];
     }
 }
 

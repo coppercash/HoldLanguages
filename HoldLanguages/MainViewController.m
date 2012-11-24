@@ -288,6 +288,14 @@
 }
 
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer{
+    NSString* lyricsPath = [CDiTunesFinder findFileWithName:self.audioSharer.audioName ofType:kLRCExtension];
+    if (lyricsPath == nil) {
+        self.lyrics = nil;
+    }else{
+        CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
+        self.lyrics = newLyrics;
+    }
+    [self.lyricsView reloadData];
     [self.topBar reloadData];
     [self.bottomBar reloadData];
 }
@@ -307,9 +315,10 @@
 
 #pragma mark - Events
 - (void)openedAudioNamed:(NSString*)audioName{
+    
     [self.audioSharer stop];
     [self.audioSharer play];
-    
+    /*
     NSString* lyricsPath = [CDiTunesFinder findFileWithName:audioName ofType:kLRCExtension];
     if (lyricsPath == nil) {
         self.lyrics = nil;
@@ -317,6 +326,7 @@
         CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
         self.lyrics = newLyrics;
     }
+     */
 }
 
 - (void)switchBarsHidden{

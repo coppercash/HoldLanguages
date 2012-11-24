@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
+#define kStatusBarHtight [[UIApplication sharedApplication] statusBarFrame].size.height
 
 @interface CDFormatter : NSObject
 @end

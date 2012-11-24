@@ -59,9 +59,12 @@
 }
 
 - (void)setFocusIndex:(NSUInteger)focusIndex animated:(BOOL)animated{
-    //if (focusIndex == self.focusIndex) return;
+    NSUInteger maxIndexIncreament = 10;
+    NSUInteger currentIndex = self.focusIndex;
+    BOOL shouldAnimated = abs(focusIndex - currentIndex) < maxIndexIncreament;
+    
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:focusIndex inSection:1];
-    [_lyricsTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:animated];
+    [_lyricsTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:animated && shouldAnimated];
 }
 
 - (NSUInteger)focusIndex{

@@ -44,4 +44,5 @@ typedef enum {
 - (void)audioSharer:(CDAudioSharer*)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime;
 - (void)audioSharer:(CDAudioSharer*)audioSharer stateDidChange:(CDAudioPlayerState)state;
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer;
+
 @end
