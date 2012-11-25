@@ -21,6 +21,7 @@
 - (NSTimeInterval)playbackTimeByButton;
 - (void)createLyricsView;
 - (void)destroyLyricsView;
+- (void)switchAssistHidden;
 @end
 @implementation MainViewController
 @synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView;
@@ -146,6 +147,10 @@
 
 - (BOOL)topBarShouldLockRotation:(CDPullTopBar *)topBar{
     return YES;
+}
+
+- (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar{
+    [self switchAssistHidden];
 }
 
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
@@ -308,6 +313,27 @@
         [self setBarsHidden:!self.barsHidden animated:YES];
     }else{
         [self setBarsHidden:!self.barsHidden animated:YES];
+    }
+}
+
+- (void)switchAssistHidden{
+    NSUInteger state = self.topBar.assistButton.state;
+    if (state == 0) {
+        void(^animations)(void) = ^(void){
+            self.lyricsView.alpha = 0.0f;
+        };
+        [UIView animateWithDuration:0.3f animations:animations];
+        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyAssist];
+    } else if (state == 1) {
+        if (self.lyricsView == nil) {
+            [self.backgroundView switchViewWithKey:CDBackgroundViewKeyMissingLyrics];
+        } else {
+            void(^animations)(void) = ^(void){
+                self.lyricsView.alpha = 1.0f;
+            };
+            [UIView animateWithDuration:0.3f animations:animations];
+            [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
+        }
     }
 }
 

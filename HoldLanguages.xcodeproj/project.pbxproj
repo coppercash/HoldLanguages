@@ -16,6 +16,14 @@
 		BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
 		BE2C11EC164F68C000B4F330 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE2C11EA164F68C000B4F330 /* MainViewController.xib */; };
 		BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
+		BE5EBA8F166214DE00FECE42 /* AssistButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA8E166214DE00FECE42 /* AssistButton.png */; };
+		BE5EBA911662170500FECE42 /* AssistButtonDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA901662170500FECE42 /* AssistButtonDown.png */; };
+		BE5EBA9716622D9C00FECE42 /* AssistDouble.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA9216622D9C00FECE42 /* AssistDouble.png */; };
+		BE5EBA9816622D9C00FECE42 /* AssistDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA9316622D9C00FECE42 /* AssistDown.png */; };
+		BE5EBA9916622D9C00FECE42 /* AssistLong.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA9416622D9C00FECE42 /* AssistLong.png */; };
+		BE5EBA9A16622D9C00FECE42 /* AssistPull.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA9516622D9C00FECE42 /* AssistPull.png */; };
+		BE5EBA9B16622D9C00FECE42 /* AssistUp.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA9616622D9C00FECE42 /* AssistUp.png */; };
+		BE5EBA9D16622F3E00FECE42 /* AssistGmail.png in Resources */ = {isa = PBXBuildFile; fileRef = BE5EBA9C16622F3E00FECE42 /* AssistGmail.png */; };
 		BE7D3801165CB69C0018E8E8 /* CDPullTopBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE7D3800165CB69C0018E8E8 /* CDPullTopBar.xib */; };
 		BE7D3805165CCC920018E8E8 /* CDStateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7D3804165CCC920018E8E8 /* CDStateButton.m */; };
 		BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
@@ -86,6 +94,14 @@
 		BE2C11E9164F68C000B4F330 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BE2C11EA164F68C000B4F330 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		BE5EBA8E166214DE00FECE42 /* AssistButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButton.png; sourceTree = "<group>"; };
+		BE5EBA901662170500FECE42 /* AssistButtonDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButtonDown.png; sourceTree = "<group>"; };
+		BE5EBA9216622D9C00FECE42 /* AssistDouble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistDouble.png; sourceTree = "<group>"; };
+		BE5EBA9316622D9C00FECE42 /* AssistDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistDown.png; sourceTree = "<group>"; };
+		BE5EBA9416622D9C00FECE42 /* AssistLong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistLong.png; sourceTree = "<group>"; };
+		BE5EBA9516622D9C00FECE42 /* AssistPull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistPull.png; sourceTree = "<group>"; };
+		BE5EBA9616622D9C00FECE42 /* AssistUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistUp.png; sourceTree = "<group>"; };
+		BE5EBA9C16622F3E00FECE42 /* AssistGmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistGmail.png; sourceTree = "<group>"; };
 		BE7D3800165CB69C0018E8E8 /* CDPullTopBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDPullTopBar.xib; sourceTree = "<group>"; };
 		BE7D3803165CCC920018E8E8 /* CDStateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStateButton.h; sourceTree = "<group>"; };
 		BE7D3804165CCC920018E8E8 /* CDStateButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStateButton.m; sourceTree = "<group>"; };
@@ -241,6 +257,14 @@
 				BE10E607165E2E15001789EF /* RotationLockDown.png */,
 				BE10E608165E2E15001789EF /* RotationUnlockDown.png */,
 				BEE661801660D2B500FFBC33 /* Lyrics.png */,
+				BE5EBA8E166214DE00FECE42 /* AssistButton.png */,
+				BE5EBA901662170500FECE42 /* AssistButtonDown.png */,
+				BE5EBA9216622D9C00FECE42 /* AssistDouble.png */,
+				BE5EBA9316622D9C00FECE42 /* AssistDown.png */,
+				BE5EBA9416622D9C00FECE42 /* AssistLong.png */,
+				BE5EBA9516622D9C00FECE42 /* AssistPull.png */,
+				BE5EBA9616622D9C00FECE42 /* AssistUp.png */,
+				BE5EBA9C16622F3E00FECE42 /* AssistGmail.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -528,6 +552,14 @@
 				BE10E60C165E364E001789EF /* PullButton.png in Resources */,
 				BEE661821660DC0B00FFBC33 /* CDBackgroundView.xib in Resources */,
 				BEE661811660D2B500FFBC33 /* Lyrics.png in Resources */,
+				BE5EBA8F166214DE00FECE42 /* AssistButton.png in Resources */,
+				BE5EBA911662170500FECE42 /* AssistButtonDown.png in Resources */,
+				BE5EBA9716622D9C00FECE42 /* AssistDouble.png in Resources */,
+				BE5EBA9816622D9C00FECE42 /* AssistDown.png in Resources */,
+				BE5EBA9916622D9C00FECE42 /* AssistLong.png in Resources */,
+				BE5EBA9A16622D9C00FECE42 /* AssistPull.png in Resources */,
+				BE5EBA9B16622D9C00FECE42 /* AssistUp.png in Resources */,
+				BE5EBA9D16622F3E00FECE42 /* AssistGmail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

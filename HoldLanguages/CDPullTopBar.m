@@ -44,8 +44,8 @@
     [_rotationLock addPNGFilesNormal:@"RotationUnlock" highlighted:@"RotationUnlockDown"];
     
     _assistButton.delegate = self;
-    [_assistButton addPNGFilesNormal:@"RotationLock" highlighted:@"RotationLockDown"];
-    [_assistButton addPNGFilesNormal:@"RotationLockDown" highlighted:@"RotationLock"];
+    [_assistButton addPNGFilesNormal:@"AssistButton" highlighted:@"AssistButtonDown"];
+    [_assistButton addPNGFilesNormal:@"AssistButtonDown" highlighted:@"AssistButton"];
 }
 
 - (id)init{
