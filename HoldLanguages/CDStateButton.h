@@ -22,6 +22,8 @@ typedef enum {
 @property(nonatomic, weak)id<CDStateButtonDelegate> delegate;
 - (void)addImagesForStateNormal:(UIImage*)normalImage forHighlighted:(UIImage*)highlightedImage;
 - (void)addPNGFilesNormal:(NSString*)normalName highlighted:(NSString*)highlightedName;
+- (void)changeState;
+- (void)changeStateTo:(NSUInteger)state;
 @end
 
 @protocol CDStateButtonDelegate

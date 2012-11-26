@@ -120,9 +120,6 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     _remainingTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     _remainingTimeLabel.text = @"-00:00:00";
     configureLabel(_remainingTimeLabel);
-
-    //_progressView.backgroundColor = kDebugColor;
-    
 }
 
 - (void)drawRect:(CGRect)rect{

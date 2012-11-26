@@ -169,6 +169,7 @@
     [_artist setNonemptyText:[_dataSource topBarNeedsArtist:self]];
     [_title setNonemptyText:[_dataSource topBarNeedsTitle:self]];
     [_albumTitle setNonemptyText:[_dataSource topBarNeedsAlbumTitle:self]];
+    [_assistButton changeStateTo:0];
 }
 
 @end

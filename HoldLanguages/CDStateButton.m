@@ -152,6 +152,19 @@ static NSString* keyOfHighlighted = @"Highlighted";
 }
 
 - (void)touchUpInside{
+    [self changeState];
+}
+
+- (void)touchUpOutside{
+    [self setImageHighlighted:NO];
+}
+
+- (void)touchCancel{
+    [self setImageHighlighted:NO];
+}
+
+#pragma mark - Change State
+- (void)changeState{
     NSInteger shouldIndex = [_delegate shouldStateButtonChangedValue:self];
     NSUInteger destinationIndex;
     if (shouldIndex == CDStateButtonShouldChangeMaskKeep) {
@@ -167,13 +180,14 @@ static NSString* keyOfHighlighted = @"Highlighted";
     _state = destinationIndex;
 }
 
-- (void)touchUpOutside{
-    [self setImageHighlighted:NO];
+- (void)changeStateTo:(NSUInteger)state{
+    if (state == _state) return;
+    NSDictionary* next = [_images objectAtIndex:state];
+    UIImage* newImage = [next objectForKey:keyOfNormal];
+    [self loadImage:newImage];
+    _state = state;
 }
 
-- (void)touchCancel{
-    [self setImageHighlighted:NO];
-}
 
 - (NSUInteger)nextIndex{
     NSUInteger nextIndex = (_state + 1) % _images.count;
