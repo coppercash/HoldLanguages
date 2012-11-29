@@ -57,6 +57,7 @@
 						<string key="NSFrame">{{88, 42}, {192, 20}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -133,7 +134,7 @@
 						<string key="NSFrame">{{40, 20}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="942628965"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="250800565"/>
+						<reference key="NSNextKeyView" ref="304189417"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -145,17 +146,17 @@
 					<object class="IBUILabel" id="250800565">
 						<reference key="NSNextResponder" ref="942628965"/>
 						<int key="NSvFlags">303</int>
-						<string key="NSFrame">{{78, 24}, {202, 21}}</string>
+						<string key="NSFrame">{{78, 20}, {202, 30}}</string>
 						<reference key="NSSuperview" ref="942628965"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="304189417"/>
+						<reference key="NSNextKeyView" ref="839546344"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Tap this button to pick an audio.</string>
+						<string key="IBUIText">Tap the button in the middle of top bar to pick an audio.</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -165,6 +166,7 @@
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
+						<int key="IBUINumberOfLines">2</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="385943870">
 							<int key="type">1</int>
 							<double key="pointSize">12</double>
@@ -175,6 +177,7 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+						<double key="preferredMaxLayoutWidth">202</double>
 					</object>
 					<object class="IBUIImageView" id="304189417">
 						<reference key="NSNextResponder" ref="942628965"/>
@@ -182,7 +185,7 @@
 						<string key="NSFrame">{{40, 58}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="942628965"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="839546344"/>
+						<reference key="NSNextKeyView" ref="250800565"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -359,6 +362,7 @@
 						<string key="NSFrame">{{78, 236}, {202, 44}}</string>
 						<reference key="NSSuperview" ref="942628965"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -457,7 +461,6 @@ ZHZpY2VzLg</string>
 						<reference key="object" ref="942628965"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="299771535"/>
-							<reference ref="250800565"/>
 							<reference ref="304189417"/>
 							<reference ref="839546344"/>
 							<reference ref="635693479"/>
@@ -468,6 +471,7 @@ ZHZpY2VzLg</string>
 							<reference ref="213327266"/>
 							<reference ref="700841475"/>
 							<reference ref="245767927"/>
+							<reference ref="250800565"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -598,12 +602,12 @@ ZHZpY2VzLg</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="AssistDouble.png">{60, 60}</string>
-			<string key="AssistDown.png">{60, 60}</string>
-			<string key="AssistGmail.png">{60, 60}</string>
-			<string key="AssistLong.png">{60, 60}</string>
-			<string key="AssistPull.png">{60, 60}</string>
-			<string key="AssistUp.png">{60, 60}</string>
+			<string key="AssistDouble.png">{30, 30}</string>
+			<string key="AssistDown.png">{30, 30}</string>
+			<string key="AssistGmail.png">{30, 30}</string>
+			<string key="AssistLong.png">{30, 30}</string>
+			<string key="AssistPull.png">{30, 30}</string>
+			<string key="AssistUp.png">{30, 30}</string>
 			<string key="Lyrics.png">{38, 43}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>

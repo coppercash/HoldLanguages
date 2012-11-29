@@ -1,4 +1,2 @@
-{
-	CFBundleDisplayName = "Hold\U5916\U8bed";
-	"Display bundle name" = "Hold\U5916\U8bed";
-}
+CFBundleDisplayName = "指尖外语";
+CFBundleName = "指尖外语";

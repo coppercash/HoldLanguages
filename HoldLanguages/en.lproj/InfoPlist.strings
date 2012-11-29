@@ -1,4 +1,2 @@
-{
-	CFBundleDisplayName = "Hold Langs";
-	"Display bundle name" = "Hold Langs";
-}
+CFBundleDisplayName = "Hold Langs";
+CFBundleName = "Hold Langs";
