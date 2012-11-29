@@ -18,7 +18,7 @@
 #define kDebugColor [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f]
 #define kViewAutoresizingNoMarginSurround UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
 #ifdef DEBUG_MODE
 
 #define DLog(...);      NSLog(__VA_ARGS__);

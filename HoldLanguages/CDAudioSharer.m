@@ -95,7 +95,6 @@
         [_processTimer invalidate];
     }
     _processTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(refresh) userInfo:nil repeats:YES];
-    DLogCurrentMethod;
 }
 
 - (void)invalidateTimer{
@@ -103,7 +102,6 @@
         [_processTimer invalidate];
         _processTimer = nil;
     }
-    DLogCurrentMethod;
 }
 
 - (void)refresh{
@@ -184,7 +182,6 @@
 }
 
 - (void)handlePlaybackStateChanged:(id)notification{
-    DLogCurrentMethod;
     CDiPodPlayer* audioPlayer = (CDiPodPlayer*)self.audioPlayer;
 	MPMusicPlaybackState playbackState = audioPlayer.audioPlayer.playbackState;
     
