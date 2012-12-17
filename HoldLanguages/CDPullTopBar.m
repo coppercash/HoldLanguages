@@ -1,12 +1,5 @@
-//
-//  CDPullTopBar.m
-//  HoldLanguages
-//
-//  Created by William Remaerd on 11/16/12.
-//  Copyright (c) 2012 Coder Dreamer. All rights reserved.
-//
-
 #import "CDPullTopBar.h"
+#import "CDLabel.h"
 #import "Header.h"
 
 @interface CDPullTopBar ()
@@ -17,7 +10,8 @@
 - (void)touchPullButtonUpOutside;
 @end
 @implementation CDPullTopBar
-@synthesize artist = _artist, title = _title, albumTitle = _albumTitle, pullButton = _pullButton, rotationLock = _rotationLock, assistButton = _assistButton;
+@synthesize artistTemplate = _artistTemplate, titleTemplate = _titleTemplate, albumTitleTemplate = _albumTitleTemplate, artist = _artist, title = _title, albumTitle = _albumTitle;
+@synthesize pullButton = _pullButton, rotationLock = _rotationLock, assistButton = _assistButton;
 @synthesize delegate = _delegate, dataSource = _dataSource;
 #pragma mark - UIView Method
 - (void)initialize{
@@ -38,6 +32,19 @@
     _pullButton.alpha = kBarAlpha;
     
     [self loadSubviewsFromXibNamed:@"CDPullTopBar"];
+    
+    _artist = [[CDLabel alloc] initWithUILable:_artistTemplate];
+    [self addSubview:_artist];
+    
+    _title = [[CDLabel alloc] initWithUILable:_titleTemplate];
+    [self addSubview:_title];
+    
+    _albumTitle = [[CDLabel alloc] initWithUILable:_albumTitleTemplate];
+    [self addSubview:_albumTitle];
+
+    [_artistTemplate removeFromSuperview], _artistTemplate = nil;
+    [_titleTemplate removeFromSuperview], _titleTemplate = nil;
+    [_albumTitleTemplate removeFromSuperview], _albumTitleTemplate = nil;
     
     _rotationLock.delegate = self;
     [_rotationLock addPNGFilesNormal:@"RotationLock" highlighted:@"RotationLockDown"];
@@ -71,8 +78,7 @@
     CDColorFinder* colorFinder = [[CDColorFinder alloc] init];
     UIColor * startColor = colorFinder.colorOfBarDark;
     UIColor * endColor = colorFinder.colorOfBarLight;
-    //UIColor * startColor = [UIColor colorWithHex:0x4a4b4a];
-    //UIColor * endColor = [UIColor colorWithHex:0x282928];
+
     NSArray* colors = [NSArray arrayWithObjects:(id)[startColor CGColor], (id)[endColor CGColor], nil];
     CGGradientRef gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(),
                                                         (__bridge CFArrayRef)colors,
@@ -83,12 +89,6 @@
                                 CGPointMake(rect.origin.x, kTopBarVisualHeight),
                                 0);
     CGGradientRelease(gradient);
-    
-    //NSString* pullButtonPath = [[NSBundle mainBundle] pathForResource:@"PullButton" ofType:@"png"];
-    //UIImage* pullButton = [[UIImage alloc] initWithContentsOfFile:pullButtonPath];
-    //[pullButton drawInRect:self.pullButtonFrame];
-    //CGContextFillRect(context, self.pullButtonFrame);
-    //CGContextSetFillColorWithColor(context, kDebugColor.CGColor);
 }
 
 #pragma mark - Touch

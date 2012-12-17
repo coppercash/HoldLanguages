@@ -98,6 +98,14 @@
 		BEB9E438165B73CB00359064 /* ForwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB9E434165B73CB00359064 /* ForwardButton@2x.png */; };
 		BEB9E439165B73CB00359064 /* BackwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB9E435165B73CB00359064 /* BackwardButton@2x.png */; };
 		BEB9E441165B7DDF00359064 /* PauseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB9E440165B7DDF00359064 /* PauseButton@2x.png */; };
+		BEC0FEFC167EC7610081E67C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */; };
+		BEC0FEFD167EC7610081E67C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
+		BEC0FEFE167EC7610081E67C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D5164E318E007EBEAB /* Foundation.framework */; };
+		BEC0FF04167EC7610081E67C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF02167EC7610081E67C /* InfoPlist.strings */; };
+		BEC0FF07167EC7610081E67C /* HoldLanguagesLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */; };
+		BEC0FF19167ECB7E0081E67C /* Halo.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF18167ECB7E0081E67C /* Halo.lrc */; };
+		BEC0FF39167F0E270081E67C /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF38167F0E270081E67C /* MarqueeLabel.m */; };
+		BEC0FF3D167F0E910081E67C /* CDLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF3C167F0E910081E67C /* CDLabel.m */; };
 		BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
 		BEE661811660D2B500FFBC33 /* Lyrics.png in Resources */ = {isa = PBXBuildFile; fileRef = BEE661801660D2B500FFBC33 /* Lyrics.png */; };
 		BEE661821660DC0B00FFBC33 /* CDBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */; };
@@ -232,6 +240,18 @@
 		BEB9E434165B73CB00359064 /* ForwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ForwardButton@2x.png"; sourceTree = "<group>"; };
 		BEB9E435165B73CB00359064 /* BackwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackwardButton@2x.png"; sourceTree = "<group>"; };
 		BEB9E440165B7DDF00359064 /* PauseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PauseButton@2x.png"; sourceTree = "<group>"; };
+		BEC0FEFA167EC7600081E67C /* HoldLanguagesLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoldLanguagesLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		BEC0FF01167EC7610081E67C /* HoldLanguagesLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoldLanguagesLogicTests-Info.plist"; sourceTree = "<group>"; };
+		BEC0FF03167EC7610081E67C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BEC0FF05167EC7610081E67C /* HoldLanguagesLogicTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoldLanguagesLogicTests.h; sourceTree = "<group>"; };
+		BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HoldLanguagesLogicTests.m; sourceTree = "<group>"; };
+		BEC0FF08167EC7610081E67C /* HoldLanguagesLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HoldLanguagesLogicTests-Prefix.pch"; sourceTree = "<group>"; };
+		BEC0FF18167ECB7E0081E67C /* Halo.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Halo.lrc; sourceTree = "<group>"; };
+		BEC0FF37167F0E270081E67C /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
+		BEC0FF38167F0E270081E67C /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
+		BEC0FF3B167F0E910081E67C /* CDLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLabel.h; sourceTree = "<group>"; };
+		BEC0FF3C167F0E910081E67C /* CDLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLabel.m; sourceTree = "<group>"; };
 		BED5B0DE164E8BA100A8216F /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		BEDB7DEB1651BCF900CAF26A /* CDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStack.h; sourceTree = "<group>"; };
 		BEDB7DEC1651BCF900CAF26A /* CDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStack.m; sourceTree = "<group>"; };
@@ -254,6 +274,16 @@
 				BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */,
 				BE82F6D8164E318E007EBEAB /* CoreGraphics.framework in Frameworks */,
 				BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEC0FEF6167EC7600081E67C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEC0FEFC167EC7610081E67C /* SenTestingKit.framework in Frameworks */,
+				BEC0FEFD167EC7610081E67C /* UIKit.framework in Frameworks */,
+				BEC0FEFE167EC7610081E67C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +365,8 @@
 				BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */,
 				BE7D3803165CCC920018E8E8 /* CDStateButton.h */,
 				BE7D3804165CCC920018E8E8 /* CDStateButton.m */,
+				BEC0FF3B167F0E910081E67C /* CDLabel.h */,
+				BEC0FF3C167F0E910081E67C /* CDLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -357,6 +389,9 @@
 				BE256FAB1666EA54001665EF /* BottomBar */,
 				BE256FAA1666EA2C001665EF /* TopBar */,
 				BE256FA91666EA18001665EF /* Assist */,
+				BE256FAC1666EBB3001665EF /* Cursor.png */,
+				BEB58B99165C6505002426E4 /* Cursor@2x.png */,
+				BEE661801660D2B500FFBC33 /* Lyrics.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -365,6 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				BE82F6D9164E318E007EBEAB /* HoldLanguages */,
+				BEC0FEFF167EC7610081E67C /* HoldLanguagesLogicTests */,
 				BE82F6D2164E318E007EBEAB /* Frameworks */,
 				BE82F6D0164E318E007EBEAB /* Products */,
 			);
@@ -374,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				BE82F6CF164E318E007EBEAB /* HoldLanguages.app */,
+				BEC0FEFA167EC7600081E67C /* HoldLanguagesLogicTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -386,6 +423,7 @@
 				BE82F6D5164E318E007EBEAB /* Foundation.framework */,
 				BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */,
 				BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */,
+				BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -404,9 +442,6 @@
 				BE2C11EF164F68DB00B4F330 /* Controllers */,
 				BE2C11EE164F68CF00B4F330 /* Views */,
 				BE56E8A516514C7E006E086F /* Resources */,
-				BE256FAC1666EBB3001665EF /* Cursor.png */,
-				BEB58B99165C6505002426E4 /* Cursor@2x.png */,
-				BEE661801660D2B500FFBC33 /* Lyrics.png */,
 				BE82F6DA164E318E007EBEAB /* Supporting Files */,
 			);
 			path = HoldLanguages;
@@ -506,6 +541,7 @@
 		BE97360916568449006718F8 /* Third Part */ = {
 			isa = PBXGroup;
 			children = (
+				BEC0FF36167F0E270081E67C /* MarqueeLabel */,
 				BE96AC6A165733310010F8E0 /* ZenPlayerButton */,
 				BEB58B84165C5CDB002426E4 /* YLProgressBar */,
 			);
@@ -574,6 +610,44 @@
 			path = YLProgressBar;
 			sourceTree = "<group>";
 		};
+		BEC0FEFF167EC7610081E67C /* HoldLanguagesLogicTests */ = {
+			isa = PBXGroup;
+			children = (
+				BEC0FF16167ECABD0081E67C /* Resource */,
+				BEC0FF05167EC7610081E67C /* HoldLanguagesLogicTests.h */,
+				BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */,
+				BEC0FF00167EC7610081E67C /* Supporting Files */,
+			);
+			path = HoldLanguagesLogicTests;
+			sourceTree = "<group>";
+		};
+		BEC0FF00167EC7610081E67C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BEC0FF01167EC7610081E67C /* HoldLanguagesLogicTests-Info.plist */,
+				BEC0FF02167EC7610081E67C /* InfoPlist.strings */,
+				BEC0FF08167EC7610081E67C /* HoldLanguagesLogicTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BEC0FF16167ECABD0081E67C /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				BEC0FF18167ECB7E0081E67C /* Halo.lrc */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		BEC0FF36167F0E270081E67C /* MarqueeLabel */ = {
+			isa = PBXGroup;
+			children = (
+				BEC0FF37167F0E270081E67C /* MarqueeLabel.h */,
+				BEC0FF38167F0E270081E67C /* MarqueeLabel.m */,
+			);
+			path = MarqueeLabel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -593,6 +667,24 @@
 			productName = HoldLanguages;
 			productReference = BE82F6CF164E318E007EBEAB /* HoldLanguages.app */;
 			productType = "com.apple.product-type.application";
+		};
+		BEC0FEF9167EC7600081E67C /* HoldLanguagesLogicTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEC0FF0C167EC7610081E67C /* Build configuration list for PBXNativeTarget "HoldLanguagesLogicTests" */;
+			buildPhases = (
+				BEC0FEF5167EC7600081E67C /* Sources */,
+				BEC0FEF6167EC7600081E67C /* Frameworks */,
+				BEC0FEF7167EC7600081E67C /* Resources */,
+				BEC0FEF8167EC7600081E67C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HoldLanguagesLogicTests;
+			productName = HoldLanguagesLogicTests;
+			productReference = BEC0FEFA167EC7600081E67C /* HoldLanguagesLogicTests.octest */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -617,6 +709,7 @@
 			projectRoot = "";
 			targets = (
 				BE82F6CE164E318E007EBEAB /* HoldLanguages */,
+				BEC0FEF9167EC7600081E67C /* HoldLanguagesLogicTests */,
 			);
 		};
 /* End PBXProject section */
@@ -693,7 +786,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BEC0FEF7167EC7600081E67C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEC0FF04167EC7610081E67C /* InfoPlist.strings in Resources */,
+				BEC0FF19167ECB7E0081E67C /* Halo.lrc in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BEC0FEF8167EC7600081E67C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BE82F6CB164E318E007EBEAB /* Sources */ = {
@@ -728,6 +846,16 @@
 				BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */,
 				BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */,
 				BE7D3805165CCC920018E8E8 /* CDStateButton.m in Sources */,
+				BEC0FF39167F0E270081E67C /* MarqueeLabel.m in Sources */,
+				BEC0FF3D167F0E910081E67C /* CDLabel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEC0FEF5167EC7600081E67C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEC0FF07167EC7610081E67C /* HoldLanguagesLogicTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,6 +878,14 @@
 				BE987BF91650D43300077D30 /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		BEC0FF02167EC7610081E67C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BEC0FF03167EC7610081E67C /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */ = {
@@ -879,6 +1015,54 @@
 			};
 			name = Release;
 		};
+		BEC0FF09167EC7610081E67C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HoldLanguagesLogicTests/HoldLanguagesLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "HoldLanguagesLogicTests/HoldLanguagesLogicTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		BEC0FF0A167EC7610081E67C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HoldLanguagesLogicTests/HoldLanguagesLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "HoldLanguagesLogicTests/HoldLanguagesLogicTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		BEC0FF0B167EC7610081E67C /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HoldLanguagesLogicTests/HoldLanguagesLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "HoldLanguagesLogicTests/HoldLanguagesLogicTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Distribution;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -898,6 +1082,16 @@
 				BE82F6EE164E318E007EBEAB /* Debug */,
 				BE82F6EF164E318E007EBEAB /* Release */,
 				BE256FD71666F7A9001665EF /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEC0FF0C167EC7610081E67C /* Build configuration list for PBXNativeTarget "HoldLanguagesLogicTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEC0FF09167EC7610081E67C /* Debug */,
+				BEC0FF0A167EC7610081E67C /* Release */,
+				BEC0FF0B167EC7610081E67C /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

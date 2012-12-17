@@ -15,11 +15,14 @@
 #define kPullButtonEffectiveHeight 40.0f
 #define kPullButtonImageName @"PullButton"
 @protocol CDPullTopBarDelegate, CDPullTopBarDataSource;
-@class CDStateButton;
+@class CDStateButton, CDLabel;
 @interface CDPullTopBar : UIControl <CDStateButtonDelegate>
-@property(nonatomic, readonly, strong)IBOutlet UILabel* artist;
-@property(nonatomic, readonly, strong)IBOutlet UILabel* title;
-@property(nonatomic, readonly, strong)IBOutlet UILabel* albumTitle;
+@property(nonatomic, readonly, strong)IBOutlet UILabel* artistTemplate;
+@property(nonatomic, readonly, strong)IBOutlet UILabel* titleTemplate;
+@property(nonatomic, readonly, strong)IBOutlet UILabel* albumTitleTemplate;
+@property(nonatomic, readonly, strong)CDLabel* artist;
+@property(nonatomic, readonly, strong)CDLabel* title;
+@property(nonatomic, readonly, strong)CDLabel* albumTitle;
 @property(nonatomic, readonly, strong)IBOutlet CDStateButton* rotationLock;
 @property(nonatomic, readonly, strong)IBOutlet CDStateButton* assistButton;
 @property(nonatomic, readonly)BOOL isRotationLocked;

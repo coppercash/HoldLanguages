@@ -27,15 +27,6 @@ NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index, NSTimeInterval time, 
         [CDLRCParser parseFile:filePath intoDictionary:dictionary];
         _timeStamps = [dictionary objectForKey:kTimeStamps];
         _otherStamps = [dictionary objectForKey:kOtherStamps];
-        
-        /*
-         for (CDLRCTimeStamp* stamp in self.timeStamps) {
-         DLog(@"%f\t%@", stamp.time, stamp.content);
-         }
-         for (CDLRCOtherStamp* stamp in self.otherStamps) {
-         DLog(@"%@\t%@", stamp.type, stamp.content);
-         }
-         */
     }
     return self;
 }

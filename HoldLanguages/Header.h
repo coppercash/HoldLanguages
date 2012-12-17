@@ -17,6 +17,7 @@
 #define kMissLocalizedString @"MissLocalizedString"
 #define kDebugColor [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f]
 #define kViewAutoresizingNoMarginSurround UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
+#define SafeRelease(object) [object release], object = nil;
 
 //#define DEBUG_MODE
 #ifdef DEBUG_MODE

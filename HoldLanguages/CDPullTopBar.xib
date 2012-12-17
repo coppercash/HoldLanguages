@@ -43,6 +43,10 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="475538973"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<object class="NSColor" key="IBUIBackgroundColor" id="353237533">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MCAwAA</bytes>
+						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -75,6 +79,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="788881388"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<reference key="IBUIBackgroundColor" ref="353237533"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -103,6 +108,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="580212348"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<reference key="IBUIBackgroundColor" ref="353237533"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -159,30 +165,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">albumTitle</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="788881388"/>
-					</object>
-					<int key="connectionID">53</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">artist</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="560764224"/>
-					</object>
-					<int key="connectionID">54</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">title</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="475538973"/>
-					</object>
-					<int key="connectionID">55</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">rotationLock</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="580212348"/>
@@ -196,6 +178,30 @@
 						<reference key="destination" ref="162634188"/>
 					</object>
 					<int key="connectionID">59</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">titleTemplate</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="475538973"/>
+					</object>
+					<int key="connectionID">60</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">artistTemplate</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="560764224"/>
+					</object>
+					<int key="connectionID">61</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">albumTitleTemplate</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="788881388"/>
+					</object>
+					<int key="connectionID">62</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -278,7 +284,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">59</int>
+			<int key="maxID">62</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -286,19 +292,19 @@
 					<string key="className">CDPullTopBar</string>
 					<string key="superclassName">UIControl</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="albumTitle">UILabel</string>
-						<string key="artist">UILabel</string>
+						<string key="albumTitleTemplate">UILabel</string>
+						<string key="artistTemplate">UILabel</string>
 						<string key="assistButton">CDStateButton</string>
 						<string key="rotationLock">CDStateButton</string>
-						<string key="title">UILabel</string>
+						<string key="titleTemplate">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="albumTitle">
-							<string key="name">albumTitle</string>
+						<object class="IBToOneOutletInfo" key="albumTitleTemplate">
+							<string key="name">albumTitleTemplate</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="artist">
-							<string key="name">artist</string>
+						<object class="IBToOneOutletInfo" key="artistTemplate">
+							<string key="name">artistTemplate</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="assistButton">
@@ -309,8 +315,8 @@
 							<string key="name">rotationLock</string>
 							<string key="candidateClassName">CDStateButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="title">
-							<string key="name">title</string>
+						<object class="IBToOneOutletInfo" key="titleTemplate">
+							<string key="name">titleTemplate</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
