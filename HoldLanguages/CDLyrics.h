@@ -10,6 +10,12 @@
 
 #define kLRCExtension @"lrc"
 
+typedef enum{
+    CDSeekBackward = -1,
+    CDSeekUndefined = 0,
+    CDSeekForward = 1
+}CDSeekDestination;
+
 @interface CDLyrics : NSObject
 @property(nonatomic, readonly) NSUInteger numberOfLyricsRows;
 @property(nonatomic, readonly) BOOL isReady;

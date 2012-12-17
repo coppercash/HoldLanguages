@@ -15,8 +15,7 @@
 #import "Header.h"
 
 @interface CDLRCLyrics ()
-- (NSUInteger)seekIndexOfStampBeforeTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index;
-- (NSUInteger)seekIndexOfStampNextToTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index;
+NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index, NSTimeInterval time, CDSeekDestination destintion, NSArray* array);
 @end
 @implementation CDLRCLyrics
 @synthesize timeStamps = _timeStamps, otherStamps = _otherStamps;
@@ -68,14 +67,7 @@
 - (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time{
     static NSUInteger index = 0;
     @try {
-        NSTimeInterval currentTime = [self timeAtIndex:index];
-        NSUInteger newIndex = 0;
-        if(time > currentTime){
-            newIndex = [self seekIndexOfStampNextToTime:time forwardFromIndex:index];
-        }else{
-            newIndex = [self seekIndexOfStampBeforeTime:time backwardFromIndex:index];
-        }
-        index = newIndex;
+        index = seekIndexOfStampsClosedToTime(index, time, CDSeekUndefined, self.timeStamps);
         return index;
     }
     @catch (NSException *exception) {
@@ -83,26 +75,51 @@
     }
 }
 
-- (NSUInteger)seekIndexOfStampBeforeTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index{
-    if (index == 0) return 0;
-    NSUInteger backwardIndex = index - 1;
-    NSTimeInterval backwardTime = [self timeAtIndex:backwardIndex];
-    if (time < backwardTime) {
-        return [self seekIndexOfStampBeforeTime:time backwardFromIndex:backwardIndex];
-    }else{
-        return backwardIndex;
+NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index,
+                                         NSTimeInterval time,
+                                         CDSeekDestination destintion,
+                                         NSArray* array
+                                         ){
+    /*Determine seeking destination,backward or forward*/
+    if (destintion == CDSeekUndefined) {
+        CDLRCTimeStamp* cStamp = [array objectAtIndex:index];
+        destintion = time < cStamp.time ? CDSeekBackward : CDSeekForward;
     }
-}
-
-- (NSUInteger)seekIndexOfStampNextToTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index{
-    if (index >= self.timeStamps.lastIndex) return self.timeStamps.lastIndex;
-    NSUInteger forwardIndex = index + 1;
-    NSTimeInterval forwardTime = [self timeAtIndex:forwardIndex];
-    if (time > forwardTime) {
-        return [self seekIndexOfStampNextToTime:time forwardFromIndex:forwardIndex];
-    }else{
-        return index;
+    
+    //Find the closed stamp to current one.
+    NSUInteger seekIndex = index + destintion;
+    {//Ensure seeking won't be out of scope.
+        if (seekIndex == NSUIntegerMax) return 0;   //Because NSUInteger 0 minus 1 wont't be -1.
+        NSUInteger lastIndex = array.lastIndex;
+        if (seekIndex > lastIndex) return lastIndex;    //Must under last sentence.Because NSUInteger is greater than lastIndex.
     }
+    CDLRCTimeStamp* seekStamp = [array objectAtIndex:seekIndex];
+    NSTimeInterval seekTime = seekStamp.time;
+    //According to destination, determine continuing seeking or not
+    BOOL continueSeeking = NO;
+    switch (destintion) {
+        case CDSeekBackward:{
+            continueSeeking = time < seekTime;
+        }break;
+        case CDSeekForward:{
+            continueSeeking = time > seekTime;
+        }break;
+        default:
+            break;
+    }
+    
+    if (continueSeeking) {
+        index = seekIndexOfStampsClosedToTime(seekIndex, time, destintion, array);
+    }else{
+        /*
+         The index should be the previous one before the time in using.
+         So, for backward seeking the previous index, for forward seeking the current.
+         */
+        if (destintion == CDSeekBackward) {
+            index = seekIndex;
+        }
+    }
+    return index;
 }
 
 #pragma mark - Don't delete, there will be a variable about "degree".
