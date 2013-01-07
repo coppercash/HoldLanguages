@@ -12,14 +12,14 @@
 #import "CDFormatter.h"
 #import "CDCategories.h"
 #import "CDColorFinder.h"
+#import "CDMemAssist.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kMissLocalizedString @"MissLocalizedString"
 #define kDebugColor [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f]
 #define kViewAutoresizingNoMarginSurround UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
-#define SafeRelease(object) [object release], object = nil;
 
-//#define DEBUG_MODE
+#define DEBUG_MODE
 #ifdef DEBUG_MODE
 
 #define DLog(...);      NSLog(__VA_ARGS__);
@@ -30,9 +30,9 @@
 #define DLogCurrentMethod NSLog(@"%@:%d@%@/%@", __FILENAME__, __LINE__, NSStringFromClass([self class]), NSStringFromSelector(_cmd))
 #else
 
-#define DLog(...);      // NSLog(__VA_ARGS__);
-#define DLogPoint(p)    // NSLog(@"%f,%f", p.x, p.y);
-#define DLogSize(p)     // NSLog(@"%f,%f", p.width, p.height);
-#define DLogRect(p)     // NSLog(@"%f,%f %f,%f", p.origin.x, p.origin.y, p.size.width, p.size.height);
+#define DLog(...);
+#define DLogPoint(p)
+#define DLogSize(p)
+#define DLogRect(p)
 
 #endif

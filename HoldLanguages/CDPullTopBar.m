@@ -1,5 +1,4 @@
 #import "CDPullTopBar.h"
-#import "CDLabel.h"
 #import "Header.h"
 
 @interface CDPullTopBar ()
@@ -10,7 +9,7 @@
 - (void)touchPullButtonUpOutside;
 @end
 @implementation CDPullTopBar
-@synthesize artistTemplate = _artistTemplate, titleTemplate = _titleTemplate, albumTitleTemplate = _albumTitleTemplate, artist = _artist, title = _title, albumTitle = _albumTitle;
+@synthesize artist = _artist, title = _title, albumTitle = _albumTitle;
 @synthesize pullButton = _pullButton, rotationLock = _rotationLock, assistButton = _assistButton;
 @synthesize delegate = _delegate, dataSource = _dataSource;
 #pragma mark - UIView Method
@@ -33,18 +32,10 @@
     
     [self loadSubviewsFromXibNamed:@"CDPullTopBar"];
     
-    _artist = [[CDLabel alloc] initWithUILable:_artistTemplate];
-    [self addSubview:_artist];
-    
-    _title = [[CDLabel alloc] initWithUILable:_titleTemplate];
-    [self addSubview:_title];
-    
-    _albumTitle = [[CDLabel alloc] initWithUILable:_albumTitleTemplate];
-    [self addSubview:_albumTitle];
-
-    [_artistTemplate removeFromSuperview], _artistTemplate = nil;
-    [_titleTemplate removeFromSuperview], _titleTemplate = nil;
-    [_albumTitleTemplate removeFromSuperview], _albumTitleTemplate = nil;
+    _title.textColor = [UIColor whiteColor];
+    _artist.textColor = _albumTitle.textColor = [UIColor lightGrayColor];
+    UIFont *font = [UIFont boldSystemFontOfSize:12.0f];
+    _title.font = _artist.font = _albumTitle.font = font;
     
     _rotationLock.delegate = self;
     [_rotationLock addPNGFilesNormal:@"RotationLock" highlighted:@"RotationLockDown"];
@@ -93,30 +84,41 @@
 
 #pragma mark - Touch
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
+    /*
     CGPoint location = [touch locationInView:self];
     if (CGRectContainsPoint(self.pullButtonFrame, location)) {
         [self touchPullButtonDown];
         return YES;
     }else{
         return NO;
-    }
+    }*/
+    CGPoint location = [touch locationInView:self];
+    _yStartOffset = location.y;
+    [self touchPullButtonDown];
+    return YES; 
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
+    //CGPoint location = [touch locationInView:self];
+    CGPoint locationInSuperView = [touch locationInView:self.superview];
+    CGFloat yOffset = locationInSuperView.y - (_yStartOffset - self.frame.size.height / 2);
+    self.center = CGPointMake(self.center.x, yOffset);
     return YES;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    CGPoint location = [touch locationInView:self];
-    if (CGRectContainsPoint(self.pullButtonFrame, location)) {
+    CGPoint locationInSuperView = [touch locationInView:self.superview];
+    CGFloat threshold = self.superview.bounds.size.height * kPullingThresholdScale;
+    if (locationInSuperView.y - _yStartOffset > threshold) {
         [self touchPullButtonUpInside];
     }else{
         [self touchPullButtonUpOutside];
     }
+    _yStartOffset = 0.0f;
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event{
-    
+    _yStartOffset = 0.0f;
 }
 
 #pragma mark - Pull Button
@@ -166,10 +168,25 @@
 
 #pragma mark - Reload
 - (void)reloadData{
-    [_artist setNonemptyText:[_dataSource topBarNeedsArtist:self]];
-    [_title setNonemptyText:[_dataSource topBarNeedsTitle:self]];
-    [_albumTitle setNonemptyText:[_dataSource topBarNeedsAlbumTitle:self]];
+    _artist.text = [_dataSource topBarNeedsArtist:self];
+    _title.text = [_dataSource topBarNeedsTitle:self];
+    _albumTitle.text = [_dataSource topBarNeedsAlbumTitle:self];
     [_assistButton changeStateTo:0];
+}
+
+#pragma mark - CDScrollLabelDelegate
+#define kAnimationInterval 3.0f
+- (NSTimeInterval)scrollLabelShouldStartAnimating:(CDScrollLabel *)scrollLabel{
+    return kAnimationInterval;
+}
+
+- (NSTimeInterval)scrollLabelShouldContinueAnimating:(CDScrollLabel *)scrollLabel{
+    if (!_artist.isAnimating && !_title.isAnimating && !_albumTitle.isAnimating) {
+        [_artist animateAfterDelay:kAnimationInterval];
+        [_title animateAfterDelay:kAnimationInterval];
+        [_albumTitle animateAfterDelay:kAnimationInterval];
+    }
+    return -1.0f;
 }
 
 @end

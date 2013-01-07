@@ -13,6 +13,8 @@
 		BE10E609165E2E15001789EF /* RotationLockDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E607165E2E15001789EF /* RotationLockDown@2x.png */; };
 		BE10E60A165E2E15001789EF /* RotationUnlockDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E608165E2E15001789EF /* RotationUnlockDown@2x.png */; };
 		BE10E60C165E364E001789EF /* PullButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E60B165E364E001789EF /* PullButton@2x.png */; };
+		BE14DBB216999B9F00DB04D5 /* CDScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */; };
+		BE14DBB316999B9F00DB04D5 /* CDScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */; };
 		BE256FAD1666EBB3001665EF /* Cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAC1666EBB3001665EF /* Cursor.png */; };
 		BE256FB61666ECED001665EF /* AssistButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAE1666ECED001665EF /* AssistButton.png */; };
 		BE256FB71666ECED001665EF /* AssistButtonDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAF1666ECED001665EF /* AssistButtonDown.png */; };
@@ -104,8 +106,6 @@
 		BEC0FF04167EC7610081E67C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF02167EC7610081E67C /* InfoPlist.strings */; };
 		BEC0FF07167EC7610081E67C /* HoldLanguagesLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */; };
 		BEC0FF19167ECB7E0081E67C /* Halo.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF18167ECB7E0081E67C /* Halo.lrc */; };
-		BEC0FF39167F0E270081E67C /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF38167F0E270081E67C /* MarqueeLabel.m */; };
-		BEC0FF3D167F0E910081E67C /* CDLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF3C167F0E910081E67C /* CDLabel.m */; };
 		BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
 		BEE661811660D2B500FFBC33 /* Lyrics.png in Resources */ = {isa = PBXBuildFile; fileRef = BEE661801660D2B500FFBC33 /* Lyrics.png */; };
 		BEE661821660DC0B00FFBC33 /* CDBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */; };
@@ -121,6 +121,9 @@
 		BE10E607165E2E15001789EF /* RotationLockDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RotationLockDown@2x.png"; sourceTree = "<group>"; };
 		BE10E608165E2E15001789EF /* RotationUnlockDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RotationUnlockDown@2x.png"; sourceTree = "<group>"; };
 		BE10E60B165E364E001789EF /* PullButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PullButton@2x.png"; sourceTree = "<group>"; };
+		BE14DBAB16996C3200DB04D5 /* CDMemAssist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMemAssist.h; sourceTree = "<group>"; };
+		BE14DBB016999B9F00DB04D5 /* CDScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDScrollLabel.h; sourceTree = "<group>"; };
+		BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDScrollLabel.m; sourceTree = "<group>"; };
 		BE256FAC1666EBB3001665EF /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cursor.png; sourceTree = "<group>"; };
 		BE256FAE1666ECED001665EF /* AssistButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButton.png; sourceTree = "<group>"; };
 		BE256FAF1666ECED001665EF /* AssistButtonDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButtonDown.png; sourceTree = "<group>"; };
@@ -248,10 +251,6 @@
 		BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HoldLanguagesLogicTests.m; sourceTree = "<group>"; };
 		BEC0FF08167EC7610081E67C /* HoldLanguagesLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HoldLanguagesLogicTests-Prefix.pch"; sourceTree = "<group>"; };
 		BEC0FF18167ECB7E0081E67C /* Halo.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Halo.lrc; sourceTree = "<group>"; };
-		BEC0FF37167F0E270081E67C /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
-		BEC0FF38167F0E270081E67C /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
-		BEC0FF3B167F0E910081E67C /* CDLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLabel.h; sourceTree = "<group>"; };
-		BEC0FF3C167F0E910081E67C /* CDLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLabel.m; sourceTree = "<group>"; };
 		BED5B0DE164E8BA100A8216F /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		BEDB7DEB1651BCF900CAF26A /* CDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStack.h; sourceTree = "<group>"; };
 		BEDB7DEC1651BCF900CAF26A /* CDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStack.m; sourceTree = "<group>"; };
@@ -365,8 +364,8 @@
 				BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */,
 				BE7D3803165CCC920018E8E8 /* CDStateButton.h */,
 				BE7D3804165CCC920018E8E8 /* CDStateButton.m */,
-				BEC0FF3B167F0E910081E67C /* CDLabel.h */,
-				BEC0FF3C167F0E910081E67C /* CDLabel.m */,
+				BE14DBB016999B9F00DB04D5 /* CDScrollLabel.h */,
+				BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -477,6 +476,7 @@
 			isa = PBXGroup;
 			children = (
 				BED5B0DE164E8BA100A8216F /* Header.h */,
+				BE14DBAB16996C3200DB04D5 /* CDMemAssist.h */,
 				BE963C0F16539B0900FAB2B1 /* CDFormatter.h */,
 				BE963C1016539B0900FAB2B1 /* CDFormatter.m */,
 			);
@@ -541,7 +541,6 @@
 		BE97360916568449006718F8 /* Third Part */ = {
 			isa = PBXGroup;
 			children = (
-				BEC0FF36167F0E270081E67C /* MarqueeLabel */,
 				BE96AC6A165733310010F8E0 /* ZenPlayerButton */,
 				BEB58B84165C5CDB002426E4 /* YLProgressBar */,
 			);
@@ -637,15 +636,6 @@
 				BEC0FF18167ECB7E0081E67C /* Halo.lrc */,
 			);
 			name = Resource;
-			sourceTree = "<group>";
-		};
-		BEC0FF36167F0E270081E67C /* MarqueeLabel */ = {
-			isa = PBXGroup;
-			children = (
-				BEC0FF37167F0E270081E67C /* MarqueeLabel.h */,
-				BEC0FF38167F0E270081E67C /* MarqueeLabel.m */,
-			);
-			path = MarqueeLabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -846,8 +836,7 @@
 				BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */,
 				BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */,
 				BE7D3805165CCC920018E8E8 /* CDStateButton.m in Sources */,
-				BEC0FF39167F0E270081E67C /* MarqueeLabel.m in Sources */,
-				BEC0FF3D167F0E910081E67C /* CDLabel.m in Sources */,
+				BE14DBB216999B9F00DB04D5 /* CDScrollLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,6 +845,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC0FF07167EC7610081E67C /* HoldLanguagesLogicTests.m in Sources */,
+				BE14DBB316999B9F00DB04D5 /* CDScrollLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

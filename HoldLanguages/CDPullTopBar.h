@@ -8,21 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "CDStateButton.h"
+#import "CDScrollLabel.h"
 
 #define kTopBarVisualHeight 44.0f
 #define kTopBarPullButtonHeight 20.0f
 #define kPullButtonEffectiveWidth 40.0f
 #define kPullButtonEffectiveHeight 40.0f
+#define kPullingThresholdScale 0.1
 #define kPullButtonImageName @"PullButton"
 @protocol CDPullTopBarDelegate, CDPullTopBarDataSource;
-@class CDStateButton, CDLabel;
-@interface CDPullTopBar : UIControl <CDStateButtonDelegate>
-@property(nonatomic, readonly, strong)IBOutlet UILabel* artistTemplate;
-@property(nonatomic, readonly, strong)IBOutlet UILabel* titleTemplate;
-@property(nonatomic, readonly, strong)IBOutlet UILabel* albumTitleTemplate;
-@property(nonatomic, readonly, strong)CDLabel* artist;
-@property(nonatomic, readonly, strong)CDLabel* title;
-@property(nonatomic, readonly, strong)CDLabel* albumTitle;
+@class CDStateButton, CDScrollLabel;
+@interface CDPullTopBar : UIControl <CDStateButtonDelegate, CDScrollLabelDelegate>{
+    CGFloat _yStartOffset;
+}
+@property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* artist;
+@property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* title;
+@property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* albumTitle;
 @property(nonatomic, readonly, strong)IBOutlet CDStateButton* rotationLock;
 @property(nonatomic, readonly, strong)IBOutlet CDStateButton* assistButton;
 @property(nonatomic, readonly)BOOL isRotationLocked;
@@ -35,6 +36,10 @@
 @required
 - (void)topBarTouchedDown:(CDPullTopBar*)topBar;
 - (void)topBarTouchedUpInside:(CDPullTopBar*)topBar;
+
+- (void)topBarStartTouch;
+
+
 - (BOOL)topBarShouldLockRotation:(CDPullTopBar*)topBar;
 - (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar;
 @end
