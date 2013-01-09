@@ -14,12 +14,12 @@
 #define kTopBarPullButtonHeight 20.0f
 #define kPullButtonEffectiveWidth 40.0f
 #define kPullButtonEffectiveHeight 40.0f
-#define kPullingThresholdScale 0.1
 #define kPullButtonImageName @"PullButton"
 @protocol CDPullTopBarDelegate, CDPullTopBarDataSource;
 @class CDStateButton, CDScrollLabel;
 @interface CDPullTopBar : UIControl <CDStateButtonDelegate, CDScrollLabelDelegate>{
     CGFloat _yStartOffset;
+    CGFloat _yLastOffset;
 }
 @property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* artist;
 @property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* title;
@@ -32,13 +32,12 @@
 @property(nonatomic, weak)id<CDPullTopBarDataSource> dataSource;
 - (void)reloadData;
 @end
-@protocol CDPullTopBarDelegate
+@protocol CDPullTopBarDelegate <NSObject>
 @required
-- (void)topBarTouchedDown:(CDPullTopBar*)topBar;
-- (void)topBarTouchedUpInside:(CDPullTopBar*)topBar;
-
-- (void)topBarStartTouch;
-
+- (void)topBarStartPulling:(CDPullTopBar*)topBar;
+- (BOOL)topBarContinuePulling:(CDPullTopBar*)topBar shouldMoveTo:(CGFloat)yOffset;
+- (void)topBarFinishPulling:(CDPullTopBar*)topBar;
+- (void)topBarCancelPulling:(CDPullTopBar*)topBar;
 
 - (BOOL)topBarShouldLockRotation:(CDPullTopBar*)topBar;
 - (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar;

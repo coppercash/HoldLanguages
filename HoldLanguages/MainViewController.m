@@ -116,16 +116,43 @@
 }
 
 #pragma mark - CDPullViewController Methods
-- (void)loadPulledView:(UIView *)pulledView{
+- (void)createPulledView{
+    [super createPulledView];
     if (_mediaPicker == nil) {
         _mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
         _mediaPicker.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
     }
-    _mediaPicker.view.frame = pulledView.bounds;
-	_mediaPicker.delegate = self;
-	_mediaPicker.prompt = NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
-	
-    [pulledView addSubview:_mediaPicker.view];
+    _mediaPicker.view.frame = self.pulledView.bounds;
+    _mediaPicker.delegate = self;
+
+    [self.pulledView addSubview:_mediaPicker.view];
+
+    /*
+    dispatch_queue_t queue = dispatch_queue_create("createPulledView", nil);
+    dispatch_async(queue, ^{
+        if (_mediaPicker == nil) {
+            _mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
+            _mediaPicker.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        }
+        _mediaPicker.view.frame = self.pulledView.bounds;
+        _mediaPicker.delegate = self;
+        _mediaPicker.prompt = NSLocalizedString (@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
+        
+        NSLog(@"Finish asyn");
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.pulledView addSubview:_mediaPicker.view];
+            NSLog(@"return to main");
+        });
+    });
+    dispatch_release(queue);
+     */
+}
+
+- (void)destroyPulledView{
+    [_mediaPicker.view removeFromSuperview];
+    _mediaPicker = nil;
+    [super destroyPulledView];
 }
 
 - (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{

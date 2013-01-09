@@ -139,15 +139,43 @@
 }
 
 #pragma mark - CDPullTopBarDelegate
-- (void)topBarTouchedDown:(CDPullTopBar*)topBar{
+- (void)topBarStartPulling:(CDPullTopBar *)topBar{
+    if (!_barsHidden) {
+        [self createPulledView];
+    }
 }
 
-- (void)topBarTouchedUpInside:(CDPullTopBar*)topBar{
-    if (self.barsHidden) {
+- (BOOL)topBarContinuePulling:(CDPullTopBar *)topBar shouldMoveTo:(CGFloat)yOffset{
+    if (_barsHidden) {
+        return NO;
+    }else{
+        CGPoint pullViewCenter = CGPointMake(_pulledView.center.x, yOffset - CGRectGetHeight(_pulledView.frame) / 2);
+        _pulledView.center = pullViewCenter;
+        if (yOffset + CGRectGetHeight(topBar.frame) - kTopBarPullButtonHeight >
+            CGRectGetMinY([self bottomBarFrameWithHidding:NO]) + kSliderProgressViewHeight) {
+            CGPoint bottomCenter =
+            CGPointMake(
+                        _bottomBar.center.x,
+                        yOffset + CGRectGetHeight(topBar.frame) - kTopBarPullButtonHeight + CGRectGetHeight(_bottomBar.frame) / 2  - kSliderProgressViewHeight);
+            _bottomBar.center = bottomCenter;
+        }
+    }
+    return YES;
+}
+
+- (void)topBarFinishPulling:(CDPullTopBar *)topBar{
+    if (_barsHidden) {
         [self setBarsHidden:NO animated:YES];
     }else{
-        [self createPulledView];
         [self setPullViewPresented:YES animated:YES];
+    }
+}
+
+- (void)topBarCancelPulling:(CDPullTopBar *)topBar{
+    if (_barsHidden) {
+        [self setBarsHidden:YES];
+    }else{
+        [self setPullViewPresented:NO animated:YES];
     }
 }
 
@@ -211,20 +239,13 @@
     _pulledView = [[UIView alloc] initWithFrame:pullViewFrame];
     [self.view addSubview:_pulledView];
     _pulledView.autoresizingMask = kViewAutoresizingNoMarginSurround;
-    
-    //Send to subclass to load subviews.
-    [self loadPulledView:_pulledView];
-    
+    _pulledView.backgroundColor = [UIColor whiteColor];
     //[_pulledView setBackgroundColor:kDebugColor];
 }
 
 - (void)destroyPulledView{
     [_pulledView removeFromSuperview];
     _pulledView = nil;
-}
-
-- (void)loadPulledView:(UIView*)pulledView{
-    
 }
 
 - (void)setPulledViewPresented:(BOOL)pulledViewPresented{

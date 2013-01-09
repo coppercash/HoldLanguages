@@ -11,6 +11,7 @@
 #import "CDPullBottomBar.h"
 
 #define kHiddingAniamtionDuration 0.3f
+#define kStatusBarHeight 20.0f
 
 @interface CDPullViewController : UIViewController <CDPullTopBarDelegate, CDPullTopBarDataSource, CDPullBottomBarDelegate>
 @property(nonatomic)BOOL barsHidden;
@@ -20,7 +21,8 @@
 @property(nonatomic, readonly, strong)CDPullBottomBar* bottomBar;
 - (void)endOfViewDidLoad;
 - (void)setBarsHidden:(BOOL)barsHidden animated:(BOOL)animated;
-- (void)loadPulledView:(UIView*)pulledView;
+- (void)createPulledView;
+- (void)destroyPulledView;
 - (void)setPullViewPresented:(BOOL)pullViewPresented animated:(BOOL)animated;
 @end
 

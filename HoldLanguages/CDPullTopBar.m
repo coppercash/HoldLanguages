@@ -4,9 +4,6 @@
 @interface CDPullTopBar ()
 - (void)initialize;
 - (CGRect)pullButtonFrame;
-- (void)touchPullButtonDown;
-- (void)touchPullButtonUpInside;
-- (void)touchPullButtonUpOutside;
 @end
 @implementation CDPullTopBar
 @synthesize artist = _artist, title = _title, albumTitle = _albumTitle;
@@ -84,41 +81,50 @@
 
 #pragma mark - Touch
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    /*
-    CGPoint location = [touch locationInView:self];
-    if (CGRectContainsPoint(self.pullButtonFrame, location)) {
-        [self touchPullButtonDown];
-        return YES;
-    }else{
-        return NO;
-    }*/
     CGPoint location = [touch locationInView:self];
     _yStartOffset = location.y;
-    [self touchPullButtonDown];
+    if (_delegate && [_delegate respondsToSelector:@selector(topBarStartPulling:)]) {
+        [_delegate topBarStartPulling:self];
+    }
     return YES; 
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
     //CGPoint location = [touch locationInView:self];
     CGPoint locationInSuperView = [touch locationInView:self.superview];
-    CGFloat yOffset = locationInSuperView.y - (_yStartOffset - self.frame.size.height / 2);
-    self.center = CGPointMake(self.center.x, yOffset);
+    _yLastOffset = locationInSuperView.y;
+    if (_delegate && [_delegate respondsToSelector:@selector(topBarContinuePulling:shouldMoveTo:)]) {
+        CGFloat yOffset = locationInSuperView.y - _yStartOffset;
+        BOOL shouldMove = [_delegate topBarContinuePulling:self shouldMoveTo:yOffset];
+        if (shouldMove) {
+            self.center = CGPointMake(self.center.x, yOffset + CGRectGetHeight(self.frame) / 2);
+        }
+    }
     return YES;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
     CGPoint locationInSuperView = [touch locationInView:self.superview];
-    CGFloat threshold = self.superview.bounds.size.height * kPullingThresholdScale;
-    if (locationInSuperView.y - _yStartOffset > threshold) {
-        [self touchPullButtonUpInside];
+    BOOL isDownward = locationInSuperView.y > _yLastOffset;
+    if (isDownward) {
+        if (_delegate && [_delegate respondsToSelector:@selector(topBarFinishPulling:)]) {
+            [_delegate topBarFinishPulling:self];
+        }
     }else{
-        [self touchPullButtonUpOutside];
+        if (_delegate && [_delegate respondsToSelector:@selector(topBarCancelPulling:)]) {
+            [_delegate topBarCancelPulling:self];
+        }
     }
     _yStartOffset = 0.0f;
+    _yLastOffset = 0.0f;
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event{
     _yStartOffset = 0.0f;
+    _yLastOffset = 0.0f;
+    if (_delegate && [_delegate respondsToSelector:@selector(topBarCancelPulling:)]) {
+        [_delegate topBarCancelPulling:self];
+    }
 }
 
 #pragma mark - Pull Button
@@ -129,19 +135,6 @@
                               kPullButtonEffectiveHeight);
     return frame;
 }
-
-- (void)touchPullButtonDown{
-    [_delegate topBarTouchedDown:self];
-}
-
-- (void)touchPullButtonUpInside{
-    [_delegate topBarTouchedUpInside:self];
-}
-
-- (void)touchPullButtonUpOutside{
-    
-}
-
 #pragma mark - Rotation Lock & Assist Button
 - (NSInteger)shouldStateButtonChangedValue:(CDStateButton*)stateButton{
     if (stateButton == _rotationLock) {
