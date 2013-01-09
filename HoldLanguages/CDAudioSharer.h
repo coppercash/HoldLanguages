@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CDProgress.h"
 
 typedef enum {
     CDAudioPlayerStatePlaying,
@@ -16,7 +17,7 @@ typedef enum {
 
 @protocol CDAudioPlayerDelegate;
 @class CDAudioPlayer, MPMediaItemCollection;
-@interface CDAudioSharer : NSObject
+@interface CDAudioSharer : NSObject <CDAudioPregressDataSource>
 
 @property(nonatomic, readonly, strong)NSArray* delegates;
 @property(nonatomic, strong)CDAudioPlayer* audioPlayer;

@@ -13,9 +13,10 @@
 #import "CDLyricsView.h"
 #import "CDAudioSharer.h"
 #import "CDBackgroundView.h"
+#import "CDProgress.h"
 
 @class CDAudioSharer, CDLyrics, CDBackgroundView;
-@interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource>
+@interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource, CDAudioPregressDelegate>
 
 @property(nonatomic, strong)CDHolder* holder;
 @property(nonatomic, strong)CDLyricsView* lyricsView;
@@ -23,5 +24,6 @@
 @property(nonatomic, strong)CDAudioSharer* audioSharer;
 @property(nonatomic, strong)CDLyrics* lyrics;
 @property(nonatomic, strong)MPMediaPickerController* mediaPicker;
+@property(nonatomic, strong)CDAudioProgress *progress;
 
 @end

@@ -215,4 +215,13 @@
     }
 }
 
+#pragma mark - CDAudioPregressDataSource
+- (float)progress:(CDProgress *)progress{
+    return _audioPlayer.currentPlaybackTime / _audioPlayer.currentDuration;
+}
+
+- (NSTimeInterval)playbackTimeOfProgress:(CDAudioProgress *)progress{
+    return _audioPlayer.currentPlaybackTime;
+}
+
 @end

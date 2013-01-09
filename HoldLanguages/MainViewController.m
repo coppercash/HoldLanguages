@@ -13,6 +13,7 @@
 #import "CDiTunesFinder.h"
 #import "CDBackgroundView.h"
 #import "CDSliderProgressView.h"
+#import "CDProgress.h"
 
 @interface MainViewController ()
 - (void)openedAudioNamed:(NSString*)audioName;
@@ -27,6 +28,7 @@
 @synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView;
 @synthesize audioSharer = _audioSharer, lyrics = _lyrics;
 @synthesize mediaPicker = _mediaPicker;
+@synthesize progress = _progress;
 
 #pragma mark - ViewController Methods
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -36,6 +38,10 @@
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.audioSharer = appDelegate.audioSharer;
         [self.audioSharer registAsDelegate:self];
+        
+        self.progress = [[CDAudioProgress alloc] init];
+        [_progress registerDelegate:self];
+        _progress.dataSource = _audioSharer;
     }
     return self;
 }
@@ -368,6 +374,15 @@
 - (NSTimeInterval)playbackTimeByButton{
     NSTimeInterval playbackTime = [self.audioSharer playbackRate] * self.view.bounds.size.height * 0.5;
     return playbackTime;
+}
+
+#pragma mark - CDAudioPregressDelegate
+- (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime{
+    DLog(@"%f", playbackTime);
+}
+
+- (void)progressDidUpdate:(float)progress{
+    DLog(@"%f", progress);
 }
 
 @end
