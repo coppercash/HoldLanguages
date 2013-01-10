@@ -17,7 +17,7 @@
 
 @interface MainViewController ()
 - (void)openedAudioNamed:(NSString*)audioName;
-- (BOOL)isLyricsUsable;
+//- (BOOL)isLyricsUsable;
 - (void)switchBarsHidden;
 - (NSTimeInterval)playbackTimeByButton;
 - (void)createLyricsView;
@@ -35,12 +35,12 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.progress = [[CDAudioProgress alloc] init];
+        [_progress registerDelegate:self withTimes:5];
+        
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.audioSharer = appDelegate.audioSharer;
         [self.audioSharer registAsDelegate:self];
-        
-        self.progress = [[CDAudioProgress alloc] init];
-        [_progress registerDelegate:self];
         _progress.dataSource = _audioSharer;
     }
     return self;
@@ -50,12 +50,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.wantsFullScreenLayout = YES;
+    [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
+    [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];
+
     _backgroundView = [[CDBackgroundView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:_backgroundView];
     _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
     _backgroundView.dataSource = self;
     
-    [self createLyricsView];
+    //[self createLyricsView];
     
     self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.holder];
@@ -232,7 +235,7 @@
 }
 
 - (void)holder:(CDHolder*)holder endSwipingVerticallyFor:(CGFloat)increament fromStart:(CGFloat)distance{
-    if (self.isLyricsUsable) {
+    if (_lyrics) {
         [self.lyricsView scrollFor:-increament animated:NO];
         NSUInteger focusIndex = self.lyricsView.focusIndex;
         NSTimeInterval playbackTime = [self.lyrics timeAtIndex:focusIndex];
@@ -242,6 +245,17 @@
         NSTimeInterval playbackTime = - rate * distance;
         [self.audioSharer playbackFor:playbackTime];
     }
+    /*
+    if (self.isLyricsUsable) {
+        [self.lyricsView scrollFor:-increament animated:NO];
+        NSUInteger focusIndex = self.lyricsView.focusIndex;
+        NSTimeInterval playbackTime = [self.lyrics timeAtIndex:focusIndex];
+        [self.audioSharer playbackAt:playbackTime];
+    }else{
+        float rate = self.audioSharer.playbackRate;
+        NSTimeInterval playbackTime = - rate * distance;
+        [self.audioSharer playbackFor:playbackTime];
+    }*/
 }
 
 - (void)holderCancelSwipingVertically:(CDHolder*)holder{
@@ -271,13 +285,14 @@
 
 #pragma mark - CDAudioPlayerDelegate
 - (void)audioSharer:(CDAudioSharer *)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime{
+    /*
     if (self.isLyricsUsable && !self.holder.isBeingTouched) {
         NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
         [self.lyricsView setFocusIndex:focusIndex];
-    }
-    float sliderValue = playbackTime / self.audioSharer.currentDuration;
-    [self.bottomBar setSliderValue:sliderValue];
-    [self.bottomBar setLabelsPlaybackTime:playbackTime];
+    }*/
+    //float sliderValue = playbackTime / self.audioSharer.currentDuration;
+    //[self.bottomBar setSliderValue:sliderValue];
+    //[self.bottomBar setLabelsPlaybackTime:playbackTime];
 }
 
 - (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state{
@@ -307,8 +322,10 @@
         [self.backgroundView switchViewWithKey:CDBackgroundViewKeyMissingLyrics];
     }else{
         CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
-        self.lyrics = newLyrics;
-        [self createLyricsView];
+        if (newLyrics.isReady) {
+            self.lyrics = newLyrics;
+            [self createLyricsView];
+        }
         [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
     }
     [self.lyricsView reloadData];
@@ -323,12 +340,13 @@
 }
 
 #pragma mark - Lyrics
+/*
 - (BOOL)isLyricsUsable{
     BOOL isUsable = YES;
     if (self.lyrics == nil) isUsable = NO;
     if (!self.lyrics.isReady) isUsable = NO;
     return isUsable;
-}
+}*/
 
 - (void)setLyrics:(CDLyrics *)lyrics{
     _lyrics = lyrics;
@@ -377,12 +395,16 @@
 }
 
 #pragma mark - CDAudioPregressDelegate
-- (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime{
-    DLog(@"%f", playbackTime);
+- (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime withTimes:(NSUInteger)times{
+    if (!self.holder.isBeingTouched) {
+        NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
+        [self.lyricsView setFocusIndex:focusIndex];
+    }
+    //DLog(@"%f", playbackTime);
 }
 
-- (void)progressDidUpdate:(float)progress{
-    DLog(@"%f", progress);
+- (void)progressDidUpdate:(float)progress withTimes:(NSUInteger)times{
+    //DLog(@"%f", progress);
 }
 
 @end

@@ -108,6 +108,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     [self addSubview:_sliderThumb];
     _sliderThumb.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_sliderThumb addTarget:self action:@selector(sliderThumbChangedValue:) forControlEvents:UIControlEventValueChanged];
+    [_sliderThumb addTarget:self action:@selector(sliderThumbTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
     _playbackTimeLabel = [[UILabel alloc] initWithFrame:self.playbackTimeLabelFrame];
     [self addSubview:_playbackTimeLabel];
@@ -167,23 +168,23 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 
 - (void)sliderThumbChangedValue:(id)sender {
     float value = [(CDSliderThumb*)sender value];
-    if (_sliderThumb.thumbOn) {
-        [_progressView setProgress:value];    //When thumbOn is YES, the progress depends on thumb.
-        
-        NSTimeInterval duration = [_delegate bottomBarAskForDuration:self];
-        NSTimeInterval playbackTime = value * duration;
-        [self setLabelsPlaybackTime:playbackTime];
-    }else{
-        [_delegate bottomBar:self sliderValueChangedAs:value];  //When thumbOn is NO, the value can be sent to instance outside.
-    }
+    [_progressView setProgress:value];
+    
+    NSTimeInterval duration = [_delegate bottomBarAskForDuration:self];
+    NSTimeInterval playbackTime = value * duration;
+    [self setLabelsPlaybackTime:playbackTime];
+    DLogCurrentMethod;
+}
+
+- (void)sliderThumbTouchUpInside:(id)sender {
+    float value = [(CDSliderThumb*)sender value];
+    [_delegate bottomBar:self sliderValueChangedAs:value];
+    DLogCurrentMethod;
 }
 
 - (void)setSliderValue:(float)sliderValue{
-    if (!_sliderThumb.thumbOn) {
-        [_progressView setProgress:sliderValue];    //When thumbOn is NO, the progress depends on player.
-        _sliderThumb.value = sliderValue;   //When thumbOn is NO, the value can be set by outside instance.
-        
-    }
+    [_progressView setProgress:sliderValue];
+    _sliderThumb.value = sliderValue;
 }
 
 #pragma mark - Buttons
@@ -343,6 +344,19 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval){
     if (theAnimation == [_progressView.layer animationForKey:self.keyOfProgressViewAnimation]) {
         [self setHidden:_hidden];
         [_progressView.layer removeAnimationForKey:self.keyOfProgressViewAnimation];
+    }
+}
+
+#pragma mark - CDAudioPregressDelegate
+- (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime withTimes:(NSUInteger)times{
+    if (times == kLabelsUpdateTimes) {
+        [self setLabelsPlaybackTime:playbackTime];
+    }
+}
+
+- (void)progressDidUpdate:(float)progress withTimes:(NSUInteger)times{
+    if (!_sliderThumb.thumbOn && times == kProgressViewUpdateTimes) {
+        [self setSliderValue:progress];
     }
 }
 

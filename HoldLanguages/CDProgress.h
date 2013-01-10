@@ -7,33 +7,39 @@
 //
 
 #import <Foundation/Foundation.h>
-#define kUpdaterInterval 1.0f
+#define kUpdaterInterval 0.1f
+#define kKeyDelegate @"Del"
+#define kKeyTimes @"Tim"
 
-@protocol CDPregressDataSource, CDPregressDelegate;
+@protocol CDProgressDataSource, CDProgressDelegate;
 @interface CDProgress : NSObject {
     NSTimer *_updater;
-    id<CDPregressDataSource> _dataSource;
-    NSArray *_delegates;
+    id<CDProgressDataSource> _dataSource;
+    NSSet *_delegates;
+    NSUInteger _counter;
 }
-@property(strong, nonatomic)id<CDPregressDataSource> dataSource;
+@property(strong, nonatomic)id<CDProgressDataSource> dataSource;
 - (float)progress;
-- (void)registerDelegates:(NSArray *)delegates;
-- (void)registerDelegate:(id<CDPregressDelegate>)delegate;
+- (void)registerDelegate:(id<CDProgressDelegate>)delegate withTimes:(NSUInteger)times;
 @end
-@protocol CDPregressDataSource <NSObject>
+@protocol CDProgressDataSource <NSObject>
+@optional
 - (float)progress:(CDProgress *)progress;
 @end
-@protocol CDPregressDelegate <NSObject>
-- (void)progressDidUpdate:(float)progress;
+@protocol CDProgressDelegate <NSObject>
+@optional
+- (void)progressDidUpdate:(float)progress withTimes:(NSUInteger)times;
 @end
 
-@protocol CDAudioPregressDataSource, CDAudioPregressDelegate;
+@protocol CDAudioProgressDataSource, CDAudioProgressDelegate;
 @interface CDAudioProgress : CDProgress
 - (NSTimeInterval)playbackTime;
 @end
-@protocol CDAudioPregressDataSource <CDPregressDataSource>
+@protocol CDAudioProgressDataSource <CDProgressDataSource>
+@optional
 - (NSTimeInterval)playbackTimeOfProgress:(CDAudioProgress *)progress;
 @end
-@protocol CDAudioPregressDelegate <CDPregressDelegate>
-- (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime;
+@protocol CDAudioProgressDelegate <CDProgressDelegate>
+@optional
+- (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime withTimes:(NSUInteger)times;
 @end

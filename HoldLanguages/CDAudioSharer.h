@@ -17,7 +17,7 @@ typedef enum {
 
 @protocol CDAudioPlayerDelegate;
 @class CDAudioPlayer, MPMediaItemCollection;
-@interface CDAudioSharer : NSObject <CDAudioPregressDataSource>
+@interface CDAudioSharer : NSObject <CDAudioProgressDataSource>
 
 @property(nonatomic, readonly, strong)NSArray* delegates;
 @property(nonatomic, strong)CDAudioPlayer* audioPlayer;

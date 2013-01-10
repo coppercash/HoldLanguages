@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "CDAudioSharer.h"
+#import "CDProgress.h"
 
 #define kPlayButtonTopMargin 10.0f
 #define kPlayButtonSize 80.0f
@@ -29,6 +29,9 @@
 #define kLabelWidth 53.0f
 #define kLabelHeight kSliderProgressViewHeight + 3.0f
 
+#define kLabelsUpdateTimes 5
+#define kProgressViewUpdateTimes 10
+
 typedef enum{
     CDBottomBarButtonTypePlay,
     CDBottomBarButtonTypeBackward,
@@ -42,7 +45,7 @@ typedef enum{
 
 @class CDSliderProgressView, CDSliderThumb, CDPlayButton;
 @protocol CDPullBottomBarDelegate;
-@interface CDPullBottomBar : UIView
+@interface CDPullBottomBar : UIView <CDAudioProgressDelegate>
 @property(nonatomic)BOOL hidden;
 
 @property(nonatomic, readonly, strong)CDSliderProgressView* progressView;

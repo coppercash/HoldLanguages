@@ -30,27 +30,14 @@
     [[NSRunLoop currentRunLoop] addTimer:_updater forMode:NSDefaultRunLoopMode];
 }
 
-- (void)registerDelegates:(NSArray *)delegates{
-    if (delegates == nil || delegates.count == 0) return;
-    if (_delegates == nil) {
-        _delegates = [[NSArray alloc] initWithArray:delegates];
-    }else{
-        NSMutableArray *extendedArray = [[NSMutableArray alloc] init];
-        for (id<CDPregressDelegate> delegate in _delegates) {
-            if ([_delegates containsObject:delegate]) continue;
-            [extendedArray addObject:delegate];
-        }
-        NSArray *newDelegates = [_delegates arrayByAddingObjectsFromArray:extendedArray];
-        _delegates = newDelegates;
-    }
-}
-
-- (void)registerDelegate:(id<CDPregressDelegate>)delegate{
+- (void)registerDelegate:(id<CDProgressDelegate>)delegate withTimes:(NSUInteger)times{
     if (delegate == nil) return;
+    if (times == 0) times = 1;
+    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:delegate, kKeyDelegate, [NSNumber numberWithInteger:times], kKeyTimes, nil];
     if (_delegates == nil) {
-        _delegates = [[NSArray alloc] initWithObjects:delegate, nil];
-    }else if(![_delegates containsObject:delegate]){
-        NSArray *newDelegates = [_delegates arrayByAddingObject:delegate];
+        _delegates = [[NSSet alloc] initWithObjects:dic, nil];
+    }else{
+        NSSet *newDelegates = [_delegates setByAddingObject:dic];
         _delegates = newDelegates;
     }
 }
@@ -65,11 +52,16 @@
 
 - (void)synchronize{
     float progress = self.progress;
-    for (id<CDPregressDelegate> delegate in _delegates) {
-        if ([delegate respondsToSelector:@selector(progressDidUpdate:)]) {
-            [delegate progressDidUpdate:progress];
+    for (NSDictionary *dic in _delegates) {
+        NSUInteger times = [[dic objectForKey:kKeyTimes] unsignedIntegerValue];
+        if (_counter % times == 0) {
+            id<CDProgressDelegate> delegate = [dic objectForKey:kKeyDelegate];
+            if ([delegate respondsToSelector:@selector(progressDidUpdate:withTimes:)]) {
+                [delegate progressDidUpdate:progress withTimes:times];
+            }
         }
     }
+    _counter++;
 }
 
 @end
@@ -79,7 +71,7 @@
 @implementation CDAudioProgress
 - (NSTimeInterval)playbackTime{
     NSTimeInterval playbackTime = 0.0f;
-    id<CDAudioPregressDataSource> dataSource = (id<CDAudioPregressDataSource>)_dataSource;
+    id<CDAudioProgressDataSource> dataSource = (id<CDAudioProgressDataSource>)_dataSource;
     if (dataSource && [dataSource respondsToSelector:@selector(playbackTimeOfProgress:)]) {
         playbackTime = [dataSource playbackTimeOfProgress:self];
     }
@@ -89,14 +81,19 @@
 - (void)synchronize{
     float progress = self.progress;
     NSTimeInterval playbackTime = self.playbackTime;
-    for (id<CDAudioPregressDelegate> delegate in _delegates) {
-        if ([delegate respondsToSelector:@selector(progressDidUpdate:)]) {
-            [delegate progressDidUpdate:progress];
-        }
-        if ([delegate respondsToSelector:@selector(playbackTimeDidUpdate:)]) {
-            [delegate playbackTimeDidUpdate:playbackTime];
+    for (NSDictionary *dic in _delegates) {
+        NSUInteger times = [[dic objectForKey:kKeyTimes] unsignedIntegerValue];
+        if (_counter % times == 0) {
+            id<CDAudioProgressDelegate> delegate = [dic objectForKey:kKeyDelegate];
+            if ([delegate respondsToSelector:@selector(progressDidUpdate:withTimes:)]) {
+                [delegate progressDidUpdate:progress withTimes:times];
+            }
+            if ([delegate respondsToSelector:@selector(playbackTimeDidUpdate:withTimes:)]) {
+                [delegate playbackTimeDidUpdate:playbackTime withTimes:times];
+            }
         }
     }
+    _counter++;
 }
 
 @end

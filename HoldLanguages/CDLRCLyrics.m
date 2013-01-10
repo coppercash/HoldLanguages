@@ -21,7 +21,7 @@ NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index, NSTimeInterval time, 
 @synthesize timeStamps = _timeStamps, otherStamps = _otherStamps;
 
 - (id)initWithFile:(NSString *)filePath{
-    self = [super init];
+    self = [super initWithFile:filePath];
     if (self) {
         NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] initWithCapacity:4];
         [CDLRCParser parseFile:filePath intoDictionary:dictionary];
