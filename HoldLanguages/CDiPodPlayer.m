@@ -7,7 +7,6 @@
 //
 
 #import "CDiPodPlayer.h"
-#import "Header.h"
 #import "CDAudioSharer.h"
 
 @interface CDiPodPlayer ()

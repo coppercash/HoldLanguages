@@ -21,7 +21,6 @@ typedef enum {
 
 @property(nonatomic, readonly, strong)NSArray* delegates;
 @property(nonatomic, strong)CDAudioPlayer* audioPlayer;
-@property(nonatomic, readonly, strong)NSTimer* processTimer;
 @property(nonatomic, readonly, copy)NSString* audioName;
 @property(nonatomic, readonly) NSTimeInterval currentDuration;
 
@@ -42,8 +41,6 @@ typedef enum {
 
 @protocol CDAudioPlayerDelegate
 @required
-- (void)audioSharer:(CDAudioSharer*)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime;
 - (void)audioSharer:(CDAudioSharer*)audioSharer stateDidChange:(CDAudioPlayerState)state;
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer;
-
 @end

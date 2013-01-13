@@ -9,7 +9,7 @@
 #import "HoldLanguagesLogicTests.h"
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"
-#import "Header.h"
+#import "CDPullBottomBar.h"
 
 @implementation HoldLanguagesLogicTests
 
@@ -23,8 +23,7 @@
 
 - (void)tearDown
 {
-    SafeRelease(_lrcLyrics);
-    
+    SafeMemberRelease(_lrcLyrics);
     [super tearDown];
 }
 
@@ -35,5 +34,22 @@
     
     LogEnd;
 }
+
+NSString* textWithTimeInterval(NSTimeInterval timeInterval);
+- (void)testTextWithTimeInterval{
+    LogStart;
+
+    NSString *test1 = textWithTimeInterval(3600);
+    STAssertTrueNoThrow([test1 isEqualToString:@"01:00:00"], @"01:00:00 fails %@", test1);
+    
+    NSString *test2 = textWithTimeInterval(-1);
+    STAssertTrueNoThrow([test2 isEqualToString:@"-00:01"], @"-00:01 fails %@", test2);
+
+    NSString *test3 = textWithTimeInterval(-3601);
+    STAssertTrueNoThrow([test3 isEqualToString:@"-01:00:01"], @"-01:00:01 fails %@", test3);
+
+    LogEnd;
+}
+
 
 @end

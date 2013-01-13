@@ -40,6 +40,7 @@
 						<array class="NSMutableArray" key="NSSubviews"/>
 						<string key="NSFrame">{{60, 2}, {200, 12}}</string>
 						<reference key="NSSuperview" ref="850014887"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="413867420"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="353237533">
@@ -54,6 +55,7 @@
 						<int key="NSvFlags">298</int>
 						<string key="NSFrame">{{60, 17}, {200, 12}}</string>
 						<reference key="NSSuperview" ref="850014887"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="47717260"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="353237533"/>
@@ -65,6 +67,7 @@
 						<int key="NSvFlags">298</int>
 						<string key="NSFrame">{{60, 30}, {200, 12}}</string>
 						<reference key="NSSuperview" ref="850014887"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="580212348"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="353237533"/>
@@ -73,9 +76,10 @@
 					</object>
 					<object class="IBUIView" id="580212348">
 						<reference key="NSNextResponder" ref="850014887"/>
-						<int key="NSvFlags">297</int>
-						<string key="NSFrame">{{270, 7}, {30, 30}}</string>
+						<int key="NSvFlags">257</int>
+						<string key="NSFrame">{{263, 0}, {44, 44}}</string>
 						<reference key="NSSuperview" ref="850014887"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="280946915">
@@ -86,9 +90,10 @@
 					</object>
 					<object class="IBUIView" id="162634188">
 						<reference key="NSNextResponder" ref="850014887"/>
-						<int key="NSvFlags">300</int>
-						<string key="NSFrame">{{20, 8}, {30, 30}}</string>
+						<int key="NSvFlags">260</int>
+						<string key="NSFrame">{{13, 0}, {44, 44}}</string>
 						<reference key="NSSuperview" ref="850014887"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="146477639"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="280946915"/>
@@ -97,6 +102,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 44}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="162634188"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -256,7 +262,74 @@
 			<nil key="sourceID"/>
 			<int key="maxID">76</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">CDPullTopBar</string>
+					<string key="superclassName">UIControl</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="albumTitle">CDScrollLabel</string>
+						<string key="artist">CDScrollLabel</string>
+						<string key="assistButton">CDStateButton</string>
+						<string key="rotationLock">CDStateButton</string>
+						<string key="title">CDScrollLabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="albumTitle">
+							<string key="name">albumTitle</string>
+							<string key="candidateClassName">CDScrollLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="artist">
+							<string key="name">artist</string>
+							<string key="candidateClassName">CDScrollLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="assistButton">
+							<string key="name">assistButton</string>
+							<string key="candidateClassName">CDStateButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="rotationLock">
+							<string key="name">rotationLock</string>
+							<string key="candidateClassName">CDStateButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="title">
+							<string key="name">title</string>
+							<string key="candidateClassName">CDScrollLabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CDPullTopBar.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">CDScrollLabel</string>
+					<string key="superclassName">UIView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CDScrollLabel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">CDStateButton</string>
+					<string key="superclassName">UIControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CDStateButton.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

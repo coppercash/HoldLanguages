@@ -7,7 +7,7 @@
 //
 
 #import "CDPullBottomBar.h"
-#import "Header.h"
+#import "CDColorFinder.h"
 #import "CDSliderProgressView.h"
 #import "CDSliderThumb.h"
 #import "CDPlayButton.h"
@@ -24,7 +24,6 @@
 - (void)buttonTouchedUpInside:(id)sender;
 - (CGRect)playbackTimeLabelFrame;
 - (CGRect)remainingTimeLabelFrame;
-void configureLabel(UILabel* label);
 NSString* textWithTimeInterval(NSTimeInterval timeInterval);
 - (CAAnimationGroup*)animationOfProgressViewWithHidden:(BOOL)hidden;
 - (NSString*)keyOfProgressViewAnimation;
@@ -110,6 +109,14 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     [_sliderThumb addTarget:self action:@selector(sliderThumbChangedValue:) forControlEvents:UIControlEventValueChanged];
     [_sliderThumb addTarget:self action:@selector(sliderThumbTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
+    void (^configureLabel)(UILabel*) = ^(UILabel *label){
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
+        UIFont* font = [UIFont boldSystemFontOfSize:12.0f];
+        label.font = font;
+        label.textAlignment = NSTextAlignmentCenter;
+    };
+    
     _playbackTimeLabel = [[UILabel alloc] initWithFrame:self.playbackTimeLabelFrame];
     [self addSubview:_playbackTimeLabel];
     _playbackTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -173,13 +180,11 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     NSTimeInterval duration = [_delegate bottomBarAskForDuration:self];
     NSTimeInterval playbackTime = value * duration;
     [self setLabelsPlaybackTime:playbackTime];
-    DLogCurrentMethod;
 }
 
 - (void)sliderThumbTouchUpInside:(id)sender {
     float value = [(CDSliderThumb*)sender value];
     [_delegate bottomBar:self sliderValueChangedAs:value];
-    DLogCurrentMethod;
 }
 
 - (void)setSliderValue:(float)sliderValue{
@@ -249,40 +254,26 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval);
     return frame;
 }
 
-void configureLabel(UILabel* label){
-    label.textColor = [UIColor whiteColor];
-    label.backgroundColor = [UIColor clearColor];
-    UIFont* font = [UIFont boldSystemFontOfSize:12.0f];
-    label.font = font;
-    label.textAlignment = NSTextAlignmentCenter;
-}
-
 NSString* textWithTimeInterval(NSTimeInterval timeInterval){
-    NSString* string = nil;
-    if (timeInterval < 0) {
-        timeInterval = - timeInterval;
-        if (timeInterval < 3600) {
-            string = [NSString stringWithFormat:@"-%02li:%02li",
-                      lround(floor(timeInterval / 60.)) % 60,
-                      lround(floor(timeInterval)) % 60];
-        }else{
-            string = [NSString stringWithFormat:@"-%02li:%02li:%02li",
-                      lround(floor(timeInterval / 3600.)) % 100,
-                      lround(floor(timeInterval / 60.)) % 60,
-                      lround(floor(timeInterval)) % 60];
-        }
-    }else{
-        if (timeInterval < 3600) {
-            string = [NSString stringWithFormat:@"%02li:%02li",
-                      lround(floor(timeInterval / 60.)) % 60,
-                      lround(floor(timeInterval)) % 60];
-        }else{
-            string = [NSString stringWithFormat:@"%02li:%02li:%02li",
-                      lround(floor(timeInterval / 3600.)) % 100,
-                      lround(floor(timeInterval / 60.)) % 60,
-                      lround(floor(timeInterval)) % 60];
-        }
+    NSString* string = @"";
+    
+    NSUInteger counter = 0; //The number of elements
+    NSTimeInterval time = fabs(timeInterval);
+    while (time >= 1) {
+        time /= 60;
+        counter ++;
     }
+    if (counter < 2) counter = 2;   //Min if number is 2
+    
+    time = fabs(timeInterval);
+    int feedRate[] = {1, 60, 3600};
+    int max[] = {60, 60, 100};
+    for (int i = 0; i < counter; i++) {
+        if (string.length != 0) string = [@":" stringByAppendingString:string];
+        long int number = lround(floor(time / feedRate[i])) % max[0];
+        string = [NSString stringWithFormat:@"%02li%@",number ,string];
+    }
+    if (timeInterval < 0) string = [@"-" stringByAppendingString:string];
     return string;
 }
 

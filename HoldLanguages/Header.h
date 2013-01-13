@@ -6,15 +6,6 @@
 //  Copyright (c) 2012 Coder Dreamer. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import "CDString.h"
-#import "CDStack.h"
-#import "CDFormatter.h"
-#import "CDCategories.h"
-#import "CDColorFinder.h"
-#import "CDMemAssist.h"
-#import <QuartzCore/QuartzCore.h>
-
 #define kMissLocalizedString @"MissLocalizedString"
 #define kDebugColor [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f]
 #define kViewAutoresizingNoMarginSurround UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight

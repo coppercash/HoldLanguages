@@ -12,7 +12,8 @@
 #define kOtherStamps @"OtherStamps"
 
 #import "CDLRCLyrics.h"
-#import "Header.h"
+#import "CDString.h"
+#import "CDStack.h"
 
 @interface CDLRCLyrics ()
 NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index, NSTimeInterval time, CDSeekDestination destintion, NSArray* array);

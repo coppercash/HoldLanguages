@@ -7,7 +7,7 @@
 //
 
 #import "ZenPlayerButton.h"
-#import "Header.h"
+#import "CDColorFinder.h"
 
 @interface ZenPlayerButton ()
 {

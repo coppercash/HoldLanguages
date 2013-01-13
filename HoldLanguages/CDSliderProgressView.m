@@ -7,8 +7,8 @@
 //
 
 #import "CDSliderProgressView.h"
-#import "Header.h"
 #import "ARCMacro.h"
+#import "CDColorFinder.h"
 
 @interface YLProgressBar ()
 @property (nonatomic, assign)               double      progressOffset;

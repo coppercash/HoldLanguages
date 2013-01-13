@@ -38,3 +38,7 @@
 @interface NSArray (CDArray)
 - (NSUInteger)lastIndex;
 @end
+
+@interface UITableViewCell (CDTableViewCell)
+- (void)loadSubviewsFromXib;
+@end

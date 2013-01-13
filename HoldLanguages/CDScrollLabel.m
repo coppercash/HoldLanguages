@@ -8,7 +8,6 @@
 
 #import "CDScrollLabel.h"
 #import "CDMemAssist.h"
-#import "Header.h"
 
 #define kMarginBetweenLabels 30.0f
 #define kIntervalBetweenAnimations 3.0f
@@ -42,6 +41,7 @@
     _label.textAlignment = UITextAlignmentCenter;
     _label.backgroundColor = [UIColor clearColor];
     _label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _label.userInteractionEnabled = NO;
 }
 
 - (id)initWithFrame:(CGRect)frame text:(NSString *)text{

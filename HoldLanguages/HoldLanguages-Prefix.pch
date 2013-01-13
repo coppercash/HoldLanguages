@@ -9,6 +9,11 @@
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
+#import "CDMemAssist.h"
+#import "CDCategories.h"
+#import "Header.h"
 #endif

@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "CDPullTopBar.h"
 #import "CDPullBottomBar.h"
+#import "CDPanViewController.h"
 
 #define kHiddingAniamtionDuration 0.3f
 #define kStatusBarHeight 20.0f
 
-@interface CDPullViewController : UIViewController <CDPullTopBarDelegate, CDPullTopBarDataSource, CDPullBottomBarDelegate>
+@interface CDPullViewController : UIViewController <CDPullTopBarDelegate, CDPullTopBarDataSource, CDPullBottomBarDelegate, CDSubPanViewController>
 @property(nonatomic)BOOL barsHidden;
 @property(nonatomic)BOOL pulledViewPresented;
 @property(nonatomic, readonly, strong)UIView* pulledView;

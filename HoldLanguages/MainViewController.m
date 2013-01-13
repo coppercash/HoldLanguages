@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "Header.h"
 #import "CDLyrics.h"
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"
@@ -17,7 +16,7 @@
 
 @interface MainViewController ()
 - (void)openedAudioNamed:(NSString*)audioName;
-//- (BOOL)isLyricsUsable;
+- (BOOL)openLyricsAtPath:(NSString *)path;
 - (void)switchBarsHidden;
 - (NSTimeInterval)playbackTimeByButton;
 - (void)createLyricsView;
@@ -50,6 +49,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.wantsFullScreenLayout = YES;
+    //self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
     [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
     [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];
 
@@ -111,10 +112,8 @@
 
 #pragma mark - Flexible Subviews
 - (void)createLyricsView{
-    if (_lyricsView == nil) {
-        _lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
-        [self.view insertSubview:_lyricsView aboveSubview:_backgroundView];
-    }
+    _lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
+    [self.view insertSubview:_lyricsView aboveSubview:_backgroundView];
     _lyricsView.lyricsSource = self;
     _lyricsView.autoresizingMask = kViewAutoresizingNoMarginSurround;
 }
@@ -162,6 +161,7 @@
     [_mediaPicker.view removeFromSuperview];
     _mediaPicker = nil;
     [super destroyPulledView];
+    DLogCurrentMethod;
 }
 
 - (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{
@@ -245,17 +245,6 @@
         NSTimeInterval playbackTime = - rate * distance;
         [self.audioSharer playbackFor:playbackTime];
     }
-    /*
-    if (self.isLyricsUsable) {
-        [self.lyricsView scrollFor:-increament animated:NO];
-        NSUInteger focusIndex = self.lyricsView.focusIndex;
-        NSTimeInterval playbackTime = [self.lyrics timeAtIndex:focusIndex];
-        [self.audioSharer playbackAt:playbackTime];
-    }else{
-        float rate = self.audioSharer.playbackRate;
-        NSTimeInterval playbackTime = - rate * distance;
-        [self.audioSharer playbackFor:playbackTime];
-    }*/
 }
 
 - (void)holderCancelSwipingVertically:(CDHolder*)holder{
@@ -272,6 +261,16 @@
     [self switchBarsHidden];
 }
 
+#pragma mark - Lyrics
+- (BOOL)openLyricsAtPath:(NSString *)path{
+    CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:path];
+    if (!newLyrics.isReady) return NO;
+    self.lyrics = newLyrics;
+    if (_lyricsView == nil) [self createLyricsView];
+    else [_lyricsView reloadData];
+    return YES;
+}
+
 #pragma mark - CDLyricsViewLyricsSource
 - (NSUInteger)numberOfLyricsRowsInView:(CDLyricsView *)lyricsView{
     NSUInteger number = self.lyrics.numberOfLyricsRows;
@@ -284,17 +283,6 @@
 }
 
 #pragma mark - CDAudioPlayerDelegate
-- (void)audioSharer:(CDAudioSharer *)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime{
-    /*
-    if (self.isLyricsUsable && !self.holder.isBeingTouched) {
-        NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
-        [self.lyricsView setFocusIndex:focusIndex];
-    }*/
-    //float sliderValue = playbackTime / self.audioSharer.currentDuration;
-    //[self.bottomBar setSliderValue:sliderValue];
-    //[self.bottomBar setLabelsPlaybackTime:playbackTime];
-}
-
 - (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state{
     switch (state) {
         case CDAudioPlayerStatePlaying:{
@@ -317,18 +305,13 @@
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer{
     NSString* lyricsPath = [CDiTunesFinder findFileWithName:self.audioSharer.audioName ofType:kLRCExtension];
     if (lyricsPath == nil) {
-        [self destroyLyricsView];
         self.lyrics = nil;
+        [self destroyLyricsView];
         [self.backgroundView switchViewWithKey:CDBackgroundViewKeyMissingLyrics];
     }else{
-        CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:lyricsPath];
-        if (newLyrics.isReady) {
-            self.lyrics = newLyrics;
-            [self createLyricsView];
-        }
-        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
+        BOOL success = [self openLyricsAtPath:lyricsPath];
+        if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
     }
-    [self.lyricsView reloadData];
     [self.topBar reloadData];
     [self.bottomBar reloadData];
 }
@@ -337,20 +320,6 @@
 - (NSString*)backgroundViewNeedsAudioName:(CDBackgroundView*)backgroundView{
     NSString* audioName = self.audioSharer.audioName;
     return audioName;
-}
-
-#pragma mark - Lyrics
-/*
-- (BOOL)isLyricsUsable{
-    BOOL isUsable = YES;
-    if (self.lyrics == nil) isUsable = NO;
-    if (!self.lyrics.isReady) isUsable = NO;
-    return isUsable;
-}*/
-
-- (void)setLyrics:(CDLyrics *)lyrics{
-    _lyrics = lyrics;
-    [self.lyricsView reloadData];
 }
 
 #pragma mark - Events
@@ -407,4 +376,10 @@
     //DLog(@"%f", progress);
 }
 
+#pragma mark - CDSubPanViewController
+- (void)willPresentWithUserInfo:(id)userInfo{
+    NSString *lrcPath = (NSString *)userInfo;
+    BOOL success = [self openLyricsAtPath:lrcPath];
+    if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
+}
 @end

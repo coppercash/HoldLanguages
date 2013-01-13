@@ -7,9 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 #import "CDAudioSharer.h"
-#import "Header.h"
+#import "MainViewController.h"
+#import "CDPanViewController.h"
+#import "CDiTunesViewController.h"
 
 @implementation AppDelegate
 
@@ -20,8 +21,11 @@
     
     self.audioSharer = [CDAudioSharer sharedAudioPlayer];
     
-    self.mainViewController = [[MainViewController alloc] init];
-    self.window.rootViewController = self.mainViewController;
+    MainViewController *mainViewController = [[MainViewController alloc] init];
+    self.panViewController = [[CDPanViewController alloc] initWithRootViewController:mainViewController];
+    _panViewController.leftControllerClass = [CDiTunesViewController class];
+    
+    self.window.rootViewController = self.panViewController;
     [self.window makeKeyAndVisible];
     
     return YES;

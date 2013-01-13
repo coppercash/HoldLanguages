@@ -7,7 +7,6 @@
 //
 
 #import "CDStateButton.h"
-#import "Header.h"
 
 @interface CDStateButton ()
 - (void)initialize;
@@ -49,6 +48,7 @@
     [self addSubview:_backgound];
     _backgound.autoresizingMask = kViewAutoresizingNoMarginSurround;
     _backgound.backgroundColor = [UIColor clearColor];
+    _backgound.contentMode = UIViewContentModeCenter;
 }
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{

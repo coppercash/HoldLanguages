@@ -20,13 +20,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "HoldLanguages/CDProgress.m"
-         timestampString = "379470364.651404"
+         filePath = "HoldLanguagesLogicTests/HoldLanguagesLogicTests.m"
+         timestampString = "379685173.469208"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "86"
-         endingLineNumber = "86"
-         landmarkName = "-synchronize"
+         startingLineNumber = "18"
+         endingLineNumber = "18"
+         landmarkName = "-setUp"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -7,7 +7,6 @@
 //
 
 #import "CDLyricsViewCell.h"
-#import "Header.h"
 
 @implementation CDLyricsViewCell
 @synthesize style = _style;

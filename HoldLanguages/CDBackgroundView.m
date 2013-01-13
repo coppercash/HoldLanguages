@@ -7,7 +7,6 @@
 //
 
 #import "CDBackgroundView.h"
-#import "Header.h"
 
 @interface CDBackgroundView ()
 - (void)createMissingLyricsView;

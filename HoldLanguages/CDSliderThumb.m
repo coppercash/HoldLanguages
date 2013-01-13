@@ -7,7 +7,7 @@
 //
 
 #import "CDSliderThumb.h"
-#import "Header.h"
+
 @interface CDSliderThumb ()
 - (void)initialize;
 - (void)updateThumbLocationWithValue:(float)value;
@@ -30,8 +30,7 @@
     _thumbImageView = [[UIImageView alloc] initWithPNGImageNamed:kThumbImageName];
     [self addSubview:_thumbImageView];
     _thumbImageView.frame = CGRectMake(0.0f, 0.0f, kThumbWidth, kThumbHeight);
-    
-    //self.backgroundColor = kDebugColor;
+    _thumbImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
 #pragma mark - Value Change

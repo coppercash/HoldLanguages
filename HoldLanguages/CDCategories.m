@@ -7,7 +7,6 @@
 //
 
 #import "CDCategories.h"
-#import "Header.h"
 
 @implementation UIColor (CDColor)
 + (UIColor*) colorWithHex:(long)hexColor{
@@ -97,5 +96,15 @@
 @implementation NSArray (CDArray)
 - (NSUInteger)lastIndex{
     return self.count - 1;
+}
+@end
+
+@implementation UITableViewCell (CDTableViewCell)
+- (void)loadSubviewsFromXib{
+    NSArray* xibViews = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
+    UITableViewCell *rootView = [xibViews objectAtIndex:0];
+    for (UIView* subview in rootView.contentView.subviews) {
+        [self.contentView addSubview:subview];
+    }
 }
 @end

@@ -1,9 +1,10 @@
 #import "CDPullTopBar.h"
-#import "Header.h"
+#import "CDColorFinder.h"
 
 @interface CDPullTopBar ()
 - (void)initialize;
 - (CGRect)pullButtonFrame;
+- (void)startPullingWithDeterminingDirection:(CGPoint)locationInSuperView;
 @end
 @implementation CDPullTopBar
 @synthesize artist = _artist, title = _title, albumTitle = _albumTitle;
@@ -81,31 +82,33 @@
 
 #pragma mark - Touch
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    CGPoint location = [touch locationInView:self];
-    _yStartOffset = location.y;
-    if (_delegate && [_delegate respondsToSelector:@selector(topBarStartPulling:)]) {
-        [_delegate topBarStartPulling:self];
-    }
+    _lastPoint = [touch locationInView:self.superview];
     return YES; 
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    //CGPoint location = [touch locationInView:self];
     CGPoint locationInSuperView = [touch locationInView:self.superview];
-    _yLastOffset = locationInSuperView.y;
+    if (_pullDirection == CDDirectionNone){
+        [self startPullingWithDeterminingDirection:locationInSuperView];
+        return NO;
+    }
     if (_delegate && [_delegate respondsToSelector:@selector(topBarContinuePulling:shouldMoveTo:)]) {
-        CGFloat yOffset = locationInSuperView.y - _yStartOffset;
-        BOOL shouldMove = [_delegate topBarContinuePulling:self shouldMoveTo:yOffset];
+        CGFloat yIncreament = locationInSuperView.y - _lastPoint.y;
+        CGFloat yOffset = self.center.y + yIncreament;
+        BOOL shouldMove = [_delegate topBarContinuePulling:self
+                                              shouldMoveTo:yOffset - CGRectGetHeight(self.frame) / 2];
         if (shouldMove) {
-            self.center = CGPointMake(self.center.x, yOffset + CGRectGetHeight(self.frame) / 2);
+            self.center = CGPointMake(self.center.x, yOffset);
         }
     }
+    _lastPoint = locationInSuperView;
     return YES;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
     CGPoint locationInSuperView = [touch locationInView:self.superview];
-    BOOL isDownward = locationInSuperView.y > _yLastOffset;
+    [self startPullingWithDeterminingDirection:locationInSuperView];
+    BOOL isDownward = locationInSuperView.y > _lastPoint.y;
     if (isDownward) {
         if (_delegate && [_delegate respondsToSelector:@selector(topBarFinishPulling:)]) {
             [_delegate topBarFinishPulling:self];
@@ -115,16 +118,24 @@
             [_delegate topBarCancelPulling:self];
         }
     }
-    _yStartOffset = 0.0f;
-    _yLastOffset = 0.0f;
+    _pullDirection = CDDirectionNone;
+    _lastPoint = CGPointZero;
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event{
-    _yStartOffset = 0.0f;
-    _yLastOffset = 0.0f;
+    _pullDirection = CDDirectionNone;
+    _lastPoint = CGPointZero;
     if (_delegate && [_delegate respondsToSelector:@selector(topBarCancelPulling:)]) {
         [_delegate topBarCancelPulling:self];
     }
+}
+
+- (void)startPullingWithDeterminingDirection:(CGPoint)locationInSuperView{
+    if (_pullDirection == CDDirectionNone &&
+        _delegate && [_delegate respondsToSelector:@selector(topBarStartPulling:)]) {
+        [_delegate topBarStartPulling:self];
+    }
+    _pullDirection = CDDirectionDown;
 }
 
 #pragma mark - Pull Button

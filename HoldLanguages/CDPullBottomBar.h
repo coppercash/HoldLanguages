@@ -29,8 +29,8 @@
 #define kLabelWidth 53.0f
 #define kLabelHeight kSliderProgressViewHeight + 3.0f
 
-#define kLabelsUpdateTimes 5
-#define kProgressViewUpdateTimes 10
+#define kLabelsUpdateTimes 10
+#define kProgressViewUpdateTimes 5
 
 typedef enum{
     CDBottomBarButtonTypePlay,

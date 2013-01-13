@@ -7,7 +7,6 @@
 //
 
 #import "CDPullViewController.h"
-#import "Header.h"
 
 @interface CDPullViewController ()
 - (void)initialize;
@@ -328,5 +327,13 @@
     }
 }
 
+#pragma mark - CDSubPanViewController
+- (UIView*)panView{
+    return self.topBar;
+}
+
+- (void)switchToRootControllerWithUserInfo:(id)userInfo{
+    
+}
 
 @end

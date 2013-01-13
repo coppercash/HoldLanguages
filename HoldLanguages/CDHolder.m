@@ -7,7 +7,6 @@
 //
 
 #import "CDHolder.h"
-#import "Header.h"
 
 @interface CDHolder (Private)
 - (void)initialize;

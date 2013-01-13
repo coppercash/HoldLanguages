@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CDStateButton.h"
 #import "CDScrollLabel.h"
+#import "CDTypes.h"
 
 #define kTopBarVisualHeight 44.0f
 #define kTopBarPullButtonHeight 20.0f
@@ -18,8 +19,12 @@
 @protocol CDPullTopBarDelegate, CDPullTopBarDataSource;
 @class CDStateButton, CDScrollLabel;
 @interface CDPullTopBar : UIControl <CDStateButtonDelegate, CDScrollLabelDelegate>{
-    CGFloat _yStartOffset;
-    CGFloat _yLastOffset;
+    //CGFloat _yStartOffset;
+    CGPoint _lastPoint;
+    //CGFloat _yLastOffset;
+    
+    //CGPoint _startPoint;
+    CDDirection _pullDirection;
 }
 @property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* artist;
 @property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* title;

@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'HoldLanguagesLogicTests' target in the 'HoldLanguagesLogicTests' project
+// Prefix header for all source files of the 'HoldLanguagesTests' target in the 'HoldLanguagesTests' project
 //
 
 #ifdef __OBJC__
@@ -11,3 +11,4 @@
 #import "CDCategories.h"
 #import "Header.h"
 #endif
+

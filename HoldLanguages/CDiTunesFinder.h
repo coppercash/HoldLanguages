@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CDiTunesFinder : NSObject
+@interface CDiTunesFinder : NSObject{
+    NSString *_rootPath;
+    NSFileManager *_fileManager;
+}
+- (NSArray *)contentsOfCurrentDirectory;
 NSString* documentsPath();
 + (NSString*)findFileWithName:(NSString*)name ofType:(NSString*)extension;
 
