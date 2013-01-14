@@ -19,13 +19,10 @@
 @protocol CDPullTopBarDelegate, CDPullTopBarDataSource;
 @class CDStateButton, CDScrollLabel;
 @interface CDPullTopBar : UIControl <CDStateButtonDelegate, CDScrollLabelDelegate>{
-    //CGFloat _yStartOffset;
-    CGPoint _lastPoint;
-    //CGFloat _yLastOffset;
-    
-    //CGPoint _startPoint;
     CDDirection _pullDirection;
 }
+@property(nonatomic, assign)CGPoint lastPoint;
+
 @property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* artist;
 @property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* title;
 @property(nonatomic, readonly, strong)IBOutlet CDScrollLabel* albumTitle;
@@ -36,13 +33,15 @@
 @property(nonatomic, weak)id<CDPullTopBarDelegate> delegate;
 @property(nonatomic, weak)id<CDPullTopBarDataSource> dataSource;
 - (void)reloadData;
+- (CGFloat)centerWithDirection:(CDDirection)direction;
 @end
+
 @protocol CDPullTopBarDelegate <NSObject>
 @required
-- (void)topBarStartPulling:(CDPullTopBar*)topBar;
-- (BOOL)topBarContinuePulling:(CDPullTopBar*)topBar shouldMoveTo:(CGFloat)yOffset;
-- (void)topBarFinishPulling:(CDPullTopBar*)topBar;
-- (void)topBarCancelPulling:(CDPullTopBar*)topBar;
+- (void)topBarStartPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
+- (CGFloat)topBarContinuePulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increament;
+- (void)topBarFinishPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
+- (void)topBarCancelPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
 
 - (BOOL)topBarShouldLockRotation:(CDPullTopBar*)topBar;
 - (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar;

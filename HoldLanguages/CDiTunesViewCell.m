@@ -10,21 +10,14 @@
 #import "CDFileItem.h"
 
 @implementation CDiTunesViewCell
-
-- (id)initWithReuseIdentifier:(NSString *)identifier item:(CDFileItem *)item{
+static CGPoint gIconCenter;
+static CGRect gNameFrame;
+- (id)initWithReuseIdentifier:(NSString *)identifier{
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     if (self) {
         [self loadSubviewsFromXib];
-        _name.text = item.name;
-    }
-    return self;
-}
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
+        gIconCenter = _icon.center;
+        gNameFrame = _name.frame;
     }
     return self;
 }
@@ -34,6 +27,33 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setupWithItem:(CDFileItem *)item{
+    NSString *fileName = item.name;
+    _name.text = fileName;
+    self.selectionStyle = UITableViewCellSelectionStyleBlue;
+    [self setDegree:item.degree];
+    if (item.isDirectory) {
+        _icon.image = [UIImage pngImageWithName:item.isOpened ? kFileIconDirectoryOpened : kFileIconDirectory];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    } else if ([fileName.pathExtension isEqualToString:@"lrc"]){
+        _icon.image = [UIImage pngImageWithName:kFileIconLRC];
+    }
+}
+
+- (void)setDegree:(NSUInteger)degree{
+    CGFloat indentation = 20.0f * (degree - 1);
+    if (_icon.center.x == gIconCenter.x + indentation) return;
+    
+    CGPoint center = _icon.center;
+    center.x = gIconCenter.x + indentation;
+    _icon.center = center;
+    
+    CGRect frame = _name.frame;
+    frame.origin.x = CGRectGetMinX(gNameFrame) + indentation;
+    frame.size.width = CGRectGetWidth(gNameFrame) - indentation;
+    _name.frame = frame;
 }
 
 @end

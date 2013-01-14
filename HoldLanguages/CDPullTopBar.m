@@ -4,7 +4,7 @@
 @interface CDPullTopBar ()
 - (void)initialize;
 - (CGRect)pullButtonFrame;
-- (void)startPullingWithDeterminingDirection:(CGPoint)locationInSuperView;
+- (CDDirection)determineDirection:(CGPoint)locationInSuperView;
 @end
 @implementation CDPullTopBar
 @synthesize artist = _artist, title = _title, albumTitle = _albumTitle;
@@ -82,40 +82,46 @@
 
 #pragma mark - Touch
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    _lastPoint = [touch locationInView:self.superview];
+    _lastPoint = [touch locationInView:self.superview.superview];
     return YES; 
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    CGPoint locationInSuperView = [touch locationInView:self.superview];
+    CGPoint locationInStableView = [touch locationInView:self.superview.superview];
     if (_pullDirection == CDDirectionNone){
-        [self startPullingWithDeterminingDirection:locationInSuperView];
-        return NO;
-    }
-    if (_delegate && [_delegate respondsToSelector:@selector(topBarContinuePulling:shouldMoveTo:)]) {
-        CGFloat yIncreament = locationInSuperView.y - _lastPoint.y;
-        CGFloat yOffset = self.center.y + yIncreament;
-        BOOL shouldMove = [_delegate topBarContinuePulling:self
-                                              shouldMoveTo:yOffset - CGRectGetHeight(self.frame) / 2];
-        if (shouldMove) {
-            self.center = CGPointMake(self.center.x, yOffset);
+        _pullDirection = [self determineDirection:locationInStableView];
+        if (_delegate && [_delegate respondsToSelector:@selector(topBarStartPulling:onDirection:)]) {
+            [_delegate topBarStartPulling:self onDirection:_pullDirection];
         }
     }
-    _lastPoint = locationInSuperView;
+    if (_delegate && [_delegate respondsToSelector:@selector(topBarContinuePulling:onDirection:shouldMove:)]) {
+        if (_pullDirection == CDDirectionUp || _pullDirection == CDDirectionDown) {
+            CGFloat yIncreament = locationInStableView.y - _lastPoint.y;
+            CGPoint targetCenter = self.center;
+            targetCenter.y += [_delegate topBarContinuePulling:self onDirection:_pullDirection shouldMove:yIncreament];
+            if (!CGPointEqualToPoint(targetCenter, self.center)) self.center = targetCenter;
+        }else if (_pullDirection == CDDirectionLeft || _pullDirection == CDDirectionRight){
+            CGFloat xIncreament = locationInStableView.x - _lastPoint.x;
+            CGPoint targetCenter = self.center;
+            targetCenter.x += [_delegate topBarContinuePulling:self onDirection:_pullDirection shouldMove:xIncreament];
+            if (!CGPointEqualToPoint(targetCenter, self.center)) self.center = targetCenter;
+        }
+    }
+    _lastPoint = locationInStableView;
     return YES;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    CGPoint locationInSuperView = [touch locationInView:self.superview];
-    [self startPullingWithDeterminingDirection:locationInSuperView];
-    BOOL isDownward = locationInSuperView.y > _lastPoint.y;
-    if (isDownward) {
-        if (_delegate && [_delegate respondsToSelector:@selector(topBarFinishPulling:)]) {
-            [_delegate topBarFinishPulling:self];
+    CGPoint locationInStableView = [touch locationInView:self.superview.superview];
+    CDDirection currentDirection = [self determineDirection:locationInStableView];
+    BOOL isDirectionSame = currentDirection == _pullDirection;
+    if (_pullDirection == CDDirectionNone || isDirectionSame) {
+        if (_delegate && [_delegate respondsToSelector:@selector(topBarFinishPulling:onDirection:)]) {
+            [_delegate topBarFinishPulling:self onDirection:_pullDirection];
         }
     }else{
-        if (_delegate && [_delegate respondsToSelector:@selector(topBarCancelPulling:)]) {
-            [_delegate topBarCancelPulling:self];
+        if (_delegate && [_delegate respondsToSelector:@selector(topBarCancelPulling:onDirection:)]) {
+            [_delegate topBarCancelPulling:self onDirection:_pullDirection];
         }
     }
     _pullDirection = CDDirectionNone;
@@ -123,19 +129,41 @@
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event{
+    if (_delegate && [_delegate respondsToSelector:@selector(topBarCancelPulling:onDirection:)]) {
+        [_delegate topBarCancelPulling:self onDirection:_pullDirection];
+    }
     _pullDirection = CDDirectionNone;
     _lastPoint = CGPointZero;
-    if (_delegate && [_delegate respondsToSelector:@selector(topBarCancelPulling:)]) {
-        [_delegate topBarCancelPulling:self];
-    }
 }
 
-- (void)startPullingWithDeterminingDirection:(CGPoint)locationInSuperView{
-    if (_pullDirection == CDDirectionNone &&
-        _delegate && [_delegate respondsToSelector:@selector(topBarStartPulling:)]) {
-        [_delegate topBarStartPulling:self];
+- (CDDirection)determineDirection:(CGPoint)locationInSuperView{
+    CGFloat xIncreament = locationInSuperView.x - _lastPoint.x;
+    CGFloat yIncreament = locationInSuperView.y - _lastPoint.y;
+    if (_pullDirection == CDDirectionNone) {
+        if (fabsf(xIncreament) > fabsf(yIncreament)) {
+            if (xIncreament < 0) return CDDirectionLeft;
+            else return CDDirectionRight;
+        }else{
+            if (yIncreament < 0) return CDDirectionUp;
+            else return CDDirectionDown;
+        }
+    }else if (_pullDirection == CDDirectionUp || _pullDirection == CDDirectionDown) {
+        if (yIncreament < 0) return CDDirectionUp;
+        else return CDDirectionDown;
+    }else if (_pullDirection == CDDirectionLeft || _pullDirection == CDDirectionRight){
+        if (xIncreament < 0) return CDDirectionLeft;
+        else return CDDirectionRight;
     }
-    _pullDirection = CDDirectionDown;
+    return CDDirectionNone;
+}
+
+- (CGFloat)centerWithDirection:(CDDirection)direction{
+    if (_pullDirection == CDDirectionUp || _pullDirection == CDDirectionDown) {
+        return self.center.y;
+    }else if (_pullDirection == CDDirectionLeft || _pullDirection == CDDirectionRight){
+        return self.center.x;
+    }
+    return 0.0f;
 }
 
 #pragma mark - Pull Button

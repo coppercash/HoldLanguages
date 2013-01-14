@@ -7,8 +7,8 @@
 //
 
 #import "CDPanViewController.h"
-#define kMenuFullWidth 320.0f
-#define kMenuDisplayedWidth 280.0f
+#define kMenuFullWidth self.view.bounds.size.width * 0.7f
+#define kMenuDisplayedWidth self.view.bounds.size.width * 0.7f
 #define kMenuOverlayWidth (self.view.bounds.size.width - kMenuDisplayedWidth)
 #define kMenuBounceOffset 10.0f
 #define kMenuBounceDuration .3f
@@ -71,12 +71,12 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [_root didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self showShadow:YES];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[_root willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
-
 
 #pragma mark - Shadow
 - (void)showShadow:(BOOL)val {
@@ -89,7 +89,6 @@
         _root.view.layer.shadowRadius = 4.0f;
         _root.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.view.bounds].CGPath;
     }
-    
 }
 
 #pragma mark - Set Controller
@@ -100,199 +99,42 @@
 
 - (void)setLeftViewController:(UIViewController<CDSubPanViewController> *)leftController{
     _left = leftController;
+    UIView *view = self.leftViewController.view;
+	CGRect frame = self.view.bounds;
+	frame.size.width = kMenuFullWidth;
+    view.frame = frame;
+    [self.view insertSubview:view atIndex:0];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
     _menuFlags.canShowLeft = (self.leftViewController != nil);
 }
 
 - (void)setRootViewController:(UIViewController<CDSubPanViewController> *)rootViewController{
     if (rootViewController == nil) return;
-    [_root.view removeFromSuperview];
+    if (_right && _right.view.superview) [_root.view removeFromSuperview];
+    
     _root = rootViewController;
+    if ([_root respondsToSelector:@selector(setPanViewController:)]) {
+        [_root setPanViewController:self];
+    }
     _root.view.frame = self.view.bounds;
     [self.view addSubview:_root.view];
-    
-    if ([rootViewController respondsToSelector:@selector(panView)]) {
-        UIView *panView = rootViewController.panView;
-        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-        pan.delegate = self;
-        [panView addGestureRecognizer:pan];
-        _pan = pan;
-    }
 }
 
 #pragma mark - GestureRecognizers
-- (void)pan:(UIPanGestureRecognizer*)gesture {
-    if (gesture.state == UIGestureRecognizerStateBegan) {
-        
-        [self showShadow:YES];
-        _panOriginX = self.view.frame.origin.x;
-        _panVelocity = CGPointMake(0.0f, 0.0f);
-        
-        if([gesture velocityInView:self.view].x > 0) {
-            _panDirection = DDMenuPanDirectionRight;
-            if (_left == nil) {
-                UIViewController<CDSubPanViewController> *left = [self createSubController:_leftControllerClass];
-                [self setLeftViewController:left];
-            }
-        } else {
-            _panDirection = DDMenuPanDirectionLeft;
-        }
-    }
+- (void)panRootControllerWithIncreament:(CGPoint)increament{
+    CGFloat maxLeft = _menuFlags.canShowLeft ? CGRectGetMaxX(_left.view.frame) : 0.0f;
+    CGFloat maxRight = _menuFlags.canShowRight ? CGRectGetMinX(_right.view.frame) : 0.0f;
     
-    if (gesture.state == UIGestureRecognizerStateChanged) {
-        
-        CGPoint velocity = [gesture velocityInView:self.view];
-        if((velocity.x*_panVelocity.x + velocity.y*_panVelocity.y) < 0) {
-            _panDirection = (_panDirection == DDMenuPanDirectionRight) ? DDMenuPanDirectionLeft : DDMenuPanDirectionRight;
-        }
-        
-        _panVelocity = velocity;
-        CGPoint translation = [gesture translationInView:self.view];
-        CGRect frame = _root.view.frame;
-        frame.origin.x = _panOriginX + translation.x;
-        
-        if (frame.origin.x > 0.0f && !_menuFlags.showingLeftView) {
-            
-            if(_menuFlags.showingRightView) {
-                _menuFlags.showingRightView = NO;
-                [self.rightViewController.view removeFromSuperview];
-            }
-            
-            if (_menuFlags.canShowLeft) {
-                
-                _menuFlags.showingLeftView = YES;
-                CGRect frame = self.view.bounds;
-				frame.size.width = kMenuFullWidth;
-                self.leftViewController.view.frame = frame;
-                [self.view insertSubview:self.leftViewController.view atIndex:0];
-                
-            } else {
-                frame.origin.x = 0.0f; // ignore right view if it's not set
-            }
-            
-        } else if (frame.origin.x < 0.0f && !_menuFlags.showingRightView) {
-            
-            if(_menuFlags.showingLeftView) {
-                _menuFlags.showingLeftView = NO;
-                [self.leftViewController.view removeFromSuperview];
-            }
-            
-            if (_menuFlags.canShowRight) {
-                
-                _menuFlags.showingRightView = YES;
-                CGRect frame = self.view.bounds;
-				frame.origin.x += frame.size.width - kMenuFullWidth;
-				frame.size.width = kMenuFullWidth;
-                self.rightViewController.view.frame = frame;
-                [self.view insertSubview:self.rightViewController.view atIndex:0];
-                
-            } else {
-                frame.origin.x = 0.0f; // ignore left view if it's not set
-            }
-            
-        }
-        
-        _root.view.frame = frame;
-        
-    } else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
-        
-        //  Finishing moving to left, right or root view with current pan velocity
-        [self.view setUserInteractionEnabled:NO];
-        
-        DDMenuPanCompletion completion = DDMenuPanCompletionRoot; // by default animate back to the root
-        
-        if (_panDirection == DDMenuPanDirectionRight && _menuFlags.showingLeftView) {
-            completion = DDMenuPanCompletionLeft;
-        } else if (_panDirection == DDMenuPanDirectionLeft && _menuFlags.showingRightView) {
-            completion = DDMenuPanCompletionRight;
-        }
-        
-        CGPoint velocity = [gesture velocityInView:self.view];
-        if (velocity.x < 0.0f) {
-            velocity.x *= -1.0f;
-        }
-        BOOL bounce = (velocity.x > 800);
-        CGFloat originX = _root.view.frame.origin.x;
-        CGFloat width = _root.view.frame.size.width;
-        CGFloat span = (width - kMenuOverlayWidth);
-        CGFloat duration = kMenuSlideDuration; // default duration with 0 velocity
-        
-        
-        if (bounce) {
-            duration = (span / velocity.x); // bouncing we'll use the current velocity to determine duration
-        } else {
-            duration = ((span - originX) / span) * duration; // user just moved a little, use the defult duration, otherwise it would be too slow
-        }
-        
-        [CATransaction begin];
-        [CATransaction setCompletionBlock:^{
-            if (completion == DDMenuPanCompletionLeft) {
-                [self showLeftController:NO];
-            } else if (completion == DDMenuPanCompletionRight) {
-                [self showRightController:NO];
-            } else {
-                [self showRootController:NO];
-            }
-            [_root.view.layer removeAllAnimations];
-            [self.view setUserInteractionEnabled:YES];
-        }];
-        
-        CGPoint pos = _root.view.layer.position;
-        CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-        
-        NSMutableArray *keyTimes = [[NSMutableArray alloc] initWithCapacity:bounce ? 3 : 2];
-        NSMutableArray *values = [[NSMutableArray alloc] initWithCapacity:bounce ? 3 : 2];
-        NSMutableArray *timingFunctions = [[NSMutableArray alloc] initWithCapacity:bounce ? 3 : 2];
-        
-        [values addObject:[NSValue valueWithCGPoint:pos]];
-        [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
-        [keyTimes addObject:[NSNumber numberWithFloat:0.0f]];
-        if (bounce) {
-            
-            duration += kMenuBounceDuration;
-            [keyTimes addObject:[NSNumber numberWithFloat:1.0f - ( kMenuBounceDuration / duration)]];
-            if (completion == DDMenuPanCompletionLeft) {
-                
-                [values addObject:[NSValue valueWithCGPoint:CGPointMake(((width/2) + span) + kMenuBounceOffset, pos.y)]];
-                
-            } else if (completion == DDMenuPanCompletionRight) {
-                
-                [values addObject:[NSValue valueWithCGPoint:CGPointMake(-((width/2) - (kMenuOverlayWidth-kMenuBounceOffset)), pos.y)]];
-                
-            } else {
-                
-                // depending on which way we're panning add a bounce offset
-                if (_panDirection == DDMenuPanDirectionLeft) {
-                    [values addObject:[NSValue valueWithCGPoint:CGPointMake((width/2) - kMenuBounceOffset, pos.y)]];
-                } else {
-                    [values addObject:[NSValue valueWithCGPoint:CGPointMake((width/2) + kMenuBounceOffset, pos.y)]];
-                }
-                
-            }
-            
-            [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-            
-        }
-        if (completion == DDMenuPanCompletionLeft) {
-            [values addObject:[NSValue valueWithCGPoint:CGPointMake((width/2) + span, pos.y)]];
-        } else if (completion == DDMenuPanCompletionRight) {
-            [values addObject:[NSValue valueWithCGPoint:CGPointMake(-((width/2) - kMenuOverlayWidth), pos.y)]];
-        } else {
-            [values addObject:[NSValue valueWithCGPoint:CGPointMake(width/2, pos.y)]];
-        }
-        
-        [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-        [keyTimes addObject:[NSNumber numberWithFloat:1.0f]];
-        
-        animation.timingFunctions = timingFunctions;
-        animation.keyTimes = keyTimes;
-        //animation.calculationMode = @"cubic";
-        animation.values = values;
-        animation.duration = duration;
-        animation.removedOnCompletion = NO;
-        animation.fillMode = kCAFillModeForwards;
-        [_root.view.layer addAnimation:animation forKey:nil];
-        [CATransaction commit];
-    }    
+    CGRect targetFrame = CGRectOffset(_root.view.frame, increament.x, increament.y);
+    CGPoint center = _root.view.center;
+    if (CGRectGetMinX(targetFrame) >= maxLeft) {
+        center.x = maxLeft + CGRectGetMidX(_root.view.bounds);
+    }else if (CGRectGetWidth(_root.view.bounds) - CGRectGetMaxX(targetFrame) >= maxRight) {
+        center.x = (CGRectGetWidth(_root.view.bounds) - maxRight) - CGRectGetMidX(_root.view.bounds);
+    }else{
+        center.x += increament.x;
+    }
+    _root.view.center = center;
 }
 
 #pragma mark - Controller Switch
@@ -351,26 +193,21 @@
     _menuFlags.showingLeftView = YES;
     [self showShadow:YES];
     
-    UIView *view = self.leftViewController.view;
-	CGRect frame = self.view.bounds;
-	frame.size.width = kMenuFullWidth;
-    view.frame = frame;
-    [self.view insertSubview:view atIndex:0];
     [self.leftViewController viewWillAppear:animated];
     
-    frame = _root.view.frame;
-    frame.origin.x = CGRectGetMaxX(view.frame) - (kMenuFullWidth - kMenuDisplayedWidth);
+    CGPoint center = _root.view.center;
+    center.x = CGRectGetMaxX(_left.view.frame) + CGRectGetMidX(_root.view.bounds);
     
     _root.view.userInteractionEnabled = NO;
     if (animated) {
         [UIView animateWithDuration:.3 animations:^{
-            _root.view.frame = frame;
+            _root.view.center = center;
         } completion:^(BOOL finished) {
             [_tap setEnabled:YES];
             [self didSwitchToControllerType:CDPanViewControllerTypeLeft];
         }];
     }else{
-        _root.view.frame = frame;
+        _root.view.center = center;
         [_tap setEnabled:YES];
         [self didSwitchToControllerType:CDPanViewControllerTypeLeft];
     }
@@ -422,7 +259,11 @@
 - (void)didSwitchToControllerType:(CDPanViewControllerType)type{
     switch (type) {
         case CDPanViewControllerTypeRoot:{
+            _root.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             _left = nil;
+        }break;
+        case CDPanViewControllerTypeLeft:{
+            _root.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
         }break;
         default:
             break;

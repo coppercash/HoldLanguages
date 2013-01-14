@@ -138,42 +138,48 @@
 }
 
 #pragma mark - CDPullTopBarDelegate
-- (void)topBarStartPulling:(CDPullTopBar *)topBar{
-    if (!_barsHidden) {
+- (void)topBarStartPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
+    if (_barsHidden) return;
+    if (direction == CDDirectionDown) {
         [self createPulledView];
     }
 }
 
-- (BOOL)topBarContinuePulling:(CDPullTopBar *)topBar shouldMoveTo:(CGFloat)yOffset{
-    if (_barsHidden) {
-        return NO;
-    }else{
-        CGPoint pullViewCenter = CGPointMake(_pulledView.center.x, yOffset - CGRectGetHeight(_pulledView.frame) / 2);
+- (CGFloat)topBarContinuePulling:(CDPullTopBar *)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increament{
+    if (_barsHidden) return 0.0f;
+    if (direction == CDDirectionDown) {
+        CGPoint pullViewCenter = _pulledView.center;
+        pullViewCenter.y += increament;
         _pulledView.center = pullViewCenter;
-        if (yOffset + CGRectGetHeight(topBar.frame) - kTopBarPullButtonHeight >
+        
+        if (increament + CGRectGetMaxY(topBar.frame) - kTopBarPullButtonHeight >
             CGRectGetMinY([self bottomBarFrameWithHidding:NO]) + kSliderProgressViewHeight) {
-            CGPoint bottomCenter =
-            CGPointMake(
-                        _bottomBar.center.x,
-                        yOffset + CGRectGetHeight(topBar.frame) - kTopBarPullButtonHeight + CGRectGetHeight(_bottomBar.frame) / 2  - kSliderProgressViewHeight);
+            CGPoint bottomCenter = _bottomBar.center;
+            bottomCenter.y += increament;
+            bottomCenter.y = increament + CGRectGetMaxY(topBar.frame) + CGRectGetHeight(_bottomBar.frame) / 2 - kTopBarPullButtonHeight - kSliderProgressViewHeight;
             _bottomBar.center = bottomCenter;
+        }else{
+            CGRect frame = [self bottomBarFrameWithHidding:NO];
+            CGPoint center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+            if (!CGPointEqualToPoint(center, _bottomBar.center)) _bottomBar.center = center;
         }
+        return increament;
     }
-    return YES;
+    return 0.0f;
 }
 
-- (void)topBarFinishPulling:(CDPullTopBar *)topBar{
+- (void)topBarFinishPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
     if (_barsHidden) {
         [self setBarsHidden:NO animated:YES];
-    }else{
+    }else if (direction == CDDirectionDown || direction == CDDirectionNone){
         [self setPullViewPresented:YES animated:YES];
     }
 }
 
-- (void)topBarCancelPulling:(CDPullTopBar *)topBar{
+- (void)topBarCancelPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
     if (_barsHidden) {
         [self setBarsHidden:YES];
-    }else{
+    }else if (direction == CDDirectionDown){
         [self setPullViewPresented:NO animated:YES];
     }
 }
@@ -248,19 +254,22 @@
 }
 
 - (void)setPulledViewPresented:(BOOL)pulledViewPresented{
-    _pulledView.frame = [self pulledViewFrameWithPresented:pulledViewPresented];
-    _pullViewPresented = pulledViewPresented;
     if (!pulledViewPresented) {
         [self destroyPulledView];
     }
+    _pulledView.frame = [self pulledViewFrameWithPresented:pulledViewPresented];
+    _pullViewPresented = pulledViewPresented;
 }
 
 - (void)setPullViewPresented:(BOOL)pullViewPresented animated:(BOOL)animated{
     if (animated) {
+        if (pullViewPresented && _pulledView == nil) [self createPulledView];
         void(^animations)(void) = ^(void){
             _bottomBar.frame = [self bottomBarFrameWithHidding:pullViewPresented];
             if (pullViewPresented) {
-                _topBar.frame = CGRectOffset(_topBar.frame, 0.0f, self.view.bounds.size.height - 20.0f);
+                CGPoint center = _topBar.center;
+                center.y = CGRectGetHeight(self.view.bounds) + CGRectGetMidY(_topBar.bounds);
+                _topBar.center = center;
             } else {
                 _topBar.frame = [self topBarFrameWithHidding:NO];
             }

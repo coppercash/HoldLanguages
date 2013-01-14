@@ -7,9 +7,7 @@
 //
 
 #import "CDProgress.h"
-@interface CDProgress (Private)
-- (void)setupUpdater;
-- (void)synchronize;
+@interface CDProgress ()
 @end
 @implementation CDProgress
 @synthesize dataSource = _dataSource;
@@ -28,6 +26,11 @@
 - (void)setupUpdater{
     _updater = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:kUpdaterInterval target:self selector:@selector(synchronize) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_updater forMode:NSDefaultRunLoopMode];
+}
+
+- (void)stopUpdater{
+    [_updater invalidate];
+    SafeMemberRelease(_updater);
 }
 
 - (void)registerDelegate:(id<CDProgressDelegate>)delegate withTimes:(NSUInteger)times{

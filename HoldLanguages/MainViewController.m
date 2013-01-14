@@ -123,7 +123,42 @@
     _lyricsView = nil;
 }
 
-#pragma mark - CDPullViewController Methods
+#pragma mark - CDPullViewController Top Bar Methods
+- (void)topBarStartPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
+    if (self.barsHidden) return;
+    [super topBarStartPulling:topBar onDirection:direction];
+    if (direction == CDDirectionRight) {
+        //DLogCurrentMethod;
+        _panViewController.leftViewController = [_panViewController createSubController:_panViewController.leftControllerClass];
+    }
+}
+
+- (CGFloat)topBarContinuePulling:(CDPullTopBar *)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increament{
+    if (self.barsHidden) return 0.0f;
+    CGFloat superIncreament = [super topBarContinuePulling:topBar onDirection:direction shouldMove:increament];
+    if (superIncreament != 0.0f) return superIncreament;
+    if (direction == CDDirectionRight) {
+        [_panViewController panRootControllerWithIncreament:CGPointMake(increament, 0.0f)];
+    }
+    return 0.0;
+}
+
+- (void)topBarFinishPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
+    [super topBarFinishPulling:topBar onDirection:direction];
+    if (direction == CDDirectionRight) {
+        //DLogCurrentMethod;
+        [_panViewController showLeftController:YES];
+    }
+}
+
+- (void)topBarCancelPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
+    [super topBarCancelPulling:topBar onDirection:direction];
+    if (direction == CDDirectionRight) {
+        //DLogCurrentMethod;
+        [_panViewController showRootController:YES];
+    }
+}
+
 - (void)createPulledView{
     [super createPulledView];
     if (_mediaPicker == nil) {
@@ -189,6 +224,7 @@
     [self switchAssistHidden];
 }
 
+#pragma mark - CDPullViewController Bottom Bar Methods
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
     NSTimeInterval playbackTime = sliderValue * self.audioSharer.currentDuration;
     [self.audioSharer playbackAt:playbackTime];

@@ -12,7 +12,6 @@
     NSString *_rootPath;
     NSFileManager *_fileManager;
 }
-- (NSArray *)contentsOfCurrentDirectory;
 NSString* documentsPath();
 + (NSString*)findFileWithName:(NSString*)name ofType:(NSString*)extension;
 

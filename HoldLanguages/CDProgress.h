@@ -19,6 +19,9 @@
     NSUInteger _counter;
 }
 @property(strong, nonatomic)id<CDProgressDataSource> dataSource;
+- (void)setupUpdater;
+- (void)stopUpdater;
+- (void)synchronize;
 - (float)progress;
 - (void)registerDelegate:(id<CDProgressDelegate>)delegate withTimes:(NSUInteger)times;
 @end

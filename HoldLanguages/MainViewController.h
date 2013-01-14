@@ -18,7 +18,7 @@
 
 @class CDAudioSharer, CDLyrics, CDBackgroundView;
 @interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource, CDAudioProgressDelegate, CDSubPanViewController>
-
+@property(nonatomic, strong)CDPanViewController *panViewController;
 @property(nonatomic, strong)CDHolder* holder;
 @property(nonatomic, strong)CDLyricsView* lyricsView;
 @property(nonatomic, readonly, strong)CDBackgroundView* backgroundView;

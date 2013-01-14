@@ -18,15 +18,11 @@
     return self;
 }
 
-- (NSArray *)contentsOfCurrentDirectory{
-   // NSString *currentDirectory = self.currentDirectoryPath;
-    //return [self contentsOfDirectoryAtPath:currentDirectory error:nil];
-}
-
 #pragma mark - Quick Method
 NSString* documentsPath(){
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
+    DLog(@"%@", documentsPath);
     return documentsPath;
 }
 

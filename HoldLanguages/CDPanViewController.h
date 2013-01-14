@@ -22,11 +22,13 @@ typedef enum {
 
 - (id)initWithRootViewController:(UIViewController<CDSubPanViewController> *)controller;
 - (void)switchToController:(CDPanViewControllerType)type withUserInfo:(id)userInfo;
+- (UIViewController<CDSubPanViewController> *)createSubController:(Class)controllerClass;
+- (void)panRootControllerWithIncreament:(CGPoint)increament;
 @end
 
 @protocol CDSubPanViewController <NSObject>
 @optional
-- (UIView*)panView;
+//- (UIView*)panView;
 - (void)setPanViewController:(CDPanViewController*)panController;
 - (void)willPresentWithUserInfo:(id)userInfo;
 @end
