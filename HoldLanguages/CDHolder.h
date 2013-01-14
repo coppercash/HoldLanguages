@@ -33,7 +33,7 @@
 @protocol CDHolderDelegate <NSObject>
 @optional
 - (void)holder:(CDHolder *)holder beginSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction;
-- (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increament;
+- (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increment;
 - (void)holder:(CDHolder *)holder endSwipingVerticallyFromStart:(CGFloat)distance;
 - (void)holder:(CDHolder *)holder continueSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index;
 - (void)holder:(CDHolder *)holder endSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index;

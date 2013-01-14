@@ -125,8 +125,8 @@
         }
     }else if (_swipeDirection & UISwipeGestureRecognizerDirectionVertical){
         if ([_delegate respondsToSelector:@selector(holder:continueSwipingVerticallyFor:)]) {
-            CGFloat increament = location.y - _lastPoint.y;
-            [_delegate holder:self continueSwipingVerticallyFor:increament];
+            CGFloat increment = location.y - _lastPoint.y;
+            [_delegate holder:self continueSwipingVerticallyFor:increment];
         }
     }
 }
@@ -154,21 +154,21 @@
 }
 
 - (UISwipeGestureRecognizerDirection)determineDirection:(CGPoint)location{
-    CGFloat xIncreament = location.x - _lastPoint.x;
-    CGFloat yIncreament = location.y - _lastPoint.y;
+    CGFloat xIncrement = location.x - _lastPoint.x;
+    CGFloat yIncrement = location.y - _lastPoint.y;
     if (_swipeDirection == UISwipeGestureRecognizerDirectionNone) {
-        if (fabsf(xIncreament) > fabsf(yIncreament)) {
-            if (xIncreament < 0) return UISwipeGestureRecognizerDirectionLeft;
+        if (fabsf(xIncrement) > fabsf(yIncrement)) {
+            if (xIncrement < 0) return UISwipeGestureRecognizerDirectionLeft;
             else return UISwipeGestureRecognizerDirectionRight;
         }else{
-            if (yIncreament < 0) return UISwipeGestureRecognizerDirectionUp;
+            if (yIncrement < 0) return UISwipeGestureRecognizerDirectionUp;
             else return UISwipeGestureRecognizerDirectionDown;
         }
     }else if (_swipeDirection & (UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown)) {
-        if (yIncreament < 0) return UISwipeGestureRecognizerDirectionUp;
+        if (yIncrement < 0) return UISwipeGestureRecognizerDirectionUp;
         else return UISwipeGestureRecognizerDirectionDown;
     }else if (_swipeDirection & (UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight)) {
-        if (xIncreament < 0) return UISwipeGestureRecognizerDirectionLeft;
+        if (xIncrement < 0) return UISwipeGestureRecognizerDirectionLeft;
         else return UISwipeGestureRecognizerDirectionRight;
     }
     return CDDirectionNone;

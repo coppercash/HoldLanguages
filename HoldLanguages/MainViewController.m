@@ -131,12 +131,12 @@
     }
 }
 
-- (CGFloat)topBarContinuePulling:(CDPullTopBar *)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increament{
+- (CGFloat)topBarContinuePulling:(CDPullTopBar *)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increment{
     if (self.barsHidden) return 0.0f;
-    CGFloat superIncreament = [super topBarContinuePulling:topBar onDirection:direction shouldMove:increament];
-    if (superIncreament != 0.0f) return superIncreament;
+    CGFloat superIncrement = [super topBarContinuePulling:topBar onDirection:direction shouldMove:increment];
+    if (superIncrement != 0.0f) return superIncrement;
     if (direction == CDDirectionRight) {
-        [_panViewController panRootControllerWithIncreament:CGPointMake(increament, 0.0f)];
+        [_panViewController panRootControllerWithIncrement:CGPointMake(increment, 0.0f)];
     }
     return 0.0;
 }
@@ -264,8 +264,8 @@
 - (void)holder:(CDHolder *)holder beginSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction{
 }
 
-- (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increament{
-    [self.lyricsView scrollFor:-increament animated:NO];
+- (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increment{
+    [self.lyricsView scrollFor:-increment animated:NO];
 }
 
 - (void)holder:(CDHolder *)holder endSwipingVerticallyFromStart:(CGFloat)distance{

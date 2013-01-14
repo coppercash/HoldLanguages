@@ -58,10 +58,10 @@
 }
 
 - (void)setFocusIndex:(NSUInteger)focusIndex animated:(BOOL)animated{
-    NSUInteger maxIndexIncreament = 10;
+    NSUInteger maxIndexIncrement = 10;
     NSUInteger currentIndex = self.focusIndex;
     //if (focusIndex == currentIndex) return;
-    BOOL shouldAnimated = abs(focusIndex - currentIndex) < maxIndexIncreament;
+    BOOL shouldAnimated = abs(focusIndex - currentIndex) < maxIndexIncrement;
     
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:focusIndex inSection:1];
     [_lyricsTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:animated && shouldAnimated];
@@ -156,8 +156,8 @@
     [_lyricsTable setContentOffset:offset animated:animated];
 }
 
-- (void)scrollFor:(CGFloat)distance animated:(BOOL)animated{
-    CGFloat destination = self.yOffset + distance;
+- (void)scrollFor:(CGFloat)increment animated:(BOOL)animated{
+    CGFloat destination = self.yOffset + increment;
     [self setYOffset:destination animated:animated];
 }
 

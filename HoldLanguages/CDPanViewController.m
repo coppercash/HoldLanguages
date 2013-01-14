@@ -121,18 +121,18 @@
 }
 
 #pragma mark - GestureRecognizers
-- (void)panRootControllerWithIncreament:(CGPoint)increament{
+- (void)panRootControllerWithIncrement:(CGPoint)increment{
     CGFloat maxLeft = _menuFlags.canShowLeft ? CGRectGetMaxX(_left.view.frame) : 0.0f;
     CGFloat maxRight = _menuFlags.canShowRight ? CGRectGetMinX(_right.view.frame) : 0.0f;
     
-    CGRect targetFrame = CGRectOffset(_root.view.frame, increament.x, increament.y);
+    CGRect targetFrame = CGRectOffset(_root.view.frame, increment.x, increment.y);
     CGPoint center = _root.view.center;
     if (CGRectGetMinX(targetFrame) >= maxLeft) {
         center.x = maxLeft + CGRectGetMidX(_root.view.bounds);
     }else if (CGRectGetWidth(_root.view.bounds) - CGRectGetMaxX(targetFrame) >= maxRight) {
         center.x = (CGRectGetWidth(_root.view.bounds) - maxRight) - CGRectGetMidX(_root.view.bounds);
     }else{
-        center.x += increament.x;
+        center.x += increment.x;
     }
     _root.view.center = center;
 }

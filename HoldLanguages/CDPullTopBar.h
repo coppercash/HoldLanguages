@@ -39,7 +39,7 @@
 @protocol CDPullTopBarDelegate <NSObject>
 @required
 - (void)topBarStartPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
-- (CGFloat)topBarContinuePulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increament;
+- (CGFloat)topBarContinuePulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increment;
 - (void)topBarFinishPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
 - (void)topBarCancelPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
 

@@ -18,7 +18,7 @@
 @property(nonatomic, weak) id<CDLyricsViewLyricsSource> lyricsSource;
 @property(nonatomic, readonly, strong) UITableView* lyricsTable;
 @property(nonatomic, readonly, strong) UIImageView* cursor;
-- (void)scrollFor:(CGFloat)distance animated:(BOOL)animated;
+- (void)scrollFor:(CGFloat)increment animated:(BOOL)animated;
 - (void)reloadData;
 @end
 

@@ -118,11 +118,11 @@
         
         NSUInteger oldCount = item.count;
         item.isOpened = !isOpened;
-        NSUInteger increament = abs(item.count - oldCount);
+        NSUInteger increment = abs(item.count - oldCount);
         
         NSInteger baseRow = indexPath.row + 1, section = indexPath.section;
-        NSMutableArray *paths = [[NSMutableArray alloc] initWithCapacity:increament];
-        for (int i = 0; i < increament; i++) {
+        NSMutableArray *paths = [[NSMutableArray alloc] initWithCapacity:increment];
+        for (int i = 0; i < increment; i++) {
             NSIndexPath *path = [NSIndexPath indexPathForRow:baseRow + i inSection:section];
             [paths addObject:path];
         }

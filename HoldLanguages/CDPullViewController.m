@@ -145,25 +145,25 @@
     }
 }
 
-- (CGFloat)topBarContinuePulling:(CDPullTopBar *)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increament{
+- (CGFloat)topBarContinuePulling:(CDPullTopBar *)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increment{
     if (_barsHidden) return 0.0f;
     if (direction == CDDirectionDown) {
         CGPoint pullViewCenter = _pulledView.center;
-        pullViewCenter.y += increament;
+        pullViewCenter.y += increment;
         _pulledView.center = pullViewCenter;
         
-        if (increament + CGRectGetMaxY(topBar.frame) - kTopBarPullButtonHeight >
+        if (increment + CGRectGetMaxY(topBar.frame) - kTopBarPullButtonHeight >
             CGRectGetMinY([self bottomBarFrameWithHidding:NO]) + kSliderProgressViewHeight) {
             CGPoint bottomCenter = _bottomBar.center;
-            bottomCenter.y += increament;
-            bottomCenter.y = increament + CGRectGetMaxY(topBar.frame) + CGRectGetHeight(_bottomBar.frame) / 2 - kTopBarPullButtonHeight - kSliderProgressViewHeight;
+            bottomCenter.y += increment;
+            bottomCenter.y = increment + CGRectGetMaxY(topBar.frame) + CGRectGetHeight(_bottomBar.frame) / 2 - kTopBarPullButtonHeight - kSliderProgressViewHeight;
             _bottomBar.center = bottomCenter;
         }else{
             CGRect frame = [self bottomBarFrameWithHidding:NO];
             CGPoint center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
             if (!CGPointEqualToPoint(center, _bottomBar.center)) _bottomBar.center = center;
         }
-        return increament;
+        return increment;
     }
     return 0.0f;
 }

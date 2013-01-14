@@ -96,14 +96,14 @@
     }
     if (_delegate && [_delegate respondsToSelector:@selector(topBarContinuePulling:onDirection:shouldMove:)]) {
         if (_pullDirection == CDDirectionUp || _pullDirection == CDDirectionDown) {
-            CGFloat yIncreament = locationInStableView.y - _lastPoint.y;
+            CGFloat yIncrement = locationInStableView.y - _lastPoint.y;
             CGPoint targetCenter = self.center;
-            targetCenter.y += [_delegate topBarContinuePulling:self onDirection:_pullDirection shouldMove:yIncreament];
+            targetCenter.y += [_delegate topBarContinuePulling:self onDirection:_pullDirection shouldMove:yIncrement];
             if (!CGPointEqualToPoint(targetCenter, self.center)) self.center = targetCenter;
         }else if (_pullDirection == CDDirectionLeft || _pullDirection == CDDirectionRight){
-            CGFloat xIncreament = locationInStableView.x - _lastPoint.x;
+            CGFloat xIncrement = locationInStableView.x - _lastPoint.x;
             CGPoint targetCenter = self.center;
-            targetCenter.x += [_delegate topBarContinuePulling:self onDirection:_pullDirection shouldMove:xIncreament];
+            targetCenter.x += [_delegate topBarContinuePulling:self onDirection:_pullDirection shouldMove:xIncrement];
             if (!CGPointEqualToPoint(targetCenter, self.center)) self.center = targetCenter;
         }
     }
@@ -137,21 +137,21 @@
 }
 
 - (CDDirection)determineDirection:(CGPoint)location{
-    CGFloat xIncreament = location.x - _lastPoint.x;
-    CGFloat yIncreament = location.y - _lastPoint.y;
+    CGFloat xIncrement = location.x - _lastPoint.x;
+    CGFloat yIncrement = location.y - _lastPoint.y;
     if (_pullDirection == CDDirectionNone) {
-        if (fabsf(xIncreament) > fabsf(yIncreament)) {
-            if (xIncreament < 0) return CDDirectionLeft;
+        if (fabsf(xIncrement) > fabsf(yIncrement)) {
+            if (xIncrement < 0) return CDDirectionLeft;
             else return CDDirectionRight;
         }else{
-            if (yIncreament < 0) return CDDirectionUp;
+            if (yIncrement < 0) return CDDirectionUp;
             else return CDDirectionDown;
         }
     }else if (_pullDirection == CDDirectionUp || _pullDirection == CDDirectionDown) {
-        if (yIncreament < 0) return CDDirectionUp;
+        if (yIncrement < 0) return CDDirectionUp;
         else return CDDirectionDown;
     }else if (_pullDirection == CDDirectionLeft || _pullDirection == CDDirectionRight){
-        if (xIncreament < 0) return CDDirectionLeft;
+        if (xIncrement < 0) return CDDirectionLeft;
         else return CDDirectionRight;
     }
     return CDDirectionNone;
