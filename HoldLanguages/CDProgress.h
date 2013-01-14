@@ -25,6 +25,7 @@
 - (float)progress;
 - (void)registerDelegate:(id<CDProgressDelegate>)delegate withTimes:(NSUInteger)times;
 @end
+
 @protocol CDProgressDataSource <NSObject>
 @optional
 - (float)progress:(CDProgress *)progress;

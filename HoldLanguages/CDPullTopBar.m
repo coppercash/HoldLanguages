@@ -4,7 +4,7 @@
 @interface CDPullTopBar ()
 - (void)initialize;
 - (CGRect)pullButtonFrame;
-- (CDDirection)determineDirection:(CGPoint)locationInSuperView;
+- (CDDirection)determineDirection:(CGPoint)location;
 @end
 @implementation CDPullTopBar
 @synthesize artist = _artist, title = _title, albumTitle = _albumTitle;
@@ -136,9 +136,9 @@
     _lastPoint = CGPointZero;
 }
 
-- (CDDirection)determineDirection:(CGPoint)locationInSuperView{
-    CGFloat xIncreament = locationInSuperView.x - _lastPoint.x;
-    CGFloat yIncreament = locationInSuperView.y - _lastPoint.y;
+- (CDDirection)determineDirection:(CGPoint)location{
+    CGFloat xIncreament = location.x - _lastPoint.x;
+    CGFloat yIncreament = location.y - _lastPoint.y;
     if (_pullDirection == CDDirectionNone) {
         if (fabsf(xIncreament) > fabsf(yIncreament)) {
             if (xIncreament < 0) return CDDirectionLeft;

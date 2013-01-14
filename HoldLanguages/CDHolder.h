@@ -8,15 +8,17 @@
 
 #import <UIKit/UIKit.h>
 @protocol CDHolderDelegate;
-
 @interface CDHolder : UIControl {
-    CGFloat _startY;
-    CGFloat _lastY;
     BOOL _isBeingTouched;
-    BOOL _swipedHorizontally;
+    
+    CGPoint _startPoint;
+    CGPoint _lastPoint;
+    NSUInteger _indexOfRow;
+    UISwipeGestureRecognizerDirection _swipeDirection;
 }
 
 @property(nonatomic, readonly)BOOL isBeingTouched;
+@property(nonatomic, assign)NSUInteger numberOfRows;
 
 @property(nonatomic, readonly, strong)UITapGestureRecognizer* tapGesture;
 @property(nonatomic, readonly, strong)UISwipeGestureRecognizer* swipeLeftGesture;
@@ -28,13 +30,15 @@
 @end
 
 
-@protocol CDHolderDelegate
-@required
-- (void)holderBeginSwipingVertically:(CDHolder*)holder;
-- (void)holder:(CDHolder*)holder swipeVerticallyFor:(CGFloat)increament;
-- (void)holder:(CDHolder*)holder endSwipingVerticallyFor:(CGFloat)increament fromStart:(CGFloat)distance;
-- (void)holderCancelSwipingVertically:(CDHolder*)holder;
-- (void)holder:(CDHolder*)holder swipeHorizontallyToDirection:(UISwipeGestureRecognizerDirection)direction;
+@protocol CDHolderDelegate <NSObject>
+@optional
+- (void)holder:(CDHolder *)holder beginSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction;
+- (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increament;
+- (void)holder:(CDHolder *)holder endSwipingVerticallyFromStart:(CGFloat)distance;
+- (void)holder:(CDHolder *)holder continueSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index;
+- (void)holder:(CDHolder *)holder endSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index;
+- (void)holder:(CDHolder *)holder cancelSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction;
+
 - (void)holderTapDouble:(CDHolder*)holder;
 - (void)holderLongPressed:(CDHolder*)holder;
 @end

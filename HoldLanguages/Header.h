@@ -18,7 +18,7 @@
 #define DLogSize(p)     NSLog(@"%f,%f", p.width, p.height);
 #define DLogRect(p)     NSLog(@"%f,%f %f,%f", p.origin.x, p.origin.y, p.size.width, p.size.height);
 #define  __FILENAME__  [[NSString stringWithCString:__FILE__ encoding:NSStringEncodingConversionAllowLossy] lastPathComponent]
-#define DLogCurrentMethod NSLog(@"%@:%d@%@/%@", __FILENAME__, __LINE__, NSStringFromClass([self class]), NSStringFromSelector(_cmd))
+#define DLogCurrentMethod NSLog(@"%@:%d@%@\n%@", __FILENAME__, __LINE__, NSStringFromClass([self class]), NSStringFromSelector(_cmd))
 #else
 
 #define DLog(...);

@@ -9,5 +9,6 @@
 #import "AppDelegate.h"
 #import "CDMemAssist.h"
 #import "CDCategories.h"
+#import "CDTypes.h"
 #import "Header.h"
 #endif

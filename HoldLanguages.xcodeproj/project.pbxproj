@@ -595,10 +595,7 @@
 				BE963C1216539B3500FAB2B1 /* Develope Helper */,
 				BE97360916568449006718F8 /* Third Part */,
 				BE987C0A1650F9FC00077D30 /* Categories */,
-				BE963C0E165378F000FAB2B1 /* Finder */,
-				BE987C011650DE5500077D30 /* Lyrics */,
-				BEFC394B16A0D82900D9482C /* Progress */,
-				BE9781B0164F74F0002B9A8D /* Players */,
+				BE9D521C16A3AC95006DCDB9 /* Classes */,
 				BE2C11EF164F68DB00B4F330 /* Controllers */,
 				BE2C11EE164F68CF00B4F330 /* Views */,
 				BE56E8A516514C7E006E086F /* Resources */,
@@ -745,6 +742,17 @@
 				BEFC396016A1137900D9482C /* CDTypes.h */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		BE9D521C16A3AC95006DCDB9 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BE963C0E165378F000FAB2B1 /* Finder */,
+				BE987C011650DE5500077D30 /* Lyrics */,
+				BEFC394B16A0D82900D9482C /* Progress */,
+				BE9781B0164F74F0002B9A8D /* Players */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		BEA2EE2E16632088009456AA /* iOS */ = {

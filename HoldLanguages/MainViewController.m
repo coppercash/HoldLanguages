@@ -35,7 +35,7 @@
     if (self) {
         // Custom initialization
         self.progress = [[CDAudioProgress alloc] init];
-        [_progress registerDelegate:self withTimes:5];
+        [_progress registerDelegate:self withTimes:3];
         
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.audioSharer = appDelegate.audioSharer;
@@ -49,7 +49,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.wantsFullScreenLayout = YES;
-    //self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
     [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];
@@ -59,12 +58,11 @@
     _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
     _backgroundView.dataSource = self;
     
-    //[self createLyricsView];
-    
     self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.holder];
-    self.holder.delegate = self;
-    self.holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    _holder.numberOfRows = 3;
+    _holder.delegate = self;
+    _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
     [self endOfViewDidLoad];
 }
@@ -263,16 +261,15 @@
 }
 
 #pragma mark - CDHolderDelegate
-- (void)holderBeginSwipingVertically:(CDHolder*)holder{
+- (void)holder:(CDHolder *)holder beginSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction{
 }
 
-- (void)holder:(CDHolder*)holder swipeVerticallyFor:(CGFloat)increament{
+- (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increament{
     [self.lyricsView scrollFor:-increament animated:NO];
 }
 
-- (void)holder:(CDHolder*)holder endSwipingVerticallyFor:(CGFloat)increament fromStart:(CGFloat)distance{
+- (void)holder:(CDHolder *)holder endSwipingVerticallyFromStart:(CGFloat)distance{
     if (_lyrics) {
-        [self.lyricsView scrollFor:-increament animated:NO];
         NSUInteger focusIndex = self.lyricsView.focusIndex;
         NSTimeInterval playbackTime = [self.lyrics timeAtIndex:focusIndex];
         [self.audioSharer playbackAt:playbackTime];
@@ -283,10 +280,13 @@
     }
 }
 
-- (void)holderCancelSwipingVertically:(CDHolder*)holder{
+- (void)holder:(CDHolder *)holder continueSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index{
 }
 
-- (void)holder:(CDHolder*)holder swipeHorizontallyToDirection:(UISwipeGestureRecognizerDirection)direction{
+- (void)holder:(CDHolder *)holder endSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index{
+}
+
+- (void)holder:(CDHolder *)holder cancelSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction{
 }
 
 - (void)holderTapDouble:(CDHolder *)holder{
@@ -405,7 +405,6 @@
         NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
         [self.lyricsView setFocusIndex:focusIndex];
     }
-    //DLog(@"%f", playbackTime);
 }
 
 - (void)progressDidUpdate:(float)progress withTimes:(NSUInteger)times{

@@ -10,6 +10,10 @@
 
 @interface CDHolder (Private)
 - (void)initialize;
+- (CDDirection)determineDirection:(CGPoint)location;
+- (void)beginTracking:(CGPoint)location;
+- (void)continueTracking:(CGPoint)location;
+- (void)endTracking:(CGPoint)location;
 - (void)endOrCancelTracking;
 @end
 
@@ -20,8 +24,7 @@
 @synthesize isBeingTouched = _isBeingTouched;
 
 #pragma mark - UIView methods
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         [self initialize];
@@ -39,18 +42,11 @@
 
 - (void)initialize {
     self.backgroundColor = [UIColor clearColor];
+    self.numberOfRows = 1;
     
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     _tapGesture.numberOfTapsRequired = 2;
     [self addGestureRecognizer:_tapGesture];
-    
-    _swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    _swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self addGestureRecognizer:_swipeLeftGesture];
-    
-    _swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    _swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
-    [self addGestureRecognizer:_swipeRightGesture];
     
     _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     _longPressGesture.minimumPressDuration = 1.0f;
@@ -60,61 +56,122 @@
 #pragma mark - Handle Gesture
 - (void)handleTap:(UITapGestureRecognizer *)tapGesture {
     if (tapGesture.state == UIGestureRecognizerStateEnded){
-        [_delegate holderTapDouble:self];
+        if (_delegate && [_delegate respondsToSelector:@selector(holderTapDouble:)]) {
+            [_delegate holderTapDouble:self];
+        }
     }
-}
-
-- (void)handleSwipe:(UISwipeGestureRecognizer*)swipeGesture {
-    [_delegate holder:self swipeHorizontallyToDirection:swipeGesture.direction];
-    _swipedHorizontally = YES;
 }
 
 - (void)handleLongPress:(UILongPressGestureRecognizer*)longPressGesture {
     if ([longPressGesture state] == UIGestureRecognizerStateBegan) {
-        [_delegate holderLongPressed:self];
+        if (_delegate && [_delegate respondsToSelector:@selector(holderLongPressed:)]) {
+            [_delegate holderLongPressed:self];
+        }
     }
 }
 
 #pragma mark - Tracking
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     _isBeingTouched = YES;
-    CGPoint startLocation = [touch locationInView:self];
-    _startY = startLocation.y;
-    _lastY = startLocation.y;
-    [_delegate holderBeginSwipingVertically:self];
+    _startPoint = _lastPoint = [touch locationInView:self];
+
+    CGFloat rowHeight = CGRectGetHeight(self.bounds) / _numberOfRows;
+    for (_indexOfRow = 0; _indexOfRow < _numberOfRows; _indexOfRow++) {
+        CGFloat topDistance = rowHeight * (_indexOfRow + 1);
+        if (topDistance > _lastPoint.y) break;
+    }
+
     return YES;
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint location = [touch locationInView:self];
-    CGFloat increament = location.y - _lastY;
-    _lastY = location.y;
-    [_delegate holder:self swipeVerticallyFor:increament];
-    
+    [self beginTracking:location];
+    [self continueTracking:location];
+    _lastPoint = location;
     return YES;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint location = [touch locationInView:self];
-    CGFloat increament = location.y - _lastY;
-    CGFloat distance = location.y - _startY;
-    [_delegate holder:self endSwipingVerticallyFor:increament fromStart:distance];
+    [self continueTracking:location];
+    [self endTracking:location];
     [self endOrCancelTracking];
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event {
-    [_delegate holderCancelSwipingVertically:self];
-    
+    if (_delegate && [_delegate respondsToSelector:@selector(holder:cancelSwipingOnDirection:)]) {
+        [_delegate holder:self cancelSwipingOnDirection:_swipeDirection];
+    }
     [self endOrCancelTracking];
 }
 
-- (void)endOrCancelTracking {
-    _isBeingTouched = NO;
-    _startY = 0.0f;
-    _lastY = 0.0f;
-    _swipedHorizontally = NO;
+- (void)beginTracking:(CGPoint)location{
+    if (_delegate == nil) return;
+    if (_swipeDirection == UISwipeGestureRecognizerDirectionNone) {
+        _swipeDirection = [self determineDirection:location];
+        if ([_delegate respondsToSelector:@selector(holder:beginSwipingOnDirection:)]) {
+            [_delegate holder:self beginSwipingOnDirection:_swipeDirection];
+        }
+    }
 }
 
+- (void)continueTracking:(CGPoint)location{
+    if (_delegate == nil) return;
+    if (_swipeDirection & UISwipeGestureRecognizerDirectionHorizontal) {
+        if ([_delegate respondsToSelector:@selector(holder:continueSwipingHorizontallyFromStart:onRow:)]) {
+            CGFloat distance = location.x - _startPoint.x;
+            [_delegate holder:self continueSwipingHorizontallyFromStart:distance onRow:_indexOfRow];
+        }
+    }else if (_swipeDirection & UISwipeGestureRecognizerDirectionVertical){
+        if ([_delegate respondsToSelector:@selector(holder:continueSwipingVerticallyFor:)]) {
+            CGFloat increament = location.y - _lastPoint.y;
+            [_delegate holder:self continueSwipingVerticallyFor:increament];
+        }
+    }
+}
 
+- (void)endTracking:(CGPoint)location{
+    if (_delegate == nil) return;
+    if (_swipeDirection & UISwipeGestureRecognizerDirectionHorizontal) {
+        CGFloat distance = location.x - _startPoint.x;
+        if ([_delegate respondsToSelector:@selector(holder:endSwipingHorizontallyFromStart:onRow:)]) {
+            [_delegate holder:self endSwipingHorizontallyFromStart:distance onRow:_indexOfRow];
+        }
+    }else if (_swipeDirection & UISwipeGestureRecognizerDirectionVertical){
+        CGFloat distance = location.y - _startPoint.y;
+        if ([_delegate respondsToSelector:@selector(holder:endSwipingVerticallyFromStart:)]) {
+            [_delegate holder:self endSwipingVerticallyFromStart:distance];
+        }
+    }
+}
+
+- (void)endOrCancelTracking{
+    _isBeingTouched = NO;
+    _indexOfRow = 0;
+    _startPoint = _lastPoint = CGPointZero;
+    _swipeDirection = UISwipeGestureRecognizerDirectionNone;
+}
+
+- (UISwipeGestureRecognizerDirection)determineDirection:(CGPoint)location{
+    CGFloat xIncreament = location.x - _lastPoint.x;
+    CGFloat yIncreament = location.y - _lastPoint.y;
+    if (_swipeDirection == UISwipeGestureRecognizerDirectionNone) {
+        if (fabsf(xIncreament) > fabsf(yIncreament)) {
+            if (xIncreament < 0) return UISwipeGestureRecognizerDirectionLeft;
+            else return UISwipeGestureRecognizerDirectionRight;
+        }else{
+            if (yIncreament < 0) return UISwipeGestureRecognizerDirectionUp;
+            else return UISwipeGestureRecognizerDirectionDown;
+        }
+    }else if (_swipeDirection & (UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown)) {
+        if (yIncreament < 0) return UISwipeGestureRecognizerDirectionUp;
+        else return UISwipeGestureRecognizerDirectionDown;
+    }else if (_swipeDirection & (UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight)) {
+        if (xIncreament < 0) return UISwipeGestureRecognizerDirectionLeft;
+        else return UISwipeGestureRecognizerDirectionRight;
+    }
+    return CDDirectionNone;
+}
 
 @end
