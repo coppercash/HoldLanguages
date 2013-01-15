@@ -42,6 +42,7 @@
         [self.audioSharer registAsDelegate:self];
         _progress.dataSource = _audioSharer;
     }
+
     return self;
 }
 

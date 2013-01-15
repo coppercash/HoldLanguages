@@ -21,14 +21,14 @@
     UIBezierPath* path = [UIBezierPath bezierPathWithRect:self.bounds];
     self.layer.shadowPath = path.CGPath;
     */
-    
+
     _pullButton = [[UIImageView alloc] initWithPNGImageNamed:kPullButtonImageName];
     _pullButton.frame = self.pullButtonFrame;
     [self addSubview:_pullButton];
     _pullButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     _pullButton.alpha = kBarAlpha;
     
-    [self loadSubviewsFromXibNamed:@"CDPullTopBar"];
+    [self loadSubviewsFromXibNamed:NSStringFromClass([self class])];
     
     _title.textColor = [UIColor whiteColor];
     _artist.textColor = _albumTitle.textColor = [UIColor lightGrayColor];

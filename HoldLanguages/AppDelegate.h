@@ -12,7 +12,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property(strong, nonatomic) UIWindow *window;
-//@property(strong, nonatomic) MainViewController* mainViewController;
 @property(strong, nonatomic) CDPanViewController *panViewController;
 @property(strong, nonatomic) CDAudioSharer *audioSharer;
 

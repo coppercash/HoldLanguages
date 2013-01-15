@@ -17,27 +17,20 @@
 }
 
 - (NSString*)previousCharacterBeforeSubstring:(NSString*)substring{
-    @try {
-        NSRange range = [self rangeOfString:substring];
-        NSRange previousRange = NSMakeRange(range.location - 1, 1);
-        NSString* previous = [self substringWithRange:previousRange];
-        return previous;
-    }
-    @catch (NSException *exception) {
-        return nil;
-    }    
+    NSRange range = [self rangeOfString:substring];
+    if (range.location <= 0) return nil;
+    NSRange previousRange = NSMakeRange(range.location - 1, 1);
+    NSString* previous = [self substringWithRange:previousRange];
+    return previous;
 }
 
 - (NSString*)nextCharacterAfterSubstring:(NSString*)substring{
-    @try {
-        NSRange range = [self rangeOfString:substring];
-        NSRange nextRange = NSMakeRange(range.location + range.length, 1);
-        NSString* next = [self substringWithRange:nextRange];
-        return next;
-    }
-    @catch (NSException *exception) {
-        return nil;
-    }
+    NSRange range = [self rangeOfString:substring];
+    NSUInteger subLocation = range.location + range.length;
+    if (subLocation >= self.length) return nil;
+    NSRange nextRange = NSMakeRange(subLocation, 1);
+    NSString* next = [self substringWithRange:nextRange];
+    return next;
 }
 
 @end

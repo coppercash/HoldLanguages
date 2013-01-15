@@ -13,8 +13,6 @@
 		BE10E609165E2E15001789EF /* RotationLockDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E607165E2E15001789EF /* RotationLockDown@2x.png */; };
 		BE10E60A165E2E15001789EF /* RotationUnlockDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E608165E2E15001789EF /* RotationUnlockDown@2x.png */; };
 		BE10E60C165E364E001789EF /* PullButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E60B165E364E001789EF /* PullButton@2x.png */; };
-		BE14DBB216999B9F00DB04D5 /* CDScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */; };
-		BE14DBB316999B9F00DB04D5 /* CDScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */; };
 		BE256FAD1666EBB3001665EF /* Cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAC1666EBB3001665EF /* Cursor.png */; };
 		BE256FB61666ECED001665EF /* AssistButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAE1666ECED001665EF /* AssistButton.png */; };
 		BE256FB71666ECED001665EF /* AssistButtonDown.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAF1666ECED001665EF /* AssistButtonDown.png */; };
@@ -74,7 +72,6 @@
 		BE3DBA2E16A185C9003CAAFE /* CDPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AC84165733770010F8E0 /* CDPlayButton.m */; };
 		BE3DBA2F16A185C9003CAAFE /* CDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */; };
 		BE3DBA3016A185C9003CAAFE /* CDStateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7D3804165CCC920018E8E8 /* CDStateButton.m */; };
-		BE3DBA3116A185C9003CAAFE /* CDScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */; };
 		BE3DBA3316A185E3003CAAFE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE964EB71654E6C1000DDB28 /* QuartzCore.framework */; };
 		BE3DBA3416A185E9003CAAFE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
 		BE3DBA3516A185FB003CAAFE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
@@ -122,6 +119,7 @@
 		BE990BE01651EC4900A03885 /* CDLyricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE990BDF1651EC4900A03885 /* CDLyricsView.m */; };
 		BE99939A169D42EF00715058 /* CDProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BE999399169D42EF00715058 /* CDProgress.m */; };
 		BE99939B169D42EF00715058 /* CDProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BE999399169D42EF00715058 /* CDProgress.m */; };
+		BE9B62D316A4EE7F00484AE9 /* libCDScrollLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9B62CF16A4EE7000484AE9 /* libCDScrollLabel.a */; };
 		BE9D521116A38B66006DCDB9 /* FileIconLRC.png in Resources */ = {isa = PBXBuildFile; fileRef = BE9D521016A38B66006DCDB9 /* FileIconLRC.png */; };
 		BE9D521216A38B66006DCDB9 /* FileIconLRC.png in Resources */ = {isa = PBXBuildFile; fileRef = BE9D521016A38B66006DCDB9 /* FileIconLRC.png */; };
 		BE9D521316A38B66006DCDB9 /* FileIconLRC.png in Resources */ = {isa = PBXBuildFile; fileRef = BE9D521016A38B66006DCDB9 /* FileIconLRC.png */; };
@@ -206,6 +204,23 @@
 		BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		BE9B62CE16A4EE7000484AE9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BE9B625816A4D2D000484AE9;
+			remoteInfo = CDScrollLabel;
+		};
+		BE9B62D016A4EE7000484AE9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BE9B626D16A4D3A700484AE9;
+			remoteInfo = CDScrollLabelDemo;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		BE027B6E165B33E600EA28BE /* SliderThumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SliderThumb@2x.png"; sourceTree = "<group>"; };
 		BE10E603165E296E001789EF /* RotationLock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RotationLock@2x.png"; sourceTree = "<group>"; };
@@ -214,8 +229,6 @@
 		BE10E608165E2E15001789EF /* RotationUnlockDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RotationUnlockDown@2x.png"; sourceTree = "<group>"; };
 		BE10E60B165E364E001789EF /* PullButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PullButton@2x.png"; sourceTree = "<group>"; };
 		BE14DBAB16996C3200DB04D5 /* CDMemAssist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMemAssist.h; sourceTree = "<group>"; };
-		BE14DBB016999B9F00DB04D5 /* CDScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDScrollLabel.h; sourceTree = "<group>"; };
-		BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDScrollLabel.m; sourceTree = "<group>"; };
 		BE256FAC1666EBB3001665EF /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cursor.png; sourceTree = "<group>"; };
 		BE256FAE1666ECED001665EF /* AssistButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButton.png; sourceTree = "<group>"; };
 		BE256FAF1666ECED001665EF /* AssistButtonDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButtonDown.png; sourceTree = "<group>"; };
@@ -317,6 +330,7 @@
 		BE990BDF1651EC4900A03885 /* CDLyricsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyricsView.m; sourceTree = "<group>"; };
 		BE999398169D42EF00715058 /* CDProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProgress.h; sourceTree = "<group>"; };
 		BE999399169D42EF00715058 /* CDProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDProgress.m; sourceTree = "<group>"; };
+		BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CDScrollLabel.xcodeproj; path = ../CDScrollLabel/CDScrollLabel.xcodeproj; sourceTree = "<group>"; };
 		BE9D521016A38B66006DCDB9 /* FileIconLRC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FileIconLRC.png; sourceTree = "<group>"; };
 		BE9D521816A3985C006DCDB9 /* FileIconDirectoryOpened.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FileIconDirectoryOpened.png; sourceTree = "<group>"; };
 		BE9FE15216521CCE0054CDEE /* CDLyricsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLyricsViewCell.h; sourceTree = "<group>"; };
@@ -394,6 +408,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE9B62D316A4EE7F00484AE9 /* libCDScrollLabel.a in Frameworks */,
 				BE964EB81654E6C1000DDB28 /* QuartzCore.framework in Frameworks */,
 				BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */,
 				BE82F6D6164E318E007EBEAB /* Foundation.framework in Frameworks */,
@@ -493,8 +508,6 @@
 				BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */,
 				BE7D3803165CCC920018E8E8 /* CDStateButton.h */,
 				BE7D3804165CCC920018E8E8 /* CDStateButton.m */,
-				BE14DBB016999B9F00DB04D5 /* CDScrollLabel.h */,
-				BE14DBB116999B9F00DB04D5 /* CDScrollLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -577,6 +590,7 @@
 		BE82F6D2164E318E007EBEAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */,
 				BE964EB71654E6C1000DDB28 /* QuartzCore.framework */,
 				BE82F6D3164E318E007EBEAB /* UIKit.framework */,
 				BE82F6D5164E318E007EBEAB /* Foundation.framework */,
@@ -742,6 +756,15 @@
 				BEFC396016A1137900D9482C /* CDTypes.h */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		BE9B62CA16A4EE7000484AE9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE9B62CF16A4EE7000484AE9 /* libCDScrollLabel.a */,
+				BE9B62D116A4EE7000484AE9 /* CDScrollLabelDemo.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		BE9D521C16A3AC95006DCDB9 /* Classes */ = {
@@ -912,6 +935,12 @@
 			mainGroup = BE82F6C4164E318E007EBEAB;
 			productRefGroup = BE82F6D0164E318E007EBEAB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BE9B62CA16A4EE7000484AE9 /* Products */;
+					ProjectRef = BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				BE82F6CE164E318E007EBEAB /* HoldLanguages */,
@@ -920,6 +949,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BE9B62CF16A4EE7000484AE9 /* libCDScrollLabel.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCDScrollLabel.a;
+			remoteRef = BE9B62CE16A4EE7000484AE9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BE9B62D116A4EE7000484AE9 /* CDScrollLabelDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CDScrollLabelDemo.app;
+			remoteRef = BE9B62D016A4EE7000484AE9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		BE3DB9FD16A1844F003CAAFE /* Resources */ = {
@@ -1088,7 +1134,6 @@
 				BE3DBA2E16A185C9003CAAFE /* CDPlayButton.m in Sources */,
 				BE3DBA2F16A185C9003CAAFE /* CDBackgroundView.m in Sources */,
 				BE3DBA3016A185C9003CAAFE /* CDStateButton.m in Sources */,
-				BE3DBA3116A185C9003CAAFE /* CDScrollLabel.m in Sources */,
 				BE3DBA0C16A1844F003CAAFE /* HoldLanguagesTests.m in Sources */,
 				BEF3394516A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */,
 			);
@@ -1125,7 +1170,6 @@
 				BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */,
 				BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */,
 				BE7D3805165CCC920018E8E8 /* CDStateButton.m in Sources */,
-				BE14DBB216999B9F00DB04D5 /* CDScrollLabel.m in Sources */,
 				BE99939A169D42EF00715058 /* CDProgress.m in Sources */,
 				BEFC394816A0D7F600D9482C /* DDMenuController.m in Sources */,
 				BEFC395716A0DD7000D9482C /* CDPanViewController.m in Sources */,
@@ -1167,7 +1211,6 @@
 				BEA5E695169E55D70048306A /* CDStateButton.m in Sources */,
 				BEA5E696169E55D70048306A /* main.m in Sources */,
 				BEC0FF07167EC7610081E67C /* HoldLanguagesLogicTests.m in Sources */,
-				BE14DBB316999B9F00DB04D5 /* CDScrollLabel.m in Sources */,
 				BE99939B169D42EF00715058 /* CDProgress.m in Sources */,
 				BEFC394916A0D7F600D9482C /* DDMenuController.m in Sources */,
 				BEFC395816A0DD7000D9482C /* CDPanViewController.m in Sources */,
@@ -1243,9 +1286,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "128A9976-C195-4D6C-B57C-9D744362CD2A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -1253,10 +1298,12 @@
 		BE256FD71666F7A9001665EF /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
 				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
@@ -1338,9 +1385,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "A3CAC820-F762-43DA-BBBE-4A8E8D16CBEE";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
@@ -1363,9 +1412,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "A3CAC820-F762-43DA-BBBE-4A8E8D16CBEE";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1373,10 +1424,12 @@
 		BE82F6EE164E318E007EBEAB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
 				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1384,10 +1437,12 @@
 		BE82F6EF164E318E007EBEAB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
 				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

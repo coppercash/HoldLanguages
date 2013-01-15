@@ -188,6 +188,7 @@
 
 #pragma mark - CDAudioPregressDataSource
 - (float)progress:(CDProgress *)progress{
+    if (_audioPlayer.currentDuration == 0.0f) return 0.0f;
     return _audioPlayer.currentPlaybackTime / _audioPlayer.currentDuration;
 }
 

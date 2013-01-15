@@ -137,28 +137,45 @@
     return height;
 }
 
-#pragma mark - Scroll in Horizontal
-//- (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated;
-//- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+}
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+    DLogCurrentMethod;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    DLogCurrentMethod;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    DLogCurrentMethod;
+}
+
+#pragma mark - Scroll in Horizontal
 - (CGFloat)yOffset{
     CGFloat yOffset = _lyricsTable.contentOffset.y;
     return yOffset;
 }
 
 - (void)setYOffset:(CGFloat)yOffset animated:(BOOL)animated{
-    //if (0.0f > yOffset || yOffset > _lyricsTable.contentSize.height - _lyricsTable.bounds.size.height) return;
-    if (yOffset < 0.0f) yOffset = 0.0f;
-    CGFloat maxYOffset = _lyricsTable.contentSize.height - _lyricsTable.bounds.size.height;
-    if (yOffset > maxYOffset) yOffset = maxYOffset;
-    
-    CGPoint offset = CGPointMake(0.0f, yOffset);
+    CGFloat yMin = 0.0f;
+    CGFloat yMax = _lyricsTable.contentSize.height - CGRectGetHeight(_lyricsTable.bounds);
+    CGPoint offset = _lyricsTable.contentOffset;
+    if (yOffset < yMin) {
+        offset.y = yMin;
+    }else if (yOffset > yMax) {
+        offset.y = yMax;
+    }else{
+        offset.y = yOffset;
+    }
     [_lyricsTable setContentOffset:offset animated:animated];
 }
 
 - (void)scrollFor:(CGFloat)increment animated:(BOOL)animated{
-    CGFloat destination = self.yOffset + increment;
-    [self setYOffset:destination animated:animated];
+    CGFloat yTarget = _lyricsTable.contentOffset.y + increment;
+    [self setYOffset:yTarget animated:animated];
 }
 
 @end

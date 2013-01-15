@@ -217,13 +217,6 @@ NSString* stringFromFile(NSString* filePath);
 bool isStamp(NSString* subString, NSString* string);
 bool isTimeStamp(NSString* stamp);
 
-- (void)initialize;
-- (void)parseFile:(NSString *)filePath;
-- (void)lines:(NSMutableArray*)lines withString:(NSString*)string;
-- (void)stampDictionaries:(NSMutableArray*)dictionaries withLines:(NSArray*)lines;
-- (void)timeStamps:(NSMutableArray*)timeStamps otherStamps:(NSMutableArray*)otherStamps withStampDictionaries:(NSArray*)dictionaries;
-- (void)stampDictionary:(NSMutableDictionary*)dictionary withLine:(NSString*)line;
-- (BOOL)isTimeStamp:(NSDictionary*)stampDictionary;
 @end
 
 @implementation CDLRCParser
@@ -315,113 +308,6 @@ bool isTimeStamp(NSString* stamp){
                                         range:NSMakeRange(0, stamp.length)];
     bool isMatch = matches.count == 1;
     return isMatch;
-}
-
-
-//Old version of LRC parse functions below
-- (id)initWithFile:(NSString*)filePath{
-    self = [super init];
-    if (self) {
-        [self initialize];
-        [self parseFile:filePath];
-    }
-    return self;
-}
-
-- (void)initialize{
-    self.lines = [[NSMutableArray alloc] init];
-    self.stampDictionaries = [[NSMutableArray alloc] init];
-    self.timeStamps = [[NSMutableArray alloc] init];
-    self.otherStamps = [[NSMutableArray alloc] init];
-}
-
-- (void)parseFile:(NSString *)filePath{
-    if (filePath == nil) return;
-    NSError* error = [[NSError alloc] init];
-    NSString* fileInString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-    if (fileInString == nil) return;
-    [self lines:self.lines withString:fileInString];
-    [self stampDictionaries:self.stampDictionaries withLines:self.lines];
-    [self timeStamps:self.timeStamps otherStamps:self.otherStamps withStampDictionaries:self.stampDictionaries];
-    
-    NSArray* sortedTimeStamps = [self.timeStamps sortedArrayUsingSelector:@selector(compare:)];
-    [self.timeStamps removeAllObjects];
-    [self.timeStamps addObjectsFromArray:sortedTimeStamps];
-}
-
-- (void)lines:(NSMutableArray*)lines withString:(NSString*)string{
-    if (lines == nil) return;
-    if (string == nil || string.length == 0) return;
-    
-    NSString* separater = @"\n";
-    NSArray* newLines = [string componentsSeparatedByString:separater];
-    [lines addObjectsFromArray:newLines];
-}
-
-- (void)stampDictionaries:(NSMutableArray*)dictionaries withLines:(NSArray*)lines{
-    for (NSString* line in lines) {
-        if (line.isVisuallyEmpty) continue;
-        
-        NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
-        [self stampDictionary:dictionary withLine:line];
-        [dictionaries addObject:dictionary];
-    }
-}
-
-- (void)timeStamps:(NSMutableArray*)timeStamps otherStamps:(NSMutableArray*)otherStamps withStampDictionaries:(NSArray*)dictionaries{
-    for (NSDictionary* dictionary in dictionaries) {
-        NSArray* stamps = [dictionary objectForKey:kStamp];
-        NSString* content = [dictionary objectForKey:kContent];
-        if ([self isTimeStamp:dictionary]) {
-            for (NSString* stamp in stamps) {
-                CDLRCTimeStamp* timeStamp = [[CDLRCTimeStamp alloc] initWithTime:stamp content:content];
-                [timeStamps addObject:timeStamp];
-            }
-        }else{
-            for (NSString* stamp in stamps) {
-                CDLRCOtherStamp* otherStamp = [[CDLRCOtherStamp alloc] initWithStamp:stamp];
-                [otherStamps addObject:otherStamp];
-            }
-        }
-    }
-}
-
-- (void)stampDictionary:(NSMutableDictionary*)dictionary withLine:(NSString*)line{
-    NSCharacterSet* separeters = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
-    NSArray* components = [line componentsSeparatedByCharactersInSet:separeters];
-    
-    NSMutableArray* stamps = [[NSMutableArray alloc] init];
-    [dictionary setObject:stamps forKey:kStamp];
-    for (NSString* component in components) {
-        if (component.isVisuallyEmpty) continue;
-        
-        NSString* previous = [line previousCharacterBeforeSubstring:component];
-        NSString* next = [line nextCharacterAfterSubstring:component];
-        BOOL isStamp = [previous isEqualToString:@"["] && [next isEqualToString:@"]"];
-        if (isStamp) {
-            [stamps addObject:component];
-        }else{
-            [dictionary setObject:component forKey:kContent];
-        }
-    }
-}
-
-- (BOOL)isTimeStamp:(NSDictionary *)stampDictionary{
-    BOOL isTimeStamp = YES;
-    NSArray* stamps = [stampDictionary objectForKey:kStamp];
-    for (NSString* stamp in stamps) {
-        NSString* pattern = @"^\\d|[:.]$";
-        NSError *error = [[NSError alloc] init];
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
-        NSTextCheckingResult *isMatch = [regex firstMatchInString:stamp
-                                                          options:NSRegularExpressionCaseInsensitive
-                                                            range:NSMakeRange(0, stamp.length)];
-        if (isMatch == nil) {
-            isTimeStamp = NO;
-            break;
-        }
-    }
-    return isTimeStamp;
 }
 
 @end
