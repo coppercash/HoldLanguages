@@ -14,6 +14,7 @@
 - (CGFloat)yOffset;
 - (void)setYOffset:(CGFloat)yOffset animated:(BOOL)animated;
 - (void)setFocusIndex:(NSUInteger)focusIndex animated:(BOOL)animated;
+- (BOOL)isFocusAccurate;
 @end
 
 @implementation CDLyricsView
@@ -60,7 +61,7 @@
 - (void)setFocusIndex:(NSUInteger)focusIndex animated:(BOOL)animated{
     NSUInteger maxIndexIncrement = 10;
     NSUInteger currentIndex = self.focusIndex;
-    //if (focusIndex == currentIndex) return;
+    if (focusIndex == currentIndex && self.isFocusAccurate) return;
     BOOL shouldAnimated = abs(focusIndex - currentIndex) < maxIndexIncrement;
     
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:focusIndex inSection:1];
@@ -73,6 +74,15 @@
     NSUInteger focusIndex = indexPath.row;
     
     return focusIndex;
+}
+
+- (BOOL)isFocusAccurate{
+    CGPoint focusPoint = CGPointMake(CGRectGetMidX(_lyricsTable.bounds), CGRectGetMidY(_lyricsTable.bounds));
+    NSIndexPath* indexPath = [_lyricsTable indexPathForRowAtPoint:focusPoint];
+    UITableViewCell *cell = [_lyricsTable cellForRowAtIndexPath:indexPath];
+    
+    BOOL isAccurate = CGPointEqualToPoint(cell.center, focusPoint);
+    return isAccurate;
 }
 
 #pragma mark - UITableViewDataSource
@@ -135,22 +145,6 @@
             break;
     }
     return height;
-}
-
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
-    DLogCurrentMethod;
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    DLogCurrentMethod;
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    DLogCurrentMethod;
 }
 
 #pragma mark - Scroll in Horizontal

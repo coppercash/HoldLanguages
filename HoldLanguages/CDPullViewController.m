@@ -184,24 +184,12 @@
     }
 }
 
-- (BOOL)topBarShouldLockRotation:(CDPullTopBar *)topBar{
-    return YES;
-}
-
-- (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar{
-    
+- (BOOL)shouldTopBar:(CDPullTopBar *)topBar changeState:(CDDirection)direction{
+    return NO;
 }
 
 #pragma mark - CDPullTopBarDataSource
-- (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{
-    return @"CDPullViewController";
-}
-
-- (NSString*)topBarNeedsTitle:(CDPullTopBar*)topBar{
-    return @"CDPullViewController";
-}
-
-- (NSString*)topBarNeedsAlbumTitle:(CDPullTopBar*)topBar{
+- (NSString*)topBarLabel:(CDPullTopBar *)topBar textAtIndex:(NSUInteger)index{
     return @"CDPullViewController";
 }
 

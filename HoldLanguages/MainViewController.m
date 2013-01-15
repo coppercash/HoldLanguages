@@ -158,6 +158,43 @@
     }
 }
 
+- (NSString*)topBarLabel:(CDPullTopBar *)topBar textAtIndex:(NSUInteger)index{
+    switch (index) {
+        case 0:{
+            NSString* artist = [self.audioSharer valueForProperty:MPMediaItemPropertyArtist];
+            if (artist == nil)
+                artist = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumArtist];
+            return artist;
+        }break;
+        case 1:{
+            NSString* title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+            return title;
+        }break;
+        case 2:{
+            NSString* albumTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumTitle];
+            return albumTitle;
+        }break;
+        default:
+            break;
+    }
+    return nil;
+}
+
+- (BOOL)shouldTopBar:(CDPullTopBar *)topBar changeState:(CDDirection)direction{
+    switch (direction) {
+        case CDDirectionLeft:{
+            [self switchAssistHidden];
+            return YES;
+        }break;
+        case CDDirectionRight:{
+            return YES;
+        }break;
+        default:
+            break;
+    }
+    return NO;
+}
+
 - (void)createPulledView{
     [super createPulledView];
     if (_mediaPicker == nil) {
@@ -198,35 +235,11 @@
     DLogCurrentMethod;
 }
 
-- (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar{
-    NSString* artist = [self.audioSharer valueForProperty:MPMediaItemPropertyArtist];
-    if (artist == nil) 
-        artist = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumArtist];
-    return artist;
-}
-
-- (NSString*)topBarNeedsTitle:(CDPullTopBar*)topBar{
-    NSString* title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
-    return title;
-}
-
-- (NSString*)topBarNeedsAlbumTitle:(CDPullTopBar*)topBar{
-    NSString* albumTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumTitle];
-    return albumTitle;
-}
-
-- (BOOL)topBarShouldLockRotation:(CDPullTopBar *)topBar{
-    return YES;
-}
-
-- (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar{
-    [self switchAssistHidden];
-}
-
 #pragma mark - CDPullViewController Bottom Bar Methods
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
     NSTimeInterval playbackTime = sliderValue * self.audioSharer.currentDuration;
     [self.audioSharer playbackAt:playbackTime];
+    [_progress synchronize];
 }
 
 - (void)bottomBar:(CDPullBottomBar *)bottomButton buttonFire:(CDBottomBarButtonType)buttonType{
@@ -271,14 +284,16 @@
 
 - (void)holder:(CDHolder *)holder endSwipingVerticallyFromStart:(CGFloat)distance{
     if (_lyrics) {
-        NSUInteger focusIndex = self.lyricsView.focusIndex;
+        NSUInteger focusIndex = _lyricsView.focusIndex;
         NSTimeInterval playbackTime = [self.lyrics timeAtIndex:focusIndex];
         [self.audioSharer playbackAt:playbackTime];
+        [_lyricsView setFocusIndex:focusIndex]; //For making focus accrute.
     }else{
         float rate = self.audioSharer.playbackRate;
         NSTimeInterval playbackTime = - rate * distance;
         [self.audioSharer playbackFor:playbackTime];
     }
+    [_progress synchronize];
 }
 
 - (void)holder:(CDHolder *)holder continueSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index{
@@ -325,14 +340,17 @@
         case CDAudioPlayerStatePlaying:{
             self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePlaying;
             self.bottomBar.progressView.animated = YES;
+            [_progress setupUpdater];
         }break;
         case CDAudioPlayerStatePaused:{
             self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
             self.bottomBar.progressView.animated = NO;
+            [_progress stopUpdater];
         }break;
         case CDAudioPlayerStateStopped:{
             self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
             self.bottomBar.progressView.animated = NO;
+            [_progress stopUpdater];
         }break;
         default:
             break;
@@ -406,10 +424,6 @@
         NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
         [self.lyricsView setFocusIndex:focusIndex];
     }
-}
-
-- (void)progressDidUpdate:(float)progress withTimes:(NSUInteger)times{
-    //DLog(@"%f", progress);
 }
 
 #pragma mark - CDSubPanViewController

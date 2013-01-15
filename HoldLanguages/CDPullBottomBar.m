@@ -301,18 +301,7 @@ NSString* textWithTimeInterval(NSTimeInterval timeInterval){
     animationGroup.removedOnCompletion  = NO;
     animationGroup.delegate = self;
     animationGroup.fillMode = kCAFillModeForwards;
-    /*
-    move.duration = kHiddingAniamtionDuration;
-    transform.duration = kHiddingAniamtionDuration;
-    alpha.duration = kHiddingAniamtionDuration;
-    move.removedOnCompletion  = NO;
-    transform.removedOnCompletion  = NO;
-    alpha.removedOnCompletion = NO;
-    //move.delegate = transform.delegate = alpha.delegate = self;
-    move.delegate = self;
-    transform.delegate = self;
-    alpha.delegate = self;
-    */
+
     CGFloat moveTo = CGRectGetMidY([self progressViewFrameWithHidding:hidden]);
     move.toValue = [[NSNumber alloc] initWithFloat:moveTo];
     

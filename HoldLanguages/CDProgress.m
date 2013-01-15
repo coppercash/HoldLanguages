@@ -86,7 +86,7 @@
     NSTimeInterval playbackTime = self.playbackTime;
     for (NSDictionary *dic in _delegates) {
         NSUInteger times = [[dic objectForKey:kKeyTimes] unsignedIntegerValue];
-        if (_counter % times == 0) {
+        if (_counter % times == 0 || _updater == nil) {
             id<CDAudioProgressDelegate> delegate = [dic objectForKey:kKeyDelegate];
             if ([delegate respondsToSelector:@selector(progressDidUpdate:withTimes:)]) {
                 [delegate progressDidUpdate:progress withTimes:times];

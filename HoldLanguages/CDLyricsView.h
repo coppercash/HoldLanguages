@@ -13,7 +13,7 @@
 
 @protocol CDLyricsViewLyricsSource;
 
-@interface CDLyricsView : UIView <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface CDLyricsView : UIView <UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic) NSUInteger focusIndex;
 @property(nonatomic, weak) id<CDLyricsViewLyricsSource> lyricsSource;
 @property(nonatomic, readonly, strong) UITableView* lyricsTable;

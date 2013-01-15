@@ -175,19 +175,18 @@
     return frame;
 }
 #pragma mark - Rotation Lock & Assist Button
-- (NSInteger)shouldStateButtonChangedValue:(CDStateButton*)stateButton{
-    if (stateButton == _rotationLock) {
-        BOOL should = [_delegate topBarShouldLockRotation:self];
-        if (should) {
-            return CDStateButtonShouldChangeMaskNext;
-        }else{
-            return CDStateButtonShouldChangeMaskKeep;
-        }
-    } else if (stateButton == _assistButton) {
-        [_delegate topBarLeftButtonTouched:self];
-        return CDStateButtonShouldChangeMaskNext;
+- (NSUInteger)shouldStateButton:(CDStateButton *)stateButton changeStateTo:(NSInteger)state{
+    CDDirection direction = CDDirectionNone;
+    if (stateButton == _rotationLock) direction = CDDirectionRight;
+    else if (stateButton == _assistButton) direction = CDDirectionLeft;
+    
+    BOOL should = NO;
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldTopBar:changeState:)]) {
+        should = [_delegate shouldTopBar:self changeState:direction];
     }
-    return CDStateButtonShouldChangeMaskKeep;
+    
+    if (should) return state;
+    return state - 1;
 }
 
 - (BOOL)isRotationLocked{
@@ -200,9 +199,11 @@
 
 #pragma mark - Reload
 - (void)reloadData{
-    _artist.text = [_dataSource topBarNeedsArtist:self];
-    _title.text = [_dataSource topBarNeedsTitle:self];
-    _albumTitle.text = [_dataSource topBarNeedsAlbumTitle:self];
+    if (_dataSource && [_dataSource respondsToSelector:@selector(topBarLabel:textAtIndex:)]) {
+        _artist.text = [_dataSource topBarLabel:self textAtIndex:0];
+        _title.text = [_dataSource topBarLabel:self textAtIndex:1];
+        _albumTitle.text = [_dataSource topBarLabel:self textAtIndex:2];
+    }
     [_assistButton changeStateTo:0];
 }
 

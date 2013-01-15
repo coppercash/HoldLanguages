@@ -108,7 +108,7 @@
 
 - (void)beginTracking:(CGPoint)location{
     if (_delegate == nil) return;
-    if (_swipeDirection == UISwipeGestureRecognizerDirectionNone) {
+    if (_swipeDirection == CDDirectionNone) {
         _swipeDirection = [self determineDirection:location];
         if ([_delegate respondsToSelector:@selector(holder:beginSwipingOnDirection:)]) {
             [_delegate holder:self beginSwipingOnDirection:_swipeDirection];
@@ -118,12 +118,12 @@
 
 - (void)continueTracking:(CGPoint)location{
     if (_delegate == nil) return;
-    if (_swipeDirection & UISwipeGestureRecognizerDirectionHorizontal) {
+    if (_swipeDirection & CDDirectionHorizontal) {
         if ([_delegate respondsToSelector:@selector(holder:continueSwipingHorizontallyFromStart:onRow:)]) {
             CGFloat distance = location.x - _startPoint.x;
             [_delegate holder:self continueSwipingHorizontallyFromStart:distance onRow:_indexOfRow];
         }
-    }else if (_swipeDirection & UISwipeGestureRecognizerDirectionVertical){
+    }else if (_swipeDirection & CDDirectionVertical){
         if ([_delegate respondsToSelector:@selector(holder:continueSwipingVerticallyFor:)]) {
             CGFloat increment = location.y - _lastPoint.y;
             [_delegate holder:self continueSwipingVerticallyFor:increment];
@@ -133,12 +133,12 @@
 
 - (void)endTracking:(CGPoint)location{
     if (_delegate == nil) return;
-    if (_swipeDirection & UISwipeGestureRecognizerDirectionHorizontal) {
+    if (_swipeDirection & CDDirectionHorizontal) {
         CGFloat distance = location.x - _startPoint.x;
         if ([_delegate respondsToSelector:@selector(holder:endSwipingHorizontallyFromStart:onRow:)]) {
             [_delegate holder:self endSwipingHorizontallyFromStart:distance onRow:_indexOfRow];
         }
-    }else if (_swipeDirection & UISwipeGestureRecognizerDirectionVertical){
+    }else if (_swipeDirection & CDDirectionVertical){
         CGFloat distance = location.y - _startPoint.y;
         if ([_delegate respondsToSelector:@selector(holder:endSwipingVerticallyFromStart:)]) {
             [_delegate holder:self endSwipingVerticallyFromStart:distance];
@@ -150,26 +150,26 @@
     _isBeingTouched = NO;
     _indexOfRow = 0;
     _startPoint = _lastPoint = CGPointZero;
-    _swipeDirection = UISwipeGestureRecognizerDirectionNone;
+    _swipeDirection = CDDirectionNone;
 }
 
 - (UISwipeGestureRecognizerDirection)determineDirection:(CGPoint)location{
     CGFloat xIncrement = location.x - _lastPoint.x;
     CGFloat yIncrement = location.y - _lastPoint.y;
-    if (_swipeDirection == UISwipeGestureRecognizerDirectionNone) {
+    if (_swipeDirection == CDDirectionNone) {
         if (fabsf(xIncrement) > fabsf(yIncrement)) {
-            if (xIncrement < 0) return UISwipeGestureRecognizerDirectionLeft;
-            else return UISwipeGestureRecognizerDirectionRight;
+            if (xIncrement < 0) return CDDirectionLeft;
+            else return CDDirectionRight;
         }else{
-            if (yIncrement < 0) return UISwipeGestureRecognizerDirectionUp;
-            else return UISwipeGestureRecognizerDirectionDown;
+            if (yIncrement < 0) return CDDirectionUp;
+            else return CDDirectionDown;
         }
-    }else if (_swipeDirection & (UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown)) {
-        if (yIncrement < 0) return UISwipeGestureRecognizerDirectionUp;
-        else return UISwipeGestureRecognizerDirectionDown;
-    }else if (_swipeDirection & (UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight)) {
+    }else if (_swipeDirection & (CDDirectionUp | CDDirectionDown)) {
+        if (yIncrement < 0) return CDDirectionUp;
+        else return CDDirectionDown;
+    }else if (_swipeDirection & (CDDirectionLeft | CDDirectionRight)) {
         if (xIncrement < 0) return UISwipeGestureRecognizerDirectionLeft;
-        else return UISwipeGestureRecognizerDirectionRight;
+        else return CDDirectionRight;
     }
     return CDDirectionNone;
 }

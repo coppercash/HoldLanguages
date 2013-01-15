@@ -127,11 +127,14 @@
             [paths addObject:path];
         }
         
+        [tableView beginUpdates];
         if (isOpened) {
             [tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationBottom];
         }else{
             [tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationBottom];
         }
+        [tableView endUpdates];
+        
         [tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:section]] withRowAnimation:UITableViewRowAnimationFade];
     }else{
         [self openFileWithItem:item];

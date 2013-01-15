@@ -37,18 +37,14 @@
 @end
 
 @protocol CDPullTopBarDelegate <NSObject>
-@required
 - (void)topBarStartPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
 - (CGFloat)topBarContinuePulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increment;
 - (void)topBarFinishPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
 - (void)topBarCancelPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction;
-
-- (BOOL)topBarShouldLockRotation:(CDPullTopBar*)topBar;
-- (void)topBarLeftButtonTouched:(CDPullTopBar*)topBar;
+- (BOOL)shouldTopBar:(CDPullTopBar*)topBar changeState:(CDDirection)direction;
 @end
-@protocol CDPullTopBarDataSource
-- (NSString*)topBarNeedsArtist:(CDPullTopBar*)topBar;
-- (NSString*)topBarNeedsTitle:(CDPullTopBar*)topBar;
-- (NSString*)topBarNeedsAlbumTitle:(CDPullTopBar*)topBar;
-@required
+
+@protocol CDPullTopBarDataSource <NSObject>
+@optional
+- (NSString*)topBarLabel:(CDPullTopBar*)topBar textAtIndex:(NSUInteger)index;
 @end

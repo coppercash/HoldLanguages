@@ -165,14 +165,9 @@ static NSString* keyOfHighlighted = @"Highlighted";
 
 #pragma mark - Change State
 - (void)changeState{
-    NSInteger shouldIndex = [_delegate shouldStateButtonChangedValue:self];
-    NSUInteger destinationIndex;
-    if (shouldIndex == CDStateButtonShouldChangeMaskKeep) {
-        destinationIndex = _state;
-    }else if (shouldIndex == CDStateButtonShouldChangeMaskNext){
-        destinationIndex = self.nextIndex;
-    }else{
-        destinationIndex = shouldIndex;
+    NSUInteger destinationIndex = (_state + 1) % _images.count;
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldStateButton:changeStateTo:)]) {
+        destinationIndex = [_delegate shouldStateButton:self changeStateTo:destinationIndex];
     }
     NSDictionary* next = [_images objectAtIndex:destinationIndex];
     UIImage* newImage = [next objectForKey:keyOfNormal];
