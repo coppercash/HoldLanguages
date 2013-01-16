@@ -87,7 +87,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Distribution"
+      buildConfiguration = "Debug"
       customArchiveName = "HoldLanguages20121129"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>

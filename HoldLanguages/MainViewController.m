@@ -334,6 +334,10 @@
     return string;
 }
 
+- (NSArray*)lyricsViewNeedsLyricsInfo:(CDLyricsView *)lyricsView{
+    return _lyrics.lyricsInfo;
+}
+
 #pragma mark - CDAudioPlayerDelegate
 - (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state{
     switch (state) {

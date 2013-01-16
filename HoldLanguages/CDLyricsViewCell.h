@@ -19,8 +19,8 @@ typedef enum{
 
 @interface CDLyricsViewCell : UITableViewCell
 @property(nonatomic, readonly)CDLyricsViewCellStyle style;
-
 @property(nonatomic, strong)UILabel* content;
 
 - (id)initWithLyricsStyle:(CDLyricsViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+- (void)setLyricsInfo:(NSArray*)info;
 @end

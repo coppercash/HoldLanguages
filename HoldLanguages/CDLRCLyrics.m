@@ -114,42 +114,27 @@ NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index,
     return index;
 }
 
-#pragma mark - Don't delete, there will be a variable about "degree".
-- (NSUInteger)seekIndexOfStampNearTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index{
-    if (index == 0) return 0;
-    NSUInteger backwardIndex = index - 1;
-    NSTimeInterval backwardTime = [self timeAtIndex:backwardIndex];
-    NSTimeInterval forwardTime = [self timeAtIndex:index];
-    if (time < backwardTime) {
-        return [self seekIndexOfStampNearTime:time backwardFromIndex:backwardIndex];
-    }else{
-        if (time - backwardTime < forwardTime - time) {
-            return backwardIndex;
-        }else{
-            return index;
+- (NSString*)contentOfType:(CDLyricsStampType)type{
+    NSArray *typeIDs = @[@"tl", @"ar", @"al", @"by"];
+    NSString *typeID = [typeIDs objectAtIndex:(NSUInteger)type];
+    NSString *content = nil;
+    for (CDLRCOtherStamp *stamp in _otherStamps) {
+        if ([stamp.type isEqualToString:typeID]) {
+            content = stamp.content;
+            break;
         }
     }
+    return content;
 }
 
-- (NSUInteger)seekIndexOfStampNearTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index{
-    if (index >= self.timeStamps.lastIndex) return self.timeStamps.lastIndex;
-    NSUInteger forwardIndex = index + 1;
-    NSTimeInterval backwardTime = [self timeAtIndex:index];
-    NSTimeInterval forwardTime = [self timeAtIndex:forwardIndex];
-    if (time > forwardTime) {
-        return [self seekIndexOfStampNearTime:time forwardFromIndex:forwardIndex];
-    }else{
-        if (time - backwardTime > forwardTime - time) {
-            return forwardIndex;
-        }else{
-            return index;
-        }
+- (NSArray*)lyricsInfo{
+    NSMutableArray *info = [[NSMutableArray alloc] initWithCapacity:_otherStamps.count];
+    for (CDLRCOtherStamp *stamp in _otherStamps) {
+        NSString *type = stamp.type;
+        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(type, type), kKeyStampType, stamp.content, kKeyStampContent, nil];
+        [info addObject:dic];
     }
-}
-
-bool isCloserToPrevious(NSTimeInterval reciever, NSTimeInterval previous, NSTimeInterval next){
-    bool isCloser = (reciever - previous) < (next - reciever);
-    return isCloser;
+    return info;
 }
 
 @end

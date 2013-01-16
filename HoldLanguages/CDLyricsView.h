@@ -22,7 +22,9 @@
 - (void)reloadData;
 @end
 
-@protocol CDLyricsViewLyricsSource
+@protocol CDLyricsViewLyricsSource <NSObject>
+@optional
+- (NSArray*)lyricsViewNeedsLyricsInfo:(CDLyricsView *)lyricsView;
 @required
 - (NSUInteger)numberOfLyricsRowsInView:(CDLyricsView *)lyricsView;
 - (NSString*)lyricsView:(CDLyricsView *)lyricsView stringForRowAtIndex:(NSUInteger)index;

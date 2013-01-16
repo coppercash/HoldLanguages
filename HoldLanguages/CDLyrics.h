@@ -10,6 +10,16 @@
 
 #define kLRCExtension @"lrc"
 
+#define kKeyStampType @"Type"
+#define kKeyStampContent @"Content"
+
+typedef enum {
+    CDLyricsStampTypeTitle,
+    CDLyricsStampTypeArtist,
+    CDLyricsStampTypeAlbum,
+    CDLyricsStampTypeAuthor
+}CDLyricsStampType;
+
 typedef enum{
     CDSeekBackward = -1,
     CDSeekUndefined = 0,
@@ -23,5 +33,6 @@ typedef enum{
 - (NSString*)contentAtIndex:(NSUInteger)index;
 - (NSTimeInterval)timeAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time;
-
+- (NSString*)contentOfType:(CDLyricsStampType)type;
+- (NSArray*)lyricsInfo;
 @end

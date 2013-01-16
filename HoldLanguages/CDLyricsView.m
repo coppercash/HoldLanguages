@@ -92,6 +92,11 @@
         case 0:{
             cell = [tableView dequeueReusableCellWithIdentifier:kReuseIdentifierOfStyleHeader];
             if (cell == nil) cell = [[CDLyricsViewCell alloc] initWithLyricsStyle:CDLyricsViewCellStyleHeader reuseIdentifier:kReuseIdentifierOfStyleHeader];
+            NSArray* lyricsInfo = nil;
+            if (_lyricsSource && [_lyricsSource respondsToSelector:@selector(lyricsViewNeedsLyricsInfo:)]) {
+                lyricsInfo = [_lyricsSource lyricsViewNeedsLyricsInfo:self];
+            }
+            [cell setLyricsInfo:lyricsInfo];
         }break;
         case 1:{
             cell = [tableView dequeueReusableCellWithIdentifier:kReuseIdentifierOfStyleLyrics];
