@@ -16,5 +16,6 @@
 #import "CDMemAssist.h"
 #import "CDCategories.h"
 #import "CDTypes.h"
+#import "CDFunctions.h"
 #import "Header.h"
 #endif

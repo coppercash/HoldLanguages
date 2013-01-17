@@ -7,22 +7,39 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+typedef enum {
+    CDAudioRepeatModeNone = MPMusicRepeatModeNone,
+    CDAudioRepeatModeOne = MPMusicRepeatModeOne,
+    CDAudioRepeatModeAll = MPMusicRepeatModeAll
+}CDAudioRepeatMode;
+typedef enum {
+    CDAudioPlayerStatePlaying,
+    CDAudioPlayerStatePaused,
+    CDAudioPlayerStateStopped
+}CDAudioPlayerState;
 
-@interface CDAudioPlayer : NSObject {
-    NSTimeInterval _currentDuration;
-}
 
-@property(nonatomic) NSTimeInterval currentPlaybackTime;
-@property(nonatomic, readonly) NSTimeInterval currentDuration;
-@property(nonatomic, readonly, copy) NSString* audioName;
-
-- (void)openAudios;
+@class MPMediaItemCollection;
+@protocol CDAudioPlayer <NSObject>
+@optional
+#pragma mark - Open
+- (void)openAudioWithURL:(NSURL*)url;
+- (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+@required
+#pragma mark - Control
 - (void)play;
 - (void)pause;
 - (void)stop;
 - (BOOL)isPlaying;
-- (void)playbackFor:(NSTimeInterval)playbackTime;
+- (BOOL)next;   //If YES indicates will play different audio.
+- (BOOL)previous;   //If YES indicates will play different audio.
+#pragma mark - Playback
 - (void)playbackAt:(NSTimeInterval)playbackTime;
-- (NSString*)valueForProperty:(NSString *)property;
-
+- (void)playbackFor:(NSTimeInterval)increment;
+- (NSArray*)availebleRata;
+#pragma mark - Information
+- (NSTimeInterval)currentPlaybackTime;
+- (NSTimeInterval)currentDuration;
+- (id)valueForProperty:(NSString*)property;
 @end

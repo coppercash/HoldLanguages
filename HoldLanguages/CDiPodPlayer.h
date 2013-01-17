@@ -9,11 +9,9 @@
 #import "CDAudioPlayer.h"
 #import <MediaPlayer/MPMediaItemCollection.h>
 #import <MediaPlayer/MPMusicPlayerController.h>
-
-@interface CDiPodPlayer : CDAudioPlayer
-
-@property(nonatomic, strong)MPMusicPlayerController* audioPlayer;
-
+@interface CDiPodPlayer : NSObject <CDAudioPlayer>{
+    MPMusicPlayerController *_audioPlayer;
+}
+@property(nonatomic, strong)MPMusicPlayerController *audioPlayer;
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
-
 @end

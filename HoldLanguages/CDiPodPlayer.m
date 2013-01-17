@@ -31,12 +31,12 @@
     self.audioPlayer.repeatMode = MPMusicRepeatModeOne;
 }
 
-#pragma mark - Play Control
+#pragma mark - Open
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
     [self.audioPlayer setQueueWithItemCollection:itemCollection];
-    [self openAudios];
 }
 
+#pragma mark - Control
 - (void)play{
     [self.audioPlayer prepareToPlay];
     [self.audioPlayer play];
@@ -60,6 +60,7 @@
     return NO;
 }
 
+#pragma mark - Playback
 - (void)playbackFor:(NSTimeInterval)playbackTime{
     NSTimeInterval currentPlaybackTime = self.audioPlayer.currentPlaybackTime;
     NSTimeInterval destinationPlaybackTime = currentPlaybackTime + playbackTime;
@@ -70,31 +71,23 @@
     self.audioPlayer.currentPlaybackTime = playbackTime;
 }
 
+#pragma mark - Information
 - (NSTimeInterval)currentDuration{
     //Get current playing duration.
     MPMediaItem* currentAudio = self.audioPlayer.nowPlayingItem;
     NSNumber *string = [currentAudio valueForKey:MPMediaItemPropertyPlaybackDuration];
     NSTimeInterval currentDuration = string.doubleValue;
-    _currentDuration = currentDuration;
-    
-    return _currentDuration;
+    return currentDuration;
 }
-
 
 - (NSTimeInterval)currentPlaybackTime{
     NSTimeInterval playbackTime = self.audioPlayer.currentPlaybackTime;
     return playbackTime;
 }
 
-- (NSString*)audioName{
+- (id)valueForProperty:(NSString*)property{
     MPMediaItem* currentAudio = self.audioPlayer.nowPlayingItem;
-    NSString *string = [currentAudio valueForKey:MPMediaItemPropertyTitle];
-    return string;
-}
-
-- (NSString*)valueForProperty:(NSString *)property{
-    MPMediaItem* currentAudio = self.audioPlayer.nowPlayingItem;
-    NSString *value = [currentAudio valueForKey:property];
+    id value = [currentAudio valueForProperty:property];
     return value;
 }
 

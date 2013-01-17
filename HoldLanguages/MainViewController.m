@@ -13,9 +13,10 @@
 #import "CDBackgroundView.h"
 #import "CDSliderProgressView.h"
 #import "CDProgress.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface MainViewController ()
-- (void)openedAudioNamed:(NSString*)audioName;
+//- (void)openedAudioNamed:(NSString*)audioName;
 - (BOOL)openLyricsAtPath:(NSString *)path;
 - (void)switchBarsHidden;
 - (NSTimeInterval)playbackTimeByButton;
@@ -46,11 +47,16 @@
     return self;
 }
 
+- (void)didReceiveMemoryWarning{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.wantsFullScreenLayout = YES;
-    
+
     [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
     [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];
 
@@ -69,18 +75,24 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
 }
 
 - (BOOL)canBecomeFirstResponder {
     return YES;
 }
 
-- (void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
+#pragma mark - System Callback
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
     if (event.type == UIEventSubtypeMotionShake)
     {
@@ -88,6 +100,34 @@
     }
 }
 
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event{
+    if (event.type == UIEventTypeRemoteControl) {
+        switch (event.subtype) {
+            case UIEventSubtypeRemoteControlTogglePlayPause:{
+                [self.audioSharer playOrPause];
+            }break;
+            case UIEventSubtypeRemoteControlPreviousTrack:{
+                [self.audioSharer previous];
+            }break;
+            case UIEventSubtypeRemoteControlNextTrack:{
+                [self.audioSharer next];
+            }break;
+            case UIEventSubtypeRemoteControlPlay:{
+                [self.audioSharer play];
+            }break;
+            case UIEventSubtypeRemoteControlPause:{
+                [self.audioSharer pause];
+            }break;
+            case UIEventSubtypeRemoteControlStop:{
+                [self.audioSharer stop];
+            }break;
+            default:
+                break;  
+        }  
+    }
+}
+
+#pragma mark - Rotation Events
 - (BOOL)shouldAutorotate{
     BOOL should = !self.topBar.isRotationLocked;
     return should;
@@ -245,13 +285,13 @@
 - (void)bottomBar:(CDPullBottomBar *)bottomButton buttonFire:(CDBottomBarButtonType)buttonType{
     switch (buttonType) {
         case CDBottomBarButtonTypePlay:{
-            [self.audioSharer playOrPause];
+            [_audioSharer playOrPause];
         }break;
         case CDBottomBarButtonTypeBackward:{
-            [self.audioSharer playbackFor:- self.playbackTimeByButton];
+            [_audioSharer playbackFor:- self.playbackTimeByButton];
         }break;
         case CDBottomBarButtonTypeForward:{
-            [self.audioSharer playbackFor:self.playbackTimeByButton];
+            [_audioSharer playbackFor:self.playbackTimeByButton];
         }break;
         default:
             break;
@@ -265,9 +305,8 @@
 #pragma mark - MPMediaPickerControllerDelegate
 - (void)mediaPicker:(MPMediaPickerController*)mediaPicker didPickMediaItems:(MPMediaItemCollection*) mediaItemCollection {
     [self setPullViewPresented:NO animated:YES];
-    
-    NSString* itemName = [self.audioSharer openQueueWithItemCollection:mediaItemCollection];
-    [self openedAudioNamed:itemName];
+    [self.audioSharer openQueueWithItemCollection:mediaItemCollection];
+    [self.audioSharer play];
 }
 
 - (void)mediaPickerDidCancel: (MPMediaPickerController *) mediaPicker {
@@ -362,7 +401,8 @@
 }
 
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer{
-    NSString* lyricsPath = [CDiTunesFinder findFileWithName:self.audioSharer.audioName ofType:kLRCExtension];
+    NSString *audioTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+    NSString* lyricsPath = [CDiTunesFinder findFileWithName:audioTitle ofType:kLRCExtension];
     if (lyricsPath == nil) {
         self.lyrics = nil;
         [self destroyLyricsView];
@@ -377,15 +417,16 @@
 
 #pragma mark - CDBackgroundViewDatasource
 - (NSString*)backgroundViewNeedsAudioName:(CDBackgroundView*)backgroundView{
-    NSString* audioName = self.audioSharer.audioName;
-    return audioName;
+    NSString *audioTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+    return audioTitle;
 }
 
 #pragma mark - Events
+/*
 - (void)openedAudioNamed:(NSString*)audioName{
     [self.audioSharer stop];
     [self.audioSharer play];
-}
+}*/
 
 - (void)switchBarsHidden{
     if (self.barsHidden) {

@@ -8,34 +8,36 @@
 
 #import <Foundation/Foundation.h>
 #import "CDProgress.h"
+#import "CDAudioPlayer.h"
 
-typedef enum {
-    CDAudioPlayerStatePlaying,
-    CDAudioPlayerStatePaused,
-    CDAudioPlayerStateStopped
-}CDAudioPlayerState;
+@protocol CDAudioPlayerDelegate,CDAudioPlayer;
+@class MPMediaItemCollection;
+@interface CDAudioSharer : UIResponder <CDAudioProgressDataSource>{
+    NSArray *_delegates;
+    NSObject<CDAudioPlayer> *_audioPlayer;
+}
 
-@protocol CDAudioPlayerDelegate;
-@class CDAudioPlayer, MPMediaItemCollection;
-@interface CDAudioSharer : NSObject <CDAudioProgressDataSource>
+@property(nonatomic, strong)NSObject<CDAudioPlayer> *audioPlayer;
 
-@property(nonatomic, readonly, strong)NSArray* delegates;
-@property(nonatomic, strong)CDAudioPlayer* audioPlayer;
-@property(nonatomic, readonly, copy)NSString* audioName;
-@property(nonatomic, readonly) NSTimeInterval currentDuration;
-
+#pragma mark - Diplomacy
 + (CDAudioSharer*)sharedAudioPlayer;
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate;
 - (void)removeDelegate:(id<CDAudioPlayerDelegate>)delegate;
-- (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+- (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+#pragma mark - Control
 - (void)play;
 - (void)pause;
 - (void)playOrPause;
 - (void)stop;
+- (void)next;
+- (void)previous;
+#pragma mark - Playback
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 - (void)playbackAt:(NSTimeInterval)playbackTime;
+#pragma mark - Infomation
+- (NSTimeInterval)currentDuration;
 - (float)playbackRate;
-- (NSString*)valueForProperty:(NSString *)property;
+- (id)valueForProperty:(NSString *)property;
 
 @end
 
