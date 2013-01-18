@@ -32,6 +32,8 @@
 }
 
 - (void)initialize{
+    _animateTagetingIndex = NSUIntegerMax;
+    
     _lyricsTable = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     [self addSubview:_lyricsTable];
     _lyricsTable.dataSource = self;
@@ -59,13 +61,15 @@
 }
 
 - (void)setFocusIndex:(NSUInteger)focusIndex animated:(BOOL)animated{
-    NSUInteger maxIndexIncrement = 10;
     NSUInteger currentIndex = self.focusIndex;
     if (focusIndex == currentIndex && self.isFocusAccurate) return;
+    if (animated && (focusIndex == _animateTagetingIndex)) return;
+    NSUInteger maxIndexIncrement = 10;
     BOOL shouldAnimated = abs(focusIndex - currentIndex) < maxIndexIncrement;
     
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:focusIndex inSection:1];
     [_lyricsTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:animated && shouldAnimated];
+    if (animated && shouldAnimated) _animateTagetingIndex = focusIndex;
 }
 
 - (NSUInteger)focusIndex{

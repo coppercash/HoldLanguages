@@ -14,11 +14,10 @@
 @class MPMediaItemCollection;
 @interface CDAudioSharer : UIResponder <CDAudioProgressDataSource>{
     NSArray *_delegates;
-    NSObject<CDAudioPlayer> *_audioPlayer;
+    id<CDAudioPlayer> _audioPlayer;
 }
-
-@property(nonatomic, strong)NSObject<CDAudioPlayer> *audioPlayer;
-
+@property(nonatomic, strong)id<CDAudioPlayer> audioPlayer;
+@property(nonatomic, assign)float rate;
 #pragma mark - Diplomacy
 + (CDAudioSharer*)sharedAudioPlayer;
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate;
@@ -34,9 +33,15 @@
 #pragma mark - Playback
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 - (void)playbackAt:(NSTimeInterval)playbackTime;
+- (void)repeatIn:(CDTimeRange)timeRange;
+- (void)stopRepeating;
+- (BOOL)isRepeating;
 #pragma mark - Infomation
+- (CDCycleArray*)rates;
+- (NSTimeInterval)currentPlaybackTime;
 - (NSTimeInterval)currentDuration;
 - (float)playbackRate;
+- (float)repeatRate;
 - (id)valueForProperty:(NSString *)property;
 
 @end

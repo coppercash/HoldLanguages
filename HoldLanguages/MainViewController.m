@@ -14,7 +14,6 @@
 #import "CDSliderProgressView.h"
 #import "CDProgress.h"
 #import <AVFoundation/AVFoundation.h>
-
 @interface MainViewController ()
 //- (void)openedAudioNamed:(NSString*)audioName;
 - (BOOL)openLyricsAtPath:(NSString *)path;
@@ -35,13 +34,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.progress = [[CDAudioProgress alloc] init];
-        [_progress registerDelegate:self withTimes:3];
         
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+        
+        self.progress = appDelegate.progress;
+        [_progress registerDelegate:self withTimes:3];
+
         self.audioSharer = appDelegate.audioSharer;
-        [self.audioSharer registAsDelegate:self];
-        _progress.dataSource = _audioSharer;
+        [_audioSharer registAsDelegate:self];
     }
 
     return self;
@@ -67,7 +67,7 @@
     
     self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.holder];
-    _holder.numberOfRows = 3;
+    _holder.numberOfRows = 2;
     _holder.delegate = self;
     _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
@@ -279,7 +279,7 @@
 - (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
     NSTimeInterval playbackTime = sliderValue * self.audioSharer.currentDuration;
     [self.audioSharer playbackAt:playbackTime];
-    [_progress synchronize];
+    [_progress synchronize:nil];
 }
 
 - (void)bottomBar:(CDPullBottomBar *)bottomButton buttonFire:(CDBottomBarButtonType)buttonType{
@@ -314,9 +314,6 @@
 }
 
 #pragma mark - CDHolderDelegate
-- (void)holder:(CDHolder *)holder beginSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction{
-}
-
 - (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increment{
     [self.lyricsView scrollFor:-increment animated:NO];
 }
@@ -324,24 +321,95 @@
 - (void)holder:(CDHolder *)holder endSwipingVerticallyFromStart:(CGFloat)distance{
     if (_lyrics) {
         NSUInteger focusIndex = _lyricsView.focusIndex;
-        NSTimeInterval playbackTime = [self.lyrics timeAtIndex:focusIndex];
+        NSTimeInterval playbackTime = [_lyrics timeAtIndex:focusIndex];
         [self.audioSharer playbackAt:playbackTime];
         [_lyricsView setFocusIndex:focusIndex]; //For making focus accrute.
     }else{
-        float rate = self.audioSharer.playbackRate;
+        float rate = _audioSharer.playbackRate;
         NSTimeInterval playbackTime = - rate * distance;
         [self.audioSharer playbackFor:playbackTime];
     }
-    [_progress synchronize];
+    [_progress synchronize:nil];
+}
+
+- (void)holder:(CDHolder *)holder beginSwipingHorizontallyOnDirection:(CDDirection)direction onRow:(NSUInteger)index{
+    switch (index) {
+        case 0:{
+            if (!_audioSharer.isRepeating) {
+                DLog(@"Create Repeat View");
+            }
+        }break;
+        case 1:{
+            float currentRate = [_audioSharer.rates.current floatValue];
+            DLog(@"Create Current Rate:(%f) View", currentRate);
+        }break;
+        default:
+            break;
+    }
 }
 
 - (void)holder:(CDHolder *)holder continueSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index{
+    switch (index) {
+        case 0:{
+            if (!_audioSharer.isRepeating) {
+                float rate = _audioSharer.repeatRate;
+                NSTimeInterval length = rate * distance;
+                DLog(@"Will repeat for %f", length);
+            }
+         }break;
+        default:
+            break;
+    }
 }
 
 - (void)holder:(CDHolder *)holder endSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index{
+    switch (index) {
+        case 0:{
+            if (_audioSharer.isRepeating) {
+                CDDirection currentDirection = distance > 0 ? CDDirectionRight : CDDirectionLeft;
+                if (currentDirection != _lastRepeatDirection) {
+                    [_audioSharer stopRepeating];
+                    DLog(@"Repeat stop");
+                }
+            }else{
+                float rate = _audioSharer.repeatRate;
+                NSTimeInterval length = rate * distance;
+                NSTimeInterval location = _audioSharer.currentPlaybackTime;
+                if (length < 0) {
+                    //Length is nagitive, so add it indicates repeat in forward range.
+                    location += length;
+                }
+                CDTimeRange repeatRange = CDMakeTimeRange(location, length);
+                [_audioSharer repeatIn:repeatRange];
+                DLog(@"Repeat range:%lf, %lf",repeatRange.location, repeatRange.length);
+            }
+        }break;
+        case 1:{
+            float targetRate = 0.0f;
+            if (distance > 0) {
+                targetRate = [_audioSharer.rates.previous floatValue];
+            }else{
+                targetRate = [_audioSharer.rates.next floatValue];
+            }
+            _audioSharer.rate = targetRate;
+            DLog(@"Create Target Rate:(%f) View", targetRate);
+        }break;
+        default:
+            break;
+    }
 }
 
-- (void)holder:(CDHolder *)holder cancelSwipingOnDirection:(UISwipeGestureRecognizerDirection)direction{
+- (void)holder:(CDHolder *)holder cancelSwipingHorizontallyOnDirection:(CDDirection)direction onRow:(NSUInteger)index{
+    switch (index) {
+        case 0:{
+            DLog(@"Release Repeat View");
+        }break;
+        case 1:{
+            DLog(@"Release Target View");
+        }break;
+        default:
+            break;
+    }
 }
 
 - (void)holderTapDouble:(CDHolder *)holder{
@@ -465,9 +533,9 @@
 
 #pragma mark - CDAudioPregressDelegate
 - (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime withTimes:(NSUInteger)times{
-    if (!self.holder.isBeingTouched) {
+    if (!_holder.isBeingTouched) {
         NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
-        [self.lyricsView setFocusIndex:focusIndex];
+        [_lyricsView setFocusIndex:focusIndex];
     }
 }
 

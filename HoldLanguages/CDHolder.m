@@ -100,8 +100,12 @@
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event {
-    if (_delegate && [_delegate respondsToSelector:@selector(holder:cancelSwipingOnDirection:)]) {
-        [_delegate holder:self cancelSwipingOnDirection:_swipeDirection];
+    if (_delegate != nil) {
+        if ((_swipeDirection & CDDirectionHorizontal) && [_delegate respondsToSelector:@selector(holder:cancelSwipingHorizontallyOnDirection:onRow:)]) {
+            [_delegate holder:self cancelSwipingHorizontallyOnDirection:_swipeDirection onRow:_indexOfRow];
+        }else if ((_swipeDirection & CDDirectionVertical) && [_delegate respondsToSelector:@selector(holder:cancelSwipingVerticallyOnDirection:)]){
+            [_delegate holder:self cancelSwipingVerticallyOnDirection:_swipeDirection];
+        }
     }
     [self endOrCancelTracking];
 }
@@ -110,8 +114,10 @@
     if (_delegate == nil) return;
     if (_swipeDirection == CDDirectionNone) {
         _swipeDirection = [self determineDirection:location];
-        if ([_delegate respondsToSelector:@selector(holder:beginSwipingOnDirection:)]) {
-            [_delegate holder:self beginSwipingOnDirection:_swipeDirection];
+        if ((_swipeDirection & CDDirectionHorizontal) && [_delegate respondsToSelector:@selector(holder:beginSwipingHorizontallyOnDirection:onRow:)]) {
+            [_delegate holder:self beginSwipingHorizontallyOnDirection:_swipeDirection onRow:_indexOfRow];
+        }else if ((_swipeDirection & CDDirectionVertical) && [_delegate respondsToSelector:@selector(holder:beginSwipingVerticallyOnDirection:)]){
+            [_delegate holder:self beginSwipingVerticallyOnDirection:_swipeDirection];
         }
     }
 }
@@ -153,7 +159,7 @@
     _swipeDirection = CDDirectionNone;
 }
 
-- (UISwipeGestureRecognizerDirection)determineDirection:(CGPoint)location{
+- (CDDirection)determineDirection:(CGPoint)location{
     CGFloat xIncrement = location.x - _lastPoint.x;
     CGFloat yIncrement = location.y - _lastPoint.y;
     if (_swipeDirection == CDDirectionNone) {
@@ -168,7 +174,7 @@
         if (yIncrement < 0) return CDDirectionUp;
         else return CDDirectionDown;
     }else if (_swipeDirection & (CDDirectionLeft | CDDirectionRight)) {
-        if (xIncrement < 0) return UISwipeGestureRecognizerDirectionLeft;
+        if (xIncrement < 0) return CDDirectionLeft;
         else return CDDirectionRight;
     }
     return CDDirectionNone;

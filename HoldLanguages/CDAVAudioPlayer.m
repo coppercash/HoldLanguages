@@ -15,7 +15,19 @@
 @end
 
 @implementation CDAVAudioPlayer
-@synthesize itemCollection = _itemCollection, player = _player, repeatMode = _repeatMode;
+@synthesize itemCollection = _itemCollection, player = _player, repeatMode = _repeatMode, rates = _rates;
+- (id)init{
+    self = [super init];
+    if (self) {
+        _rates = [[CDCycleArray alloc] initWithArray:@[
+                  [NSNumber numberWithFloat:0.5],
+                  [NSNumber numberWithFloat:1.0],
+                  [NSNumber numberWithFloat:1.5],
+                  [NSNumber numberWithFloat:2.0]] index:1];
+    }
+    return self;
+}
+
 - (MPMediaItem*)currentItem{
     MPMediaItem *item = [_itemCollection.items objectAtIndex:_currentItemIndex];
     return item;
@@ -41,6 +53,7 @@
     self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     _player.delegate = self;
     _player.enableRate = YES;
+    _player.rate = [_rates.current floatValue];
     _player.numberOfLoops = -1;
 }
 
@@ -109,12 +122,12 @@
     }
 }
 
-- (CDAudioRepeatMode)repeatMode{
-    return CDAudioRepeatModeOne;
-}
-
 #pragma mark - Playback
 - (void)playbackAt:(NSTimeInterval)playbackTime{
+    if (self.isRepeating) {
+        CDTimeRange range = _repeater.range;
+        playbackTime = limitedDouble(playbackTime, range.location, CDTimeRangeGetEnd(range));
+    }
     [_player setCurrentTime:playbackTime];
 }
 
@@ -125,7 +138,44 @@
     [self playbackAt:target];
 }
 
+- (void)setRate:(float)rate{
+    _player.rate = rate;
+}
+
+- (float)rate{
+    return _player.rate;
+}
+
+#pragma mark - Repeater
+- (void)repeatIn:(CDTimeRange)timeRange{
+    if (_player == nil) return;
+    if (!self.isRepeating) {
+        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+        CDAudioProgress *progress = appDelegate.progress;
+        _repeater = [[CDAudioRepeater alloc] initWithPlayer:self progress:progress];
+    }
+    [_repeater repeatIn:timeRange];
+}
+
+- (void)stopRepeating{
+    if (!self.isRepeating) return;
+    [_repeater stopRepeating];
+    SafeMemberRelease(_repeater);
+}
+
+- (BOOL)isRepeating{
+    return _repeater != nil;
+}
+
 #pragma mark - Information
+- (NSArray*)availableRate{
+    return _available;
+}
+
+- (CDAudioRepeatMode)repeatMode{
+    return CDAudioRepeatModeOne;
+}
+
 - (NSTimeInterval)currentPlaybackTime{
     return _player.currentTime;
 }

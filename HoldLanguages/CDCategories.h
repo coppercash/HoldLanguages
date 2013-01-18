@@ -42,3 +42,14 @@
 @interface UITableViewCell (CDTableViewCell)
 - (void)loadSubviewsFromXib;
 @end
+
+@interface CDCycleArray : NSObject{
+    NSUInteger _index;
+    NSArray *_array;
+}
+@property(nonatomic, assign)NSUInteger index;
+- (id)initWithArray:(NSArray *)array index:(NSUInteger)index;
+- (id)current;
+- (id)next;
+- (id)previous;
+@end

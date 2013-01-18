@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#define kUpdaterInterval 0.1f
 #define kKeyDelegate @"Del"
 #define kKeyTimes @"Tim"
 
@@ -17,13 +16,16 @@
     id<CDProgressDataSource> _dataSource;
     NSSet *_delegates;
     NSUInteger _counter;
+    NSTimeInterval _updateInterval;
 }
 @property(strong, nonatomic)id<CDProgressDataSource> dataSource;
+- (id)initWithUpdateInterval:(NSTimeInterval)interval;
 - (void)setupUpdater;
 - (void)stopUpdater;
-- (void)synchronize;
+- (void)synchronize:(NSTimer*)updater;
 - (float)progress;
 - (void)registerDelegate:(id<CDProgressDelegate>)delegate withTimes:(NSUInteger)times;
+- (void)removeDelegate:(id<CDProgressDelegate>)delegate;
 @end
 
 @protocol CDProgressDataSource <NSObject>

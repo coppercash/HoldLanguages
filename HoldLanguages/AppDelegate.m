@@ -21,6 +21,9 @@
     
     self.audioSharer = [CDAudioSharer sharedAudioPlayer];
     
+    self.progress = [[CDAudioProgress alloc] initWithUpdateInterval:0.1f];
+    _progress.dataSource = _audioSharer;
+    
     MainViewController *mainViewController = [[MainViewController alloc] init];
     self.panViewController = [[CDPanViewController alloc] initWithRootViewController:mainViewController];
     _panViewController.leftControllerClass = [CDiTunesViewController class];

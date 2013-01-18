@@ -57,7 +57,6 @@
 		BE3DBA1E16A185C9003CAAFE /* CDLRCLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C031650DE8000077D30 /* CDLRCLyrics.m */; };
 		BE3DBA1F16A185C9003CAAFE /* CDProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BE999399169D42EF00715058 /* CDProgress.m */; };
 		BE3DBA2016A185C9003CAAFE /* CDAudioSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE950E68164FC74A00C51C45 /* CDAudioSharer.m */; };
-		BE3DBA2216A185C9003CAAFE /* CDiPodPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */; };
 		BE3DBA2316A185C9003CAAFE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
 		BE3DBA2516A185C9003CAAFE /* CDPullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE964E8616549A06000DDB28 /* CDPullViewController.m */; };
 		BE3DBA2616A185C9003CAAFE /* CDPullTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9735FC165661AC006718F8 /* CDPullTopBar.m */; };
@@ -109,7 +108,6 @@
 		BE9735FD165661AC006718F8 /* CDPullTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9735FC165661AC006718F8 /* CDPullTopBar.m */; };
 		BE97360016566238006718F8 /* CDPullBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9735FF16566238006718F8 /* CDPullBottomBar.m */; };
 		BE97360E165684AD006718F8 /* CDSliderProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE97360D165684AD006718F8 /* CDSliderProgressView.m */; };
-		BE9781B3164F7519002B9A8D /* CDiPodPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */; };
 		BE987BF61650D42F00077D30 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE987BF81650D42F00077D30 /* Localizable.strings */; };
 		BE987C001650DE4600077D30 /* CDLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987BFF1650DE4600077D30 /* CDLyrics.m */; };
 		BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C031650DE8000077D30 /* CDLRCLyrics.m */; };
@@ -129,9 +127,9 @@
 		BE9D814416A68AF800AD091F /* CDAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */; };
 		BE9D814616A68BA100AD091F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9D814516A68BA100AD091F /* AudioToolbox.framework */; };
 		BE9D814816A68E3D00AD091F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9D814716A68E3D00AD091F /* AVFoundation.framework */; };
-		BE9D814E16A6952600AD091F /* CDFunctoins.c in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.c */; };
-		BE9D814F16A6952600AD091F /* CDFunctoins.c in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.c */; };
-		BE9D815016A6952600AD091F /* CDFunctoins.c in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.c */; };
+		BE9D814E16A6952600AD091F /* CDFunctoins.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.m */; };
+		BE9D814F16A6952600AD091F /* CDFunctoins.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.m */; };
+		BE9D815016A6952600AD091F /* CDFunctoins.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.m */; };
 		BE9FE15416521CCE0054CDEE /* CDLyricsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */; };
 		BEA2EE4516632EA4009456AA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4016632EA4009456AA /* Default-568h@2x.png */; };
 		BEA2EE4616632EA4009456AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4116632EA4009456AA /* Default.png */; };
@@ -147,7 +145,6 @@
 		BEA5E689169E55D70048306A /* CDiTunesFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE963C0B165378EA00FAB2B1 /* CDiTunesFinder.m */; };
 		BEA5E68A169E55D70048306A /* CDColorFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9F165C88E9002426E4 /* CDColorFinder.m */; };
 		BEA5E68B169E55D70048306A /* CDAudioSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE950E68164FC74A00C51C45 /* CDAudioSharer.m */; };
-		BEA5E68D169E55D70048306A /* CDiPodPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */; };
 		BEA5E68E169E55D70048306A /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 		BEA5E68F169E55D70048306A /* CDLyricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE990BDF1651EC4900A03885 /* CDLyricsView.m */; };
 		BEA5E690169E55D70048306A /* CDLyricsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */; };
@@ -167,6 +164,9 @@
 		BEA5E69E169E55E90048306A /* CDPullTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9735FC165661AC006718F8 /* CDPullTopBar.m */; };
 		BEA5E69F169E55E90048306A /* CDPullBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9735FF16566238006718F8 /* CDPullBottomBar.m */; };
 		BEA5E6A0169E56040048306A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
+		BEA6CAEA16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */; };
+		BEA6CAEB16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */; };
+		BEA6CAEC16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */; };
 		BEB58B8A165C5CDB002426E4 /* noise.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB58B85165C5CDB002426E4 /* noise.png */; };
 		BEB58B8B165C5CDB002426E4 /* YLBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B87165C5CDB002426E4 /* YLBackgroundView.m */; };
 		BEB58B8C165C5CDB002426E4 /* YLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B89165C5CDB002426E4 /* YLProgressBar.m */; };
@@ -185,6 +185,8 @@
 		BEC0FF04167EC7610081E67C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF02167EC7610081E67C /* InfoPlist.strings */; };
 		BEC0FF07167EC7610081E67C /* HoldLanguagesLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */; };
 		BEC0FF19167ECB7E0081E67C /* Halo.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF18167ECB7E0081E67C /* Halo.lrc */; };
+		BED7594C16A7EA8100D980E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9D814716A68E3D00AD091F /* AVFoundation.framework */; };
+		BED7594D16A7EA9F00D980E7 /* CDiTunesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */; };
 		BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
 		BEE661811660D2B500FFBC33 /* Lyrics.png in Resources */ = {isa = PBXBuildFile; fileRef = BEE661801660D2B500FFBC33 /* Lyrics.png */; };
 		BEE661821660DC0B00FFBC33 /* CDBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */; };
@@ -319,8 +321,6 @@
 		BE97360C165684AD006718F8 /* CDSliderProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSliderProgressView.h; sourceTree = "<group>"; };
 		BE97360D165684AD006718F8 /* CDSliderProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSliderProgressView.m; sourceTree = "<group>"; };
 		BE9781AD164F74E7002B9A8D /* CDAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioPlayer.h; sourceTree = "<group>"; };
-		BE9781B1164F7519002B9A8D /* CDiPodPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDiPodPlayer.h; sourceTree = "<group>"; };
-		BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDiPodPlayer.m; sourceTree = "<group>"; };
 		BE987BF31650D27800077D30 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		BE987BF71650D42F00077D30 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BE987BF91650D43300077D30 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 		BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAVAudioPlayer.m; sourceTree = "<group>"; };
 		BE9D814516A68BA100AD091F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BE9D814716A68E3D00AD091F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		BE9D814D16A6952600AD091F /* CDFunctoins.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CDFunctoins.c; sourceTree = "<group>"; };
+		BE9D814D16A6952600AD091F /* CDFunctoins.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFunctoins.m; sourceTree = "<group>"; };
 		BE9D815116A6954100AD091F /* CDFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDFunctions.h; sourceTree = "<group>"; };
 		BE9FE15216521CCE0054CDEE /* CDLyricsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLyricsViewCell.h; sourceTree = "<group>"; };
 		BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyricsViewCell.m; sourceTree = "<group>"; };
@@ -350,6 +350,8 @@
 		BEA2EE4216632EA4009456AA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		BEA2EE4316632EA4009456AA /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		BEA2EE4416632EA4009456AA /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		BEA6CAE816A8EDB900901EA3 /* CDAudioRepeater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioRepeater.h; sourceTree = "<group>"; };
+		BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioRepeater.m; sourceTree = "<group>"; };
 		BEB58B85165C5CDB002426E4 /* noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noise.png; sourceTree = "<group>"; };
 		BEB58B86165C5CDB002426E4 /* YLBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLBackgroundView.h; sourceTree = "<group>"; };
 		BEB58B87165C5CDB002426E4 /* YLBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLBackgroundView.m; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED7594C16A7EA8100D980E7 /* AVFoundation.framework in Frameworks */,
 				BEA5E6A0169E56040048306A /* MediaPlayer.framework in Frameworks */,
 				BEA5E683169E55BB0048306A /* CoreGraphics.framework in Frameworks */,
 				BEA5E681169E55A80048306A /* QuartzCore.framework in Frameworks */,
@@ -530,13 +533,9 @@
 				BE2C11E8164F68C000B4F330 /* MainViewController.h */,
 				BE2C11E9164F68C000B4F330 /* MainViewController.m */,
 				BE2C11EA164F68C000B4F330 /* MainViewController.xib */,
-				BEF3393E16A24C0D0032A1B6 /* CDiTunesViewController.h */,
-				BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */,
-				BEF3394116A24DC10032A1B6 /* CDiTunesViewCell.h */,
-				BEF3394216A24DC10032A1B6 /* CDiTunesViewCell.m */,
-				BEF3394616A253370032A1B6 /* CDiTunesViewCell.xib */,
-				BE96AC86165735C10010F8E0 /* CDPullViewController */,
 				BEFC395416A0DD2500D9482C /* CDPanViewController */,
+				BED7594A16A7D26200D980E7 /* CDiTunesController */,
+				BE96AC86165735C10010F8E0 /* CDPullViewController */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -742,8 +741,8 @@
 				BE9781AD164F74E7002B9A8D /* CDAudioPlayer.h */,
 				BE9D814016A68AF800AD091F /* CDAVAudioPlayer.h */,
 				BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */,
-				BE9781B1164F7519002B9A8D /* CDiPodPlayer.h */,
-				BE9781B2164F7519002B9A8D /* CDiPodPlayer.m */,
+				BEA6CAE816A8EDB900901EA3 /* CDAudioRepeater.h */,
+				BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */,
 			);
 			name = Players;
 			sourceTree = "<group>";
@@ -769,7 +768,7 @@
 				BE964EBD1654EA5F000DDB28 /* CDCategories.h */,
 				BE964EBE1654EA5F000DDB28 /* CDCategories.m */,
 				BE9D815116A6954100AD091F /* CDFunctions.h */,
-				BE9D814D16A6952600AD091F /* CDFunctoins.c */,
+				BE9D814D16A6952600AD091F /* CDFunctoins.m */,
 				BEFC396016A1137900D9482C /* CDTypes.h */,
 			);
 			name = Categories;
@@ -847,6 +846,18 @@
 				BEC0FF18167ECB7E0081E67C /* Halo.lrc */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		BED7594A16A7D26200D980E7 /* CDiTunesController */ = {
+			isa = PBXGroup;
+			children = (
+				BEF3393E16A24C0D0032A1B6 /* CDiTunesViewController.h */,
+				BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */,
+				BEF3394116A24DC10032A1B6 /* CDiTunesViewCell.h */,
+				BEF3394216A24DC10032A1B6 /* CDiTunesViewCell.m */,
+				BEF3394616A253370032A1B6 /* CDiTunesViewCell.xib */,
+			);
+			name = CDiTunesController;
 			sourceTree = "<group>";
 		};
 		BEFC394516A0D7F600D9482C /* DDMenuController */ = {
@@ -1136,7 +1147,6 @@
 				BE3DBA1E16A185C9003CAAFE /* CDLRCLyrics.m in Sources */,
 				BE3DBA1F16A185C9003CAAFE /* CDProgress.m in Sources */,
 				BE3DBA2016A185C9003CAAFE /* CDAudioSharer.m in Sources */,
-				BE3DBA2216A185C9003CAAFE /* CDiPodPlayer.m in Sources */,
 				BE3DBA2316A185C9003CAAFE /* MainViewController.m in Sources */,
 				BE3DBA2516A185C9003CAAFE /* CDPullViewController.m in Sources */,
 				BE3DBA2616A185C9003CAAFE /* CDPullTopBar.m in Sources */,
@@ -1153,7 +1163,8 @@
 				BE3DBA0C16A1844F003CAAFE /* HoldLanguagesTests.m in Sources */,
 				BEF3394516A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */,
 				BE9D814416A68AF800AD091F /* CDAVAudioPlayer.m in Sources */,
-				BE9D815016A6952600AD091F /* CDFunctoins.c in Sources */,
+				BE9D815016A6952600AD091F /* CDFunctoins.m in Sources */,
+				BEA6CAEC16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1165,7 +1176,6 @@
 				BE82F6E4164E318E007EBEAB /* AppDelegate.m in Sources */,
 				BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */,
 				BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */,
-				BE9781B3164F7519002B9A8D /* CDiPodPlayer.m in Sources */,
 				BE950E69164FC74A00C51C45 /* CDAudioSharer.m in Sources */,
 				BE987C001650DE4600077D30 /* CDLyrics.m in Sources */,
 				BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */,
@@ -1194,7 +1204,8 @@
 				BEF3394016A24C0D0032A1B6 /* CDiTunesViewController.m in Sources */,
 				BEF3394316A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */,
 				BE9D814216A68AF800AD091F /* CDAVAudioPlayer.m in Sources */,
-				BE9D814E16A6952600AD091F /* CDFunctoins.c in Sources */,
+				BE9D814E16A6952600AD091F /* CDFunctoins.m in Sources */,
+				BEA6CAEA16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1202,6 +1213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED7594D16A7EA9F00D980E7 /* CDiTunesViewController.m in Sources */,
 				BEA5E697169E55E90048306A /* ZenPlayerButton.m in Sources */,
 				BEA5E698169E55E90048306A /* YLBackgroundView.m in Sources */,
 				BEA5E699169E55E90048306A /* YLProgressBar.m in Sources */,
@@ -1218,7 +1230,6 @@
 				BEA5E689169E55D70048306A /* CDiTunesFinder.m in Sources */,
 				BEA5E68A169E55D70048306A /* CDColorFinder.m in Sources */,
 				BEA5E68B169E55D70048306A /* CDAudioSharer.m in Sources */,
-				BEA5E68D169E55D70048306A /* CDiPodPlayer.m in Sources */,
 				BEA5E68E169E55D70048306A /* CDHolder.m in Sources */,
 				BEA5E68F169E55D70048306A /* CDLyricsView.m in Sources */,
 				BEA5E690169E55D70048306A /* CDLyricsViewCell.m in Sources */,
@@ -1235,7 +1246,8 @@
 				BEFC398016A1772100D9482C /* CDFileItem.m in Sources */,
 				BEF3394416A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */,
 				BE9D814316A68AF800AD091F /* CDAVAudioPlayer.m in Sources */,
-				BE9D814F16A6952600AD091F /* CDFunctoins.c in Sources */,
+				BE9D814F16A6952600AD091F /* CDFunctoins.m in Sources */,
+				BEA6CAEB16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

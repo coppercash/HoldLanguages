@@ -11,10 +11,11 @@
 @end
 @implementation CDProgress
 @synthesize dataSource = _dataSource;
-- (id)init{
+- (id)initWithUpdateInterval:(NSTimeInterval)interval{
     self = [super init];
     if (self){
-        [self setupUpdater];
+        //[self setupUpdater];
+        _updateInterval = interval;
     }
     return self;
 }
@@ -24,7 +25,7 @@
 }
 
 - (void)setupUpdater{
-    _updater = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:kUpdaterInterval target:self selector:@selector(synchronize) userInfo:nil repeats:YES];
+    _updater = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:_updateInterval target:self selector:@selector(synchronize:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_updater forMode:NSDefaultRunLoopMode];
 }
 
@@ -45,6 +46,20 @@
     }
 }
 
+- (void)removeDelegate:(id<CDProgressDelegate>)delegate{
+    if (delegate == nil || _delegates == nil) return;
+    NSDictionary *dic = nil;
+    for (dic in _delegates) {
+        if ([dic objectForKey:kKeyDelegate] == delegate) break;
+    }
+    if (dic == nil) return;
+    
+    NSMutableSet *tempSet = [[NSMutableSet alloc] initWithSet:_delegates];
+    [tempSet removeObject:dic];
+    _delegates = [[NSSet alloc] initWithSet:tempSet];
+}
+
+
 - (float)progress{
     float progress = 0.0f;
     if (_dataSource && [_dataSource respondsToSelector:@selector(progress:)]) {
@@ -53,7 +68,7 @@
     return progress;
 }
 
-- (void)synchronize{
+- (void)synchronize:(NSTimer*)updater{
     float progress = self.progress;
     for (NSDictionary *dic in _delegates) {
         NSUInteger times = [[dic objectForKey:kKeyTimes] unsignedIntegerValue];
@@ -81,7 +96,7 @@
     return playbackTime;
 }
 
-- (void)synchronize{
+- (void)synchronize:(NSTimer*)updater{
     float progress = self.progress;
     NSTimeInterval playbackTime = self.playbackTime;
     for (NSDictionary *dic in _delegates) {

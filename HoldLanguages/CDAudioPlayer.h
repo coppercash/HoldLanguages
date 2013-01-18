@@ -13,12 +13,12 @@ typedef enum {
     CDAudioRepeatModeOne = MPMusicRepeatModeOne,
     CDAudioRepeatModeAll = MPMusicRepeatModeAll
 }CDAudioRepeatMode;
+
 typedef enum {
     CDAudioPlayerStatePlaying,
     CDAudioPlayerStatePaused,
     CDAudioPlayerStateStopped
 }CDAudioPlayerState;
-
 
 @class MPMediaItemCollection;
 @protocol CDAudioPlayer <NSObject>
@@ -27,6 +27,8 @@ typedef enum {
 - (void)openAudioWithURL:(NSURL*)url;
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
 @required
+@property(nonatomic, assign)CDAudioRepeatMode repeatMode;
+@property(nonatomic, assign)float rate;
 #pragma mark - Control
 - (void)play;
 - (void)pause;
@@ -37,8 +39,11 @@ typedef enum {
 #pragma mark - Playback
 - (void)playbackAt:(NSTimeInterval)playbackTime;
 - (void)playbackFor:(NSTimeInterval)increment;
-- (NSArray*)availebleRata;
+- (void)repeatIn:(CDTimeRange)timeRange;
+- (void)stopRepeating;
+- (BOOL)isRepeating;
 #pragma mark - Information
+- (NSArray*)availableRate;
 - (NSTimeInterval)currentPlaybackTime;
 - (NSTimeInterval)currentDuration;
 - (id)valueForProperty:(NSString*)property;

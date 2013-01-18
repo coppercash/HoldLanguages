@@ -13,7 +13,9 @@
 
 @protocol CDLyricsViewLyricsSource;
 
-@interface CDLyricsView : UIView <UITableViewDataSource, UITableViewDelegate>
+@interface CDLyricsView : UIView <UITableViewDataSource, UITableViewDelegate>{
+    NSUInteger _animateTagetingIndex;
+}
 @property(nonatomic) NSUInteger focusIndex;
 @property(nonatomic, weak) id<CDLyricsViewLyricsSource> lyricsSource;
 @property(nonatomic, readonly, strong) UITableView* lyricsTable;

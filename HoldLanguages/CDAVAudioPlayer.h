@@ -9,17 +9,21 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import "CDAudioPlayer.h"
+#import "CDAudioRepeater.h"
 
 @class MPMediaItemCollection, MPMediaItem, AVAudioPlayer;
-@interface CDAVAudioPlayer : NSObject <CDAudioPlayer, AVAudioPlayerDelegate>{
+@interface CDAVAudioPlayer : NSObject <CDAudioPlayer, CDAudioRepeaterSource, AVAudioPlayerDelegate>{
     MPMediaItemCollection *_itemCollection;
     NSUInteger _currentItemIndex;
     AVAudioPlayer *_player;
     CDAudioRepeatMode _repeatMode;
+    NSArray *_available;
+    CDCycleArray *_rates;
+    CDAudioRepeater *_repeater;
 }
 @property(nonatomic, strong)MPMediaItemCollection *itemCollection;
 @property(nonatomic, strong)AVAudioPlayer *player;
-@property(nonatomic, assign)CDAudioRepeatMode repeatMode;
+@property(nonatomic, readonly)CDCycleArray *rates;
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
 - (MPMediaItem*)currentItem;
 @end

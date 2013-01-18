@@ -17,7 +17,9 @@
 #import "CDPanViewController.h"
 
 @class CDAudioSharer, CDLyrics, CDBackgroundView;
-@interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource, CDAudioProgressDelegate, CDSubPanViewController>
+@interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource, CDAudioProgressDelegate, CDSubPanViewController>{
+    CDDirection _lastRepeatDirection;
+}
 @property(nonatomic, strong)CDPanViewController *panViewController;
 @property(nonatomic, strong)CDHolder* holder;
 @property(nonatomic, strong)CDLyricsView* lyricsView;

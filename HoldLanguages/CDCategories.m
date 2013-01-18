@@ -24,7 +24,6 @@
     UIColor* color = [UIColor colorWithRed:red / 255.0f green:green / 255.0f blue:blue / 255.0f alpha:alpha];
     return color;
 }
-
 @end
 
 @implementation UIImageView (CDImageView)
@@ -41,7 +40,6 @@
     self = [self initWithImage:image];
     return self;
 }
-
 @end
 
 @implementation UIImage (CDImage)
@@ -53,8 +51,7 @@
 @end
 
 @implementation UIView (CDView)
-- (void)setBackgroundLayer:(CALayer *)backgroundLayer;
-{
+- (void)setBackgroundLayer:(CALayer *)backgroundLayer;{
     CALayer * oldBackground = [[self.layer sublayers] objectAtIndex:0];
     if (oldBackground){
         [self.layer replaceSublayer:oldBackground with:backgroundLayer];
@@ -83,7 +80,6 @@
     UIView* view = [UIView viewFromXibNamed:xibName owner:owner atIndex:0];
     return  view;
 }
-
 @end
 
 @implementation UILabel (CDLabel)
@@ -106,5 +102,33 @@
     for (UIView* subview in rootView.contentView.subviews) {
         [self.contentView addSubview:subview];
     }
+}
+@end
+
+@implementation CDCycleArray
+@synthesize index = _index;
+- (id)initWithArray:(NSArray *)array index:(NSUInteger)index{
+    self = [super init];
+    if (self) {
+        _index = index;
+        _array = [[NSArray alloc] initWithArray:array];
+    }
+    return self;
+}
+
+- (id)current{
+    return [_array objectAtIndex:_index];
+}
+
+- (id)next{
+    NSUInteger nextIndex = (_index + 1) % _array.count;
+    _index = nextIndex;
+    return [_array objectAtIndex:nextIndex];
+}
+
+- (id)previous{
+    NSUInteger previousIndex = (_index == 0) ? _array.count - 1 : _index - 1;
+    _index = previousIndex;
+    return [_array objectAtIndex:previousIndex];
 }
 @end
