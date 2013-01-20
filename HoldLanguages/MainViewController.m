@@ -5,7 +5,7 @@
 //  Created by William Remaerd on 11/11/12.
 //  Copyright (c) 2012 Coder Dreamer. All rights reserved.
 //
-
+#import <AVFoundation/AVFoundation.h>
 #import "MainViewController.h"
 #import "CDLyrics.h"
 #import "CDLRCLyrics.h"
@@ -13,7 +13,9 @@
 #import "CDBackgroundView.h"
 #import "CDSliderProgressView.h"
 #import "CDProgress.h"
-#import <AVFoundation/AVFoundation.h>
+#import "CDLazyScrollView.h"
+#import "CDBigLabelView.h"
+
 @interface MainViewController ()
 //- (void)openedAudioNamed:(NSString*)audioName;
 - (BOOL)openLyricsAtPath:(NSString *)path;
@@ -331,6 +333,7 @@
     }
     [_progress synchronize:nil];
 }
+static CGFloat lastDistance = 0.0f;
 
 - (void)holder:(CDHolder *)holder beginSwipingHorizontallyOnDirection:(CDDirection)direction onRow:(NSUInteger)index{
     switch (index) {
@@ -340,8 +343,18 @@
             }
         }break;
         case 1:{
-            float currentRate = [_audioSharer.rates.current floatValue];
-            DLog(@"Create Current Rate:(%f) View", currentRate);
+            lastDistance = 0.0f;
+            if (_ratesView == nil) {
+                CGRect frame = self.view.bounds;
+                frame.size.height /= 2;
+                frame.origin.y = frame.size.height;
+                self.ratesView = [[CDLazyScrollView alloc] initWithFrame:frame];
+                [self.view insertSubview:_ratesView belowSubview:_holder];
+                _ratesView.lazyDelegate = self;
+                _ratesView.dataSource = self;
+                _ratesView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+            }
+            [_ratesView startScrolling];
         }break;
         default:
             break;
@@ -357,6 +370,11 @@
                 DLog(@"Will repeat for %f", length);
             }
          }break;
+        case 1:{
+            [_ratesView scrollFor:-(distance - lastDistance) animated:NO];
+            lastDistance = distance;
+
+        }
         default:
             break;
     }
@@ -385,14 +403,7 @@
             }
         }break;
         case 1:{
-            float targetRate = 0.0f;
-            if (distance > 0) {
-                targetRate = [_audioSharer.rates.previous floatValue];
-            }else{
-                targetRate = [_audioSharer.rates.next floatValue];
-            }
-            _audioSharer.rate = targetRate;
-            DLog(@"Create Target Rate:(%f) View", targetRate);
+            [_ratesView endScrolling];
         }break;
         default:
             break;
@@ -405,7 +416,7 @@
             DLog(@"Release Repeat View");
         }break;
         case 1:{
-            DLog(@"Release Target View");
+            [_ratesView cancelScrolling];
         }break;
         default:
             break;
@@ -545,4 +556,46 @@
     BOOL success = [self openLyricsAtPath:lrcPath];
     if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
 }
+
+#pragma mark - CDLazyScrollViewDataSource & CDLazyScrollViewDelegate
+- (UIView*)subViewAtPosition:(CDLazyScrollViewPosition)position inLazyScrollView:(CDLazyScrollView*)lazyScrollView{
+    NSString *rate = nil;
+    switch (position) {
+        case CDLazyScrollViewPositionLeft:{
+            rate = [_audioSharer.rates.previousObject stringValue];
+        }break;
+        case CDLazyScrollViewPositionMiddle:{
+            rate = [_audioSharer.rates.currentObject stringValue];
+        }break;
+        case CDLazyScrollViewPositionRight:{
+            rate = [_audioSharer.rates.nextObject stringValue];
+        }break;
+        default:
+            break;
+    }
+    UIView *view = [[CDBigLabelView alloc] initWithText:rate];
+    [view setBackgroundColor:kDebugColor];
+    return view;
+}
+
+- (void)lazyScrollViewDidFinishScroll:(CDLazyScrollView*)lazyScrollView onDirection:(CDDirection)direction{
+    switch (direction) {
+        case CDDirectionLeft:
+            [_audioSharer.rates moveNext];
+            [_audioSharer setRate:[_audioSharer.rates.currentObject floatValue]];
+            break;
+        case CDDirectionRight:
+            [_audioSharer.rates movePrevious];
+            [_audioSharer setRate:[_audioSharer.rates.currentObject floatValue]];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)lazyScrollViewDidHide:(CDLazyScrollView*)lazyScrollView{
+    [_ratesView removeFromSuperview];
+    self.ratesView = nil;
+}
+
 @end

@@ -15,9 +15,10 @@
 #import "CDBackgroundView.h"
 #import "CDProgress.h"
 #import "CDPanViewController.h"
+#import "CDLazyScrollView.h"
 
-@class CDAudioSharer, CDLyrics, CDBackgroundView;
-@interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource, CDAudioProgressDelegate, CDSubPanViewController>{
+@class CDAudioSharer, CDLyrics, CDBackgroundView, CDLazyScrollView;
+@interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource, CDAudioProgressDelegate, CDSubPanViewController, CDLazyScrollViewDataSource, CDLazyScrollViewDelegate>{
     CDDirection _lastRepeatDirection;
 }
 @property(nonatomic, strong)CDPanViewController *panViewController;
@@ -28,5 +29,5 @@
 @property(nonatomic, strong)CDLyrics* lyrics;
 @property(nonatomic, strong)MPMediaPickerController* mediaPicker;
 @property(nonatomic, strong)CDAudioProgress *progress;
-
+@property(nonatomic, strong)CDLazyScrollView *ratesView;
 @end

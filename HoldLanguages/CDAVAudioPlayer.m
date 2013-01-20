@@ -9,6 +9,7 @@
 #import "CDAVAudioPlayer.h"
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MPMediaItemCollection.h>
+#import "CDCycleArray.h"
 
 @interface CDAVAudioPlayer ()
 - (void)nextOrPreviousWithIndex:(NSUInteger)index;
@@ -53,7 +54,7 @@
     self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     _player.delegate = self;
     _player.enableRate = YES;
-    _player.rate = [_rates.current floatValue];
+    _player.rate = [_rates.currentObject floatValue];
     _player.numberOfLoops = -1;
 }
 

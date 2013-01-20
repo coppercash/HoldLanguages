@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CDProgress.h"
 #import "CDAudioPlayer.h"
+#import "CDCycleArray.h"
 
 @protocol CDAudioPlayerDelegate,CDAudioPlayer;
 @class MPMediaItemCollection;

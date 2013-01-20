@@ -11,7 +11,7 @@
 #import "CDAudioPlayer.h"
 #import "CDAudioRepeater.h"
 
-@class MPMediaItemCollection, MPMediaItem, AVAudioPlayer;
+@class MPMediaItemCollection, MPMediaItem, AVAudioPlayer, CDCycleArray;
 @interface CDAVAudioPlayer : NSObject <CDAudioPlayer, CDAudioRepeaterSource, AVAudioPlayerDelegate>{
     MPMediaItemCollection *_itemCollection;
     NSUInteger _currentItemIndex;

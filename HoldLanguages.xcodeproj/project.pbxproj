@@ -47,9 +47,6 @@
 		BE3DBA1416A185C9003CAAFE /* ZenPlayerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AC76165733310010F8E0 /* ZenPlayerButton.m */; };
 		BE3DBA1516A185C9003CAAFE /* YLBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B87165C5CDB002426E4 /* YLBackgroundView.m */; };
 		BE3DBA1616A185C9003CAAFE /* YLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B89165C5CDB002426E4 /* YLProgressBar.m */; };
-		BE3DBA1716A185C9003CAAFE /* CDString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C081650F9F700077D30 /* CDString.m */; };
-		BE3DBA1816A185C9003CAAFE /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
-		BE3DBA1916A185C9003CAAFE /* CDCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = BE964EBE1654EA5F000DDB28 /* CDCategories.m */; };
 		BE3DBA1A16A185C9003CAAFE /* CDiTunesFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE963C0B165378EA00FAB2B1 /* CDiTunesFinder.m */; };
 		BE3DBA1B16A185C9003CAAFE /* CDFileItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC397E16A1772100D9482C /* CDFileItem.m */; };
 		BE3DBA1C16A185C9003CAAFE /* CDColorFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9F165C88E9002426E4 /* CDColorFinder.m */; };
@@ -62,7 +59,6 @@
 		BE3DBA2616A185C9003CAAFE /* CDPullTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9735FC165661AC006718F8 /* CDPullTopBar.m */; };
 		BE3DBA2716A185C9003CAAFE /* CDPullBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9735FF16566238006718F8 /* CDPullBottomBar.m */; };
 		BE3DBA2816A185C9003CAAFE /* CDPanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC395616A0DD7000D9482C /* CDPanViewController.m */; };
-		BE3DBA2916A185C9003CAAFE /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 		BE3DBA2A16A185C9003CAAFE /* CDLyricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE990BDF1651EC4900A03885 /* CDLyricsView.m */; };
 		BE3DBA2B16A185C9003CAAFE /* CDLyricsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */; };
 		BE3DBA2C16A185C9003CAAFE /* CDSliderProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE97360D165684AD006718F8 /* CDSliderProgressView.m */; };
@@ -93,7 +89,6 @@
 		BE963C0C165378EA00FAB2B1 /* CDiTunesFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE963C0B165378EA00FAB2B1 /* CDiTunesFinder.m */; };
 		BE964E8716549A06000DDB28 /* CDPullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE964E8616549A06000DDB28 /* CDPullViewController.m */; };
 		BE964EB81654E6C1000DDB28 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE964EB71654E6C1000DDB28 /* QuartzCore.framework */; };
-		BE964EBF1654EA5F000DDB28 /* CDCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = BE964EBE1654EA5F000DDB28 /* CDCategories.m */; };
 		BE96AC79165733310010F8E0 /* zenpb_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = BE96AC6D165733310010F8E0 /* zenpb_circle.png */; };
 		BE96AC7A165733310010F8E0 /* zenpb_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE96AC6E165733310010F8E0 /* zenpb_circle@2x.png */; };
 		BE96AC7B165733310010F8E0 /* zenpb_pausebutton.png in Resources */ = {isa = PBXBuildFile; fileRef = BE96AC6F165733310010F8E0 /* zenpb_pausebutton.png */; };
@@ -111,7 +106,6 @@
 		BE987BF61650D42F00077D30 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE987BF81650D42F00077D30 /* Localizable.strings */; };
 		BE987C001650DE4600077D30 /* CDLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987BFF1650DE4600077D30 /* CDLyrics.m */; };
 		BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C031650DE8000077D30 /* CDLRCLyrics.m */; };
-		BE987C091650F9F700077D30 /* CDString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C081650F9F700077D30 /* CDString.m */; };
 		BE990BE01651EC4900A03885 /* CDLyricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE990BDF1651EC4900A03885 /* CDLyricsView.m */; };
 		BE99939A169D42EF00715058 /* CDProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BE999399169D42EF00715058 /* CDProgress.m */; };
 		BE99939B169D42EF00715058 /* CDProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BE999399169D42EF00715058 /* CDProgress.m */; };
@@ -127,9 +121,6 @@
 		BE9D814416A68AF800AD091F /* CDAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */; };
 		BE9D814616A68BA100AD091F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9D814516A68BA100AD091F /* AudioToolbox.framework */; };
 		BE9D814816A68E3D00AD091F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9D814716A68E3D00AD091F /* AVFoundation.framework */; };
-		BE9D814E16A6952600AD091F /* CDFunctoins.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.m */; };
-		BE9D814F16A6952600AD091F /* CDFunctoins.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.m */; };
-		BE9D815016A6952600AD091F /* CDFunctoins.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814D16A6952600AD091F /* CDFunctoins.m */; };
 		BE9FE15416521CCE0054CDEE /* CDLyricsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */; };
 		BEA2EE4516632EA4009456AA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4016632EA4009456AA /* Default-568h@2x.png */; };
 		BEA2EE4616632EA4009456AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4116632EA4009456AA /* Default.png */; };
@@ -139,13 +130,9 @@
 		BEA5E681169E55A80048306A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE964EB71654E6C1000DDB28 /* QuartzCore.framework */; };
 		BEA5E683169E55BB0048306A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
 		BEA5E684169E55D70048306A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE82F6E3164E318E007EBEAB /* AppDelegate.m */; };
-		BEA5E686169E55D70048306A /* CDString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE987C081650F9F700077D30 /* CDString.m */; };
-		BEA5E687169E55D70048306A /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
-		BEA5E688169E55D70048306A /* CDCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = BE964EBE1654EA5F000DDB28 /* CDCategories.m */; };
 		BEA5E689169E55D70048306A /* CDiTunesFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE963C0B165378EA00FAB2B1 /* CDiTunesFinder.m */; };
 		BEA5E68A169E55D70048306A /* CDColorFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9F165C88E9002426E4 /* CDColorFinder.m */; };
 		BEA5E68B169E55D70048306A /* CDAudioSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE950E68164FC74A00C51C45 /* CDAudioSharer.m */; };
-		BEA5E68E169E55D70048306A /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 		BEA5E68F169E55D70048306A /* CDLyricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE990BDF1651EC4900A03885 /* CDLyricsView.m */; };
 		BEA5E690169E55D70048306A /* CDLyricsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */; };
 		BEA5E691169E55D70048306A /* CDSliderProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE97360D165684AD006718F8 /* CDSliderProgressView.m */; };
@@ -185,9 +172,14 @@
 		BEC0FF04167EC7610081E67C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF02167EC7610081E67C /* InfoPlist.strings */; };
 		BEC0FF07167EC7610081E67C /* HoldLanguagesLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */; };
 		BEC0FF19167ECB7E0081E67C /* Halo.lrc in Resources */ = {isa = PBXBuildFile; fileRef = BEC0FF18167ECB7E0081E67C /* Halo.lrc */; };
+		BEC189C616AB7C5F00F56053 /* libCDKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF9CB6716AB7C040043A3BC /* libCDKit.a */; };
+		BEC189DD16AB7C9F00F56053 /* libCDLazyScrollView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC189D716AB7C9400F56053 /* libCDLazyScrollView.a */; };
+		BEC189E416AB7CBD00F56053 /* libCDHolder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC189E316AB7CB700F56053 /* libCDHolder.a */; };
+		BEC189E716AB8EC400F56053 /* CDBigLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC189E616AB8EC400F56053 /* CDBigLabelView.m */; };
+		BEC189E816AB8EC400F56053 /* CDBigLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC189E616AB8EC400F56053 /* CDBigLabelView.m */; };
+		BEC189E916AB8EC400F56053 /* CDBigLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC189E616AB8EC400F56053 /* CDBigLabelView.m */; };
 		BED7594C16A7EA8100D980E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9D814716A68E3D00AD091F /* AVFoundation.framework */; };
 		BED7594D16A7EA9F00D980E7 /* CDiTunesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */; };
-		BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDB7DEC1651BCF900CAF26A /* CDStack.m */; };
 		BEE661811660D2B500FFBC33 /* Lyrics.png in Resources */ = {isa = PBXBuildFile; fileRef = BEE661801660D2B500FFBC33 /* Lyrics.png */; };
 		BEE661821660DC0B00FFBC33 /* CDBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */; };
 		BEEF05EF165A3F47006A844A /* zenpb_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEEF05ED165A3F47006A844A /* zenpb_bg.png */; };
@@ -208,7 +200,6 @@
 		BEFC395816A0DD7000D9482C /* CDPanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC395616A0DD7000D9482C /* CDPanViewController.m */; };
 		BEFC397F16A1772100D9482C /* CDFileItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC397E16A1772100D9482C /* CDFileItem.m */; };
 		BEFC398016A1772100D9482C /* CDFileItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC397E16A1772100D9482C /* CDFileItem.m */; };
-		BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFEE95B164E65DF00994116 /* CDHolder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,6 +217,34 @@
 			remoteGlobalIDString = BE9B626D16A4D3A700484AE9;
 			remoteInfo = CDScrollLabelDemo;
 		};
+		BEC189D616AB7C9400F56053 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEC189C716AB7C9400F56053 /* CDLazyScrollView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BEA7B47C16AA285D00765628;
+			remoteInfo = CDLazyScrollView;
+		};
+		BEC189D816AB7C9400F56053 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEC189C716AB7C9400F56053 /* CDLazyScrollView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BE417CA916AA33A900693029;
+			remoteInfo = CDLazyScrollViewDemo;
+		};
+		BEC189E216AB7CB700F56053 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEC189DE16AB7CB700F56053 /* CDHolder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BEA7B49816AA28F700765628;
+			remoteInfo = CDHolder;
+		};
+		BEF9CB6616AB7C040043A3BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEF9CB6216AB7C040043A3BC /* CDKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BEA7B4EC16AA2D7500765628;
+			remoteInfo = CDKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -235,7 +254,6 @@
 		BE10E607165E2E15001789EF /* RotationLockDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RotationLockDown@2x.png"; sourceTree = "<group>"; };
 		BE10E608165E2E15001789EF /* RotationUnlockDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RotationUnlockDown@2x.png"; sourceTree = "<group>"; };
 		BE10E60B165E364E001789EF /* PullButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PullButton@2x.png"; sourceTree = "<group>"; };
-		BE14DBAB16996C3200DB04D5 /* CDMemAssist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMemAssist.h; sourceTree = "<group>"; };
 		BE256FAC1666EBB3001665EF /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cursor.png; sourceTree = "<group>"; };
 		BE256FAE1666ECED001665EF /* AssistButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButton.png; sourceTree = "<group>"; };
 		BE256FAF1666ECED001665EF /* AssistButtonDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssistButtonDown.png; sourceTree = "<group>"; };
@@ -298,8 +316,6 @@
 		BE964E8516549A06000DDB28 /* CDPullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPullViewController.h; sourceTree = "<group>"; };
 		BE964E8616549A06000DDB28 /* CDPullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPullViewController.m; sourceTree = "<group>"; };
 		BE964EB71654E6C1000DDB28 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		BE964EBD1654EA5F000DDB28 /* CDCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCategories.h; sourceTree = "<group>"; };
-		BE964EBE1654EA5F000DDB28 /* CDCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCategories.m; sourceTree = "<group>"; };
 		BE96AC6D165733310010F8E0 /* zenpb_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zenpb_circle.png; sourceTree = "<group>"; };
 		BE96AC6E165733310010F8E0 /* zenpb_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zenpb_circle@2x.png"; sourceTree = "<group>"; };
 		BE96AC6F165733310010F8E0 /* zenpb_pausebutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zenpb_pausebutton.png; sourceTree = "<group>"; };
@@ -328,8 +344,6 @@
 		BE987BFF1650DE4600077D30 /* CDLyrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyrics.m; sourceTree = "<group>"; };
 		BE987C021650DE8000077D30 /* CDLRCLyrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLRCLyrics.h; sourceTree = "<group>"; };
 		BE987C031650DE8000077D30 /* CDLRCLyrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLRCLyrics.m; sourceTree = "<group>"; };
-		BE987C071650F9F700077D30 /* CDString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDString.h; sourceTree = "<group>"; };
-		BE987C081650F9F700077D30 /* CDString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDString.m; sourceTree = "<group>"; };
 		BE990BDE1651EC4900A03885 /* CDLyricsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLyricsView.h; sourceTree = "<group>"; };
 		BE990BDF1651EC4900A03885 /* CDLyricsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyricsView.m; sourceTree = "<group>"; };
 		BE999398169D42EF00715058 /* CDProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDProgress.h; sourceTree = "<group>"; };
@@ -341,8 +355,6 @@
 		BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAVAudioPlayer.m; sourceTree = "<group>"; };
 		BE9D814516A68BA100AD091F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BE9D814716A68E3D00AD091F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		BE9D814D16A6952600AD091F /* CDFunctoins.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFunctoins.m; sourceTree = "<group>"; };
-		BE9D815116A6954100AD091F /* CDFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDFunctions.h; sourceTree = "<group>"; };
 		BE9FE15216521CCE0054CDEE /* CDLyricsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLyricsViewCell.h; sourceTree = "<group>"; };
 		BE9FE15316521CCE0054CDEE /* CDLyricsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLyricsViewCell.m; sourceTree = "<group>"; };
 		BEA2EE4016632EA4009456AA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -377,9 +389,10 @@
 		BEC0FF06167EC7610081E67C /* HoldLanguagesLogicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HoldLanguagesLogicTests.m; sourceTree = "<group>"; };
 		BEC0FF08167EC7610081E67C /* HoldLanguagesLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HoldLanguagesLogicTests-Prefix.pch"; sourceTree = "<group>"; };
 		BEC0FF18167ECB7E0081E67C /* Halo.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Halo.lrc; sourceTree = "<group>"; };
-		BED5B0DE164E8BA100A8216F /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
-		BEDB7DEB1651BCF900CAF26A /* CDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStack.h; sourceTree = "<group>"; };
-		BEDB7DEC1651BCF900CAF26A /* CDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStack.m; sourceTree = "<group>"; };
+		BEC189C716AB7C9400F56053 /* CDLazyScrollView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CDLazyScrollView.xcodeproj; path = ../CDLazyScrollView/CDLazyScrollView.xcodeproj; sourceTree = "<group>"; };
+		BEC189DE16AB7CB700F56053 /* CDHolder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CDHolder.xcodeproj; path = ../CDHolder/CDHolder.xcodeproj; sourceTree = "<group>"; };
+		BEC189E516AB8EC400F56053 /* CDBigLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBigLabelView.h; sourceTree = "<group>"; };
+		BEC189E616AB8EC400F56053 /* CDBigLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBigLabelView.m; sourceTree = "<group>"; };
 		BEE661801660D2B500FFBC33 /* Lyrics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lyrics.png; sourceTree = "<group>"; };
 		BEE661831660DC0B00FFBC33 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CDBackgroundView.xib; sourceTree = "<group>"; };
 		BEE661851660DC1000FFBC33 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/CDBackgroundView.xib"; sourceTree = "<group>"; };
@@ -391,15 +404,13 @@
 		BEF3394216A24DC10032A1B6 /* CDiTunesViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDiTunesViewCell.m; sourceTree = "<group>"; };
 		BEF3394616A253370032A1B6 /* CDiTunesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDiTunesViewCell.xib; sourceTree = "<group>"; };
 		BEF3394A16A255910032A1B6 /* FileIconDirectory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FileIconDirectory.png; sourceTree = "<group>"; };
+		BEF9CB6216AB7C040043A3BC /* CDKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CDKit.xcodeproj; path = ../CDKit/CDKit.xcodeproj; sourceTree = "<group>"; };
 		BEFC394616A0D7F600D9482C /* DDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMenuController.h; sourceTree = "<group>"; };
 		BEFC394716A0D7F600D9482C /* DDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMenuController.m; sourceTree = "<group>"; };
 		BEFC395516A0DD7000D9482C /* CDPanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPanViewController.h; sourceTree = "<group>"; };
 		BEFC395616A0DD7000D9482C /* CDPanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPanViewController.m; sourceTree = "<group>"; };
-		BEFC396016A1137900D9482C /* CDTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDTypes.h; sourceTree = "<group>"; };
 		BEFC397D16A1772100D9482C /* CDFileItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFileItem.h; sourceTree = "<group>"; };
 		BEFC397E16A1772100D9482C /* CDFileItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFileItem.m; sourceTree = "<group>"; };
-		BEFEE95A164E65DF00994116 /* CDHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDHolder.h; sourceTree = "<group>"; };
-		BEFEE95B164E65DF00994116 /* CDHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDHolder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,6 +431,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEC189E416AB7CBD00F56053 /* libCDHolder.a in Frameworks */,
+				BEC189DD16AB7C9F00F56053 /* libCDLazyScrollView.a in Frameworks */,
+				BEC189C616AB7C5F00F56053 /* libCDKit.a in Frameworks */,
 				BE9B62D316A4EE7F00484AE9 /* libCDScrollLabel.a in Frameworks */,
 				BE964EB81654E6C1000DDB28 /* QuartzCore.framework in Frameworks */,
 				BE82F6D4164E318E007EBEAB /* UIKit.framework in Frameworks */,
@@ -512,8 +526,6 @@
 		BE2C11EE164F68CF00B4F330 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BEFEE95A164E65DF00994116 /* CDHolder.h */,
-				BEFEE95B164E65DF00994116 /* CDHolder.m */,
 				BE96AC88165735EA0010F8E0 /* CDLyricsView */,
 				BE96AC87165735DE0010F8E0 /* CDSlider */,
 				BE96AC83165733770010F8E0 /* CDPlayButton.h */,
@@ -523,6 +535,8 @@
 				BEE661841660DC0B00FFBC33 /* CDBackgroundView.xib */,
 				BE7D3803165CCC920018E8E8 /* CDStateButton.h */,
 				BE7D3804165CCC920018E8E8 /* CDStateButton.m */,
+				BEC189E516AB8EC400F56053 /* CDBigLabelView.h */,
+				BEC189E616AB8EC400F56053 /* CDBigLabelView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -601,7 +615,10 @@
 		BE82F6D2164E318E007EBEAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BEF9CB6216AB7C040043A3BC /* CDKit.xcodeproj */,
 				BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */,
+				BEC189C716AB7C9400F56053 /* CDLazyScrollView.xcodeproj */,
+				BEC189DE16AB7CB700F56053 /* CDHolder.xcodeproj */,
 				BE964EB71654E6C1000DDB28 /* QuartzCore.framework */,
 				BE9D814516A68BA100AD091F /* AudioToolbox.framework */,
 				BE82F6D3164E318E007EBEAB /* UIKit.framework */,
@@ -619,9 +636,7 @@
 			children = (
 				BE82F6E2164E318E007EBEAB /* AppDelegate.h */,
 				BE82F6E3164E318E007EBEAB /* AppDelegate.m */,
-				BE963C1216539B3500FAB2B1 /* Develope Helper */,
 				BE97360916568449006718F8 /* Third Part */,
-				BE987C0A1650F9FC00077D30 /* Categories */,
 				BE9D521C16A3AC95006DCDB9 /* Classes */,
 				BE2C11EF164F68DB00B4F330 /* Controllers */,
 				BE2C11EE164F68CF00B4F330 /* Views */,
@@ -657,15 +672,6 @@
 				BEB58B9F165C88E9002426E4 /* CDColorFinder.m */,
 			);
 			name = Finder;
-			sourceTree = "<group>";
-		};
-		BE963C1216539B3500FAB2B1 /* Develope Helper */ = {
-			isa = PBXGroup;
-			children = (
-				BED5B0DE164E8BA100A8216F /* Header.h */,
-				BE14DBAB16996C3200DB04D5 /* CDMemAssist.h */,
-			);
-			name = "Develope Helper";
 			sourceTree = "<group>";
 		};
 		BE96AC6A165733310010F8E0 /* ZenPlayerButton */ = {
@@ -758,22 +764,6 @@
 			name = Lyrics;
 			sourceTree = "<group>";
 		};
-		BE987C0A1650F9FC00077D30 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				BE987C071650F9F700077D30 /* CDString.h */,
-				BE987C081650F9F700077D30 /* CDString.m */,
-				BEDB7DEB1651BCF900CAF26A /* CDStack.h */,
-				BEDB7DEC1651BCF900CAF26A /* CDStack.m */,
-				BE964EBD1654EA5F000DDB28 /* CDCategories.h */,
-				BE964EBE1654EA5F000DDB28 /* CDCategories.m */,
-				BE9D815116A6954100AD091F /* CDFunctions.h */,
-				BE9D814D16A6952600AD091F /* CDFunctoins.m */,
-				BEFC396016A1137900D9482C /* CDTypes.h */,
-			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
 		BE9B62CA16A4EE7000484AE9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -848,6 +838,23 @@
 			name = Resource;
 			sourceTree = "<group>";
 		};
+		BEC189C816AB7C9400F56053 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BEC189D716AB7C9400F56053 /* libCDLazyScrollView.a */,
+				BEC189D916AB7C9400F56053 /* CDLazyScrollViewDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BEC189DF16AB7CB700F56053 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BEC189E316AB7CB700F56053 /* libCDHolder.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BED7594A16A7D26200D980E7 /* CDiTunesController */ = {
 			isa = PBXGroup;
 			children = (
@@ -858,6 +865,14 @@
 				BEF3394616A253370032A1B6 /* CDiTunesViewCell.xib */,
 			);
 			name = CDiTunesController;
+			sourceTree = "<group>";
+		};
+		BEF9CB6316AB7C040043A3BC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BEF9CB6716AB7C040043A3BC /* libCDKit.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		BEFC394516A0D7F600D9482C /* DDMenuController */ = {
@@ -965,6 +980,18 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = BEC189DF16AB7CB700F56053 /* Products */;
+					ProjectRef = BEC189DE16AB7CB700F56053 /* CDHolder.xcodeproj */;
+				},
+				{
+					ProductGroup = BEF9CB6316AB7C040043A3BC /* Products */;
+					ProjectRef = BEF9CB6216AB7C040043A3BC /* CDKit.xcodeproj */;
+				},
+				{
+					ProductGroup = BEC189C816AB7C9400F56053 /* Products */;
+					ProjectRef = BEC189C716AB7C9400F56053 /* CDLazyScrollView.xcodeproj */;
+				},
+				{
 					ProductGroup = BE9B62CA16A4EE7000484AE9 /* Products */;
 					ProjectRef = BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */;
 				},
@@ -991,6 +1018,34 @@
 			fileType = wrapper.application;
 			path = CDScrollLabelDemo.app;
 			remoteRef = BE9B62D016A4EE7000484AE9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BEC189D716AB7C9400F56053 /* libCDLazyScrollView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCDLazyScrollView.a;
+			remoteRef = BEC189D616AB7C9400F56053 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BEC189D916AB7C9400F56053 /* CDLazyScrollViewDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CDLazyScrollViewDemo.app;
+			remoteRef = BEC189D816AB7C9400F56053 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BEC189E316AB7CB700F56053 /* libCDHolder.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCDHolder.a;
+			remoteRef = BEC189E216AB7CB700F56053 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BEF9CB6716AB7C040043A3BC /* libCDKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCDKit.a;
+			remoteRef = BEF9CB6616AB7C040043A3BC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1137,9 +1192,6 @@
 				BE3DBA1416A185C9003CAAFE /* ZenPlayerButton.m in Sources */,
 				BE3DBA1516A185C9003CAAFE /* YLBackgroundView.m in Sources */,
 				BE3DBA1616A185C9003CAAFE /* YLProgressBar.m in Sources */,
-				BE3DBA1716A185C9003CAAFE /* CDString.m in Sources */,
-				BE3DBA1816A185C9003CAAFE /* CDStack.m in Sources */,
-				BE3DBA1916A185C9003CAAFE /* CDCategories.m in Sources */,
 				BE3DBA1A16A185C9003CAAFE /* CDiTunesFinder.m in Sources */,
 				BE3DBA1B16A185C9003CAAFE /* CDFileItem.m in Sources */,
 				BE3DBA1C16A185C9003CAAFE /* CDColorFinder.m in Sources */,
@@ -1152,7 +1204,6 @@
 				BE3DBA2616A185C9003CAAFE /* CDPullTopBar.m in Sources */,
 				BE3DBA2716A185C9003CAAFE /* CDPullBottomBar.m in Sources */,
 				BE3DBA2816A185C9003CAAFE /* CDPanViewController.m in Sources */,
-				BE3DBA2916A185C9003CAAFE /* CDHolder.m in Sources */,
 				BE3DBA2A16A185C9003CAAFE /* CDLyricsView.m in Sources */,
 				BE3DBA2B16A185C9003CAAFE /* CDLyricsViewCell.m in Sources */,
 				BE3DBA2C16A185C9003CAAFE /* CDSliderProgressView.m in Sources */,
@@ -1163,8 +1214,8 @@
 				BE3DBA0C16A1844F003CAAFE /* HoldLanguagesTests.m in Sources */,
 				BEF3394516A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */,
 				BE9D814416A68AF800AD091F /* CDAVAudioPlayer.m in Sources */,
-				BE9D815016A6952600AD091F /* CDFunctoins.m in Sources */,
 				BEA6CAEC16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */,
+				BEC189E916AB8EC400F56053 /* CDBigLabelView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,18 +1225,14 @@
 			files = (
 				BE82F6E0164E318E007EBEAB /* main.m in Sources */,
 				BE82F6E4164E318E007EBEAB /* AppDelegate.m in Sources */,
-				BEFEE95C164E65DF00994116 /* CDHolder.m in Sources */,
 				BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */,
 				BE950E69164FC74A00C51C45 /* CDAudioSharer.m in Sources */,
 				BE987C001650DE4600077D30 /* CDLyrics.m in Sources */,
 				BE987C041650DE8000077D30 /* CDLRCLyrics.m in Sources */,
-				BE987C091650F9F700077D30 /* CDString.m in Sources */,
-				BEDB7DED1651BCF900CAF26A /* CDStack.m in Sources */,
 				BE990BE01651EC4900A03885 /* CDLyricsView.m in Sources */,
 				BE9FE15416521CCE0054CDEE /* CDLyricsViewCell.m in Sources */,
 				BE963C0C165378EA00FAB2B1 /* CDiTunesFinder.m in Sources */,
 				BE964E8716549A06000DDB28 /* CDPullViewController.m in Sources */,
-				BE964EBF1654EA5F000DDB28 /* CDCategories.m in Sources */,
 				BE9735F616564884006718F8 /* CDSliderThumb.m in Sources */,
 				BE9735FD165661AC006718F8 /* CDPullTopBar.m in Sources */,
 				BE97360016566238006718F8 /* CDPullBottomBar.m in Sources */,
@@ -1204,8 +1251,8 @@
 				BEF3394016A24C0D0032A1B6 /* CDiTunesViewController.m in Sources */,
 				BEF3394316A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */,
 				BE9D814216A68AF800AD091F /* CDAVAudioPlayer.m in Sources */,
-				BE9D814E16A6952600AD091F /* CDFunctoins.m in Sources */,
 				BEA6CAEA16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */,
+				BEC189E716AB8EC400F56053 /* CDBigLabelView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,13 +1271,9 @@
 				BEA5E69E169E55E90048306A /* CDPullTopBar.m in Sources */,
 				BEA5E69F169E55E90048306A /* CDPullBottomBar.m in Sources */,
 				BEA5E684169E55D70048306A /* AppDelegate.m in Sources */,
-				BEA5E686169E55D70048306A /* CDString.m in Sources */,
-				BEA5E687169E55D70048306A /* CDStack.m in Sources */,
-				BEA5E688169E55D70048306A /* CDCategories.m in Sources */,
 				BEA5E689169E55D70048306A /* CDiTunesFinder.m in Sources */,
 				BEA5E68A169E55D70048306A /* CDColorFinder.m in Sources */,
 				BEA5E68B169E55D70048306A /* CDAudioSharer.m in Sources */,
-				BEA5E68E169E55D70048306A /* CDHolder.m in Sources */,
 				BEA5E68F169E55D70048306A /* CDLyricsView.m in Sources */,
 				BEA5E690169E55D70048306A /* CDLyricsViewCell.m in Sources */,
 				BEA5E691169E55D70048306A /* CDSliderProgressView.m in Sources */,
@@ -1246,8 +1289,8 @@
 				BEFC398016A1772100D9482C /* CDFileItem.m in Sources */,
 				BEF3394416A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */,
 				BE9D814316A68AF800AD091F /* CDAVAudioPlayer.m in Sources */,
-				BE9D814F16A6952600AD091F /* CDFunctoins.m in Sources */,
 				BEA6CAEB16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */,
+				BEC189E816AB8EC400F56053 /* CDBigLabelView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,7 +1365,7 @@
 				PROVISIONING_PROFILE = "128A9976-C195-4D6C-B57C-9D744362CD2A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
+				USER_HEADER_SEARCH_PATHS = "../CDKit/CDKit ../CDScrollLabel/CDScrollLabel/ ../CDHolder/CDHolder ../CDLazyScrollView/CDLazyScrollView";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -1335,7 +1378,7 @@
 				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
 				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
+				USER_HEADER_SEARCH_PATHS = "../CDKit/CDKit ../CDScrollLabel/CDScrollLabel/ ../CDHolder/CDHolder ../CDLazyScrollView/CDLazyScrollView";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
@@ -1421,7 +1464,7 @@
 				PROVISIONING_PROFILE = "A3CAC820-F762-43DA-BBBE-4A8E8D16CBEE";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
+				USER_HEADER_SEARCH_PATHS = "../CDKit/CDKit ../CDScrollLabel/CDScrollLabel/ ../CDHolder/CDHolder ../CDLazyScrollView/CDLazyScrollView";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
@@ -1448,7 +1491,7 @@
 				PROVISIONING_PROFILE = "A3CAC820-F762-43DA-BBBE-4A8E8D16CBEE";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
+				USER_HEADER_SEARCH_PATHS = "../CDKit/CDKit ../CDScrollLabel/CDScrollLabel/ ../CDHolder/CDHolder ../CDLazyScrollView/CDLazyScrollView";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1461,7 +1504,7 @@
 				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
 				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
+				USER_HEADER_SEARCH_PATHS = "../CDKit/CDKit ../CDScrollLabel/CDScrollLabel/ ../CDHolder/CDHolder ../CDLazyScrollView/CDLazyScrollView";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1474,7 +1517,7 @@
 				GCC_PREFIX_HEADER = "HoldLanguages/HoldLanguages-Prefix.pch";
 				INFOPLIST_FILE = "HoldLanguages/HoldLanguages-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = ../CDScrollLabel/CDScrollLabel/;
+				USER_HEADER_SEARCH_PATHS = "../CDKit/CDKit ../CDScrollLabel/CDScrollLabel/ ../CDHolder/CDHolder ../CDLazyScrollView/CDLazyScrollView";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
