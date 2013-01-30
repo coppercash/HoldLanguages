@@ -9,24 +9,24 @@
 #import "CDBigLabelView.h"
 
 @implementation CDBigLabelView
-@synthesize text = _text;
+@synthesize bigLabel = _bigLabel;
+
 
 - (void)initialize{
-    UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
-    label.font = [UIFont boldSystemFontOfSize:30];
-    label.textColor = [UIColor whiteColor];
-    label.text = _text;
-    label.backgroundColor = [UIColor clearColor];
-    label.autoresizingMask = kViewAutoresizingNoMarginSurround;
-    label.textAlignment = UITextAlignmentCenter;
-    [self addSubview:label];
+    _bigLabel = [[UILabel alloc] initWithFrame:self.bounds];
+    _bigLabel.font = [UIFont boldSystemFontOfSize:30];
+    _bigLabel.textColor = [UIColor whiteColor];
+    _bigLabel.backgroundColor = [UIColor clearColor];
+    _bigLabel.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    _bigLabel.textAlignment = UITextAlignmentCenter;
+    [self addSubview:_bigLabel];
 }
 
 - (id)initWithText:(NSString*)text;{
     self = [super init];
     if (self) {
-        self.text = text;
         [self initialize];
+        _bigLabel.text = text;
     }
     return self;
 }
@@ -35,7 +35,8 @@
 - (id)initWithFrame:(CGRect)frame text:(NSString*)text{
     self = [super initWithFrame:frame];
     if (self) {
-        self.text = text;
+        [self initialize];
+        _bigLabel.text = text;
     }
     return self;
 }

@@ -16,15 +16,17 @@
 @end
 
 @implementation CDAVAudioPlayer
-@synthesize itemCollection = _itemCollection, player = _player, repeatMode = _repeatMode, rates = _rates;
+@synthesize itemCollection = _itemCollection, player = _player, repeatMode = _repeatMode, rates = _rates, state = _state, pointA = _pointA;
 - (id)init{
     self = [super init];
     if (self) {
         _rates = [[CDCycleArray alloc] initWithArray:@[
                   [NSNumber numberWithFloat:0.5],
+                  [NSNumber numberWithFloat:0.75],
                   [NSNumber numberWithFloat:1.0],
                   [NSNumber numberWithFloat:1.5],
-                  [NSNumber numberWithFloat:2.0]] index:1];
+                  [NSNumber numberWithFloat:2.0]] index:2];
+        _state = CDAudioPlayerStateStopped;
     }
     return self;
 }
@@ -47,7 +49,7 @@
 
 - (void)openAudioWithURL:(NSURL*)url{
     if (_player != nil) {
-        [_player stop];
+        [self stop];
         SafeMemberRelease(_player);
     }
     NSError *error;
@@ -56,25 +58,30 @@
     _player.enableRate = YES;
     _player.rate = [_rates.currentObject floatValue];
     _player.numberOfLoops = -1;
+    _state = CDAudioPlayerStatePaused;
 }
 
 #pragma mark - Control
 - (void)play{
     [_player prepareToPlay];
     [_player play];
+    if (_player.playing) _state = CDAudioPlayerStatePlaying;
 }
 
 - (void)stop{
     [_player stop];
+    SafeMemberRelease(_player);
+    if (!_player.playing) _state = CDAudioPlayerStateStopped;
 }
 
 - (void)pause{
     [_player pause];
+    if (!_player.playing) _state = CDAudioPlayerStatePaused;
 }
-
+/*
 - (BOOL)isPlaying{
     return [_player isPlaying];
-}
+}*/
 
 - (BOOL)next{
     NSArray *items = _itemCollection.items;
@@ -108,7 +115,7 @@
             [self playbackAt:0.0f];
         }break;
         case CDAudioRepeatModeAll:{
-            BOOL isPlaying = self.isPlaying;
+            BOOL isPlaying = (_state == CDAudioPlayerStatePlaying);
             if (isPlaying) [self stop];
             
             NSArray *items = _itemCollection.items;
@@ -126,7 +133,7 @@
 #pragma mark - Playback
 - (void)playbackAt:(NSTimeInterval)playbackTime{
     if (self.isRepeating) {
-        CDTimeRange range = _repeater.range;
+        CDTimeRange range = _repeater.repeatRange;
         playbackTime = limitedDouble(playbackTime, range.location, CDTimeRangeGetEnd(range));
     }
     [_player setCurrentTime:playbackTime];
@@ -158,14 +165,33 @@
     [_repeater repeatIn:timeRange];
 }
 
+- (void)setRepeatA{
+    _pointA = self.currentPlaybackTime;
+}
+
+- (void)setRepeatB{
+    NSTimeInterval length = self.currentPlaybackTime - _pointA;
+    [self repeatIn:CDMakeTimeRange(_pointA, length)];
+}
+
 - (void)stopRepeating{
     if (!self.isRepeating) return;
+    _pointA = 0.0f;
     [_repeater stopRepeating];
     SafeMemberRelease(_repeater);
 }
 
+- (CDTimeRange)repeatRange{
+    return _repeater.repeatRange;
+}
+
+
 - (BOOL)isRepeating{
     return _repeater != nil;
+}
+
+- (BOOL)isWaitingForPointB{
+    return !self.isRepeating && _pointA != 0.0f;
 }
 
 #pragma mark - Information

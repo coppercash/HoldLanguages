@@ -17,7 +17,10 @@ typedef enum {
     CDBackgroundViewKeyAssist
 }CDBackgroundViewKey;
 @protocol CDBackgroundViewDatasource;
-@interface CDBackgroundView : YLBackgroundView 
+@interface CDBackgroundView : YLBackgroundView {
+    CDBackgroundViewKey _state;
+}
+@property(nonatomic, readonly)CDBackgroundViewKey state;
 @property(nonatomic, readonly, strong)UIView* missingLyrics;
 @property(nonatomic, readonly, strong)UIView* assistView;
 @property(nonatomic, weak)id<CDBackgroundViewDatasource> dataSource;

@@ -16,6 +16,7 @@
 @end
 
 @implementation CDBackgroundView
+@synthesize state = _state;
 @synthesize missingLyrics = _missingLyrics, audioName = _audioName, assistView = _assistView;
 @synthesize dataSource = _dataSource;
 - (id)initWithFrame:(CGRect)frame
@@ -46,6 +47,7 @@
         default:
             break;
     }
+    _state = key;
 }
 
 - (void)createMissingLyricsView{

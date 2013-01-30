@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface CDBigLabelView : UIView{
-    NSString *_text;
+    UILabel *_bigLabel;
 }
-@property(nonatomic, copy)NSString *text;
+@property(nonatomic, readonly)UILabel *bigLabel;
 - (id)initWithFrame:(CGRect)frame text:(NSString*)text;
 - (id)initWithText:(NSString*)text;
 @end

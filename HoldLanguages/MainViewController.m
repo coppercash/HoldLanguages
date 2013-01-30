@@ -11,19 +11,23 @@
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"
 #import "CDBackgroundView.h"
-#import "CDSliderProgressView.h"
 #import "CDProgress.h"
 #import "CDLazyScrollView.h"
 #import "CDBigLabelView.h"
+//#import "CDRepeatView.h"
+#import "CDRepeaterView.h"
+#import "CDMasterButton.h"
+//#import "CDAudioPlayer.h"
+//#import "CDAudioSharer.h"
 
 @interface MainViewController ()
-//- (void)openedAudioNamed:(NSString*)audioName;
 - (BOOL)openLyricsAtPath:(NSString *)path;
 - (void)switchBarsHidden;
-- (NSTimeInterval)playbackTimeByButton;
 - (void)createLyricsView;
 - (void)destroyLyricsView;
 - (void)switchAssistHidden;
+
+
 @end
 @implementation MainViewController
 @synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView;
@@ -58,21 +62,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.wantsFullScreenLayout = YES;
-
+    _bottomBar.backgroundColor = [UIColor color255WithRed:0.0f green:115.0f blue:180.0f alpha:1.0f];
+    
     [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
     [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];
 
     _backgroundView = [[CDBackgroundView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:_backgroundView];
     _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
     _backgroundView.dataSource = self;
     
     self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:self.holder];
     _holder.numberOfRows = 2;
     _holder.delegate = self;
     _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
     
+    [self.view addSubview:_backgroundView];
+    [self.view addSubview:self.holder];
     [self endOfViewDidLoad];
 }
 
@@ -128,7 +133,7 @@
         }  
     }
 }
-
+/*
 #pragma mark - Rotation Events
 - (BOOL)shouldAutorotate{
     BOOL should = !self.topBar.isRotationLocked;
@@ -136,7 +141,7 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationPortrait;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
@@ -149,7 +154,7 @@
     }else{
         return YES;
     }
-}
+}*/
 
 #pragma mark - Flexible Subviews
 - (void)createLyricsView{
@@ -165,8 +170,30 @@
 }
 
 #pragma mark - CDPullViewController Top Bar Methods
+- (NSString*)topBarLabel:(CDPullTopBar *)topBar textAtIndex:(NSUInteger)index{
+    switch (index) {
+        case 0:{
+            NSString* artist = [self.audioSharer valueForProperty:MPMediaItemPropertyArtist];
+            if (artist == nil)
+                artist = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumArtist];
+            return artist;
+        }break;
+        case 1:{
+            NSString* title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+            return title;
+        }break;
+        case 2:{
+            NSString* albumTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumTitle];
+            return albumTitle;
+        }break;
+        default:
+            break;
+    }
+    return nil;
+}
+
 - (void)topBarStartPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
-    if (self.barsHidden) return;
+    if (_barsHidden) return;
     [super topBarStartPulling:topBar onDirection:direction];
     if (direction == CDDirectionRight) {
         //DLogCurrentMethod;
@@ -175,7 +202,7 @@
 }
 
 - (CGFloat)topBarContinuePulling:(CDPullTopBar *)topBar onDirection:(CDDirection)direction shouldMove:(CGFloat)increment{
-    if (self.barsHidden) return 0.0f;
+    if (_barsHidden) return 0.0f;
     CGFloat superIncrement = [super topBarContinuePulling:topBar onDirection:direction shouldMove:increment];
     if (superIncrement != 0.0f) return superIncrement;
     if (direction == CDDirectionRight) {
@@ -200,41 +227,15 @@
     }
 }
 
-- (NSString*)topBarLabel:(CDPullTopBar *)topBar textAtIndex:(NSUInteger)index{
-    switch (index) {
+- (void)topBar:(CDPullTopBar *)topBar buttonTouched:(NSUInteger)position{
+    switch (position) {
         case 0:{
-            NSString* artist = [self.audioSharer valueForProperty:MPMediaItemPropertyArtist];
-            if (artist == nil)
-                artist = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumArtist];
-            return artist;
-        }break;
-        case 1:{
-            NSString* title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
-            return title;
-        }break;
-        case 2:{
-            NSString* albumTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyAlbumTitle];
-            return albumTitle;
+            _panViewController.leftViewController = [_panViewController createSubController:_panViewController.leftControllerClass];
+            [_panViewController showLeftController:YES];
         }break;
         default:
             break;
     }
-    return nil;
-}
-
-- (BOOL)shouldTopBar:(CDPullTopBar *)topBar changeState:(CDDirection)direction{
-    switch (direction) {
-        case CDDirectionLeft:{
-            [self switchAssistHidden];
-            return YES;
-        }break;
-        case CDDirectionRight:{
-            return YES;
-        }break;
-        default:
-            break;
-    }
-    return NO;
 }
 
 - (void)createPulledView{
@@ -277,33 +278,6 @@
     DLogCurrentMethod;
 }
 
-#pragma mark - CDPullViewController Bottom Bar Methods
-- (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
-    NSTimeInterval playbackTime = sliderValue * self.audioSharer.currentDuration;
-    [self.audioSharer playbackAt:playbackTime];
-    [_progress synchronize:nil];
-}
-
-- (void)bottomBar:(CDPullBottomBar *)bottomButton buttonFire:(CDBottomBarButtonType)buttonType{
-    switch (buttonType) {
-        case CDBottomBarButtonTypePlay:{
-            [_audioSharer playOrPause];
-        }break;
-        case CDBottomBarButtonTypeBackward:{
-            [_audioSharer playbackFor:- self.playbackTimeByButton];
-        }break;
-        case CDBottomBarButtonTypeForward:{
-            [_audioSharer playbackFor:self.playbackTimeByButton];
-        }break;
-        default:
-            break;
-    }
-}
-
-- (NSTimeInterval)bottomBarAskForDuration:(CDPullBottomBar*)bottomButton{
-    return self.audioSharer.currentDuration;
-}
-
 #pragma mark - MPMediaPickerControllerDelegate
 - (void)mediaPicker:(MPMediaPickerController*)mediaPicker didPickMediaItems:(MPMediaItemCollection*) mediaItemCollection {
     [self setPullViewPresented:NO animated:YES];
@@ -315,108 +289,145 @@
     [self setPullViewPresented:NO animated:YES];
 }
 
-#pragma mark - CDHolderDelegate
-- (void)holder:(CDHolder *)holder continueSwipingVerticallyFor:(CGFloat)increment{
-    [self.lyricsView scrollFor:-increment animated:NO];
+#pragma mark - CDPullBottomBarDelegate & DataSource
+- (void)bottomBar:(CDPullBottomBar *)bottomBar touchCellAtIndex:(NSUInteger)index{
+    [super bottomBar:bottomBar touchCellAtIndex:index];
+    switch (index) {
+        case NSUIntegerMax:{
+            [_audioSharer playOrPause];
+        }break;
+        case 0:{
+            NSTimeInterval playbackTime = - _audioSharer.playbackRate * CGRectGetHeight(self.view.bounds) * 0.5;
+            [_audioSharer playbackFor:playbackTime];
+        }break;
+        case 1:{
+            NSTimeInterval playbackTime = _audioSharer.playbackRate * CGRectGetHeight(self.view.bounds) * 0.5;
+            [_audioSharer playbackFor:playbackTime];
+        }break;
+        case 2:{
+            BOOL iR = [_audioSharer.audioPlayer isRepeating];   //is repeating
+            if (iR) {
+                [_audioSharer stopRepeating];
+            }else{
+                BOOL iW = [_audioSharer.audioPlayer isWaitingForPointB];    //is waiting for point B
+                if (iW) {
+                    [_audioSharer setRepeatB];
+                }else{
+                    if (_audioSharer.canRepeating) {
+                        [self loadRepeatView];
+                        _repeatView.repeatDirection = CDDirectionRight;
+                        [_repeatView show];
+                        [_audioSharer setRepeatA];
+                    }
+                }
+            }
+        }break;
+        case 3:{
+            [self switchAssistHidden];
+        }break;
+        default:
+            break;
+    }
+    DLog(@"%d", index);
 }
 
-- (void)holder:(CDHolder *)holder endSwipingVerticallyFromStart:(CGFloat)distance{
-    if (_lyrics) {
-        NSUInteger focusIndex = _lyricsView.focusIndex;
-        NSTimeInterval playbackTime = [_lyrics timeAtIndex:focusIndex];
-        [self.audioSharer playbackAt:playbackTime];
-        [_lyricsView setFocusIndex:focusIndex]; //For making focus accrute.
-    }else{
-        float rate = _audioSharer.playbackRate;
-        NSTimeInterval playbackTime = - rate * distance;
-        [self.audioSharer playbackFor:playbackTime];
-    }
+- (void)bottomBar:(CDPullBottomBar *)bottomButton sliderValueChangedAs:(float)sliderValue{
+    NSTimeInterval playbackTime = sliderValue * _audioSharer.audioPlayer.currentDuration;
+    [self.audioSharer playbackAt:playbackTime];
     [_progress synchronize:nil];
 }
-static CGFloat lastDistance = 0.0f;
 
-- (void)holder:(CDHolder *)holder beginSwipingHorizontallyOnDirection:(CDDirection)direction onRow:(NSUInteger)index{
-    switch (index) {
-        case 0:{
-            if (!_audioSharer.isRepeating) {
-                DLog(@"Create Repeat View");
-            }
-        }break;
-        case 1:{
-            lastDistance = 0.0f;
-            if (_ratesView == nil) {
-                CGRect frame = self.view.bounds;
-                frame.size.height /= 2;
-                frame.origin.y = frame.size.height;
-                self.ratesView = [[CDLazyScrollView alloc] initWithFrame:frame];
-                [self.view insertSubview:_ratesView belowSubview:_holder];
-                _ratesView.lazyDelegate = self;
-                _ratesView.dataSource = self;
-                _ratesView.autoresizingMask = kViewAutoresizingNoMarginSurround;
-            }
-            [_ratesView startScrolling];
-        }break;
-        default:
-            break;
-    }
+- (NSTimeInterval)bottomBarAskForDuration:(CDPullBottomBar*)bottomButton{
+    return _audioSharer.audioPlayer.currentDuration;
 }
 
-- (void)holder:(CDHolder *)holder continueSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index{
-    switch (index) {
-        case 0:{
-            if (!_audioSharer.isRepeating) {
-                float rate = _audioSharer.repeatRate;
-                NSTimeInterval length = rate * distance;
-                DLog(@"Will repeat for %f", length);
-            }
-         }break;
-        case 1:{
-            [_ratesView scrollFor:-(distance - lastDistance) animated:NO];
-            lastDistance = distance;
-
+#pragma mark - CDHolderDelegate
+- (void)holder:(CDHolder *)holder beginSwipingOnDirection:(CDDirection)direction index:(NSUInteger)index{
+    if (direction & CDDirectionHorizontal) {
+        switch (index) {
+            case 0:{
+                [self prepareToChangeRate];
+            }break;
+            case 1:{
+                [self prepareToRepeat:direction];
+            }break;
+            default:
+                break;
         }
-        default:
-            break;
     }
 }
 
-- (void)holder:(CDHolder *)holder endSwipingHorizontallyFromStart:(CGFloat)distance onRow:(NSUInteger)index{
-    switch (index) {
-        case 0:{
-            if (_audioSharer.isRepeating) {
-                CDDirection currentDirection = distance > 0 ? CDDirectionRight : CDDirectionLeft;
-                if (currentDirection != _lastRepeatDirection) {
-                    [_audioSharer stopRepeating];
-                    DLog(@"Repeat stop");
-                }
-            }else{
-                float rate = _audioSharer.repeatRate;
-                NSTimeInterval length = rate * distance;
-                NSTimeInterval location = _audioSharer.currentPlaybackTime;
-                if (length < 0) {
-                    //Length is nagitive, so add it indicates repeat in forward range.
-                    location += length;
-                }
-                CDTimeRange repeatRange = CDMakeTimeRange(location, length);
-                [_audioSharer repeatIn:repeatRange];
-                DLog(@"Repeat range:%lf, %lf",repeatRange.location, repeatRange.length);
+- (void)holder:(CDHolder *)holder continueSwipingOnDirection:(CDDirection)direction forIncrement:(CGFloat)increment fromStart:(CGFloat)distance index:(NSUInteger)index{
+    if (direction & CDDirectionHorizontal) {
+        switch (index) {
+            case 0:{
+                [_ratesView scrollFor:-increment animated:NO];
+            }break;
+            case 1:{
+                [self countRepeatTimeWithDistance:distance];
             }
-        }break;
-        case 1:{
-            [_ratesView endScrolling];
-        }break;
-        default:
-            break;
+            default:
+                break;
+        }
+    }else if (direction & CDDirectionVertical){
+        [self.lyricsView scrollFor:-increment animated:NO];
     }
 }
 
-- (void)holder:(CDHolder *)holder cancelSwipingHorizontallyOnDirection:(CDDirection)direction onRow:(NSUInteger)index{
-    switch (index) {
-        case 0:{
-            DLog(@"Release Repeat View");
-        }break;
+- (void)holder:(CDHolder *)holder endSwipingOnDirection:(CDDirection)direction fromStart:(CGFloat)distance index:(NSUInteger)index{
+    if (direction & CDDirectionHorizontal) {
+        switch (index) {
+            case 0:{
+                [_ratesView endScrolling];
+                return;
+            }break;
+            case 1:{
+                [self repeatWithDirection:direction distance:distance];
+                return;
+            }break;
+            default:
+                break;
+        }
+    }else if (direction & CDDirectionVertical){
+        if (_lyrics) {
+            NSUInteger focusIndex = _lyricsView.focusIndex;
+            NSTimeInterval playbackTime = [_lyrics timeAtIndex:focusIndex];
+            [self.audioSharer playbackAt:playbackTime];
+            [_lyricsView setFocusIndex:focusIndex]; //For making focus accrute.
+        }else{
+            float rate = _audioSharer.playbackRate;
+            NSTimeInterval playbackTime = - rate * distance;
+            [self.audioSharer playbackFor:playbackTime];
+        }
+        [_progress synchronize:nil];
+        return;
+    }
+    if (!_barsHidden) [self setBarsHidden:YES animated:YES];
+}
+
+- (void)holder:(CDHolder *)holder cancelSwipingOnDirection:(CDDirection)direction index:(NSUInteger)index{
+    if (direction & CDDirectionHorizontal) {
+        switch (index) {
+            case 0:{
+                [_ratesView cancelScrolling];
+             }break;
+            case 1:{
+                [_repeatView cancel];
+                DLog(@"Release Repeat View");
+            }break;
+            default:
+                break;
+        }
+    }
+}
+
+- (void)holder:(CDHolder *)holder handleTap:(NSUInteger)count{
+    switch (count) {
         case 1:{
-            [_ratesView cancelScrolling];
+            [self setBarsHidden:YES animated:YES];
+        }break;
+        case 2:{
+            [self.audioSharer playOrPause];
         }break;
         default:
             break;
@@ -429,16 +440,6 @@ static CGFloat lastDistance = 0.0f;
 
 - (void)holderLongPressed:(CDHolder *)holder{
     [self switchBarsHidden];
-}
-
-#pragma mark - Lyrics
-- (BOOL)openLyricsAtPath:(NSString *)path{
-    CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:path];
-    if (!newLyrics.isReady) return NO;
-    self.lyrics = newLyrics;
-    if (_lyricsView == nil) [self createLyricsView];
-    else [_lyricsView reloadData];
-    return YES;
 }
 
 #pragma mark - CDLyricsViewLyricsSource
@@ -456,22 +457,29 @@ static CGFloat lastDistance = 0.0f;
     return _lyrics.lyricsInfo;
 }
 
+#pragma mark - Lyrics
+- (BOOL)openLyricsAtPath:(NSString *)path{
+    CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:path];
+    if (!newLyrics.isReady) return NO;
+    self.lyrics = newLyrics;
+    if (_lyricsView == nil) [self createLyricsView];
+    else [_lyricsView reloadData];
+    return YES;
+}
+
 #pragma mark - CDAudioPlayerDelegate
 - (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state{
     switch (state) {
         case CDAudioPlayerStatePlaying:{
-            self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePlaying;
-            self.bottomBar.progressView.animated = YES;
+            _bottomBar.masterButton.isPlaying = YES;
             [_progress setupUpdater];
         }break;
         case CDAudioPlayerStatePaused:{
-            self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
-            self.bottomBar.progressView.animated = NO;
+            _bottomBar.masterButton.isPlaying = NO;
             [_progress stopUpdater];
         }break;
         case CDAudioPlayerStateStopped:{
-            self.bottomBar.playButtonState = CDBottomBarPlayButtonStatePaused;
-            self.bottomBar.progressView.animated = NO;
+            _bottomBar.masterButton.isPlaying = NO;
             [_progress stopUpdater];
         }break;
         default:
@@ -485,13 +493,31 @@ static CGFloat lastDistance = 0.0f;
     if (lyricsPath == nil) {
         self.lyrics = nil;
         [self destroyLyricsView];
-        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyMissingLyrics];
+        //[self.backgroundView switchViewWithKey:CDBackgroundViewKeyMissingLyrics];
     }else{
         BOOL success = [self openLyricsAtPath:lyricsPath];
         if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
     }
+    //if (_repeatView.isPresented) [_repeatView dismiss];
+    if (_audioSharer.audioPlayer.isRepeating) [_audioSharer stopRepeating];
     [self.topBar reloadData];
     [self.bottomBar reloadData];
+}
+
+- (void)audioSharer:(CDAudioSharer *)audioSharer didRepeatInRange:(CDTimeRange)range{
+    [_repeatView.repeater setRepeatRaneg:range];
+    [_bottomBar setRepeatRanege:range withDuration:audioSharer.audioPlayer.currentDuration];
+    [_repeatView present];
+}
+
+- (void)audioSharer:(CDAudioSharer *)audioSharer didSetRepeatA:(NSTimeInterval)pointA{
+    
+}
+
+- (void)audioSharerDidCancelRepeating:(CDAudioSharer *)audioSharer{
+    if (_repeatView != nil) [_repeatView dismiss];
+    [_bottomBar cleanRepeatRange];
+    DLog(@"Repeat stop");
 }
 
 #pragma mark - CDBackgroundViewDatasource
@@ -501,22 +527,31 @@ static CGFloat lastDistance = 0.0f;
 }
 
 #pragma mark - Events
-/*
-- (void)openedAudioNamed:(NSString*)audioName{
-    [self.audioSharer stop];
-    [self.audioSharer play];
-}*/
-
 - (void)switchBarsHidden{
-    if (self.barsHidden) {
-        [self setBarsHidden:!self.barsHidden animated:YES];
-    }else{
-        [self setBarsHidden:!self.barsHidden animated:YES];
-    }
+    [self setBarsHidden:!_barsHidden animated:YES];
 }
 
 - (void)switchAssistHidden{
-    NSUInteger state = self.topBar.assistButton.state;
+    CDBackgroundViewKey state = _backgroundView.state;
+    
+    if (state == CDBackgroundViewKeyNone) {
+        if (_lyrics != nil) {
+            [UIView animateWithDuration:0.3f animations:^{
+                self.lyricsView.alpha = 0.0f;
+            }];
+        }
+        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyAssist];
+
+    }else{
+        if (_lyrics != nil) {
+            [UIView animateWithDuration:0.3f animations:^{
+                self.lyricsView.alpha = 1.0f;
+            }];
+        }
+        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
+    }
+
+      /*
     if (state == 0) {
         void(^animations)(void) = ^(void){
             self.lyricsView.alpha = 0.0f;
@@ -533,13 +568,7 @@ static CGFloat lastDistance = 0.0f;
             [UIView animateWithDuration:0.3f animations:animations];
             [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
         }
-    }
-}
-
-#pragma mark - Other Methods
-- (NSTimeInterval)playbackTimeByButton{
-    NSTimeInterval playbackTime = [self.audioSharer playbackRate] * self.view.bounds.size.height * 0.5;
-    return playbackTime;
+    }*/
 }
 
 #pragma mark - CDAudioPregressDelegate
@@ -547,6 +576,10 @@ static CGFloat lastDistance = 0.0f;
     if (!_holder.isBeingTouched) {
         NSUInteger focusIndex = [self.lyrics indexOfStampNearTime:playbackTime];
         [_lyricsView setFocusIndex:focusIndex];
+    }
+    if (_repeatView && _audioSharer.audioPlayer.isWaitingForPointB) {
+        NSTimeInterval value = playbackTime - _audioSharer.audioPlayer.pointA;
+        [_repeatView setValueOfCounterView:value];
     }
 }
 
@@ -557,45 +590,122 @@ static CGFloat lastDistance = 0.0f;
     if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
 }
 
-#pragma mark - CDLazyScrollViewDataSource & CDLazyScrollViewDelegate
-- (UIView*)subViewAtPosition:(CDLazyScrollViewPosition)position inLazyScrollView:(CDLazyScrollView*)lazyScrollView{
-    NSString *rate = nil;
-    switch (position) {
-        case CDLazyScrollViewPositionLeft:{
-            rate = [_audioSharer.rates.previousObject stringValue];
-        }break;
-        case CDLazyScrollViewPositionMiddle:{
-            rate = [_audioSharer.rates.currentObject stringValue];
-        }break;
-        case CDLazyScrollViewPositionRight:{
-            rate = [_audioSharer.rates.nextObject stringValue];
-        }break;
-        default:
-            break;
+#pragma mark - Rates
+- (void)prepareToChangeRate{
+    if (_ratesView == nil) {
+        CGFloat topMargin = 80.0f;
+        CGFloat bottomMargin = 5.0f;
+        CGRect frame = self.view.bounds;
+        frame.origin.y = topMargin;
+        frame.size.height = frame.size.height / 2 - topMargin - bottomMargin;
+        self.ratesView = [[CDRatesView alloc] initWithFrame:frame rates:_audioSharer.rates delegate:self];
+         _ratesView.autoresizingMask = CDViewAutoresizingFloat;
+        [self.view insertSubview:_ratesView belowSubview:_holder];
     }
-    UIView *view = [[CDBigLabelView alloc] initWithText:rate];
-    [view setBackgroundColor:kDebugColor];
-    return view;
+    [_ratesView startScrolling];
 }
 
-- (void)lazyScrollViewDidFinishScroll:(CDLazyScrollView*)lazyScrollView onDirection:(CDDirection)direction{
-    switch (direction) {
-        case CDDirectionLeft:
-            [_audioSharer.rates moveNext];
-            [_audioSharer setRate:[_audioSharer.rates.currentObject floatValue]];
-            break;
-        case CDDirectionRight:
-            [_audioSharer.rates movePrevious];
-            [_audioSharer setRate:[_audioSharer.rates.currentObject floatValue]];
-            break;
-        default:
-            break;
-    }
+- (void)ratesView:(CDRatesView *)rateView didChangeRateTo:(float)rate{
+    [_audioSharer setRate:rate];
 }
 
-- (void)lazyScrollViewDidHide:(CDLazyScrollView*)lazyScrollView{
+- (void)ratesViewDidHide:(CDRatesView *)rateView{
     [_ratesView removeFromSuperview];
     self.ratesView = nil;
+}
+
+#pragma mark - Repeat
+- (void)loadRepeatView{
+    if (_repeatView != nil) [_repeatView removeFromSuperview];
+    
+    CGRect frame = self.view.bounds;
+    CGFloat width = CGRectGetWidth(self.view.bounds);
+    CGFloat height = CGRectGetHeight(self.view.bounds);
+    float widthProportion = 0.9;
+    CGFloat topMagin = 0.01 * width;
+    CGFloat bottomMagin = 0.17 * height;
+    frame.origin.x += width * (1 - widthProportion) / 2;
+    frame.origin.y = height / 2 + topMagin;
+    frame.size.height = frame.size.height / 2 - topMagin - bottomMagin;
+    frame.size.width *= widthProportion;
+    _repeatView = [[CDRepeatView alloc] initWithFrame:frame delegate:self];
+    _repeatView.autoresizingMask = CDViewAutoresizingFloat;
+    [self.view insertSubview:_repeatView aboveSubview:_holder];
+}
+
+- (void)prepareToRepeat:(CDDirection)direction{
+    if (_audioSharer.canRepeating) {
+        if (_repeatView == nil) [self loadRepeatView];
+        _repeatView.repeatDirection = direction;
+        [_repeatView show];
+        DLog(@"Create Repeat View");
+    }
+}
+
+- (void)countRepeatTimeWithDistance:(CGFloat)distance{
+    if (!_audioSharer.audioPlayer.isRepeating) {
+        float rate = _audioSharer.repeatRate;
+        NSTimeInterval length = rate * distance;
+        [_repeatView setValueOfCounterView:length];
+        DLog(@"Will repeat for %f", length);
+    }
+}
+
+- (void)repeatWithDirection:(CDDirection)direction distance:(CGFloat)distance{
+    CDDirection currentDirection = CDDirectionNone;
+    if (distance < 0) currentDirection = CDDirectionLeft;
+    if (distance > 0) currentDirection = CDDirectionRight;
+    BOOL sameDirection = direction == currentDirection;
+    
+    if (sameDirection && !_audioSharer.audioPlayer.isRepeating ) {
+        float rate = _audioSharer.repeatRate;
+        NSTimeInterval length = rate * distance;
+        NSTimeInterval location = _audioSharer.currentPlaybackTime;
+        if (length < 0) {
+            //Length is nagitive, so add it indicates repeat in forward range.
+            location += length;
+        }
+        CDTimeRange repeatRange = CDMakeTimeRange(location, length);
+        
+        [_audioSharer repeatIn:repeatRange];
+    }
+}
+
+#pragma mark - CDRepeatViewDelegate
+/*
+- (void)repeatViewDidPresent:(CDRepeatView*)repeatView{
+    [repeatView.repeater setRepeatRaneg:_audioSharer.repeatRange];
+    [_bottomBar setRepeatRanege:_audioSharer.repeatRange withDuration:_audioSharer.currentDuration];
+}*/
+
+- (void)repeatViewDidDismiss:(CDRepeatView*)repeatView{
+    [_audioSharer stopRepeating];
+
+    [_repeatView removeFromSuperview];
+    SafeMemberRelease(_repeatView);
+}
+
+- (void)repeatView:(CDRepeatView*)repeatView alterRepeatRange:(CDRepeatAlterType)type{
+    CDTimeRange range = _audioSharer.audioPlayer.repeatRange;
+    switch (type) {
+        case CDRepeatAlterTypeStartPlus:{
+            range.location += 1;
+            range.length -= 1;
+        }break;
+        case CDRepeatAlterTypeStartMinus:{
+            range.location -= 1;
+            range.length += 1;
+        }break;
+        case CDRepeatAlterTypeEndPlus:{
+            range.length += 1;
+        }break;
+        case CDRepeatAlterTypeEndMinus:{
+            range.length -= 1;
+        }break;
+        default:
+            break;
+    }
+    [_audioSharer repeatIn:range];
 }
 
 @end

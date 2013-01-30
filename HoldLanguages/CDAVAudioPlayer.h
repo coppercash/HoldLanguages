@@ -20,6 +20,8 @@
     NSArray *_available;
     CDCycleArray *_rates;
     CDAudioRepeater *_repeater;
+    NSTimeInterval _pointA;
+    CDAudioPlayerState _state;
 }
 @property(nonatomic, strong)MPMediaItemCollection *itemCollection;
 @property(nonatomic, strong)AVAudioPlayer *player;

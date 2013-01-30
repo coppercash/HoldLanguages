@@ -26,22 +26,29 @@ typedef enum {
 #pragma mark - Open
 - (void)openAudioWithURL:(NSURL*)url;
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+
 @required
+@property(nonatomic, readonly)CDAudioPlayerState state;
 @property(nonatomic, assign)CDAudioRepeatMode repeatMode;
 @property(nonatomic, assign)float rate;
+@property(nonatomic, readonly)NSTimeInterval pointA;
 #pragma mark - Control
 - (void)play;
 - (void)pause;
 - (void)stop;
-- (BOOL)isPlaying;
 - (BOOL)next;   //If YES indicates will play different audio.
 - (BOOL)previous;   //If YES indicates will play different audio.
 #pragma mark - Playback
 - (void)playbackAt:(NSTimeInterval)playbackTime;
 - (void)playbackFor:(NSTimeInterval)increment;
+#pragma mark - Repeat
 - (void)repeatIn:(CDTimeRange)timeRange;
+- (void)setRepeatA;
+- (void)setRepeatB;
 - (void)stopRepeating;
+- (CDTimeRange)repeatRange;
 - (BOOL)isRepeating;
+- (BOOL)isWaitingForPointB;
 #pragma mark - Information
 - (NSArray*)availableRate;
 - (NSTimeInterval)currentPlaybackTime;

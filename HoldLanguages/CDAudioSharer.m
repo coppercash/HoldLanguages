@@ -99,7 +99,7 @@
 }
 
 - (void)playOrPause{
-    if (_audioPlayer.isPlaying) {
+    if (_audioPlayer.state == CDAudioPlayerStatePlaying) {
         [self pause];
     }else{
         [self play];
@@ -123,16 +123,55 @@
     return _audioPlayer.rate;
 }
 
-- (void)repeatIn:(CDTimeRange)timeRange{
+#pragma mark - Repeat
+- (BOOL)repeatIn:(CDTimeRange)timeRange{
     [_audioPlayer repeatIn:timeRange];
+    if (_audioPlayer.isRepeating) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharer:self didRepeatInRange:_audioPlayer.repeatRange];
+        }
+    }else{
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharerDidCancelRepeating:self];
+        }
+    }
+    return _audioPlayer.isRepeating;
 }
+
+- (void)setRepeatA{
+    [_audioPlayer setRepeatA];
+    for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+        [delegate audioSharer:self didSetRepeatA:_audioPlayer.pointA];
+    }
+}
+
+- (void)setRepeatB{
+    [_audioPlayer setRepeatB];
+    for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+        [delegate audioSharer:self didRepeatInRange:_audioPlayer.repeatRange];
+    }
+}
+
+/*
+- (CDTimeRange)repeatRange{
+    return [_audioPlayer repeatRange];
+}*/
 
 - (void)stopRepeating{
     [_audioPlayer stopRepeating];
+    for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+        [delegate audioSharerDidCancelRepeating:self];
+    }
 }
-
+/*
 - (BOOL)isRepeating{
     return [_audioPlayer isRepeating];
+}*/
+
+- (BOOL)canRepeating{
+    if (_audioPlayer == nil) return NO;
+    if (_audioPlayer.state == CDAudioPlayerStateStopped) return NO;
+    return YES;
 }
 
 #pragma mark - Convertion between Time and Distance
@@ -153,7 +192,7 @@
 }
 
 - (float)repeatRate{
-    NSTimeInterval screenDuration = 10.0f;
+    NSTimeInterval screenDuration = 15.0f;
     CGFloat holderWidth = 320.0f;
     NSTimeInterval repeatRate = screenDuration / holderWidth;
     return repeatRate;
@@ -170,11 +209,11 @@
 - (NSTimeInterval)currentPlaybackTime{
     return _audioPlayer.currentPlaybackTime;
 }
-
+/*
 - (NSTimeInterval)currentDuration{
     return self.audioPlayer.currentDuration;
 }
-
+*/
 - (id)valueForProperty:(NSString *)property{
     id value = [self.audioPlayer valueForProperty:property];
     return value;
@@ -182,9 +221,8 @@
 
 - (void)detectPlayerState{
     if ([_audioPlayer isKindOfClass:[CDAVAudioPlayer class]]) {
-        CDAudioPlayerState state = _audioPlayer.isPlaying ? CDAudioPlayerStatePlaying : CDAudioPlayerStatePaused;
         for (id<CDAudioPlayerDelegate> delegate in _delegates) {
-            [delegate audioSharer:self stateDidChange:state];
+            [delegate audioSharer:self stateDidChange:_audioPlayer.state];
         }
     }
 }

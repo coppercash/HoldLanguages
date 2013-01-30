@@ -9,7 +9,6 @@
 #import "CDAudioRepeater.h"
 
 @implementation CDAudioRepeater
-@synthesize range = _range;
 - (id)initWithPlayer:(id<CDAudioRepeaterSource>)player progress:(CDAudioProgress*)progress{
     self = [super init];
     if (self) {
@@ -23,12 +22,12 @@
     CDTimeRange wholeRange = CDMakeTimeRange(0.0f, _player.currentDuration);
     range = CDIntersectionTimeRange(range, wholeRange);
     
-    self.range = range;
-    _rangeEnd = CDTimeRangeGetEnd(_range);
+    _repeatRange = range;
+    _rangeEnd = CDTimeRangeGetEnd(_repeatRange);
     [_progress registerDelegate:self withTimes:1];
 
-    NSTimeInterval location = _range.location;
-    if (location + _range.length  < _player.currentPlaybackTime) {
+    NSTimeInterval location = _repeatRange.location;
+    if (location + _repeatRange.length  < _player.currentPlaybackTime) {
         [_player playbackAt:location];
     }
 }
@@ -37,10 +36,14 @@
     [_progress removeDelegate:self];
 }
 
+- (CDTimeRange)repeatRange{
+    return _repeatRange;
+}
+
 #pragma mark - CDAudioPregressDelegate
 - (void)playbackTimeDidUpdate:(NSTimeInterval)playbackTime withTimes:(NSUInteger)times{
     if (playbackTime > _rangeEnd)
-        [_player playbackAt:_range.location];
+        [_player playbackAt:_repeatRange.location];
 }
 
 @end
