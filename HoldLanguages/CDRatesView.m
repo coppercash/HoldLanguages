@@ -20,7 +20,7 @@
         
         self.lazyDelegate = self, self.dataSource = self;
         self.animatedHiding = YES, self.animatedShowing = YES;
-        self.widthProportion = 0.9;
+        self.widthProportion = 0.96;
     }
     return self;
 }
@@ -45,7 +45,7 @@
     rate = [rate stringByAppendingString:@" X"];
     
     UIView *view = [[CDBigLabelView alloc] initWithText:rate];
-    [view setBackgroundColor:kDebugColor];
+    view.backgroundColor = kRatesViewBackgroundColor;
     return view;
 }
 

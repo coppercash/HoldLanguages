@@ -11,14 +11,12 @@
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"
 #import "CDBackgroundView.h"
-#import "CDProgress.h"
+//#import "CDProgress.h"
 #import "CDLazyScrollView.h"
 #import "CDBigLabelView.h"
-//#import "CDRepeatView.h"
 #import "CDRepeaterView.h"
 #import "CDMasterButton.h"
-//#import "CDAudioPlayer.h"
-//#import "CDAudioSharer.h"
+#import "CDImageMetroCell.h"
 
 @interface MainViewController ()
 - (BOOL)openLyricsAtPath:(NSString *)path;
@@ -26,7 +24,6 @@
 - (void)createLyricsView;
 - (void)destroyLyricsView;
 - (void)switchAssistHidden;
-
 
 @end
 @implementation MainViewController
@@ -36,20 +33,22 @@
 @synthesize progress = _progress;
 
 #pragma mark - ViewController Methods
+- (void)initialize{
+    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    self.progress = appDelegate.progress;
+    [_progress registerDelegate:self withTimes:3];
+    
+    self.audioSharer = appDelegate.audioSharer;
+    [_audioSharer registAsDelegate:self];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
-        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        
-        self.progress = appDelegate.progress;
-        [_progress registerDelegate:self withTimes:3];
-
-        self.audioSharer = appDelegate.audioSharer;
-        [_audioSharer registAsDelegate:self];
+        [self initialize];
     }
-
     return self;
 }
 
@@ -180,6 +179,7 @@
         }break;
         case 1:{
             NSString* title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+            if (title == nil) title = NSLocalizedString(@"TapHere", @"Tap here !");
             return title;
         }break;
         case 2:{
@@ -278,6 +278,11 @@
     DLogCurrentMethod;
 }
 
+- (void)presentTopBarAnimated:(BOOL)animated{
+    [super presentTopBarAnimated:animated];
+    _topBar.leftButton.contentMode = UIViewContentModeCenter;
+    [_topBar.leftButton setImage:[UIImage pngImageWithName:@"TopBariTunes"] forState:UIControlStateNormal];
+}
 #pragma mark - MPMediaPickerControllerDelegate
 - (void)mediaPicker:(MPMediaPickerController*)mediaPicker didPickMediaItems:(MPMediaItemCollection*) mediaItemCollection {
     [self setPullViewPresented:NO animated:YES];
@@ -290,6 +295,24 @@
 }
 
 #pragma mark - CDPullBottomBarDelegate & DataSource
+- (CDMetroCell *)bottomBar:(CDPullBottomBar *)bottomBar cellAtIndex:(NSUInteger)index boundIn:(CGRect)frame{
+    CDMetroCell *cell = nil;
+    switch (index) {
+        case 2:{
+            cell = [[CDImageMetroCell alloc] initWithFrame:frame];
+            ((CDImageMetroCell*)cell).imageName = @"BottomCellRepeat";
+        }break;
+        case 3:{
+            cell = [[CDImageMetroCell alloc] initWithFrame:frame];
+            ((CDImageMetroCell*)cell).imageName = @"BottomCellAssist";
+        }break;
+        default:{
+            cell = [super bottomBar:bottomBar cellAtIndex:index boundIn:frame];
+        }break;
+    }
+    return cell;
+}
+
 - (void)bottomBar:(CDPullBottomBar *)bottomBar touchCellAtIndex:(NSUInteger)index{
     [super bottomBar:bottomBar touchCellAtIndex:index];
     switch (index) {
@@ -493,12 +516,10 @@
     if (lyricsPath == nil) {
         self.lyrics = nil;
         [self destroyLyricsView];
-        //[self.backgroundView switchViewWithKey:CDBackgroundViewKeyMissingLyrics];
     }else{
         BOOL success = [self openLyricsAtPath:lyricsPath];
         if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
     }
-    //if (_repeatView.isPresented) [_repeatView dismiss];
     if (_audioSharer.audioPlayer.isRepeating) [_audioSharer stopRepeating];
     [self.topBar reloadData];
     [self.bottomBar reloadData];
@@ -618,16 +639,14 @@
 - (void)loadRepeatView{
     if (_repeatView != nil) [_repeatView removeFromSuperview];
     
-    CGRect frame = self.view.bounds;
-    CGFloat width = CGRectGetWidth(self.view.bounds);
+    CGFloat hI = (1 - 0.96) / 2 * CGRectGetWidth(self.view.bounds);  //horizontal inset
+    CGRect frame = CGRectInset(self.view.bounds, hI, 0.0f);
     CGFloat height = CGRectGetHeight(self.view.bounds);
-    float widthProportion = 0.9;
-    CGFloat topMagin = 0.01 * width;
+    CGFloat topMagin = 0.02 * height;
     CGFloat bottomMagin = 0.17 * height;
-    frame.origin.x += width * (1 - widthProportion) / 2;
     frame.origin.y = height / 2 + topMagin;
     frame.size.height = frame.size.height / 2 - topMagin - bottomMagin;
-    frame.size.width *= widthProportion;
+
     _repeatView = [[CDRepeatView alloc] initWithFrame:frame delegate:self];
     _repeatView.autoresizingMask = CDViewAutoresizingFloat;
     [self.view insertSubview:_repeatView aboveSubview:_holder];

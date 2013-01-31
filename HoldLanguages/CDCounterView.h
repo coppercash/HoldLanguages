@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kRepeatIconName @"FileIconLRC"
+#define kRepeatIconName @"RepeatIcon"
 
 @interface CDCounterView : UIView {
     UIImageView *_icon;

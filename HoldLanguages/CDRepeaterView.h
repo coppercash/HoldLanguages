@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#define kRepeatViewBackgroundColor [UIColor color255WithRed:133 green:166 blue:38 alpha:1.0f]
+
 @class CDPlusButton, CDMinusButton;
 @interface CDRepeaterView : UIView{
     CDPlusButton *_leftPlus;

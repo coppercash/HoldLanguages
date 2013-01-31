@@ -19,6 +19,7 @@
 }
 
 - (void)repeatIn:(CDTimeRange)range{
+    if (range.length <= 0) return;
     CDTimeRange wholeRange = CDMakeTimeRange(0.0f, _player.currentDuration);
     range = CDIntersectionTimeRange(range, wholeRange);
     

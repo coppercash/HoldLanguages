@@ -81,7 +81,7 @@
 
 - (void)createAssistView{
     if (_assistView == nil) {
-        _assistView = [UIView viewFromXibNamed:@"CDBackgroundView" owner:self atIndex:1];
+        _assistView = [UIView viewFromXibNamed:@"CDBackgroundView" owner:self atIndex:0];
         [self addSubview:_assistView];
     }
     _assistView.backgroundColor = [UIColor clearColor];

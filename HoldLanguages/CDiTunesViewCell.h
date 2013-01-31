@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CDScrollLabel.h"
 #define kCDiTunesViewCell @"CDiTunesViewCell"
-#define kFileIconDirectory @"FileIconDirectory"
-#define kFileIconDirectoryOpened @"FileIconDirectoryOpened"
-#define kFileIconLRC @"FileIconLRC"
+#define kFileIconDirectory @"FileDir"
+#define kFileIconDirectoryOpened @"FileDirOpened"
+#define kFileIconLRC @"FileLRC"
 
 @class CDFileItem;
-@interface CDiTunesViewCell : UITableViewCell
+@interface CDiTunesViewCell : UITableViewCell <CDScrollLabelDelegate>
 - (id)initWithReuseIdentifier:(NSString *)identifier;
 - (void)setupWithItem:(CDFileItem *)item;
 @property(strong, readonly, nonatomic)IBOutlet UIImageView *icon;
-@property(strong, readonly, nonatomic)IBOutlet UILabel *name;
+@property(strong, readonly, nonatomic)IBOutlet CDScrollLabel *name;
 @end

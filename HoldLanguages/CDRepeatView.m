@@ -27,12 +27,9 @@
         self.animatedShowing = YES;
         
         _counter = [[CDCounterView alloc] initWithFrame:self.bounds];
-        _counter.backgroundColor = kDebugColor;
+        _counter.backgroundColor = kRepeatViewBackgroundColor;
         
         _repeater = (CDRepeaterView*)[UIView viewFromXibNamed:NSStringFromClass([CDRepeaterView class]) owner:self];
-        
-        //_repeater = [[CDRepeaterView alloc] initWithFrame:self.bounds];
-        //_repeater.backgroundColor = kDebugColor;
         
         _middleView = [self addSubviewAtPosition:CDLazyScrollViewPositionMiddle];
         _middleView.frame = self.bounds;
@@ -44,39 +41,6 @@
     _repeatDirection = repeatDirection;
     [_counter setDirection:repeatDirection];
 }
-
-/*
-- (id)initWithFrame:(CGRect)frame delegate:(id<CDRepeatViewDelegate>)delegate{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.contentSize = frame.size;
-        _repeatDelegate = delegate;
-        self.lazyDelegate = self;
-        self.dataSource = self;
-        _repeatDirection = CDDirectionNone;
-        self.animatedShowing = YES;
-        
-        _counter = [[CDCounterView alloc] init];
-        //_counter.backgroundColor = [UIColor redColor];
-        
-        _repeater = [[CDRepeaterView alloc] init];
-        _repeater.backgroundColor = [UIColor blueColor];
-        
-        _middleView = [_dataSource subViewAtPosition:CDLazyScrollViewPositionMiddle inLazyScrollView:self];
-        _middleView.frame = self.bounds;
-        [self addSubview:_middleView];
-    }
-    return self;
-}
-*/
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 #pragma mark - Present & Dismiss
 - (void)present{

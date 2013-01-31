@@ -16,21 +16,23 @@
     self = [super initWithFrame:frame];
     if (self) {
         _image = [UIImage pngImageWithName:kRepeatIconName];
-        
         _icon = [[UIImageView alloc] init];
         _icon.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin| UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        [self addSubview:_icon];
+        _icon.contentMode = UIViewContentModeCenter;
         
         _number = [[UILabel alloc] init];
         _number.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin| UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         _number.font = [UIFont boldSystemFontOfSize:30];
         _number.textColor = [UIColor whiteColor];
         _number.backgroundColor = [UIColor clearColor];
-        [self addSubview:_number];
+        _number.adjustsFontSizeToFitWidth = YES;
 
-        _icon.backgroundColor = _number.backgroundColor = kDebugColor;
+        //_icon.backgroundColor = _number.backgroundColor = kDebugColor;
         
         _direction = CDDirectionNone;
+        
+        [self addSubview:_icon];
+        [self addSubview:_number];
     }
     return self;
 }
@@ -51,7 +53,7 @@
         case CDDirectionLeft:{
             //Forward, icon at left
             _icon.frame = CGRectMake(leftMargin, topMargin, size, size);
-            UIImage *flip = [[UIImage alloc] initWithCGImage:_image.CGImage scale:1.0f orientation:UIImageOrientationUpMirrored];
+            UIImage *flip = [[UIImage alloc] initWithCGImage:_image.CGImage scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUpMirrored];
             _icon.image = flip;
             
             CGRect numberFrame = _icon.frame;

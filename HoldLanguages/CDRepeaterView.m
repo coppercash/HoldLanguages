@@ -18,7 +18,7 @@
     if (self) {
         //_start.adjustsFontSizeToFitWidth = YES;
         //_end.adjustsFontSizeToFitWidth = YES;
-        self.backgroundColor = kDebugColor;
+        self.backgroundColor = kRepeatViewBackgroundColor;
     }
     return self;
 }

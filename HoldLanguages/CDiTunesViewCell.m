@@ -8,6 +8,7 @@
 
 #import "CDiTunesViewCell.h"
 #import "CDFileItem.h"
+#import "CDScrollLabel.h"
 
 @implementation CDiTunesViewCell
 static CGPoint gIconCenter;
@@ -18,6 +19,13 @@ static CGRect gNameFrame;
         [self loadSubviewsFromXib];
         gIconCenter = _icon.center;
         gNameFrame = _name.frame;
+        self.contentView.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor darkGrayColor];
+        
+        _name.textColor = [UIColor whiteColor];
+        _name.font = [UIFont boldSystemFontOfSize:17];
+        _name.textAlignment = UITextAlignmentLeft;
+        _name.delegate = self;
     }
     return self;
 }
@@ -32,6 +40,7 @@ static CGRect gNameFrame;
 - (void)setupWithItem:(CDFileItem *)item{
     NSString *fileName = item.name;
     _name.text = fileName;
+    
     self.selectionStyle = UITableViewCellSelectionStyleBlue;
     [self setDegree:item.degree];
     if (item.isDirectory) {
@@ -54,6 +63,16 @@ static CGRect gNameFrame;
     frame.origin.x = CGRectGetMinX(gNameFrame) + indentation;
     frame.size.width = CGRectGetWidth(gNameFrame) - indentation;
     _name.frame = frame;
+}
+
+#pragma mark - CDScrollLabelDelegate
+#define kAnimationInterval 3.0f
+- (NSTimeInterval)scrollLabelShouldStartAnimating:(CDScrollLabel *)scrollLabel{
+    return kAnimationInterval;
+}
+
+- (NSTimeInterval)scrollLabelShouldContinueAnimating:(CDScrollLabel *)scrollLabel{
+    return kAnimationInterval;
 }
 
 @end

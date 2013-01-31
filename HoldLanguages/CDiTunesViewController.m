@@ -31,6 +31,9 @@
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
+    _tableView.separatorColor = [UIColor darkGrayColor];
+    //DLogRect(_tableView.bounds);
     [self.view addSubview:_tableView];
 }
 
