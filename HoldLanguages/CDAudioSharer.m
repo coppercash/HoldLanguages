@@ -227,7 +227,7 @@
     }
 }
 
-#pragma mark - iPod Player
+#pragma mark - Open
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
     id<CDAudioPlayer> player = self.audioPlayer;
     [player openQueueWithItemCollection:itemCollection];
@@ -238,6 +238,18 @@
         }
     }
 }
+
+- (void)openiTunesSharedFile:(NSString*)path{
+    id<CDAudioPlayer> player = self.audioPlayer;
+    [player openiTunesSharedFile:path];
+    
+    if ([player isKindOfClass:[CDAVAudioPlayer class]]) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharerNowPlayingItemDidChange:self];
+        }
+    }
+}
+
 
 #pragma mark - CDAudioPregressDataSource
 - (float)progress:(CDProgress *)progress{

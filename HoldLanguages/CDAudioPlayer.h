@@ -26,6 +26,7 @@ typedef enum {
 #pragma mark - Open
 - (void)openAudioWithURL:(NSURL*)url;
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+- (void)openiTunesSharedFile:(NSString*)path;
 
 @required
 @property(nonatomic, readonly)CDAudioPlayerState state;

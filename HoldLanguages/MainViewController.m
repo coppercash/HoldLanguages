@@ -68,7 +68,6 @@
 
     _backgroundView = [[CDBackgroundView alloc] initWithFrame:self.view.bounds];
     _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
-    _backgroundView.dataSource = self;
     
     self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
     _holder.numberOfRows = 2;
@@ -132,8 +131,13 @@
         }  
     }
 }
-/*
+
 #pragma mark - Rotation Events
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    return toInterfaceOrientation == UIInterfaceOrientationMaskPortrait;
+}
+
+/*
 - (BOOL)shouldAutorotate{
     BOOL should = !self.topBar.isRotationLocked;
     return should;
@@ -145,14 +149,6 @@
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
     return UIInterfaceOrientationPortrait;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-    if (self.topBar.isRotationLocked) {
-        return toInterfaceOrientation == self.interfaceOrientation;
-    }else{
-        return YES;
-    }
 }*/
 
 #pragma mark - Flexible Subviews
@@ -294,6 +290,18 @@
     [self setPullViewPresented:NO animated:YES];
 }
 
+#pragma mark - CDSubPanViewController
+- (void)willPresentWithUserInfo:(id)userInfo{
+    NSString *path = (NSString *)userInfo;
+    if ([path.pathExtension isEqualToString:@"lrc"]) {
+        BOOL success = [self openLyricsAtPath:path];
+        if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
+    }else if ([path.pathExtension isEqualToString:@"mp3"]){
+        [_audioSharer openiTunesSharedFile:path];
+        [self.audioSharer play];
+    }
+}
+
 #pragma mark - CDPullBottomBarDelegate & DataSource
 - (CDMetroCell *)bottomBar:(CDPullBottomBar *)bottomBar cellAtIndex:(NSUInteger)index boundIn:(CGRect)frame{
     CDMetroCell *cell = nil;
@@ -394,6 +402,8 @@
         }
     }else if (direction & CDDirectionVertical){
         [self.lyricsView scrollFor:-increment animated:NO];
+        
+        [_backgroundView moveWithValue:increment];
     }
 }
 
@@ -402,11 +412,9 @@
         switch (index) {
             case 0:{
                 [_ratesView endScrolling];
-                return;
             }break;
             case 1:{
                 [self repeatWithDirection:direction distance:distance];
-                return;
             }break;
             default:
                 break;
@@ -423,9 +431,9 @@
             [self.audioSharer playbackFor:playbackTime];
         }
         [_progress synchronize:nil];
-        return;
+        
+        [_backgroundView move:CDAnimationStateReset];
     }
-    if (!_barsHidden) [self setBarsHidden:YES animated:YES];
 }
 
 - (void)holder:(CDHolder *)holder cancelSwipingOnDirection:(CDDirection)direction index:(NSUInteger)index{
@@ -441,6 +449,8 @@
             default:
                 break;
         }
+    }else if (direction & CDDirectionVertical){
+        [_backgroundView move:CDAnimationStateReset];
     }
 }
 
@@ -541,12 +551,6 @@
     DLog(@"Repeat stop");
 }
 
-#pragma mark - CDBackgroundViewDatasource
-- (NSString*)backgroundViewNeedsAudioName:(CDBackgroundView*)backgroundView{
-    NSString *audioTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
-    return audioTitle;
-}
-
 #pragma mark - Events
 - (void)switchBarsHidden{
     [self setBarsHidden:!_barsHidden animated:YES];
@@ -602,13 +606,6 @@
         NSTimeInterval value = playbackTime - _audioSharer.audioPlayer.pointA;
         [_repeatView setValueOfCounterView:value];
     }
-}
-
-#pragma mark - CDSubPanViewController
-- (void)willPresentWithUserInfo:(id)userInfo{
-    NSString *lrcPath = (NSString *)userInfo;
-    BOOL success = [self openLyricsAtPath:lrcPath];
-    if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
 }
 
 #pragma mark - Rates

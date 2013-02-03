@@ -285,7 +285,8 @@ bool isStamp(NSString* subString, NSString* string){
 }
 
 bool isTimeStamp(NSString* stamp){
-    NSString* pattern = @"^\\d|[:.]$";
+    //NSString* pattern = @"^\\d|[:.]$";
+    NSString* pattern = @"^\\d{1,2}:\\d{1,2}\\.\\d{1,2}$";
     NSError *error = [[NSError alloc] init];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
     NSArray* matches = [regex matchesInString:stamp

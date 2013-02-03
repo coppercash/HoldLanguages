@@ -23,7 +23,9 @@
 + (CDAudioSharer*)sharedAudioPlayer;
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate;
 - (void)removeDelegate:(id<CDAudioPlayerDelegate>)delegate;
+#pragma mark - Open
 - (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+- (void)openiTunesSharedFile:(NSString*)path;
 #pragma mark - Control
 - (void)play;
 - (void)pause;

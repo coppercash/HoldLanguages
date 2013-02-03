@@ -12,6 +12,7 @@
 #define kFileIconDirectory @"FileDir"
 #define kFileIconDirectoryOpened @"FileDirOpened"
 #define kFileIconLRC @"FileLRC"
+#define kFileIconMP3 @"FileMP3"
 
 @class CDFileItem;
 @interface CDiTunesViewCell : UITableViewCell <CDScrollLabelDelegate>

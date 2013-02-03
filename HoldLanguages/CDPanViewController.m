@@ -62,6 +62,9 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    if (_root == nil) {
+        return toInterfaceOrientation == UIInterfaceOrientationMaskPortrait;
+    }
     return [_root shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 }
 

@@ -21,7 +21,7 @@
 {
     [super viewDidLoad];
     _documents = [[CDFileItem alloc] initWithName:documentsPath()];
-    _documents.visibleExtension = @[@"lrc"];
+    _documents.visibleExtension = @[@"lrc", @"mp3"];
     _documents.isOpened = YES;
     
     CGRect tableViewFrame = self.view.bounds;

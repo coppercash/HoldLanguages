@@ -47,6 +47,16 @@
     [self openAudioWithURL:url];
 }
 
+- (void)openiTunesSharedFile:(NSString*)path{
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
+    if (url == nil) return;
+    [self openAudioWithURL:url];
+    
+    SafeMemberRelease(_itemCollection);
+    _currentItemIndex = 0;
+    [self openAudioWithURL:url];
+}
+
 - (void)openAudioWithURL:(NSURL*)url{
     if (_player != nil) {
         [self stop];
@@ -213,7 +223,14 @@
 
 - (id)valueForProperty:(NSString*)property{
     MPMediaItem* currentAudio = self.currentItem;
-    id value = [currentAudio valueForKey:property];
+    id value = nil;
+    if (currentAudio == nil) {
+        if ([property isEqualToString:MPMediaItemPropertyTitle]) {
+            value = _player.url.path.lastPathComponent.stringByDeletingPathExtension;
+        }
+    }else{
+        value = [currentAudio valueForKey:property];
+    }
     return value;
 }
 

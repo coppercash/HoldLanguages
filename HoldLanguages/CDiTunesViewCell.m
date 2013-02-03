@@ -46,8 +46,10 @@ static CGRect gNameFrame;
     if (item.isDirectory) {
         _icon.image = [UIImage pngImageWithName:item.isOpened ? kFileIconDirectoryOpened : kFileIconDirectory];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-    } else if ([fileName.pathExtension isEqualToString:@"lrc"]){
+    } else if ([fileName.pathExtension caseInsensitiveCompare:@"lrc"] == NSOrderedSame){
         _icon.image = [UIImage pngImageWithName:kFileIconLRC];
+    }else if ([fileName.pathExtension caseInsensitiveCompare:@"mp3"] == NSOrderedSame){
+        _icon.image = [UIImage pngImageWithName:kFileIconMP3];
     }
 }
 
