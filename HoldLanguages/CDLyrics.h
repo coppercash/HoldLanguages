@@ -10,6 +10,22 @@
 
 #define kLRCExtension @"lrc"
 
+#define kKeyStampType @"Type"
+#define kKeyStampContent @"Content"
+
+typedef enum {
+    CDLyricsStampTypeTitle,
+    CDLyricsStampTypeArtist,
+    CDLyricsStampTypeAlbum,
+    CDLyricsStampTypeAuthor
+}CDLyricsStampType;
+
+typedef enum{
+    CDSeekBackward = -1,
+    CDSeekUndefined = 0,
+    CDSeekForward = 1
+}CDSeekDestination;
+
 @interface CDLyrics : NSObject
 @property(nonatomic, readonly) NSUInteger numberOfLyricsRows;
 @property(nonatomic, readonly) BOOL isReady;
@@ -17,5 +33,6 @@
 - (NSString*)contentAtIndex:(NSUInteger)index;
 - (NSTimeInterval)timeAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time;
-
+- (NSString*)contentOfType:(CDLyricsStampType)type;
+- (NSArray*)lyricsInfo;
 @end

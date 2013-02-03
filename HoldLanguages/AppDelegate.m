@@ -7,9 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 #import "CDAudioSharer.h"
-#import "Header.h"
+#import "MainViewController.h"
+#import "CDPanViewController.h"
+#import "CDiTunesViewController.h"
 
 @implementation AppDelegate
 
@@ -20,10 +21,16 @@
     
     self.audioSharer = [CDAudioSharer sharedAudioPlayer];
     
-    self.mainViewController = [[MainViewController alloc] init];
-    self.window.rootViewController = self.mainViewController;
-    [self.window makeKeyAndVisible];
+    self.progress = [[CDAudioProgress alloc] initWithUpdateInterval:0.1f];
+    _progress.dataSource = _audioSharer;
     
+    MainViewController *mainViewController = [[MainViewController alloc] init];
+    self.panViewController = [[CDPanViewController alloc] initWithRootViewController:mainViewController];
+    _panViewController.leftControllerClass = [CDiTunesViewController class];
+    
+    self.window.rootViewController = self.panViewController;
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 
@@ -37,6 +44,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+      
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

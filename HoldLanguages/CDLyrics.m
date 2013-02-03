@@ -23,4 +23,13 @@
 - (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time{
     return NSUIntegerMax;
 }
+
+- (NSString*)contentOfType:(CDLyricsStampType)type{
+    return @"CDLyrics is a abstract Class";
+}
+
+- (NSArray*)lyricsInfo{
+    return nil;
+}
+
 @end

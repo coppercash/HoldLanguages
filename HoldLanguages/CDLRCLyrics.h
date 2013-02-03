@@ -30,6 +30,5 @@
 @property(nonatomic, strong) NSMutableArray* stampDictionaries;
 @property(nonatomic, strong) NSMutableArray* timeStamps;
 @property(nonatomic, strong) NSMutableArray* otherStamps;
-- (id)initWithFile:(NSString*)filePath;
 + (void)parseFile:(NSString*)filePath intoDictionary:(NSMutableDictionary*)dictionary;
 @end

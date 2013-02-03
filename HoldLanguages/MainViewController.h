@@ -7,21 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CDPullViewController.h"
+//#import "CDPullViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "CDPullControllerMetro.h"
 #import "CDHolder.h"
 #import "CDLyricsView.h"
 #import "CDAudioSharer.h"
-#import "CDBackgroundView.h"
+//#import "CDBackgroundView.h"
+#import "CDProgress.h"
+#import "CDPanViewController.h"
+#import "CDRatesView.h"
+#import "CDRepeatView.h"
 
 @class CDAudioSharer, CDLyrics, CDBackgroundView;
-@interface MainViewController : CDPullViewController <MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDBackgroundViewDatasource>
-
-@property(nonatomic, strong)CDHolder* holder;
-@property(nonatomic, strong)CDLyricsView* lyricsView;
-@property(nonatomic, readonly, strong)CDBackgroundView* backgroundView;
-@property(nonatomic, strong)CDAudioSharer* audioSharer;
+@interface MainViewController : CDPullControllerMetro<MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDAudioProgressDelegate, CDSubPanViewController, CDRatesViewDelegate, CDRepeatViewDelegate>{
+    CDBackgroundView *_backgroundView;
+}
+@property(nonatomic, strong)CDPanViewController *panViewController;
+@property(nonatomic, strong)CDHolder *holder;
+@property(nonatomic, strong)CDLyricsView *lyricsView;
+@property(nonatomic, readonly)CDBackgroundView *backgroundView;
+@property(nonatomic, strong)CDAudioSharer *audioSharer;
 @property(nonatomic, strong)CDLyrics* lyrics;
-@property(nonatomic, strong)MPMediaPickerController* mediaPicker;
-
+@property(nonatomic, strong)MPMediaPickerController *mediaPicker;
+@property(nonatomic, strong)CDAudioProgress *progress;
+@property(nonatomic, strong)CDRatesView *ratesView;
+@property(nonatomic, strong)CDRepeatView *repeatView;
 @end

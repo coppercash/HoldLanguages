@@ -7,7 +7,6 @@
 //
 
 #import "CDColorFinder.h"
-#import "Header.h"
 
 @implementation CDColorFinder
 - (UIColor*)colorOfBarLight{

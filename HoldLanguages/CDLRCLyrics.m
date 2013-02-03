@@ -12,31 +12,22 @@
 #define kOtherStamps @"OtherStamps"
 
 #import "CDLRCLyrics.h"
-#import "Header.h"
+#import "CDString.h"
+#import "CDStack.h"
 
 @interface CDLRCLyrics ()
-- (NSUInteger)seekIndexOfStampBeforeTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index;
-- (NSUInteger)seekIndexOfStampNextToTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index;
+NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index, NSTimeInterval time, CDSeekDestination destintion, NSArray* array);
 @end
 @implementation CDLRCLyrics
 @synthesize timeStamps = _timeStamps, otherStamps = _otherStamps;
 
 - (id)initWithFile:(NSString *)filePath{
-    self = [super init];
+    self = [super initWithFile:filePath];
     if (self) {
         NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] initWithCapacity:4];
         [CDLRCParser parseFile:filePath intoDictionary:dictionary];
         _timeStamps = [dictionary objectForKey:kTimeStamps];
         _otherStamps = [dictionary objectForKey:kOtherStamps];
-        
-        /*
-         for (CDLRCTimeStamp* stamp in self.timeStamps) {
-         DLog(@"%f\t%@", stamp.time, stamp.content);
-         }
-         for (CDLRCOtherStamp* stamp in self.otherStamps) {
-         DLog(@"%@\t%@", stamp.type, stamp.content);
-         }
-         */
     }
     return self;
 }
@@ -68,14 +59,7 @@
 - (NSUInteger)indexOfStampNearTime:(NSTimeInterval)time{
     static NSUInteger index = 0;
     @try {
-        NSTimeInterval currentTime = [self timeAtIndex:index];
-        NSUInteger newIndex = 0;
-        if(time > currentTime){
-            newIndex = [self seekIndexOfStampNextToTime:time forwardFromIndex:index];
-        }else{
-            newIndex = [self seekIndexOfStampBeforeTime:time backwardFromIndex:index];
-        }
-        index = newIndex;
+        index = seekIndexOfStampsClosedToTime(index, time, CDSeekUndefined, self.timeStamps);
         return index;
     }
     @catch (NSException *exception) {
@@ -83,64 +67,74 @@
     }
 }
 
-- (NSUInteger)seekIndexOfStampBeforeTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index{
-    if (index == 0) return 0;
-    NSUInteger backwardIndex = index - 1;
-    NSTimeInterval backwardTime = [self timeAtIndex:backwardIndex];
-    if (time < backwardTime) {
-        return [self seekIndexOfStampBeforeTime:time backwardFromIndex:backwardIndex];
-    }else{
-        return backwardIndex;
+NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index,
+                                         NSTimeInterval time,
+                                         CDSeekDestination destintion,
+                                         NSArray* array
+                                         ){
+    /*Determine seeking destination,backward or forward*/
+    if (destintion == CDSeekUndefined) {
+        CDLRCTimeStamp* cStamp = [array objectAtIndex:index];
+        destintion = time < cStamp.time ? CDSeekBackward : CDSeekForward;
     }
-}
-
-- (NSUInteger)seekIndexOfStampNextToTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index{
-    if (index >= self.timeStamps.lastIndex) return self.timeStamps.lastIndex;
-    NSUInteger forwardIndex = index + 1;
-    NSTimeInterval forwardTime = [self timeAtIndex:forwardIndex];
-    if (time > forwardTime) {
-        return [self seekIndexOfStampNextToTime:time forwardFromIndex:forwardIndex];
-    }else{
-        return index;
+    
+    //Find the closed stamp to current one.
+    NSUInteger seekIndex = index + destintion;
+    {//Ensure seeking won't be out of scope.
+        if (seekIndex == NSUIntegerMax) return 0;   //Because NSUInteger 0 minus 1 wont't be -1.
+        NSUInteger lastIndex = array.lastIndex;
+        if (seekIndex > lastIndex) return lastIndex;    //Must under last sentence.Because NSUInteger is greater than lastIndex.
     }
-}
-
-#pragma mark - Don't delete, there will be a variable about "degree".
-- (NSUInteger)seekIndexOfStampNearTime:(NSTimeInterval)time backwardFromIndex:(NSUInteger)index{
-    if (index == 0) return 0;
-    NSUInteger backwardIndex = index - 1;
-    NSTimeInterval backwardTime = [self timeAtIndex:backwardIndex];
-    NSTimeInterval forwardTime = [self timeAtIndex:index];
-    if (time < backwardTime) {
-        return [self seekIndexOfStampNearTime:time backwardFromIndex:backwardIndex];
+    CDLRCTimeStamp* seekStamp = [array objectAtIndex:seekIndex];
+    NSTimeInterval seekTime = seekStamp.time;
+    //According to destination, determine continuing seeking or not
+    BOOL continueSeeking = NO;
+    switch (destintion) {
+        case CDSeekBackward:{
+            continueSeeking = time < seekTime;
+        }break;
+        case CDSeekForward:{
+            continueSeeking = time > seekTime;
+        }break;
+        default:
+            break;
+    }
+    
+    if (continueSeeking) {
+        index = seekIndexOfStampsClosedToTime(seekIndex, time, destintion, array);
     }else{
-        if (time - backwardTime < forwardTime - time) {
-            return backwardIndex;
-        }else{
-            return index;
+        /*
+         The index should be the previous one before the time in using.
+         So, for backward seeking the previous index, for forward seeking the current.
+         */
+        if (destintion == CDSeekBackward) {
+            index = seekIndex;
         }
     }
+    return index;
 }
 
-- (NSUInteger)seekIndexOfStampNearTime:(NSTimeInterval)time forwardFromIndex:(NSUInteger)index{
-    if (index >= self.timeStamps.lastIndex) return self.timeStamps.lastIndex;
-    NSUInteger forwardIndex = index + 1;
-    NSTimeInterval backwardTime = [self timeAtIndex:index];
-    NSTimeInterval forwardTime = [self timeAtIndex:forwardIndex];
-    if (time > forwardTime) {
-        return [self seekIndexOfStampNearTime:time forwardFromIndex:forwardIndex];
-    }else{
-        if (time - backwardTime > forwardTime - time) {
-            return forwardIndex;
-        }else{
-            return index;
+- (NSString*)contentOfType:(CDLyricsStampType)type{
+    NSArray *typeIDs = @[@"tl", @"ar", @"al", @"by"];
+    NSString *typeID = [typeIDs objectAtIndex:(NSUInteger)type];
+    NSString *content = nil;
+    for (CDLRCOtherStamp *stamp in _otherStamps) {
+        if ([stamp.type isEqualToString:typeID]) {
+            content = stamp.content;
+            break;
         }
     }
+    return content;
 }
 
-bool isCloserToPrevious(NSTimeInterval reciever, NSTimeInterval previous, NSTimeInterval next){
-    bool isCloser = (reciever - previous) < (next - reciever);
-    return isCloser;
+- (NSArray*)lyricsInfo{
+    NSMutableArray *info = [[NSMutableArray alloc] initWithCapacity:_otherStamps.count];
+    for (CDLRCOtherStamp *stamp in _otherStamps) {
+        NSString *type = stamp.type;
+        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(type, type), kKeyStampType, stamp.content, kKeyStampContent, nil];
+        [info addObject:dic];
+    }
+    return info;
 }
 
 @end
@@ -208,13 +202,6 @@ NSString* stringFromFile(NSString* filePath);
 bool isStamp(NSString* subString, NSString* string);
 bool isTimeStamp(NSString* stamp);
 
-- (void)initialize;
-- (void)parseFile:(NSString *)filePath;
-- (void)lines:(NSMutableArray*)lines withString:(NSString*)string;
-- (void)stampDictionaries:(NSMutableArray*)dictionaries withLines:(NSArray*)lines;
-- (void)timeStamps:(NSMutableArray*)timeStamps otherStamps:(NSMutableArray*)otherStamps withStampDictionaries:(NSArray*)dictionaries;
-- (void)stampDictionary:(NSMutableDictionary*)dictionary withLine:(NSString*)line;
-- (BOOL)isTimeStamp:(NSDictionary*)stampDictionary;
 @end
 
 @implementation CDLRCParser
@@ -298,7 +285,8 @@ bool isStamp(NSString* subString, NSString* string){
 }
 
 bool isTimeStamp(NSString* stamp){
-    NSString* pattern = @"^\\d|[:.]$";
+    //NSString* pattern = @"^\\d|[:.]$";
+    NSString* pattern = @"^\\d{1,2}:\\d{1,2}\\.\\d{1,2}$";
     NSError *error = [[NSError alloc] init];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
     NSArray* matches = [regex matchesInString:stamp
@@ -306,113 +294,6 @@ bool isTimeStamp(NSString* stamp){
                                         range:NSMakeRange(0, stamp.length)];
     bool isMatch = matches.count == 1;
     return isMatch;
-}
-
-
-//Old version of LRC parse functions below
-- (id)initWithFile:(NSString*)filePath{
-    self = [super init];
-    if (self) {
-        [self initialize];
-        [self parseFile:filePath];
-    }
-    return self;
-}
-
-- (void)initialize{
-    self.lines = [[NSMutableArray alloc] init];
-    self.stampDictionaries = [[NSMutableArray alloc] init];
-    self.timeStamps = [[NSMutableArray alloc] init];
-    self.otherStamps = [[NSMutableArray alloc] init];
-}
-
-- (void)parseFile:(NSString *)filePath{
-    if (filePath == nil) return;
-    NSError* error = [[NSError alloc] init];
-    NSString* fileInString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-    if (fileInString == nil) return;
-    [self lines:self.lines withString:fileInString];
-    [self stampDictionaries:self.stampDictionaries withLines:self.lines];
-    [self timeStamps:self.timeStamps otherStamps:self.otherStamps withStampDictionaries:self.stampDictionaries];
-    
-    NSArray* sortedTimeStamps = [self.timeStamps sortedArrayUsingSelector:@selector(compare:)];
-    [self.timeStamps removeAllObjects];
-    [self.timeStamps addObjectsFromArray:sortedTimeStamps];
-}
-
-- (void)lines:(NSMutableArray*)lines withString:(NSString*)string{
-    if (lines == nil) return;
-    if (string == nil || string.length == 0) return;
-    
-    NSString* separater = @"\n";
-    NSArray* newLines = [string componentsSeparatedByString:separater];
-    [lines addObjectsFromArray:newLines];
-}
-
-- (void)stampDictionaries:(NSMutableArray*)dictionaries withLines:(NSArray*)lines{
-    for (NSString* line in lines) {
-        if (line.isVisuallyEmpty) continue;
-        
-        NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] init];
-        [self stampDictionary:dictionary withLine:line];
-        [dictionaries addObject:dictionary];
-    }
-}
-
-- (void)timeStamps:(NSMutableArray*)timeStamps otherStamps:(NSMutableArray*)otherStamps withStampDictionaries:(NSArray*)dictionaries{
-    for (NSDictionary* dictionary in dictionaries) {
-        NSArray* stamps = [dictionary objectForKey:kStamp];
-        NSString* content = [dictionary objectForKey:kContent];
-        if ([self isTimeStamp:dictionary]) {
-            for (NSString* stamp in stamps) {
-                CDLRCTimeStamp* timeStamp = [[CDLRCTimeStamp alloc] initWithTime:stamp content:content];
-                [timeStamps addObject:timeStamp];
-            }
-        }else{
-            for (NSString* stamp in stamps) {
-                CDLRCOtherStamp* otherStamp = [[CDLRCOtherStamp alloc] initWithStamp:stamp];
-                [otherStamps addObject:otherStamp];
-            }
-        }
-    }
-}
-
-- (void)stampDictionary:(NSMutableDictionary*)dictionary withLine:(NSString*)line{
-    NSCharacterSet* separeters = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
-    NSArray* components = [line componentsSeparatedByCharactersInSet:separeters];
-    
-    NSMutableArray* stamps = [[NSMutableArray alloc] init];
-    [dictionary setObject:stamps forKey:kStamp];
-    for (NSString* component in components) {
-        if (component.isVisuallyEmpty) continue;
-        
-        NSString* previous = [line previousCharacterBeforeSubstring:component];
-        NSString* next = [line nextCharacterAfterSubstring:component];
-        BOOL isStamp = [previous isEqualToString:@"["] && [next isEqualToString:@"]"];
-        if (isStamp) {
-            [stamps addObject:component];
-        }else{
-            [dictionary setObject:component forKey:kContent];
-        }
-    }
-}
-
-- (BOOL)isTimeStamp:(NSDictionary *)stampDictionary{
-    BOOL isTimeStamp = YES;
-    NSArray* stamps = [stampDictionary objectForKey:kStamp];
-    for (NSString* stamp in stamps) {
-        NSString* pattern = @"^\\d|[:.]$";
-        NSError *error = [[NSError alloc] init];
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
-        NSTextCheckingResult *isMatch = [regex firstMatchInString:stamp
-                                                          options:NSRegularExpressionCaseInsensitive
-                                                            range:NSMakeRange(0, stamp.length)];
-        if (isMatch == nil) {
-            isTimeStamp = NO;
-            break;
-        }
-    }
-    return isTimeStamp;
 }
 
 @end

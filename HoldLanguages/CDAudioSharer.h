@@ -7,42 +7,60 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CDProgress.h"
+#import "CDAudioPlayer.h"
+#import "CDCycleArray.h"
 
-typedef enum {
-    CDAudioPlayerStatePlaying,
-    CDAudioPlayerStatePaused,
-    CDAudioPlayerStateStopped
-}CDAudioPlayerState;
-
-@protocol CDAudioPlayerDelegate;
-@class CDAudioPlayer, MPMediaItemCollection;
-@interface CDAudioSharer : NSObject
-
-@property(nonatomic, readonly, strong)NSArray* delegates;
-@property(nonatomic, strong)CDAudioPlayer* audioPlayer;
-@property(nonatomic, readonly, strong)NSTimer* processTimer;
-@property(nonatomic, readonly, copy)NSString* audioName;
-@property(nonatomic, readonly) NSTimeInterval currentDuration;
-
+@protocol CDAudioPlayerDelegate,CDAudioPlayer;
+@class MPMediaItemCollection;
+@interface CDAudioSharer : UIResponder <CDAudioProgressDataSource>{
+    NSArray *_delegates;
+    id<CDAudioPlayer> _audioPlayer;
+}
+@property(nonatomic, strong)id<CDAudioPlayer> audioPlayer;
+@property(nonatomic, assign)float rate;
+#pragma mark - Diplomacy
 + (CDAudioSharer*)sharedAudioPlayer;
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate;
 - (void)removeDelegate:(id<CDAudioPlayerDelegate>)delegate;
-- (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+#pragma mark - Open
+- (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection;
+- (void)openiTunesSharedFile:(NSString*)path;
+#pragma mark - Control
 - (void)play;
 - (void)pause;
 - (void)playOrPause;
 - (void)stop;
+- (void)next;
+- (void)previous;
+#pragma mark - Playback
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 - (void)playbackAt:(NSTimeInterval)playbackTime;
+#pragma mark - Repeat
+- (BOOL)repeatIn:(CDTimeRange)timeRange;
+- (void)setRepeatA;
+- (void)setRepeatB;
+- (void)stopRepeating;
+//- (CDTimeRange)repeatRange;
+//- (BOOL)isRepeating;
+- (BOOL)canRepeating;
+#pragma mark - Infomation
+- (CDCycleArray*)rates;
+- (NSTimeInterval)currentPlaybackTime;
+//- (NSTimeInterval)currentDuration;
 - (float)playbackRate;
-- (NSString*)valueForProperty:(NSString *)property;
+- (float)repeatRate;
+- (id)valueForProperty:(NSString *)property;
 
 @end
 
 @protocol CDAudioPlayerDelegate
 @required
-- (void)audioSharer:(CDAudioSharer*)audioSharer refreshPlaybackTime:(NSTimeInterval)playbackTime;
 - (void)audioSharer:(CDAudioSharer*)audioSharer stateDidChange:(CDAudioPlayerState)state;
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer;
+
+- (void)audioSharer:(CDAudioSharer *)audioSharer didRepeatInRange:(CDTimeRange)range;
+- (void)audioSharer:(CDAudioSharer *)audioSharer didSetRepeatA:(NSTimeInterval)pointA;
+- (void)audioSharerDidCancelRepeating:(CDAudioSharer *)audioSharer;
 
 @end

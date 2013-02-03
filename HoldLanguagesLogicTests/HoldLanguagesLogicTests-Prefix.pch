@@ -1,0 +1,15 @@
+//
+// Prefix header for all source files of the 'HoldLanguagesLogicTests' target in the 'HoldLanguagesLogicTests' project
+//
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
+#import "CDMemAssist.h"
+#import "CDCategories.h"
+#import "CDTypes.h"
+#import "CDFunctions.h"
+#import "Header.h"
+#endif

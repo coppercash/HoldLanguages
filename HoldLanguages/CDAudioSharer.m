@@ -5,22 +5,17 @@
 //  Created by William Remaerd on 11/11/12.
 //  Copyright (c) 2012 Coder Dreamer. All rights reserved.
 //
-
+#import <AVFoundation/AVFoundation.h>
 #import "CDAudioSharer.h"
-#import "CDiPodPlayer.h"
-#import "Header.h"
+#import "CDAVAudioPlayer.h"
 
 @interface CDAudioSharer ()
 - (void)initialize;
-- (void)refresh;
-- (void)resumeTimerWithTimeInterval:(NSTimeInterval)timeInterval;
-- (void)invalidateTimer;
-- (void)handlePlaybackStateChanged:(id)notification;
-- (void)handleNowPlayingItemChanged:(id)notification;
+- (void)detectPlayerState;
 @end
 
 @implementation CDAudioSharer
-@synthesize delegates = _delegates, audioPlayer = _audioPlayer, processTimer = _processTimer, audioName = _audioName;
+@synthesize audioPlayer = _audioPlayer;
 
 - (id)init{
     self = [super init];
@@ -31,9 +26,16 @@
 }
 
 - (void)initialize{
-    self.audioPlayer = [[CDiPodPlayer alloc] init];
+    NSError *setCategoryErr = nil;
+    NSError *activationErr  = nil;
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory: AVAudioSessionCategoryPlayback error: &setCategoryErr];
+    [session setActive: YES error: &activationErr];
+    
+    self.audioPlayer = [[CDAVAudioPlayer alloc] init];
 }
 
+#pragma mark - Diplomacy
 + (CDAudioSharer*)sharedAudioPlayer{
     static CDAudioSharer* sharedAudioPlayer;
     @synchronized(self){
@@ -44,33 +46,6 @@
     return sharedAudioPlayer;
 }
 
-#pragma mark - Players
-- (void)setAudioPlayer:(CDAudioPlayer *)audioPlayer{
-    if ([_audioPlayer isKindOfClass:[CDiPodPlayer class]]) {
-        CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)audioPlayer;
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter removeObserver:self name:MPMusicPlayerControllerPlaybackStateDidChangeNotification object:_audioPlayer];
-        [notificationCenter removeObserver:self name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:_audioPlayer];
-        [iPodPlayer.audioPlayer endGeneratingPlaybackNotifications];
-    }
-    
-    if ([audioPlayer isKindOfClass:[CDiPodPlayer class]]) {
-        CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)audioPlayer;
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserver: self
-                               selector: @selector (handlePlaybackStateChanged:)
-                                   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                 object: iPodPlayer.audioPlayer];
-        [notificationCenter addObserver: self
-                               selector: @selector (handleNowPlayingItemChanged:)
-                                   name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                 object: iPodPlayer.audioPlayer];
-        [iPodPlayer.audioPlayer beginGeneratingPlaybackNotifications];
-    }
-    _audioPlayer = audioPlayer;
-}
-
-#pragma mark - Delegates
 - (void)registAsDelegate:(id<CDAudioPlayerDelegate>)delegate{
     NSMutableArray* delegates = nil;
     if (_delegates == nil) {
@@ -89,55 +64,114 @@
     _delegates = delegates;
 }
 
-#pragma mark - Timer
-- (void)resumeTimerWithTimeInterval:(NSTimeInterval)timeInterval{
-    if (_processTimer != nil) {
-        [_processTimer invalidate];
-    }
-    _processTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(refresh) userInfo:nil repeats:YES];
-}
-
-- (void)invalidateTimer{
-    if (_processTimer != nil) {
-        [_processTimer invalidate];
-        _processTimer = nil;
-    }
-}
-
-- (void)refresh{
-    NSTimeInterval playbackTime = self.audioPlayer.currentPlaybackTime;
-    for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
-        [delegate audioSharer:self refreshPlaybackTime:playbackTime];
-    }
-}
-
-#pragma mark - Control Types of Players
+#pragma mark - Control
 - (void)play{
-    [self.audioPlayer play];
+    [_audioPlayer play];
+    [self detectPlayerState];
 }
 
 - (void)pause{
-    [self.audioPlayer pause];
+    [_audioPlayer pause];
+    [self detectPlayerState];
+}
+
+- (void)stop{
+    [_audioPlayer stop];
+    [self detectPlayerState];
+}
+
+- (void)next{
+    BOOL isChanged = [_audioPlayer next];
+    if (isChanged && [_audioPlayer isKindOfClass:[CDAVAudioPlayer class]]) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharerNowPlayingItemDidChange:self];
+        }
+    }
+}
+
+- (void)previous{
+    BOOL isChanged = [_audioPlayer previous];
+    if (isChanged &&[_audioPlayer isKindOfClass:[CDAVAudioPlayer class]]) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharerNowPlayingItemDidChange:self];
+        }
+    }
 }
 
 - (void)playOrPause{
-    if (self.audioPlayer.isPlaying) {
+    if (_audioPlayer.state == CDAudioPlayerStatePlaying) {
         [self pause];
     }else{
         [self play];
     }
 }
 
-- (void)stop{
-    [self.audioPlayer stop];
-}
-
+#pragma mark - Playback
 - (void)playbackFor:(NSTimeInterval)playbackTime{
     [self.audioPlayer playbackFor:playbackTime];
 }
 
 - (void)playbackAt:(NSTimeInterval)playbackTime{
     [self.audioPlayer playbackAt:playbackTime];
+}
+
+- (void)setRate:(float)rate{
+    _audioPlayer.rate = rate;
+}
+
+- (float)rate{
+    return _audioPlayer.rate;
+}
+
+#pragma mark - Repeat
+- (BOOL)repeatIn:(CDTimeRange)timeRange{
+    [_audioPlayer repeatIn:timeRange];
+    if (_audioPlayer.isRepeating) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharer:self didRepeatInRange:_audioPlayer.repeatRange];
+        }
+    }else{
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharerDidCancelRepeating:self];
+        }
+    }
+    return _audioPlayer.isRepeating;
+}
+
+- (void)setRepeatA{
+    [_audioPlayer setRepeatA];
+    for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+        [delegate audioSharer:self didSetRepeatA:_audioPlayer.pointA];
+    }
+}
+
+- (void)setRepeatB{
+    [_audioPlayer setRepeatB];
+    for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+        [delegate audioSharer:self didRepeatInRange:_audioPlayer.repeatRange];
+    }
+}
+
+/*
+- (CDTimeRange)repeatRange{
+    return [_audioPlayer repeatRange];
+}*/
+
+- (void)stopRepeating{
+    [_audioPlayer stopRepeating];
+    for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+        [delegate audioSharerDidCancelRepeating:self];
+    }
+}
+/*
+- (BOOL)isRepeating{
+    return [_audioPlayer isRepeating];
+}*/
+
+- (BOOL)canRepeating{
+    if (_audioPlayer == nil) return NO;
+    if (_audioPlayer.state == CDAudioPlayerStateStopped) return NO;
+    return YES;
 }
 
 #pragma mark - Convertion between Time and Distance
@@ -157,62 +191,74 @@
     return playbackRate;
 }
 
-#pragma mark - Getter
-- (NSString*)audioName{
-    return self.audioPlayer.audioName;
+- (float)repeatRate{
+    NSTimeInterval screenDuration = 15.0f;
+    CGFloat holderWidth = 320.0f;
+    NSTimeInterval repeatRate = screenDuration / holderWidth;
+    return repeatRate;
 }
 
+#pragma mark - Information
+- (CDCycleArray*)rates{
+    if ([_audioPlayer isKindOfClass:CDAVAudioPlayer.class]) {
+        return ((CDAVAudioPlayer*)_audioPlayer).rates;
+    }
+    return nil;
+}
+
+- (NSTimeInterval)currentPlaybackTime{
+    return _audioPlayer.currentPlaybackTime;
+}
+/*
 - (NSTimeInterval)currentDuration{
     return self.audioPlayer.currentDuration;
 }
-
-- (NSString*)valueForProperty:(NSString *)property{
-    NSString* value = [self.audioPlayer valueForProperty:property];
+*/
+- (id)valueForProperty:(NSString *)property{
+    id value = [self.audioPlayer valueForProperty:property];
     return value;
 }
 
-#pragma mark - iPod Player
-- (NSString*)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
-    CDiPodPlayer* iPodPlayer = (CDiPodPlayer*)self.audioPlayer;
-    [iPodPlayer openQueueWithItemCollection:itemCollection];
-    
-    MPMediaItem* firstItem = [itemCollection.items objectAtIndex:0];
-    NSString* itemName = [firstItem valueForKey:MPMediaItemPropertyTitle];
-    return itemName;    //The first item will be played.
-}
-
-- (void)handlePlaybackStateChanged:(id)notification{
-    CDiPodPlayer* audioPlayer = (CDiPodPlayer*)self.audioPlayer;
-	MPMusicPlaybackState playbackState = audioPlayer.audioPlayer.playbackState;
-    
-    switch (playbackState) {
-        case MPMusicPlaybackStatePaused:{
-            [self invalidateTimer];
-            for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
-                [delegate audioSharer:self stateDidChange:CDAudioPlayerStatePaused];
-            }
-        }break;
-        case MPMusicPlaybackStatePlaying:{
-            [self resumeTimerWithTimeInterval:0.5];
-            for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
-                [delegate audioSharer:self stateDidChange:CDAudioPlayerStatePlaying];
-            }
-        }break;
-        case MPMusicPlaybackStateStopped:{
-            [self invalidateTimer];
-            for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
-                [delegate audioSharer:self stateDidChange:CDAudioPlayerStateStopped];
-            }
-        }break;
-        default:
-            break;
+- (void)detectPlayerState{
+    if ([_audioPlayer isKindOfClass:[CDAVAudioPlayer class]]) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharer:self stateDidChange:_audioPlayer.state];
+        }
     }
 }
 
-- (void)handleNowPlayingItemChanged:(id)notification{
-    for (id<CDAudioPlayerDelegate> delegate in self.delegates) {
-        [delegate audioSharerNowPlayingItemDidChange:self];
+#pragma mark - Open
+- (void)openQueueWithItemCollection:(MPMediaItemCollection *)itemCollection{
+    id<CDAudioPlayer> player = self.audioPlayer;
+    [player openQueueWithItemCollection:itemCollection];
+    
+    if ([player isKindOfClass:[CDAVAudioPlayer class]]) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharerNowPlayingItemDidChange:self];
+        }
     }
+}
+
+- (void)openiTunesSharedFile:(NSString*)path{
+    id<CDAudioPlayer> player = self.audioPlayer;
+    [player openiTunesSharedFile:path];
+    
+    if ([player isKindOfClass:[CDAVAudioPlayer class]]) {
+        for (id<CDAudioPlayerDelegate> delegate in _delegates) {
+            [delegate audioSharerNowPlayingItemDidChange:self];
+        }
+    }
+}
+
+
+#pragma mark - CDAudioPregressDataSource
+- (float)progress:(CDProgress *)progress{
+    if (_audioPlayer.currentDuration == 0.0f) return 0.0f;
+    return _audioPlayer.currentPlaybackTime / _audioPlayer.currentDuration;
+}
+
+- (NSTimeInterval)playbackTimeOfProgress:(CDAudioProgress *)progress{
+    return _audioPlayer.currentPlaybackTime;
 }
 
 @end

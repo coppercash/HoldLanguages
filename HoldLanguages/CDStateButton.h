@@ -9,11 +9,6 @@
 #import <UIKit/UIKit.h>
 #define kEffectiveRectInset -50.0f
 
-typedef enum {
-    CDStateButtonShouldChangeMaskKeep = -1,
-    CDStateButtonShouldChangeMaskNext = -2
-}CDStateButtonShouldChangeMask;
-
 @protocol CDStateButtonDelegate;
 @interface CDStateButton : UIControl
 @property(nonatomic, readonly, strong)NSArray* images;
@@ -26,6 +21,7 @@ typedef enum {
 - (void)changeStateTo:(NSUInteger)state;
 @end
 
-@protocol CDStateButtonDelegate
-- (NSInteger)shouldStateButtonChangedValue:(CDStateButton*)stateButton;
+@protocol CDStateButtonDelegate <NSObject>
+@optional
+- (NSUInteger)shouldStateButton:(CDStateButton*)stateButton changeStateTo:(NSInteger)state;
 @end

@@ -8,13 +8,13 @@
 
 #import "CDLyricsView.h"
 #import "CDLyricsViewCell.h"
-#import "Header.h"
 
 @interface CDLyricsView ()
 - (void)initialize;
 - (CGFloat)yOffset;
 - (void)setYOffset:(CGFloat)yOffset animated:(BOOL)animated;
 - (void)setFocusIndex:(NSUInteger)focusIndex animated:(BOOL)animated;
+- (BOOL)isFocusAccurate;
 @end
 
 @implementation CDLyricsView
@@ -32,6 +32,8 @@
 }
 
 - (void)initialize{
+    _animateTagetingIndex = NSUIntegerMax;
+    
     _lyricsTable = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     [self addSubview:_lyricsTable];
     _lyricsTable.dataSource = self;
@@ -59,12 +61,15 @@
 }
 
 - (void)setFocusIndex:(NSUInteger)focusIndex animated:(BOOL)animated{
-    NSUInteger maxIndexIncreament = 10;
     NSUInteger currentIndex = self.focusIndex;
-    BOOL shouldAnimated = abs(focusIndex - currentIndex) < maxIndexIncreament;
+    if (focusIndex == currentIndex && self.isFocusAccurate) return;
+    if (animated && (focusIndex == _animateTagetingIndex)) return;
+    NSUInteger maxIndexIncrement = 10;
+    BOOL shouldAnimated = abs(focusIndex - currentIndex) < maxIndexIncrement;
     
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:focusIndex inSection:1];
     [_lyricsTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:animated && shouldAnimated];
+    if (animated && shouldAnimated) _animateTagetingIndex = focusIndex;
 }
 
 - (NSUInteger)focusIndex{
@@ -75,6 +80,15 @@
     return focusIndex;
 }
 
+- (BOOL)isFocusAccurate{
+    CGPoint focusPoint = CGPointMake(CGRectGetMidX(_lyricsTable.bounds), CGRectGetMidY(_lyricsTable.bounds));
+    NSIndexPath* indexPath = [_lyricsTable indexPathForRowAtPoint:focusPoint];
+    UITableViewCell *cell = [_lyricsTable cellForRowAtIndexPath:indexPath];
+    
+    BOOL isAccurate = CGPointEqualToPoint(cell.center, focusPoint);
+    return isAccurate;
+}
+
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CDLyricsViewCell* cell = nil;
@@ -82,6 +96,11 @@
         case 0:{
             cell = [tableView dequeueReusableCellWithIdentifier:kReuseIdentifierOfStyleHeader];
             if (cell == nil) cell = [[CDLyricsViewCell alloc] initWithLyricsStyle:CDLyricsViewCellStyleHeader reuseIdentifier:kReuseIdentifierOfStyleHeader];
+            NSArray* lyricsInfo = nil;
+            if (_lyricsSource && [_lyricsSource respondsToSelector:@selector(lyricsViewNeedsLyricsInfo:)]) {
+                lyricsInfo = [_lyricsSource lyricsViewNeedsLyricsInfo:self];
+            }
+            [cell setLyricsInfo:lyricsInfo];
         }break;
         case 1:{
             cell = [tableView dequeueReusableCellWithIdentifier:kReuseIdentifierOfStyleLyrics];
@@ -138,28 +157,28 @@
 }
 
 #pragma mark - Scroll in Horizontal
-//- (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated;
-//- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
-
 - (CGFloat)yOffset{
     CGFloat yOffset = _lyricsTable.contentOffset.y;
     return yOffset;
 }
 
 - (void)setYOffset:(CGFloat)yOffset animated:(BOOL)animated{
-    //if (0.0f > yOffset || yOffset > _lyricsTable.contentSize.height - _lyricsTable.bounds.size.height) return;
-    if (yOffset < 0.0f) yOffset = 0.0f;
-    CGFloat maxYOffset = _lyricsTable.contentSize.height - _lyricsTable.bounds.size.height;
-    if (yOffset > maxYOffset) yOffset = maxYOffset;
-    
-    CGPoint offset = CGPointMake(0.0f, yOffset);
+    CGFloat yMin = 0.0f;
+    CGFloat yMax = _lyricsTable.contentSize.height - CGRectGetHeight(_lyricsTable.bounds);
+    CGPoint offset = _lyricsTable.contentOffset;
+    if (yOffset < yMin) {
+        offset.y = yMin;
+    }else if (yOffset > yMax) {
+        offset.y = yMax;
+    }else{
+        offset.y = yOffset;
+    }
     [_lyricsTable setContentOffset:offset animated:animated];
 }
 
-- (void)scrollFor:(CGFloat)distance animated:(BOOL)animated{
-    CGFloat destination = self.yOffset + distance;
-    [self setYOffset:destination animated:animated];
+- (void)scrollFor:(CGFloat)increment animated:(BOOL)animated{
+    CGFloat yTarget = _lyricsTable.contentOffset.y + increment;
+    [self setYOffset:yTarget animated:animated];
 }
-
 
 @end

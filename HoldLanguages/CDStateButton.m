@@ -7,7 +7,6 @@
 //
 
 #import "CDStateButton.h"
-#import "Header.h"
 
 @interface CDStateButton ()
 - (void)initialize;
@@ -49,6 +48,7 @@
     [self addSubview:_backgound];
     _backgound.autoresizingMask = kViewAutoresizingNoMarginSurround;
     _backgound.backgroundColor = [UIColor clearColor];
+    _backgound.contentMode = UIViewContentModeCenter;
 }
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
@@ -165,14 +165,9 @@ static NSString* keyOfHighlighted = @"Highlighted";
 
 #pragma mark - Change State
 - (void)changeState{
-    NSInteger shouldIndex = [_delegate shouldStateButtonChangedValue:self];
-    NSUInteger destinationIndex;
-    if (shouldIndex == CDStateButtonShouldChangeMaskKeep) {
-        destinationIndex = _state;
-    }else if (shouldIndex == CDStateButtonShouldChangeMaskNext){
-        destinationIndex = self.nextIndex;
-    }else{
-        destinationIndex = shouldIndex;
+    NSUInteger destinationIndex = (_state + 1) % _images.count;
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldStateButton:changeStateTo:)]) {
+        destinationIndex = [_delegate shouldStateButton:self changeStateTo:destinationIndex];
     }
     NSDictionary* next = [_images objectAtIndex:destinationIndex];
     UIImage* newImage = [next objectForKey:keyOfNormal];
