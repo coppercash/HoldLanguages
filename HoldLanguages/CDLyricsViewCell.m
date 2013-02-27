@@ -13,8 +13,7 @@
 @synthesize style = _style;
 @synthesize content = _content;
 
-- (id)initWithLyricsStyle:(CDLyricsViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithLyricsStyle:(CDLyricsViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         _style = style;
@@ -24,20 +23,31 @@
 }
 
 - (void)initialize{
+    UILabel * (^initContent)(void) = ^{
+        CGFloat hM = CGRectGetWidth(self.contentView.bounds) * kHorizontalMarginRate;
+        CGRect cF = CGRectInset(self.contentView.bounds, hM, 0.0f);
+        UILabel *content = [[UILabel alloc] initWithFrame:cF];
+        content.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        content.textAlignment = NSTextAlignmentLeft;
+        content.backgroundColor = [UIColor clearColor];
+        content.font = [UIFont systemFontOfSize:kContentFontSize];
+        content.numberOfLines = _content.numberOfLinesFitsWidth;
+
+        return content;
+    };
+    
     self.contentView.backgroundColor = [UIColor clearColor];
     switch (self.style) {
         case CDLyricsViewCellStyleHeader:{
-            
+            _content = initContent();
+            _content.textColor = [UIColor darkGrayColor];
+            [self.contentView addSubview:_content];
+
         }break;
         case CDLyricsViewCellStyleLyrics:{
-            _content = [[UILabel alloc] init];
-            [self.contentView addSubview:_content];
-            _content.frame = self.contentView.bounds;
-            _content.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            _content.textAlignment = NSTextAlignmentCenter;
-            _content.backgroundColor = [UIColor clearColor];
+            _content = initContent();
             _content.textColor = [UIColor whiteColor];
-            _content.adjustsFontSizeToFitWidth = YES;
+            [self.contentView addSubview:_content];
         }break;
         case CDLyricsViewCellStyleFooter:{
             
@@ -47,13 +57,17 @@
     }
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
 }
 
+- (CGFloat)recommendHeight{
+    CGFloat rH = _content.heightFitsWidth;  //Recommend Height
+    return rH;
+}
+/*
 - (void)setLyricsInfo:(NSArray*)info{
     if (_style != CDLyricsViewCellStyleHeader) return;
     if (info == nil) return;
@@ -84,8 +98,8 @@
         frame.origin.y = index * labelHeight + margin;
         label.frame = frame;
         
-        NSString *type = [dic valueForKey:kKeyStampType];
-        NSString *content = [dic valueForKey:kKeyStampContent];
+        NSString *type = [dic valueForKey:gKeyStampType];
+        NSString *content = [dic valueForKey:gKeyStampContent];
         label.text = [[NSString alloc] initWithFormat:@"%@:\t%@", type, content];
         
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight |UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -111,5 +125,5 @@
         [label removeFromSuperview];
     }
 }
-
+*/
 @end

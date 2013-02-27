@@ -32,3 +32,6 @@
 @property(nonatomic, strong) NSMutableArray* otherStamps;
 + (void)parseFile:(NSString*)filePath intoDictionary:(NSMutableDictionary*)dictionary;
 @end
+
+extern NSString * const gKeyStampType;
+extern NSString * const gKeyStampContent;

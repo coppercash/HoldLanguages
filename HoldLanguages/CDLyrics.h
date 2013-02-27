@@ -10,8 +10,8 @@
 
 #define kLRCExtension @"lrc"
 
-#define kKeyStampType @"Type"
-#define kKeyStampContent @"Content"
+//#define kKeyStampType @"Type"
+//#define kKeyStampContent @"Content"
 
 typedef enum {
     CDLyricsStampTypeTitle,

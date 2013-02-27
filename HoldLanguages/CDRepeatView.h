@@ -9,7 +9,7 @@
 #import "CDLazyScrollView.h"
 
 typedef enum {
-    CDRepeatAlterTypeStartPlus,
+    CDRepeatAlterTypeStartPlus = 1,
     CDRepeatAlterTypeStartMinus,
     CDRepeatAlterTypeEndPlus,
     CDRepeatAlterTypeEndMinus

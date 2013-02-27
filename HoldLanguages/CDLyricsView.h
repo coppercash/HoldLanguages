@@ -15,19 +15,23 @@
 
 @interface CDLyricsView : UIView <UITableViewDataSource, UITableViewDelegate>{
     NSUInteger _animateTagetingIndex;
+    
+    NSString *_lyricsInfo;
 }
 @property(nonatomic) NSUInteger focusIndex;
 @property(nonatomic, weak) id<CDLyricsViewLyricsSource> lyricsSource;
-@property(nonatomic, readonly, strong) UITableView* lyricsTable;
-@property(nonatomic, readonly, strong) UIImageView* cursor;
+@property(nonatomic, readonly) UITableView* lyricsTable;
+@property(nonatomic, readonly) UIImageView* cursor;
 - (void)scrollFor:(CGFloat)increment animated:(BOOL)animated;
 - (void)reloadData;
 @end
 
 @protocol CDLyricsViewLyricsSource <NSObject>
 @optional
-- (NSArray*)lyricsViewNeedsLyricsInfo:(CDLyricsView *)lyricsView;
+- (NSString *)lyricsViewNeedsLyricsInfo:(CDLyricsView *)lyricsView;
 @required
 - (NSUInteger)numberOfLyricsRowsInView:(CDLyricsView *)lyricsView;
 - (NSString*)lyricsView:(CDLyricsView *)lyricsView stringForRowAtIndex:(NSUInteger)index;
 @end
+
+NSString * convertedLyricsInfo(NSArray *lyricsInfos);

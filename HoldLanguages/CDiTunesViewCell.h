@@ -18,6 +18,6 @@
 @interface CDiTunesViewCell : UITableViewCell <CDScrollLabelDelegate>
 - (id)initWithReuseIdentifier:(NSString *)identifier;
 - (void)setupWithItem:(CDFileItem *)item;
-@property(strong, readonly, nonatomic)IBOutlet UIImageView *icon;
-@property(strong, readonly, nonatomic)IBOutlet CDScrollLabel *name;
+@property(strong, nonatomic)IBOutlet UIImageView *icon;
+@property(strong, nonatomic)IBOutlet CDScrollLabel *name;
 @end

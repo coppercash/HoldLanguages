@@ -92,7 +92,7 @@
 
 - (IBAction)buttonClicked:(id)sender{
     if (_repeatDelegate == nil || ![_repeatDelegate respondsToSelector:@selector(repeatView:alterRepeatRange:)]) return;
-    CDRepeatAlterType type;
+    CDRepeatAlterType type = 0;
     if (sender == _repeater.leftPlus) {
         type = CDRepeatAlterTypeStartPlus;
     }else if (sender == _repeater.leftMinus) {

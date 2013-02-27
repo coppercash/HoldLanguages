@@ -15,6 +15,9 @@
 #import "CDString.h"
 #import "CDStack.h"
 
+NSString * const gKeyStampType = @"ty";
+NSString * const gKeyStampContent = @"ctt";
+
 @interface CDLRCLyrics ()
 NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index, NSTimeInterval time, CDSeekDestination destintion, NSArray* array);
 @end
@@ -131,7 +134,7 @@ NSUInteger seekIndexOfStampsClosedToTime(NSUInteger index,
     NSMutableArray *info = [[NSMutableArray alloc] initWithCapacity:_otherStamps.count];
     for (CDLRCOtherStamp *stamp in _otherStamps) {
         NSString *type = stamp.type;
-        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(type, type), kKeyStampType, stamp.content, kKeyStampContent, nil];
+        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(type, type), gKeyStampType, stamp.content, gKeyStampContent, nil];
         [info addObject:dic];
     }
     return info;
