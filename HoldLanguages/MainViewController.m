@@ -486,8 +486,9 @@
     return string;
 }
 
-- (NSArray*)lyricsViewNeedsLyricsInfo:(CDLyricsView *)lyricsView{
-    return _lyrics.lyricsInfo;
+- (NSString *)lyricsViewNeedsLyricsInfo:(CDLyricsView *)lyricsView{
+    NSString *cI = convertedLyricsInfo(_lyrics.lyricsInfo); //converted information
+    return cI;
 }
 
 #pragma mark - Lyrics
