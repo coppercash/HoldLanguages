@@ -16,7 +16,7 @@
 {
     [super setUp];
     _finder = [[CDiTunesFinder alloc] init];
-    _rootItem = [[CDFileItem alloc] initWithName:documentsPath()];
+    _rootItem = [[CDFileItem alloc] initWithName:directoryDocuments(nil)];
     _rootItem.visibleExtension = @[@"lrc", @"gif", @"jpg"];
     // Set-up code here.
 }
@@ -30,7 +30,23 @@
 }
 
 - (void)testiTunesFinder{
-    //NSLog(@"%@", [_finder contentsOfCurrentDirectory]);
+    NSString *test0 = directoryDocuments(nil);
+    NSString *test1 = directoryDocuments(@"test1");
+    STAssertTrueNoThrow([test1 isEqualToString:[test0 stringByAppendingPathComponent:@"test1"]],
+                        @"\n%@\n%@", test0, test1);
+    NSLog(@"\n%@\n%@", test0, test1);
+    
+    NSString *test2 = directoryRelativeDownload(nil);
+    NSString *test3 = directoryRelativeDownload(@"test3");
+    STAssertTrueNoThrow([test3 isEqualToString:[test2 stringByAppendingPathComponent:@"test3"]],
+                        @"\n%@\n%@", test2, test3);
+    NSLog(@"\n%@\n%@", test2, test3);
+
+    NSString *test4 = directoryAbsoluteDownload(nil);
+    NSString *test5 = directoryAbsoluteDownload(@"test5");
+    STAssertTrueNoThrow([test5 isEqualToString:[test4 stringByAppendingPathComponent:@"test5"]],
+                        @"\n%@\n%@", test4, test5);
+    NSLog(@"\n%@\n%@", test4, test5);
 }
 
 - (void)testiTunesItem{

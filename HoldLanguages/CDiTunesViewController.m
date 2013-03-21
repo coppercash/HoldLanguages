@@ -7,114 +7,77 @@
 //
 
 #import "CDiTunesViewController.h"
+#import "CDiTunesViewCell.h"
+#import "CDItemCell.h"
 #import "CDiTunesFinder.h"
 #import "CDFileItem.h"
-#import "CDiTunesViewCell.h"
+#import "CDItem.h"
+
+static NSString *gItemsCacheName = @"Downloaded Items";
+static NSString *gDownloadedItemsCell = @"DownloadedItemsCell";
+static NSString *gFileSharingCell = @"FilesSharingCell";
 
 @interface CDiTunesViewController ()
+@property(nonatomic, strong)UITableView *tableView;
+@property(nonatomic, strong)NSFetchedResultsController *items;
+@property(nonatomic, strong)CDFileItem *documents;
+- (void)selectCellInFileSharingSection:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 - (void)openFileWithItem:(CDFileItem *)item;
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @implementation CDiTunesViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    _documents = [[CDFileItem alloc] initWithName:documentsPath()];
-    _documents.visibleExtension = @[@"lrc", @"mp3"];
-    _documents.isOpened = YES;
+#pragma mark - Resource Management
+- (void)loadView{
+    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     
-    CGRect tableViewFrame = self.view.bounds;
+    CGRect tableViewFrame = view.bounds;
     tableViewFrame.origin.y = 20.0;
     tableViewFrame.size.height -= 20.0f;
-    _tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:tableViewFrame];
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
     _tableView.separatorColor = [UIColor darkGrayColor];
-    //DLogRect(_tableView.bounds);
-    [self.view addSubview:_tableView];
+
+    [view addSubview:_tableView];
+    self.view = view;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];
+    request.predicate = [NSPredicate predicateWithFormat:@"status = %d", ItemStatusDownloaded];
+    request.sortDescriptors = @[
+                                [[NSSortDescriptor alloc] initWithKey:@"downloadTry" ascending:NO]
+                                ];
+    
+    self.items = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:kMOContext sectionNameKeyPath:nil cacheName:gItemsCacheName];
+    
+    self.documents = [[CDFileItem alloc] initWithName:directoryDocuments(nil)];
+    _documents.visibleExtension = @[@"lrc", @"mp3"];
+    _documents.isOpened = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    NSError *error = nil;
+    [_items performFetch:&error];
+    AssertError(error);
+    
+    [_tableView reloadData];
+}
+
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Open
-- (void)openFileWithItem:(CDFileItem *)item{
-    [_panViewController switchToController:CDPanViewControllerTypeRoot withUserInfo:item.absolutePath];
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    NSInteger number = _documents.count - 1;
-    return number;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = kCDiTunesViewCell;
-    CDiTunesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) cell = [[CDiTunesViewCell alloc] initWithReuseIdentifier:kCDiTunesViewCell];
-    
-    CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
-    [cell setupWithItem:item];
-    
-    return cell;
-}
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+#pragma mark - Events
+- (void)selectCellInFileSharingSection:(NSIndexPath *)indexPath tableView:(UITableView *)tableView{
     CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
     if (item.isDirectory) {
         BOOL isOpened = item.isOpened;
@@ -142,6 +105,151 @@
     }else{
         [self openFileWithItem:item];
     }
+
+}
+
+- (void)openFileWithItem:(CDFileItem *)item{
+    [_panViewController switchToController:CDPanViewControllerTypeRoot withUserInfo:item.absolutePath];
+}
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{;
+    DLog(@"section\t%@", _items.sections)
+    NSUInteger number = _items.sections.count + 1;  //1 for files in iTunes File Sharing.
+    return number;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSUInteger number = 0;
+    if (section < _items.sections.count) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[_items sections] objectAtIndex:section];
+        number = sectionInfo.numberOfObjects;
+    }else if (section == _items.sections.count){
+        number = _documents.count - 1;
+    }
+
+    return number;
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
+    NSInteger section = indexPath.section;
+    if (section < _items.sections.count) {
+        Item *item = [_items objectAtIndexPath:indexPath];
+        [(CDItemCell *)cell configureWithItem:item];
+    }else if (section == _items.sections.count){
+        CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
+        [(CDiTunesViewCell *)cell configureWithItem:item];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSInteger section = indexPath.section;
+    DLog(@"\nindexPath\t%d\t%d\n_item%@", indexPath.section, indexPath.row, _items.sections);
+    if (section < _items.sections.count) {
+        CDItemCell *cell = [tableView dequeueReusableCellWithIdentifier:gDownloadedItemsCell];
+        if (cell == nil) cell = [[CDItemCell alloc] initWithReuseIdentifier:gDownloadedItemsCell];
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[_items sections] objectAtIndex:section];
+        DLog(@"info:%d", sectionInfo.numberOfObjects);
+        Item *item = [_items objectAtIndexPath:indexPath];
+        [cell configureWithItem:item];
+        
+        return cell;
+    }else if (section == _items.sections.count){
+        CDiTunesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:gFileSharingCell];
+        if (cell == nil) cell = [[CDiTunesViewCell alloc] initWithReuseIdentifier:gFileSharingCell];
+        
+        CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
+        [cell configureWithItem:item];
+        
+        return cell;
+    }
+    
+    return [[UITableViewCell alloc] init];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    switch (section) {
+        case 0:
+            return NSLocalizedString(@"iTunesViewHeaderDownloads", @"Downloads");
+            break;
+        case 1:
+            return NSLocalizedString(@"iTunesViewHeaderFileSharing", @"iTunes File Sharing");
+            break;
+        default:
+            break;
+    }
+    return [NSString stringWithFormat:@"Section %d has no title for header.", section];
+}
+
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    switch (indexPath.section) {
+        case 0:
+            
+            break;
+        case 1:
+            [self selectCellInFileSharingSection:indexPath tableView:tableView];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath]
+                    atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
 }
 
 @end

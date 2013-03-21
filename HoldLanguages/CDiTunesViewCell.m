@@ -11,6 +11,7 @@
 #import "CDScrollLabel.h"
 
 @implementation CDiTunesViewCell
+@synthesize icon = _icon, name = _name;
 static CGPoint gIconCenter;
 static CGRect gNameFrame;
 - (id)initWithReuseIdentifier:(NSString *)identifier{
@@ -30,14 +31,7 @@ static CGRect gNameFrame;
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-- (void)setupWithItem:(CDFileItem *)item{
+- (void)configureWithItem:(CDFileItem *)item{
     NSString *fileName = item.name;
     _name.text = fileName;
     

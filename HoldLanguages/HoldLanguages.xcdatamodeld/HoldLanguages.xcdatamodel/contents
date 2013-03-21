@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="1.0" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Audio" representedClassName="Audio" parentEntity="Cloud" syncable="YES">
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="item" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="audio" inverseEntity="Item" syncable="YES"/>
+    </entity>
+    <entity name="Cloud" isAbstract="YES" syncable="YES"/>
+    <entity name="Content" representedClassName="Content" parentEntity="Cloud" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="item" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="content" inverseEntity="Item" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName="Image" parentEntity="Cloud" syncable="YES">
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="item" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="images" inverseEntity="Item" syncable="YES"/>
+    </entity>
+    <entity name="Item" representedClassName="Item" parentEntity="Cloud" syncable="YES">
+        <attribute name="absolutePath" attributeType="String" syncable="YES"/>
+        <attribute name="downloadTry" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="audio" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Audio" inverseName="item" inverseEntity="Audio" syncable="YES"/>
+        <relationship name="content" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Content" inverseName="item" inverseEntity="Content" syncable="YES"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Image" inverseName="item" inverseEntity="Image" syncable="YES"/>
+        <relationship name="lyrics" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Lyrics" inverseName="item" inverseEntity="Lyrics" syncable="YES"/>
+    </entity>
+    <entity name="Lyrics" representedClassName="Lyrics" parentEntity="Cloud" syncable="YES">
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="item" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="lyrics" inverseEntity="Item" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Audio" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="Cloud" positionX="0" positionY="0" width="128" height="45"/>
+        <element name="Content" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="Image" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="Item" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="Lyrics" positionX="0" positionY="0" width="128" height="90"/>
+    </elements>
+</model>

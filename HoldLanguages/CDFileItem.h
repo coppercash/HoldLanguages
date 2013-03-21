@@ -23,3 +23,5 @@
 - (NSUInteger)count;
 - (CDFileItem *)itemWithIndex:(NSInteger)index;
 @end
+
+extern NSString * const CDFIIsDir;

@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CDPanViewController.h"
 @class CDFileItem;
-@interface CDiTunesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CDSubPanViewController>
-@property(strong, readonly, nonatomic)CDFileItem *documents;
-@property(strong, readonly, nonatomic)UITableView *tableView;
-@property(strong, nonatomic)CDPanViewController *panViewController;
+@interface CDiTunesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, CDSubPanViewController>{
+    UITableView *_tableView;
+    CDFileItem *_documents;
+    NSFetchedResultsController *_items;
+    __weak CDPanViewController *_panViewController;
+}
+@property(nonatomic, weak)CDPanViewController *panViewController;
 @end

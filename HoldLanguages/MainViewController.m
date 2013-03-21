@@ -191,9 +191,15 @@
 - (void)topBarStartPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
     if (_barsHidden) return;
     [super topBarStartPulling:topBar onDirection:direction];
-    if (direction == CDDirectionRight) {
-        //DLogCurrentMethod;
-        _panViewController.leftViewController = [_panViewController createSubController:_panViewController.leftControllerClass];
+    switch (direction) {
+        case CDDirectionRight:
+            _panViewController.leftViewController = [_panViewController createSubController:_panViewController.leftControllerClass];
+            break;
+        case CDDirectionLeft:
+            _panViewController.rightViewController = [_panViewController createSubController:_panViewController.rightControllerClass];
+            break;
+        default:
+            break;
     }
 }
 
@@ -201,24 +207,42 @@
     if (_barsHidden) return 0.0f;
     CGFloat superIncrement = [super topBarContinuePulling:topBar onDirection:direction shouldMove:increment];
     if (superIncrement != 0.0f) return superIncrement;
+    
+    switch (direction) {
+        case CDDirectionRight:
+            [_panViewController panRootControllerWithIncrement:CGPointMake(increment, 0.0f)];
+            break;
+        case CDDirectionLeft:
+            [_panViewController panRootControllerWithIncrement:CGPointMake(increment, 0.0f)];
+            break;
+        default:
+            break;
+    }
+    
+    /*
     if (direction == CDDirectionRight) {
         [_panViewController panRootControllerWithIncrement:CGPointMake(increment, 0.0f)];
-    }
+    }*/
     return 0.0;
 }
 
 - (void)topBarFinishPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
     [super topBarFinishPulling:topBar onDirection:direction];
-    if (direction == CDDirectionRight) {
-        //DLogCurrentMethod;
-        [_panViewController showLeftController:YES];
+    switch (direction) {
+        case CDDirectionRight:
+            [_panViewController showLeftController:YES];
+            break;
+        case CDDirectionLeft:
+            [_panViewController showRightController:YES];
+            break;
+        default:
+            break;
     }
 }
 
 - (void)topBarCancelPulling:(CDPullTopBar*)topBar onDirection:(CDDirection)direction{
     [super topBarCancelPulling:topBar onDirection:direction];
     if (direction == CDDirectionRight) {
-        //DLogCurrentMethod;
         [_panViewController showRootController:YES];
     }
 }
@@ -229,6 +253,10 @@
             _panViewController.leftViewController = [_panViewController createSubController:_panViewController.leftControllerClass];
             [_panViewController showLeftController:YES];
         }break;
+        case 1:{
+            _panViewController.rightViewController = [_panViewController createSubController:_panViewController.rightControllerClass];
+            [_panViewController showRightController:YES];
+        }
         default:
             break;
     }
@@ -278,6 +306,8 @@
     [super presentTopBarAnimated:animated];
     _topBar.leftButton.contentMode = UIViewContentModeCenter;
     [_topBar.leftButton setImage:[UIImage pngImageWithName:@"TopBariTunes"] forState:UIControlStateNormal];
+    _topBar.rightButton.contentMode = UIViewContentModeCenter;
+    [_topBar.rightButton setImage:[UIImage pngImageWithName:@"TopBariTunes"] forState:UIControlStateNormal];
 }
 #pragma mark - MPMediaPickerControllerDelegate
 - (void)mediaPicker:(MPMediaPickerController*)mediaPicker didPickMediaItems:(MPMediaItemCollection*) mediaItemCollection {

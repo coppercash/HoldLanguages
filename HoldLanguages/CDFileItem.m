@@ -46,11 +46,26 @@
     
     NSMutableArray *newSubFiles = [[NSMutableArray alloc] initWithCapacity:subFiles.count];
     for (NSURL *url in subFiles) {
+        BOOL isVisible = NO;
         BOOL isDirectory = NO;
         [fileManeger fileExistsAtPath:url.path isDirectory:&isDirectory];
+        if (isDirectory) {
+            isVisible |= [_visibleExtension containsObject:CDFIIsDir];
+        }else{
+            isVisible |= [_visibleExtension containsObject:url.pathExtension];
+        }
+        
+        /*
         BOOL isVisible = [_visibleExtension containsObject:url.pathExtension];
         
-        if (!isDirectory && !isVisible) continue;
+        if (!isVisible) {
+            BOOL isDirectory = NO;
+            [fileManeger fileExistsAtPath:url.path isDirectory:&isDirectory];
+            if (isDirectory) isVisible |= [_visibleExtension containsObject:CDFIIsDir];
+        }*/
+        
+        
+        if (!isVisible) continue;
         CDFileItem *item = [[CDFileItem alloc] initWithName:url.lastPathComponent];
         item.superItem = self;
         item.degree = _degree + 1;
@@ -93,3 +108,5 @@
 }
 
 @end
+
+NSString * const CDFIIsDir = @"_dir";
