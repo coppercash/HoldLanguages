@@ -21,9 +21,11 @@
     
     __weak NSTimer *_updater;
 }
+//@property(nonatomic, readonly)UILabel *title;
 @property(nonatomic, assign)BOOL isProgressAvailable;
 @property(nonatomic, assign)BOOL isProgressive;
 @property(nonatomic, setter = setProgress:)float progress;
+
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 - (void)configureWithDictionary:(NSDictionary *)dictionary;
 - (void)configureWithItem:(Item *)item;

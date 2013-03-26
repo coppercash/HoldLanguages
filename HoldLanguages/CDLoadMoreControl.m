@@ -17,7 +17,7 @@
 @synthesize activity = _activity;
 @synthesize label = _label, info = _info;
 - (id)init{
-    self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 50.0f)];
+    self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
     if (self) {
         CGFloat size = 20.0f;
         CGRect bounds = self.bounds;

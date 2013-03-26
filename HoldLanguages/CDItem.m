@@ -35,13 +35,6 @@ static NSString * const gKeyLyrics = @"lrc";
     NSAssert(results.count <= 1, @"%d Item with same absolutePath", results.count);
     return nil;
 }
-/*
-+ (Item *)newItemWithDictionary:(NSDictionary *)dictionary path:(NSString *)path{
-    NSManagedObjectContext *context = kMOContext;
-    Item *item = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Item class]) inManagedObjectContext:context];
-    [item configureWithDictionary:dictionary path:path forced:YES];
-    return item;
-}*/
 
 + (Item *)newItemWithDictionary:(NSDictionary *)dictionary{
     NSString *url = [dictionary objectForKey:gKeyURL];
@@ -88,75 +81,6 @@ static NSString * const gKeyLyrics = @"lrc";
 }
 
 #pragma mark - Configure
-- (void)configureWithDictionary:(NSDictionary *)dictionary path:(NSString *)path forced:(BOOL)isForced{
-    NSAssert([dictionary isKindOfClass:[NSDictionary class]], @"Item can only be configured with NSDictionary.");
-    
-    NSManagedObjectContext *context = kMOContext;
-    NSString *(^pathFromLink)(NSString *) = ^(NSString *link){
-        NSString *ex = link.pathExtension;  //extension
-        NSString *name = [nameDateNow() stringByAppendingPathExtension:ex];
-        NSString *path = directoryRelativeDownload(name);
-        NSAssert(path != nil, @"Path can't be nil.");
-        return path;
-    };
-    
-    if (isForced || self.absolutePath == nil) {
-        if (path) self.absolutePath = path;
-    }
-    
-    if (isForced || self.title == nil) {
-        NSString *title = [dictionary objectForKey:gKeyTitle];
-        if (title) self.title = title;
-    }
-    
-    if (isForced || self.audio == nil) {
-        NSString *audioLink = [dictionary objectForKey:gKeyAudio];
-        if (audioLink) {
-            Audio *audio = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Audio class]) inManagedObjectContext:context];
-            self.audio = audio;
-            audio.link = audioLink;
-            audio.path = pathFromLink(audioLink);
-        }
-    }
-    
-    if (isForced || self.lyrics == nil) {
-        NSString *lrcLink = [dictionary objectForKey:gKeyLyrics];
-        if (lrcLink) {
-            Lyrics *lyrics = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Lyrics class]) inManagedObjectContext:context];
-            self.lyrics = lyrics;
-            lyrics.link = lrcLink;
-            lyrics.path = pathFromLink(lrcLink);
-        }
-    }
-    
-    if (isForced || self.content == nil) {
-        NSArray *content = [dictionary objectForKey:gKeyContent];
-        if (content) {
-            NSMutableString *collector = [[NSMutableString alloc] init];
-            for (id text in content) {
-                if ([text isKindOfClass:[NSString class]]) {
-                    if ([text isEqualToString:@"\r\n"]) continue;
-                    [collector appendFormat:@"<%@>%@</%@>\n", gStroyTagBody, text, gStroyTagBody];
-                }else if ([text isKindOfClass:[NSDictionary class]]) {
-                    //Image Item
-                    NSString *link = [text objectForKey:gKeyImgSrc];
-                    if (link == nil) continue;
-                    
-                    NSString *path = pathFromLink(link);
-                    [collector appendFormat:@"<%@>%@</%@>\n", gStroyTagImage, directoryDocuments(path), gStroyTagImage];
-                    
-                    Image *image = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Image class]) inManagedObjectContext:context];
-                    [self addImagesObject:image];
-                    image.link = link;
-                    image.path = path;
-                }
-            }
-            self.content = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Content class]) inManagedObjectContext:context];
-            self.content.content = collector;
-        }
-    }
-}
-
 - (void)configureWithDictionary:(NSDictionary *)dictionary forced:(BOOL)isForced{
     NSAssert([dictionary isKindOfClass:[NSDictionary class]], @"Item can only be configured with NSDictionary.");
     

@@ -45,8 +45,6 @@
         
         self.stageView = view;
         [self.contentView addSubview:view];
-        
-        DLogRect(view.frame);
     }
     return self;
 }
@@ -64,7 +62,6 @@
 - (void)configureWithItem:(Item *)item{
     
     _title.text = item.title;
-    
     
     if (!_isProgressAvailable) return;
     ItemStatus status = item.status.integerValue;

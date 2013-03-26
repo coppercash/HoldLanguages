@@ -39,6 +39,7 @@
 
 #pragma mark - Item
 - (CDItemNetwork *)downloadItem:(Item *)item{
+    [item removeResource];
     item.status = [[NSNumber alloc] initWithInteger:ItemStatusDownloading];
     CDItemNetwork *network = [[CDItemNetwork alloc] initWithItem:item];
     CDNKOperation *audio = [self downloadItemComponent:item.audio network:network];

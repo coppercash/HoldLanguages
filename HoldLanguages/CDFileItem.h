@@ -8,20 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CDFileItem : NSObject
-
-@property(weak, nonatomic)CDFileItem *superItem;
-@property(readonly, strong, nonatomic)NSString *name;
-@property(readonly, strong, nonatomic)NSArray *subItems;
-@property(assign, nonatomic)BOOL isOpened;
-@property(assign, nonatomic)NSUInteger degree;
-@property(strong, nonatomic)NSArray *visibleExtension;
+@interface CDFileItem : NSObject {
+    NSString *_name;
+    __weak CDFileItem *_superItem;
+    NSArray *_subItems;
+    
+    NSArray *_visibleExtension;
+    
+    BOOL _isOpened;
+    NSUInteger _degree;
+}
+@property(nonatomic, readonly)NSString *name;
+@property(nonatomic, readonly)NSArray *subItems;
+@property(nonatomic, strong)NSArray *visibleExtension;
+@property(nonatomic, assign)BOOL isOpened;
+@property(nonatomic, assign)NSUInteger degree;
 
 - (id)initWithName:(NSString *)name;
 - (NSString *)absolutePath;
 - (BOOL)isDirectory;
 - (NSUInteger)count;
 - (CDFileItem *)itemWithIndex:(NSInteger)index;
+- (void)removeFileOfItemAtIndex:(NSInteger)index;
 @end
 
 extern NSString * const CDFIIsDir;

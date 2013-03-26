@@ -16,18 +16,24 @@
 #import "CDAudioPlayer.h"
 #import "CoreDataModels.h"
 
-static NSString *gItemsCacheName = @"Downloaded Items";
-static NSString *gReuseCell = @"DownloadedItemsCell";
-static NSString *gFileSharingCell = @"FilesSharingCell";
+static NSString * const gItemsCacheName = @"Downloaded Items";
+static NSString * const gReuseCell = @"DownloadedItemsCell";
+static NSString * const gFileSharingCell = @"FilesSharingCell";
+static NSString * const gReuseNoFile = @"NF";
+static NSString * const footerXibName = @"CDiTunesFooters";
 
 @interface CDiTunesViewController ()
 @property(nonatomic, strong)NSFetchedResultsController *items;
 @property(nonatomic, strong)CDFileItem *documents;
+@property(nonatomic, strong)UIView *downloadsFooter;
+@property(nonatomic, strong)UIView *fileSharingFooter;
+
 - (void)selectCellInFileSharingSection:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 - (void)openFileWithItem:(CDFileItem *)item;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)deleteInFileSharingSection:(NSIndexPath *)indexPath;
 - (void)deleteInFileDowloadsSection:(NSIndexPath *)indexPath;
+
 @end
 
 @implementation CDiTunesViewController
@@ -41,6 +47,10 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
     UITableView *tableView = self.tableView;
     tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
     tableView.separatorColor = [UIColor darkGrayColor];
+    
+    //Footers
+    self.downloadsFooter = [UIView viewFromXibNamed:footerXibName owner:self atIndex:0];
+    self.fileSharingFooter = [UIView viewFromXibNamed:footerXibName owner:self atIndex:1];
 }
 
 - (void)viewDidLoad{
@@ -58,16 +68,14 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
     self.documents = [[CDFileItem alloc] initWithName:directoryDocuments(nil)];
     _documents.visibleExtension = @[@"lrc", @"mp3"];
     _documents.isOpened = YES;
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
     
     NSError *error = nil;
     [_items performFetch:&error];
     AssertError(error);
-    
-    [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning{
@@ -76,6 +84,8 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
         // Preserve data stored in the views that might be needed later.
         
         // Clean up other strong references to the view in the view hierarchy.
+        self.downloadsFooter = nil;
+        self.fileSharingFooter = nil;
         
         //Release self.view
         self.view = nil;
@@ -135,7 +145,19 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
 }
 
 - (void)deleteInFileSharingSection:(NSIndexPath *)indexPath{
+    NSInteger itemIndex = indexPath.row + 1;
+    [_documents removeFileOfItemAtIndex:itemIndex];
     
+    UITableView *tableView = self.tableView;
+    [tableView beginUpdates];
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:kDefaultCellAnimationType];
+    [tableView endUpdates];
+    
+    //Relaod for footer
+    if (_documents.count <= 1) {
+        NSIndexSet *indexes = [[NSIndexSet alloc] initWithIndex:1];
+        [tableView reloadSections:indexes withRowAnimation:kDefaultCellAnimationType];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -152,8 +174,35 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
     }else if (section == _items.sections.count){
         number = _documents.count - 1;
     }
-
     return number;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSInteger section = indexPath.section;
+    if (section < _items.sections.count) {
+        
+        CDItemTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
+        if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
+        
+        Item *item = [_items objectAtIndexPath:indexPath];
+        [cell configureWithItem:item];
+        
+        return cell;
+    }else if (section == _items.sections.count){
+        
+        CDiTunesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:gFileSharingCell];
+        if (cell == nil) cell = [[CDiTunesViewCell alloc] initWithReuseIdentifier:gFileSharingCell];
+        
+        CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
+        [cell configureWithItem:item];
+        
+        return cell;
+    }
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:gReuseNoFile];
+    cell.textLabel.text = @"No files.";
+    cell.textLabel.textColor = [UIColor darkGrayColor];
+    return cell;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
@@ -165,29 +214,6 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
         CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
         [(CDiTunesViewCell *)cell configureWithItem:item];
     }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger section = indexPath.section;
-    if (section < _items.sections.count) {
-        CDItemTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
-        if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
-        
-        Item *item = [_items objectAtIndexPath:indexPath];
-        [cell configureWithItem:item];
-        
-        return cell;
-    }else if (section == _items.sections.count){
-        CDiTunesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:gFileSharingCell];
-        if (cell == nil) cell = [[CDiTunesViewCell alloc] initWithReuseIdentifier:gFileSharingCell];
-        
-        CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
-        [cell configureWithItem:item];
-        
-        return cell;
-    }
-    
-    return [[UITableViewCell alloc] init];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -205,16 +231,22 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    CDAudioSharer *audio = App.audioSharer;
+    NSString *path = audio.audioPlayer.currentAudioPath;
+
     NSInteger section = indexPath.section;
     if (section < _items.sections.count) {
-        CDAudioSharer *audio = App.audioSharer;
-        NSString *path = audio.audioPlayer.currentAudioPath;
+        
         Item *item = [_items objectAtIndexPath:indexPath];
         if ([path isEqualToString:item.audio.absolutePath]) return NO;
         return YES;
+    
     }else if (section == _items.sections.count){
-        return NO;
-        [self deleteInFileSharingSection:indexPath];
+        
+        CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
+        if ([path isEqualToString:item.absolutePath]) return NO;
+        
+        return YES;
     }
     return NO;
 }
@@ -229,6 +261,7 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
         }
     }
 }
+
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
@@ -238,11 +271,55 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
         Item *item = [_items objectAtIndexPath:indexPath];
         [app openItem:item];
         [_panViewController switchToController:CDPanViewControllerTypeRoot withUserInfo:item.title];
+    
     }else if (section == _items.sections.count){
         App.status->audioSourceType = AudioSourceTypeFileSharing;
         [self selectCellInFileSharingSection:indexPath tableView:tableView];
         [_panViewController switchToController:CDPanViewControllerTypeRoot withUserInfo:nil];
+    
     }
+}
+/*
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSInteger section = indexPath.section;
+    if (section < _items.sections.count) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[_items sections] objectAtIndex:section];
+        if (sectionInfo.numberOfObjects == 0) return nil;
+        
+    }else if (section == _items.sections.count){
+        if (_documents.count <= 1) return nil;
+
+    }
+    return indexPath;
+}*/
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section < _items.sections.count) {
+        
+        return _downloadsFooter;
+        
+    }else if (section == _items.sections.count){
+        
+        return _fileSharingFooter;
+        
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section < _items.sections.count &&
+        [[[_items sections] objectAtIndex:section] numberOfObjects] == 0) {
+        
+        return CGRectGetHeight(_downloadsFooter.frame);
+        
+    }else if (section == _items.sections.count
+              && _documents.count <= 1){
+        
+        return CGRectGetHeight(_fileSharingFooter.frame);
+        
+    }
+    return 0.0f;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -300,6 +377,12 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+    
+    //Relaod for footer
+    if ([[[controller sections] objectAtIndex:0] numberOfObjects] == 0) {
+        NSIndexSet *indexes = [[NSIndexSet alloc] initWithIndex:0];
+        [self.tableView reloadSections:indexes withRowAnimation:kDefaultCellAnimationType];
+    }
 }
 
 @end

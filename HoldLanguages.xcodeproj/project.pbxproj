@@ -14,7 +14,6 @@
 		BE0F6C1E16F2BBD4004933A5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0F6C1D16F2BBD4004933A5 /* SystemConfiguration.framework */; };
 		BE0F6C2016F2BBDC004933A5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0F6C1F16F2BBDC004933A5 /* Security.framework */; };
 		BE0F6C7F16F2BE78004933A5 /* HoldLanguages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BE0F6C7D16F2BE78004933A5 /* HoldLanguages.xcdatamodeld */; };
-		BE1ADD3A16FAD80C00EA51C4 /* CDItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE1ADD3916FAD80C00EA51C4 /* CDItemCell.m */; };
 		BE256FAD1666EBB3001665EF /* Cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAC1666EBB3001665EF /* Cursor.png */; };
 		BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
 		BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
@@ -108,7 +107,6 @@
 		BEA04A6316BBEA2100CE6A42 /* FileMP3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA04A5F16BBEA2100CE6A42 /* FileMP3@2x.png */; };
 		BEA04A6416BBEA2100CE6A42 /* FileMP3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA04A5F16BBEA2100CE6A42 /* FileMP3@2x.png */; };
 		BEA04A6516BBEA2100CE6A42 /* FileMP3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA04A5F16BBEA2100CE6A42 /* FileMP3@2x.png */; };
-		BEA18AE516FAEE7C00FC1A26 /* CDItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEA18AE416FAEE7C00FC1A26 /* CDItemCell.xib */; };
 		BEA18AE816FB177600FC1A26 /* AppDelegateOpen.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA18AE716FB177600FC1A26 /* AppDelegateOpen.m */; };
 		BEA2EE4516632EA4009456AA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4016632EA4009456AA /* Default-568h@2x.png */; };
 		BEA2EE4616632EA4009456AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4116632EA4009456AA /* Default.png */; };
@@ -160,6 +158,7 @@
 		BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */; };
 		BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9F165C88E9002426E4 /* CDColorFinder.m */; };
 		BEB5D32B17018C8A00C6ED84 /* HolderCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB5D32A17018C8A00C6ED84 /* HolderCategory.m */; };
+		BEB5D32E1701B2C600C6ED84 /* CDiTunesFooters.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEB5D3301701B2C600C6ED84 /* CDiTunesFooters.xib */; };
 		BEC0FEFC167EC7610081E67C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */; };
 		BEC0FEFD167EC7610081E67C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
 		BEC0FEFE167EC7610081E67C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D5164E318E007EBEAB /* Foundation.framework */; };
@@ -403,8 +402,6 @@
 		BE0F6C1D16F2BBD4004933A5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BE0F6C1F16F2BBDC004933A5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BE0F6C7E16F2BE78004933A5 /* HoldLanguages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HoldLanguages.xcdatamodel; sourceTree = "<group>"; };
-		BE1ADD3816FAD80C00EA51C4 /* CDItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDItemCell.h; sourceTree = "<group>"; };
-		BE1ADD3916FAD80C00EA51C4 /* CDItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDItemCell.m; sourceTree = "<group>"; };
 		BE256FAC1666EBB3001665EF /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cursor.png; sourceTree = "<group>"; };
 		BE2C11E8164F68C000B4F330 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		BE2C11E9164F68C000B4F330 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -486,7 +483,6 @@
 		BEA04A2B16BBC92800CE6A42 /* noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noise.png; sourceTree = "<group>"; };
 		BEA04A5E16BBEA2100CE6A42 /* FileMP3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FileMP3.png; sourceTree = "<group>"; };
 		BEA04A5F16BBEA2100CE6A42 /* FileMP3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FileMP3@2x.png"; sourceTree = "<group>"; };
-		BEA18AE416FAEE7C00FC1A26 /* CDItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDItemCell.xib; sourceTree = "<group>"; };
 		BEA18AE616FB177600FC1A26 /* AppDelegateOpen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegateOpen.h; sourceTree = "<group>"; };
 		BEA18AE716FB177600FC1A26 /* AppDelegateOpen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegateOpen.m; sourceTree = "<group>"; };
 		BEA18AEB16FB518B00FC1A26 /* AppStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppStatus.h; sourceTree = "<group>"; };
@@ -526,6 +522,8 @@
 		BEB58B9F165C88E9002426E4 /* CDColorFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDColorFinder.m; sourceTree = "<group>"; };
 		BEB5D32917018C8A00C6ED84 /* HolderCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolderCategory.h; sourceTree = "<group>"; };
 		BEB5D32A17018C8A00C6ED84 /* HolderCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolderCategory.m; sourceTree = "<group>"; };
+		BEB5D32F1701B2C600C6ED84 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/CDiTunesFooters.xib; sourceTree = "<group>"; };
+		BEB5D3311701B2D400C6ED84 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/CDiTunesFooters.xib"; sourceTree = "<group>"; };
 		BEC0FEFA167EC7600081E67C /* HoldLanguagesLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoldLanguagesLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BEC0FF01167EC7610081E67C /* HoldLanguagesLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoldLanguagesLogicTests-Info.plist"; sourceTree = "<group>"; };
@@ -1100,9 +1098,6 @@
 				BEF3394116A24DC10032A1B6 /* CDiTunesViewCell.h */,
 				BEF3394216A24DC10032A1B6 /* CDiTunesViewCell.m */,
 				BEF3394616A253370032A1B6 /* CDiTunesViewCell.xib */,
-				BE1ADD3816FAD80C00EA51C4 /* CDItemCell.h */,
-				BE1ADD3916FAD80C00EA51C4 /* CDItemCell.m */,
-				BEA18AE416FAEE7C00FC1A26 /* CDItemCell.xib */,
 				BEA644CD16FF2D9E004B1E44 /* CDItemTableCell.h */,
 				BEA644CE16FF2D9E004B1E44 /* CDItemTableCell.m */,
 			);
@@ -1192,6 +1187,7 @@
 			children = (
 				BEF3393E16A24C0D0032A1B6 /* CDiTunesViewController.h */,
 				BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */,
+				BEB5D3301701B2C600C6ED84 /* CDiTunesFooters.xib */,
 			);
 			name = CDiTunesController;
 			sourceTree = "<group>";
@@ -1577,8 +1573,8 @@
 				BEA04A6316BBEA2100CE6A42 /* FileMP3@2x.png in Resources */,
 				BE9ABBF216F31E23001B0465 /* 51VOA.lah in Resources */,
 				BEFEE33D16F548C80084A287 /* 51VOAItem.lah in Resources */,
-				BEA18AE516FAEE7C00FC1A26 /* CDItemCell.xib in Resources */,
 				BE6196F816FD8E1F0020AA63 /* 51VOAList.lah in Resources */,
+				BEB5D32E1701B2C600C6ED84 /* CDiTunesFooters.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1738,7 +1734,6 @@
 				BEAAF7F516F8911E00A698E6 /* CDItem.m in Sources */,
 				BEAAF7F916F8A30200A698E6 /* CDItemNetwork.m in Sources */,
 				BE94C1F216F95775008864B7 /* CDNetworkGroup.m in Sources */,
-				BE1ADD3A16FAD80C00EA51C4 /* CDItemCell.m in Sources */,
 				BEA18AE816FB177600FC1A26 /* AppDelegateOpen.m in Sources */,
 				BEA53E2916FBF2CA00528564 /* CDStoryView.m in Sources */,
 				BEA53E6116FBF56800528564 /* StoryViewCategory.m in Sources */,
@@ -1811,6 +1806,15 @@
 				BE987BF91650D43300077D30 /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		BEB5D3301701B2C600C6ED84 /* CDiTunesFooters.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BEB5D32F1701B2C600C6ED84 /* en */,
+				BEB5D3311701B2D400C6ED84 /* zh-Hans */,
+			);
+			name = CDiTunesFooters.xib;
 			sourceTree = "<group>";
 		};
 		BEC0FF02167EC7610081E67C /* InfoPlist.strings */ = {

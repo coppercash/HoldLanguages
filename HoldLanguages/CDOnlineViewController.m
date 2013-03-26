@@ -90,6 +90,7 @@ pageCapacity = _pageCapacity;
     self.indexInPage = 0;
     
     [self refresh];
+    [self.refreshControl beginRefreshing];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -272,7 +273,6 @@ pageCapacity = _pageCapacity;
             if ([data isKindOfClass:[NSDictionary class]]) {
                 [self downloadWithRowAtIndexPath:indexPath];
             } else if ([data isKindOfClass:[Item class]] && ((Item *)data).status.integerValue == ItemStatusDownloaded) {
-                
             }
         }break;
         case UISwipeGestureRecognizerDirectionRight:

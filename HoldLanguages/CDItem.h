@@ -20,13 +20,11 @@ typedef void(^CDItemCorrector)(Item *item, NSError *error);
 @interface Item (Enhance)
 #pragma mark - Fetch
 + (Item *)fetchOrCreatItem:(NSDictionary *)dictionary;
-//+ (Item *)newItemWithDictionary:(NSDictionary *)dictionary path:(NSString *)path;
 + (Item *)newItemWithDictionary:(NSDictionary *)dictionary;
 + (NSArray *)itemsOfAbsolutePath:(NSString *)path;
 + (NSArray *)itemsDownloaded;
 + (BOOL)exixtsItemWithSameAbsolutePath:(NSString *)path;
 #pragma mark - Configure
-//- (void)configureWithDictionary:(NSDictionary *)dictionary path:(NSString *)path forced:(BOOL)isForced;
 - (void)configureWithDictionary:(NSDictionary *)dictionary forced:(BOOL)isForced;
 #pragma mark - Delete
 - (void)removeResource;

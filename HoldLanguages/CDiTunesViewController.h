@@ -14,6 +14,10 @@
     
     NSFetchedResultsController *_items;
     CDFileItem *_documents;
+    
+    //Footers
+    UIView *_downloadsFooter;
+    UIView *_fileSharingFooter;
 }
 @property(nonatomic, weak)CDPanViewController *panViewController;
 @end
