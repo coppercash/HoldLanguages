@@ -12,19 +12,19 @@
 #import "CDItem.h"
 
 @interface CDItemTableCell ()
-@property(nonatomic, strong)CDScrollLabel *title;
+@property(nonatomic, strong)UILabel *title;
 @property(nonatomic, strong)UIView *stageView;
 @property(nonatomic, strong)UILabel *label;
 - (void)updateProgress:(NSTimer *)timer;
-- (void)refreshWhenReusing;
 @end
 
 @implementation CDItemTableCell
 @synthesize title = _title, stageView = _stageView, label = _label;
+@synthesize isProgressAvailable = _isProgressAvailable;
+@dynamic isProgressive;
 
 #pragma mark - Class Basic
-- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         self.clipsToBounds = YES;
@@ -33,17 +33,20 @@
         UIView *view = [[UIView alloc] initWithFrame:self.bounds];
         view.autoresizingMask = CDViewAutoresizingNoMaigin;
         
-        CDScrollLabel *title = [[CDScrollLabel alloc] initWithFrame:CGRectInset(view.bounds, 10.0f, 0.0f)];
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectInset(view.bounds, 10.0f, 0.0f)];
+        title.backgroundColor = [UIColor clearColor];
         title.textColor = [UIColor whiteColor];
         title.font = [UIFont boldSystemFontOfSize:17];
         title.textAlignment = UITextAlignmentLeft;
-        title.delegate = self;
         title.autoresizingMask = CDViewAutoresizingNoMaigin;
+        
         self.title = title;
         [view addSubview:title];
         
         self.stageView = view;
         [self.contentView addSubview:view];
+        
+        DLogRect(view.frame);
     }
     return self;
 }
@@ -62,6 +65,8 @@
     
     _title.text = item.title;
     
+    
+    if (!_isProgressAvailable) return;
     ItemStatus status = item.status.integerValue;
     switch (status) {
         case ItemStatusInit:{
@@ -80,13 +85,6 @@
         }break;
         default:
             break;
-    }
-}
-
-- (void)refreshWhenReusing{
-    if (_updater != nil) {
-        [_updater invalidate];
-        _updater = nil;
     }
 }
 
@@ -115,7 +113,7 @@
     self.progress = item.progress.floatValue;
 }
 
-#pragma mark - Display
+#pragma mark - Progressive
 - (void)setIsProgressive:(BOOL)isProgressive{
     [self setIsProgressive:isProgressive animated:NO];
 }
@@ -177,14 +175,5 @@
     }
 }
 
-#pragma mark - CDScrollLabelDelegate
-#define kAnimationInterval 5.0f
-- (NSTimeInterval)scrollLabelShouldStartAnimating:(CDScrollLabel *)scrollLabel{
-    return kAnimationInterval;
-}
-
-- (NSTimeInterval)scrollLabelShouldContinueAnimating:(CDScrollLabel *)scrollLabel{
-    return kAnimationInterval;
-}
 
 @end

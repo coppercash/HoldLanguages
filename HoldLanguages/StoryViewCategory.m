@@ -10,9 +10,6 @@
 #import "CDStoryView.h"
 #import "CDBackgroundView.h"
 
-@interface MainViewController ()
-@end
-
 @implementation MainViewController (StoryViewCategory)
 - (CDStoryView *)createStoryViewWihtFrame:(CGRect)frame{
     self.storyView = [[CDStoryView alloc] initWithFrame:frame];

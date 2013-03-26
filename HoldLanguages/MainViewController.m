@@ -19,16 +19,10 @@
 #import "CDStoryView.h"
 #import "CDItemTableCell.h"
 
-@interface MainViewController ()
-- (BOOL)openLyricsAtPath:(NSString *)path;
-- (void)switchBarsHidden;
-- (void)createLyricsView;
-- (void)destroyLyricsView;
-- (void)switchAssistHidden;
 
-@end
 @implementation MainViewController
 @synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView, storyView = _storyView;
+@synthesize repeatView = _repeatView, ratesView = _ratesView;
 @synthesize audioSharer = _audioSharer, lyrics = _lyrics;
 @synthesize mediaPicker = _mediaPicker;
 @synthesize progress = _progress;
@@ -54,9 +48,11 @@
 }
 
 - (void)loadView{
+    [super loadView];
+    
     self.wantsFullScreenLayout = YES;
     
-    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    UIView *view = self.view;
     
     self.backgroundView = [[CDBackgroundView alloc] initWithFrame:view.bounds];
     _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
@@ -79,17 +75,33 @@
     [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
     [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];
 
-    CDItemTableCell *cell = [[CDItemTableCell alloc] initWithFrame:CGRectMake(10.0f, 200.0f, 320.0f, 70.0f)];
-    cell = [cell initWithReuseIdentifier:@"123"];
-    [self.view addSubview:cell];
-    
     [self endOfViewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning{
+    // Test self.view can be release (on the screen or not).
+    if (self.view.window == nil){
+        // Preserve data stored in the views that might be needed later.
+        
+        // Clean up other strong references to the view in the view hierarchy.
+        self.backgroundView = nil;
+        self.storyView = nil;
+        self.holder = nil;
+        self.lyricsView = nil;
+        
+        self.repeatView = nil;
+        self.ratesView = nil;
+        
+        //Release self.view
+        self.view = nil;
+    }
+    
+    // iOS6 & later did nothing.
+    // iOS5 & earlier test self.view == nil, if not viewWillUnload -> release self.view -> viewDidUnload.
+    // In this implementation self.view is always nil, so iOS5 & earlier should do nothing.
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -414,108 +426,6 @@
     return _audioSharer.audioPlayer.currentDuration;
 }
 
-#pragma mark - CDHolderDelegate
-- (void)holder:(CDHolder *)holder beginSwipingOnDirection:(CDDirection)direction index:(NSUInteger)index{
-    if (direction & CDDirectionHorizontal) {
-        switch (index) {
-            case 0:{
-                [self prepareToChangeRate];
-            }break;
-            case 1:{
-                [self prepareToRepeat:direction];
-            }break;
-            default:
-                break;
-        }
-    }
-}
-
-- (void)holder:(CDHolder *)holder continueSwipingOnDirection:(CDDirection)direction forIncrement:(CGFloat)increment fromStart:(CGFloat)distance index:(NSUInteger)index{
-    if (direction & CDDirectionHorizontal) {
-        switch (index) {
-            case 0:{
-                [_ratesView scrollFor:-increment animated:NO];
-            }break;
-            case 1:{
-                [self countRepeatTimeWithDistance:distance];
-            }
-            default:
-                break;
-        }
-    }else if (direction & CDDirectionVertical){
-        [self.lyricsView scrollFor:-increment animated:NO];
-
-        [_backgroundView moveWithValue:increment];
-    }
-}
-
-- (void)holder:(CDHolder *)holder endSwipingOnDirection:(CDDirection)direction fromStart:(CGFloat)distance index:(NSUInteger)index{
-    if (direction & CDDirectionHorizontal) {
-        switch (index) {
-            case 0:{
-                [_ratesView endScrolling];
-            }break;
-            case 1:{
-                [self repeatWithDirection:direction distance:distance];
-            }break;
-            default:
-                break;
-        }
-    }else if (direction & CDDirectionVertical){
-        if (_lyrics) {
-            NSUInteger focusIndex = _lyricsView.focusIndex;
-            NSTimeInterval playbackTime = [_lyrics timeAtIndex:focusIndex];
-            [self.audioSharer playbackAt:playbackTime];
-            [_lyricsView setFocusIndex:focusIndex]; //For making focus accrute.
-        }else{
-            float rate = _audioSharer.playbackRate;
-            NSTimeInterval playbackTime = - rate * distance;
-            [self.audioSharer playbackFor:playbackTime];
-        }
-        [_progress synchronize:nil];
-        
-        [_backgroundView move:CDAnimationStateReset];
-    }
-}
-
-- (void)holder:(CDHolder *)holder cancelSwipingOnDirection:(CDDirection)direction index:(NSUInteger)index{
-    if (direction & CDDirectionHorizontal) {
-        switch (index) {
-            case 0:{
-                [_ratesView cancelScrolling];
-             }break;
-            case 1:{
-                [_repeatView cancel];
-                DLog(@"Release Repeat View");
-            }break;
-            default:
-                break;
-        }
-    }else if (direction & CDDirectionVertical){
-        [_backgroundView move:CDAnimationStateReset];
-    }
-}
-
-- (void)holder:(CDHolder *)holder handleTap:(NSUInteger)count{
-    switch (count) {
-        case 1:{
-            [self setBarsHidden:YES animated:YES];
-        }break;
-        case 2:{
-            [self.audioSharer playOrPause];
-        }break;
-        default:
-            break;
-    }
-}
-
-- (void)holderTapDouble:(CDHolder *)holder{
-    [self.audioSharer playOrPause];
-}
-
-- (void)holderLongPressed:(CDHolder *)holder{
-    [self switchBarsHidden];
-}
 
 #pragma mark - CDLyricsViewLyricsSource
 - (NSUInteger)numberOfLyricsRowsInView:(CDLyricsView *)lyricsView{

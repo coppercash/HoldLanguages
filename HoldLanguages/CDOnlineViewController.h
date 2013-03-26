@@ -11,11 +11,14 @@
 
 @class CD51VOA, CDLoadMoreControl;
 @interface CDOnlineViewController : UITableViewController <CDSubPanViewController> {
+    //Subviews
     CDLoadMoreControl *_loader;
     
+    //Models
     NSMutableArray *_itemList;
     CD51VOA *_VOA51;
-        
+    NSMutableDictionary *_trash;
+    
     //Joiner
     NSUInteger _pageCapacity;
     NSInteger _indexOfPage;

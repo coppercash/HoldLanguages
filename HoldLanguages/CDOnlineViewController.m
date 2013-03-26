@@ -19,8 +19,11 @@ static NSString *gReuseCell = @"RC";
 
 @interface CDOnlineViewController ()
 @property(nonatomic, strong)CDLoadMoreControl *loader;
+
 @property(nonatomic, strong)NSMutableArray *itemList;
 @property(nonatomic, strong)CD51VOA *VOA51;
+@property(nonatomic, strong)NSMutableDictionary *trash;
+
 @property(nonatomic, assign)NSInteger indexOfPage;
 @property(nonatomic, strong)NSString *currentPage;
 @property(nonatomic, assign)NSInteger indexInPage;
@@ -35,13 +38,17 @@ static NSString *gReuseCell = @"RC";
 - (void)addItems:(NSArray *)newItems;
 - (void)downloadWithRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)cancelDownloadWithRowAtIndexPath:(NSIndexPath *)indexPath;
-- (void)cleanUncompletedItems;
 @end
 
 @implementation CDOnlineViewController
 @synthesize loader = _loader;
-@synthesize VOA51 = _VOA51, itemList = _itemList;
-@synthesize indexOfPage = _indexOfPage, currentPage = _currentPage, indexInPage = _indexInPage, pageCapacity = _pageCapacity;
+@synthesize VOA51 = _VOA51, itemList = _itemList, trash = _trash;
+@synthesize
+indexOfPage = _indexOfPage,
+currentPage = _currentPage,
+indexInPage = _indexInPage,
+pageCapacity = _pageCapacity;
+
 #pragma mark - Class Basic
 
 #pragma mark - Resource Management
@@ -75,26 +82,40 @@ static NSString *gReuseCell = @"RC";
 	// Do any additional setup after loading the view.
     self.VOA51 = [[CD51VOA alloc] init];
     self.itemList = [[NSMutableArray alloc] initWithCapacity:kRefreshCapacity];
+    self.trash = [[NSMutableDictionary alloc] initWithCapacity:kRefreshCapacity];
     
     self.pageCapacity = 10;
     self.indexOfPage = 0;
     self.currentPage = g51PathStandard;
     self.indexInPage = 0;
+    
+    [self refresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self refresh];
-    //[self.refreshControl beginRefreshing];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
-    [self cleanUncompletedItems];
+    [super viewDidDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning{
+    // Test self.view can be release (on the screen or not).
+    if (self.view.window == nil){
+        // Preserve data stored in the views that might be needed later.
+        
+        // Clean up other strong references to the view in the view hierarchy.
+        self.loader = nil;
+        
+        //Release self.view
+        self.view = nil;
+    }
+    
+    // iOS6 & later did nothing.
+    // iOS5 & earlier test self.view == nil, if not viewWillUnload -> release self.view -> viewDidUnload.
+    // In this implementation self.view is always nil, so iOS5 & earlier should do nothing.
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Events
@@ -163,6 +184,7 @@ static NSString *gReuseCell = @"RC";
         NSString *urlString = [dic objectForKey:@"url"];
         NSArray *results = [Item itemsOfAbsolutePath:urlString];
         if (results.count >= 1) {
+            [_trash setObject:dic forKey:[NSIndexPath indexPathForRow:_itemList.count + index inSection:0]];    //relaim
             Item *item = [results objectAtIndex:0];
             [adding replaceObjectAtIndex:index withObject:item];
         }
@@ -191,7 +213,12 @@ static NSString *gReuseCell = @"RC";
         NSAssert(item != nil, @"Can't new Item.");
         if (item == nil) return;
         
+        //reclaim
+        NSDictionary *dic = [itemList objectAtIndex:index];
+       [_trash setObject:dic forKey:indexPath];
+        
         [itemList replaceObjectAtIndex:index withObject:item];
+ 
         [network downloadItem:item];    //item network;
         
         CDItemTableCell *cell = (CDItemTableCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -202,22 +229,26 @@ static NSString *gReuseCell = @"RC";
 }
 
 - (void)cancelDownloadWithRowAtIndexPath:(NSIndexPath *)indexPath{
+    //Get item to be cancel
     Item *item = [_itemList objectAtIndex:indexPath.row];
+    
+    //Cancel downloading
     CDNetwork *network = kSingletonNetwork;
     [network cancelDownloadWithItem:item];
     
+    //Remove resources
+    [item removeResource];
+    [kMOContext deleteObject:item];
+    
+    //Replace models
+    NSDictionary *dic = [_trash objectForKey:indexPath];
+    [_itemList replaceObjectAtIndex:indexPath.row withObject:dic];
+    [_trash removeObjectForKey:indexPath];
+
+    //Update View
     CDItemTableCell *cell = (CDItemTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [cell setIsProgressive:NO animated:YES];
     [cell invalidateUpdater];
-}
-
-- (void)cleanUncompletedItems{
-    NSManagedObjectContext *context = kMOContext;
-    for (Item *i in _itemList) {
-        if (![i isKindOfClass:[Item class]] || i.status.integerValue != ItemStatusInit) continue;
-        [i removeResource];
-        [context deleteObject:i];
-    }
 }
 
 #pragma mark - Swipe
@@ -269,6 +300,8 @@ static NSString *gReuseCell = @"RC";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CDItemTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
     if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
+    
+    cell.isProgressAvailable = YES;
     
     NSUInteger index = indexPath.row;
     id data = [_itemList objectAtIndex:index];

@@ -7,13 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-//#define kReuseIdentifierOfStyleLyrics @"ReuseLyrics"
-//#define kReuseIdentifierOfStyleHeader @"ReuseHeader"
-//#define kReuseIdentifierOfStyleFooter @"ReuseFooter"
-#define kHorizontalMarginRate 0.03
-#define kVerticalMarginRate 0.2
-#define kContentFontSize 17.0f
-#define kCellOfStyleLyricsHeihgt 30.0f
+
 typedef enum{
     CDLyricsViewCellStyleLyrics,
     CDLyricsViewCellStyleHeader,
@@ -26,5 +20,11 @@ typedef enum{
 
 - (id)initWithLyricsStyle:(CDLyricsViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 - (CGFloat)recommendHeight;
-//- (void)setLyricsInfo:(NSArray*)info;
+
 @end
+
+#define kHorizontalMarginRate 0.03
+#define kVerticalMarginRate 0.2
+#define kContentFontSize 17.0f
+#define kCellOfStyleLyricsHeihgt 30.0f
+

@@ -159,6 +159,7 @@
 		BEB58B9A165C6505002426E4 /* Cursor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB58B99165C6505002426E4 /* Cursor@2x.png */; };
 		BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */; };
 		BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9F165C88E9002426E4 /* CDColorFinder.m */; };
+		BEB5D32B17018C8A00C6ED84 /* HolderCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB5D32A17018C8A00C6ED84 /* HolderCategory.m */; };
 		BEC0FEFC167EC7610081E67C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */; };
 		BEC0FEFD167EC7610081E67C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D3164E318E007EBEAB /* UIKit.framework */; };
 		BEC0FEFE167EC7610081E67C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D5164E318E007EBEAB /* Foundation.framework */; };
@@ -523,6 +524,8 @@
 		BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBackgroundView.m; sourceTree = "<group>"; };
 		BEB58B9E165C88E9002426E4 /* CDColorFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDColorFinder.h; sourceTree = "<group>"; };
 		BEB58B9F165C88E9002426E4 /* CDColorFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDColorFinder.m; sourceTree = "<group>"; };
+		BEB5D32917018C8A00C6ED84 /* HolderCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolderCategory.h; sourceTree = "<group>"; };
+		BEB5D32A17018C8A00C6ED84 /* HolderCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolderCategory.m; sourceTree = "<group>"; };
 		BEC0FEFA167EC7600081E67C /* HoldLanguagesLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoldLanguagesLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BEC0FF01167EC7610081E67C /* HoldLanguagesLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoldLanguagesLogicTests-Info.plist"; sourceTree = "<group>"; };
@@ -1085,6 +1088,8 @@
 				BE2C11E9164F68C000B4F330 /* MainViewController.m */,
 				BEA53E5F16FBF56800528564 /* StoryViewCategory.h */,
 				BEA53E6016FBF56800528564 /* StoryViewCategory.m */,
+				BEB5D32917018C8A00C6ED84 /* HolderCategory.h */,
+				BEB5D32A17018C8A00C6ED84 /* HolderCategory.m */,
 			);
 			name = MainViewController;
 			sourceTree = "<group>";
@@ -1740,6 +1745,7 @@
 				BEA5F22416FE840800BC699C /* CDLoadMoreControl.m in Sources */,
 				BEA644CF16FF2D9E004B1E44 /* CDItemTableCell.m in Sources */,
 				BEADC16B16FFE7C600347D77 /* Item.m in Sources */,
+				BEB5D32B17018C8A00C6ED84 /* HolderCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

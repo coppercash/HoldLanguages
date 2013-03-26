@@ -8,7 +8,7 @@
 
 #import "CDiTunesViewController.h"
 #import "CDiTunesViewCell.h"
-#import "CDItemCell.h"
+#import "CDItemTableCell.h"
 #import "CDiTunesFinder.h"
 #import "CDFileItem.h"
 #import "CDItem.h"
@@ -31,32 +31,16 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
 @end
 
 @implementation CDiTunesViewController
-@synthesize items = _items;
+@synthesize items = _items, documents = _documents;
 
 #pragma mark - Resource Management
 - (void)loadView{
     self.wantsFullScreenLayout = NO;
     [super loadView];
     
-    //UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-    
     UITableView *tableView = self.tableView;
     tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
     tableView.separatorColor = [UIColor darkGrayColor];
-
-    /*
-    CGRect tableViewFrame = view.bounds;
-    tableViewFrame.origin.y = 20.0;
-    tableViewFrame.size.height -= 20.0f;
-    self.tableView = [[UITableView alloc] initWithFrame:tableViewFrame];
-    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
-    _tableView.separatorColor = [UIColor darkGrayColor];
-*/
-    //[view addSubview:_tableView];
-    //self.view = view;
 }
 
 - (void)viewDidLoad{
@@ -87,8 +71,20 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
 }
 
 - (void)didReceiveMemoryWarning{
+    // Test self.view can be release (on the screen or not).
+    if (self.view.window == nil){
+        // Preserve data stored in the views that might be needed later.
+        
+        // Clean up other strong references to the view in the view hierarchy.
+        
+        //Release self.view
+        self.view = nil;
+    }
+    
+    // iOS6 & later did nothing.
+    // iOS5 & earlier test self.view == nil, if not viewWillUnload -> release self.view -> viewDidUnload.
+    // In this implementation self.view is always nil, so iOS5 & earlier should do nothing.
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Events
@@ -164,7 +160,7 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
     NSInteger section = indexPath.section;
     if (section < _items.sections.count) {
         Item *item = [_items objectAtIndexPath:indexPath];
-        [(CDItemCell *)cell configureWithItem:item];
+        [(CDItemTableCell *)cell configureWithItem:item];
     }else if (section == _items.sections.count){
         CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
         [(CDiTunesViewCell *)cell configureWithItem:item];
@@ -174,8 +170,9 @@ static NSString *gFileSharingCell = @"FilesSharingCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     if (section < _items.sections.count) {
-        CDItemCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
-        if (cell == nil) cell = [[CDItemCell alloc] initWithReuseIdentifier:gReuseCell];
+        CDItemTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
+        if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
+        
         Item *item = [_items objectAtIndexPath:indexPath];
         [cell configureWithItem:item];
         

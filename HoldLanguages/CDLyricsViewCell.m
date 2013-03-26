@@ -24,7 +24,7 @@
 
 - (void)initialize{
     UILabel * (^initContent)(void) = ^{
-        CGFloat hM = CGRectGetWidth(self.contentView.bounds) * kHorizontalMarginRate;
+        CGFloat hM = CGRectGetWidth(self.contentView.bounds) * kHorizontalMarginRate;   //horizontal Margin
         CGRect cF = CGRectInset(self.contentView.bounds, hM, 0.0f);
         UILabel *content = [[UILabel alloc] initWithFrame:cF];
         content.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
