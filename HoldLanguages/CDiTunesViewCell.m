@@ -62,7 +62,7 @@ static CGRect gNameFrame;
 }
 
 #pragma mark - CDScrollLabelDelegate
-#define kAnimationInterval 3.0f
+#define kAnimationInterval 5.0f
 - (NSTimeInterval)scrollLabelShouldStartAnimating:(CDScrollLabel *)scrollLabel{
     return kAnimationInterval;
 }

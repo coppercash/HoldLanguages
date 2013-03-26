@@ -19,8 +19,11 @@ typedef void (^CDError) (CDNKOperation *operation, NSError* error);
 @interface CDNetwork : MKNetworkEngine{
     NSMutableArray *_downloadingItems;
 }
+#pragma mark - Item
 - (CDItemNetwork *)downloadItem:(Item *)item;
 - (CDNKOperation *)downloadItemComponent:(id<CDNetworkTrans>)transfer network:(CDItemNetwork *)network;
+- (void)cancelDownloadWithItem:(Item *)item;
+#pragma mark - Download
 - (CDNKOperation *)download:(NSString *)link to:(NSString *)path;
 - (CDNKOperation *)download:(NSString *)link to:(NSString *)path completion:(CDDownload)completion corrector:(CDError)corrector;
 @end
@@ -28,10 +31,12 @@ typedef void (^CDError) (CDNKOperation *operation, NSError* error);
 @protocol CDNetworkTrans <NSObject>
 - (NSString *)link;
 - (NSString *)path;
+- (NSString *)absolutePath;
 - (NSString *)hostName;
 @end
 
 @protocol CDNetworkItem <NSObject>
+- (void)cancel;
 @end
 
 

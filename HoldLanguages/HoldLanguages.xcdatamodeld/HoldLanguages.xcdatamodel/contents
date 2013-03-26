@@ -18,6 +18,7 @@
     <entity name="Item" representedClassName="Item" parentEntity="Cloud" syncable="YES">
         <attribute name="absolutePath" attributeType="String" syncable="YES"/>
         <attribute name="downloadTry" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="progress" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="audio" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Audio" inverseName="item" inverseEntity="Audio" syncable="YES"/>
@@ -35,7 +36,7 @@
         <element name="Cloud" positionX="0" positionY="0" width="128" height="45"/>
         <element name="Content" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Image" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="Item" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="Item" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Lyrics" positionX="0" positionY="0" width="128" height="90"/>
     </elements>
 </model>

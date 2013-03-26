@@ -6,8 +6,10 @@ dic'root':
     fet'audio'("href", key="audio")
     fet'lrc'("href", key="lrc")
     fet'title'(_text, key="title")
-
+    fet'url'(_url, key="url")
+    
 ope'ope'('root'):
+    'url'
     rec("div", "id"="rightContainer"):
         rec("div", "id"="title"):
             'title'
@@ -23,6 +25,10 @@ ope'ope'('root'):
                 rec(isText="YES"):
                     'text'
             rec("span", "datetime"):
+                rec(isText="YES"):
+                    'text'
+            
+            rec("a", "href"="_all"):
                 rec(isText="YES"):
                     'text'
             

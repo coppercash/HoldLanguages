@@ -7,16 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kMOContext [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]
-#define kSingletonContext [(AppDelegate *)[[UIApplication sharedApplication] delegate] network]
+#import "AppStatus.h"
+
 @class CDPanViewController, CDAudioSharer, CDAudioProgress, CDNetwork;
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    CDPanViewController *_panViewController;
+    CDAudioSharer *_audioSharer;
+    CDAudioProgress *_progress;
+    CDNetwork *_network;
+    
+    AppStatus *_status;
+}
 
 @property(strong, nonatomic) UIWindow *window;
 @property(strong, nonatomic) CDPanViewController *panViewController;
 @property(strong, nonatomic) CDAudioSharer *audioSharer;
 @property(strong, nonatomic) CDAudioProgress *progress;
 @property(strong, nonatomic) CDNetwork *network;
+@property(nonatomic)AppStatus *status;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

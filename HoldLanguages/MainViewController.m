@@ -11,12 +11,13 @@
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"
 #import "CDBackgroundView.h"
-//#import "CDProgress.h"
 #import "CDLazyScrollView.h"
 #import "CDBigLabelView.h"
 #import "CDRepeaterView.h"
 #import "CDMasterButton.h"
 #import "CDImageMetroCell.h"
+#import "CDStoryView.h"
+#import "CDItemTableCell.h"
 
 @interface MainViewController ()
 - (BOOL)openLyricsAtPath:(NSString *)path;
@@ -27,7 +28,7 @@
 
 @end
 @implementation MainViewController
-@synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView;
+@synthesize holder = _holder, lyricsView = _lyricsView, backgroundView = _backgroundView, storyView = _storyView;
 @synthesize audioSharer = _audioSharer, lyrics = _lyrics;
 @synthesize mediaPicker = _mediaPicker;
 @synthesize progress = _progress;
@@ -52,31 +53,42 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)loadView{
+    self.wantsFullScreenLayout = YES;
+    
+    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    
+    self.backgroundView = [[CDBackgroundView alloc] initWithFrame:view.bounds];
+    _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    
+    self.holder = [[CDHolder alloc] initWithFrame:view.bounds];
+    _holder.numberOfRows = 2;
+    _holder.delegate = self;
+    _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    
+    [view addSubview:_backgroundView];
+    [view addSubview:_holder];
+    self.view = view;
 }
 
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.wantsFullScreenLayout = YES;
     _bottomBar.backgroundColor = [UIColor color255WithRed:0.0f green:115.0f blue:180.0f alpha:1.0f];
     
     [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
     [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];
 
-    _backgroundView = [[CDBackgroundView alloc] initWithFrame:self.view.bounds];
-    _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    CDItemTableCell *cell = [[CDItemTableCell alloc] initWithFrame:CGRectMake(10.0f, 200.0f, 320.0f, 70.0f)];
+    cell = [cell initWithReuseIdentifier:@"123"];
+    [self.view addSubview:cell];
     
-    self.holder = [[CDHolder alloc] initWithFrame:self.view.bounds];
-    _holder.numberOfRows = 2;
-    _holder.delegate = self;
-    _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
-    
-    [self.view addSubview:_backgroundView];
-    [self.view addSubview:self.holder];
     [self endOfViewDidLoad];
+}
+
+- (void)didReceiveMemoryWarning{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -322,13 +334,13 @@
 
 #pragma mark - CDSubPanViewController
 - (void)willPresentWithUserInfo:(id)userInfo{
-    NSString *path = (NSString *)userInfo;
-    if ([path.pathExtension isEqualToString:@"lrc"]) {
-        BOOL success = [self openLyricsAtPath:path];
-        if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
-    }else if ([path.pathExtension isEqualToString:@"mp3"]){
-        [_audioSharer openiTunesSharedFile:path];
-        [self.audioSharer play];
+    AudioSourceType type = App.status->audioSourceType;
+    switch (type) {
+        case AudioSourceTypeDownloads:{
+            [self.topBar setTitleText:userInfo];
+        }break;
+        default:
+            break;
     }
 }
 
@@ -432,7 +444,7 @@
         }
     }else if (direction & CDDirectionVertical){
         [self.lyricsView scrollFor:-increment animated:NO];
-        
+
         [_backgroundView moveWithValue:increment];
     }
 }
@@ -523,11 +535,16 @@
 
 #pragma mark - Lyrics
 - (BOOL)openLyricsAtPath:(NSString *)path{
+    //Data prepare
     CDLRCLyrics* newLyrics = [[CDLRCLyrics alloc] initWithFile:path];
     if (!newLyrics.isReady) return NO;
     self.lyrics = newLyrics;
+    
+    //Lyrics View available check, and reload data
     if (_lyricsView == nil) [self createLyricsView];
     else [_lyricsView reloadData];
+    
+    [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
     return YES;
 }
 
@@ -552,14 +569,15 @@
 }
 
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer{
-    NSString *audioTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
-    NSString* lyricsPath = [CDiTunesFinder findFileWithName:audioTitle ofType:kLRCExtension];
-    if (lyricsPath == nil) {
-        self.lyrics = nil;
-        [self destroyLyricsView];
-    }else{
-        BOOL success = [self openLyricsAtPath:lyricsPath];
-        if (success) [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
+    if (App.status->audioSourceType == AudioSourceTypeFileSharing) {
+        NSString *audioTitle = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+        NSString* lyricsPath = [CDiTunesFinder findFileWithName:audioTitle ofType:kLRCExtension];
+        if (lyricsPath == nil) {
+            self.lyrics = nil;
+            [self destroyLyricsView];
+        }else{
+            [self openLyricsAtPath:lyricsPath];
+        }
     }
     if (_audioSharer.audioPlayer.isRepeating) [_audioSharer stopRepeating];
     [self.topBar reloadData];

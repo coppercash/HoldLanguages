@@ -7,25 +7,46 @@
 //
 
 #import "AppDelegateOpen.h"
+#import "CDItem.h"
+#import "CoreDataModels.h"
+#import "CDAudioSharer.h"
+#import "CDPanViewController.h"
+#import "MainViewController.h"
+#import "StoryViewCategory.h"
 
-@implementation AppDelegateOpen
+@implementation AppDelegate (AppDelegateOpen)
+- (BOOL)openItem:(Item *)item{
+    if (item.status.integerValue != ItemStatusDownloaded) return NO;
+    BOOL success = NO;
+    //[self openText:item.contentWithTitle];
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    
+    if (![self openLyricsAt:item.lyrics.absolutePath]) {
+        [self openText:item.contentWithTitle];
     }
-    return self;
+    success = [self openAudioAt:item.audio.absolutePath];
+    return success;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (BOOL)openAudioAt:(NSString *)path{
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    BOOL exist = [manager fileExistsAtPath:path];
+    if (!exist) return NO;
+    
+    [_audioSharer openiTunesSharedFile:path];
+    [self.audioSharer play];
+    
+    return exist;
 }
-*/
+
+- (BOOL)openLyricsAt:(NSString *)path{
+    MainViewController *con = (MainViewController *)_panViewController.rootViewController;
+    return [con openLyricsAtPath:path];
+}
+
+- (BOOL)openText:(NSString *)text{
+    MainViewController *con = (MainViewController *)_panViewController.rootViewController;
+    return [con openText:text];
+}
 
 @end

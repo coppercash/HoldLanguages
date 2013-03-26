@@ -7,6 +7,7 @@
 //
 
 #import "CDItemNetwork.h"
+#import "CDItem.h"
 
 @implementation CDItemNetwork
 @synthesize keyOperation = _keyOperation;
@@ -14,6 +15,9 @@
     self = [super init];
     if (self) {
         self.item = item;
+        [self addProgress:^(CDNetworkGroup *group, double progress) {
+            item.progress = [[NSNumber alloc] initWithFloat:progress];
+        } forKey:item];
     }
     return self;
 }
@@ -25,5 +29,11 @@
     }
     [super removeOperation:operation error:nil];
 }
+
+- (void)cancel{
+    _item.status = [[NSNumber alloc] initWithInteger:ItemStatusInit];
+    [super cancel];
+}
+
 
 @end

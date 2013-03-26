@@ -73,9 +73,16 @@
 
 #pragma mark - Control
 - (void)play{
-    [_player prepareToPlay];
-    [_player play];
-    if (_player.playing) _state = CDAudioPlayerStatePlaying;
+    @try {
+        [_player prepareToPlay];
+        [_player play];
+    }
+    @catch (NSException *exception) {
+        DLog(@"\n%@\n%@", NSStringFromSelector(@selector(_cmd)), exception.userInfo);
+    }
+    @finally {
+        if (_player.playing) _state = CDAudioPlayerStatePlaying;
+    }
 }
 
 - (void)stop{
@@ -232,6 +239,11 @@
         value = [currentAudio valueForKey:property];
     }
     return value;
+}
+
+- (NSString *)currentAudioPath{
+    NSString *path = _player.url.path;
+    return path;
 }
 
 #pragma mark - AVAudioPlayerDelegate

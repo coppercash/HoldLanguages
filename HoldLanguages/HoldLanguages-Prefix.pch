@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
+#import "AppDelegateOpen.h"
 #import "CDMemAssist.h"
 #import "CDCategories.h"
 #import "CDTypes.h"

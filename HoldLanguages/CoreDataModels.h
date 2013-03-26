@@ -6,20 +6,18 @@
 //  Copyright (c) 2013 Coder Dreamer. All rights reserved.
 //
 
-#import "Item.h"
 #import "Audio.h"
 #import "Image.h"
 #import "Lyrics.h"
+#import "Content.h"
 
 #import "CDNetwork.h"
-
 
 
 @interface Audio (Enhance) <CDNetworkTrans>
 @end
 
 @interface Image (Enhance) <CDNetworkTrans>
-- (NSString *)absolutePath;
 @end
 
 @interface Lyrics (Enhance) <CDNetworkTrans>

@@ -7,21 +7,34 @@
 //
 
 #import "Item.h"
-#define kItemDescription(context) ([NSEntityDescription entityForName:NSStringFromClass([Item class]) inManagedObjectContext:context])
+
 typedef enum{
     ItemStatusInit = 0,
-    ItemStatusDownloaded = 1
+    ItemStatusDownloading = 1,
+    ItemStatusDownloaded = 2
 }ItemStatus;
 
 typedef void(^CDItemCompletion)(Item *item);
 typedef void(^CDItemCorrector)(Item *item, NSError *error);
 
 @interface Item (Enhance)
-+ (Item *)newItemWithDictionary:(NSDictionary *)dictionary path:(NSString *)path;
+#pragma mark - Fetch
++ (Item *)fetchOrCreatItem:(NSDictionary *)dictionary;
+//+ (Item *)newItemWithDictionary:(NSDictionary *)dictionary path:(NSString *)path;
++ (Item *)newItemWithDictionary:(NSDictionary *)dictionary;
 + (NSArray *)itemsOfAbsolutePath:(NSString *)path;
 + (NSArray *)itemsDownloaded;
 + (BOOL)exixtsItemWithSameAbsolutePath:(NSString *)path;
-- (void)configureWithDictionary:(NSDictionary *)dictionary path:(NSString *)path forced:(BOOL)isForced;
+#pragma mark - Configure
+//- (void)configureWithDictionary:(NSDictionary *)dictionary path:(NSString *)path forced:(BOOL)isForced;
+- (void)configureWithDictionary:(NSDictionary *)dictionary forced:(BOOL)isForced;
+#pragma mark - Delete
+- (void)removeResource;
+#pragma mark - Getter
 - (NSString *)hostName;
 - (Image *)anyImage;
+- (NSString *)contentWithTitle;
+- (BOOL)isEqualToItem:(Item *)anotherItem;
 @end
+
+#define kItemDescription(context) ([NSEntityDescription entityForName:NSStringFromClass([Item class]) inManagedObjectContext:context])

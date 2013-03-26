@@ -54,5 +54,6 @@ typedef enum {
 - (NSArray*)availableRate;
 - (NSTimeInterval)currentPlaybackTime;
 - (NSTimeInterval)currentDuration;
+- (NSString *)currentAudioPath;
 - (id)valueForProperty:(NSString*)property;
 @end

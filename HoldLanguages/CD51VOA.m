@@ -26,9 +26,27 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     LAHOperation *operation = [self operationWithFile:lahPath key:@"ope" dictionary:dic];
     
-    operation.path = path;
+    operation.link = path;
+    
+    return operation;
+}
+
+- (LAHOperation *)listAt:(NSString *)link inRange:(NSRange)range{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"51VOAList" ofType:@"lah"];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    LAHOperation *operation = [self operationWithFile:path key:@"ope" dictionary:dic];
+    
+    LAHRecognizer *identifier = [dic objectForKey:@"id"];
+    identifier.range = range;
+    
+    operation.link = link;
     
     return operation;
 }
 
 @end
+
+NSString * const g51PathHome = @"www.51voa.com";
+NSString * const g51PathStandard = @"/VOA_Standard_1.html";
+

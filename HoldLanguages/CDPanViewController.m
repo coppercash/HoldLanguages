@@ -34,10 +34,15 @@
     return self;
 }
 
+- (void)loadView{
+    self.wantsFullScreenLayout = YES;
+    [super loadView];
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.wantsFullScreenLayout = YES;
+
 }
 
 - (void)didReceiveMemoryWarning{
@@ -99,23 +104,32 @@
 - (void)setRightViewController:(UIViewController<CDSubPanViewController> *)rightController{
     _right = rightController;
     UIView *view = self.rightViewController.view;
-	CGRect frame = self.view.bounds;
+    
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    frame.origin.y = CGRectGetMinY(view.frame);
+    frame.size.height = CGRectGetHeight(view.frame);
     frame.origin.x = CGRectGetWidth(frame) - kMenuFullWidth;
 	frame.size.width = kMenuFullWidth;
     view.frame = frame;
-    [self.view insertSubview:view atIndex:0];
+     
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
+    [self.view insertSubview:view atIndex:0];
     _menuFlags.canShowRight = (self.rightViewController != nil);
 }
 
 - (void)setLeftViewController:(UIViewController<CDSubPanViewController> *)leftController{
     _left = leftController;
     UIView *view = self.leftViewController.view;
-	CGRect frame = self.view.bounds;
-	frame.size.width = kMenuFullWidth;
+    
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    frame.origin.y = CGRectGetMinY(view.frame);
+    frame.size.height = CGRectGetHeight(view.frame);
+    frame.size.width = kMenuFullWidth;
     view.frame = frame;
-    [self.view insertSubview:view atIndex:0];
+    
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
+    
+    [self.view insertSubview:view atIndex:0];
     _menuFlags.canShowLeft = (self.leftViewController != nil);
 }
 

@@ -39,6 +39,7 @@
 
 #pragma mark - Item
 - (CDItemNetwork *)downloadItem:(Item *)item{
+    item.status = [[NSNumber alloc] initWithInteger:ItemStatusDownloading];
     CDItemNetwork *network = [[CDItemNetwork alloc] initWithItem:item];
     CDNKOperation *audio = [self downloadItemComponent:item.audio network:network];
     [self downloadItemComponent:item.lyrics network:network];
@@ -62,10 +63,12 @@
 }
 
 - (CDNKOperation *)downloadItemComponent:(id<CDNetworkTrans>)transfer network:(CDItemNetwork *)network{
+    if (transfer == nil || network == nil) return nil;
     NSString *http = @"http://";
     NSString *link = transfer.link;
-    NSString *protocol = [link substringWithRange:NSMakeRange(0, 7)];
-    if (![protocol isEqualToString:http]) link = [http stringByAppendingString:[transfer.hostName stringByAppendingPathComponent:link]];
+    if (![link hasPrefix:http]) {
+        link = [http stringByAppendingString:[transfer.hostName stringByAppendingPathComponent:link]];
+    }
     
     NSString *path = directoryDocuments(transfer.path);
 
@@ -77,6 +80,16 @@
     [network addOperation:operation];
     
     return operation;
+}
+
+- (void)cancelDownloadWithItem:(Item *)item{
+    CDItemNetwork *i = nil;
+    for (i in _downloadingItems) {
+        if (![i isKindOfClass:[CDItemNetwork class]]) continue;
+        if ([i.item isEqualToItem:item]) break;
+    }
+    [i cancel];
+    [_downloadingItems removeObject:i];
 }
 
 #pragma mark - Download

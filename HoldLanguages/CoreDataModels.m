@@ -18,6 +18,10 @@
 - (NSString *)hostName{
     return self.item.hostName;
 }
+
+- (NSString *)absolutePath{
+    return directoryDocuments(self.path);
+}
 @end
 
 @implementation Image (Enhance)
@@ -33,6 +37,10 @@
 @implementation Lyrics (Enhance)
 - (NSString *)hostName{
     return self.item.hostName;
+}
+
+- (NSString *)absolutePath{
+    return directoryDocuments(self.path);
 }
 @end
 

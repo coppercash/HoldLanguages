@@ -17,15 +17,17 @@
 #import "CDOnlineViewController.h"
 
 @implementation AppDelegate
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize panViewController = _panViewController, audioSharer = _audioSharer, progress = _progress, network = _network;
+@synthesize managedObjectContext = _managedObjectContext, managedObjectModel = _managedObjectModel, persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize status = _status;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [CDiTunesFinder organizeiTunesFileSharing];
+    _status = malloc(sizeof(AppStatus));
+    _status->audioSourceType = AudioSourceTypeDownloads;
     
     self.audioSharer = [CDAudioSharer sharedAudioPlayer];
     

@@ -67,6 +67,14 @@ static NSString * const gKeyDowloaded = @"dow";
     }
 }
 
+- (void)cancel{
+    for (NSDictionary *dic in _holder) {
+        CDNKOperation *ope = [dic objectForKey:gKeyOperation];
+        [ope cancel];
+    }
+    DLogCurrentMethod;
+}
+
 #pragma mark - Download Infor
 - (long long)expectedContentLength{
     long long amount = 0;
