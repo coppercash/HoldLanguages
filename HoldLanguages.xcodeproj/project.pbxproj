@@ -153,7 +153,8 @@
 		BEAAF7F216F876B600A698E6 /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAAF7F116F876B500A698E6 /* Audio.m */; };
 		BEAAF7F516F8911E00A698E6 /* CDItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAAF7F416F8911E00A698E6 /* CDItem.m */; };
 		BEAAF7F916F8A30200A698E6 /* CDItemNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAAF7F816F8A30200A698E6 /* CDItemNetwork.m */; };
-		BEADC16B16FFE7C600347D77 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = BEADC16A16FFE7C600347D77 /* Item.m */; };
+		BEB1CCF81702C744004C8A79 /* CDItemDetailTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB1CCF71702C744004C8A79 /* CDItemDetailTableCell.m */; };
+		BEB1CD0A1702E386004C8A79 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB1CD091702E386004C8A79 /* Item.m */; };
 		BEB58B9A165C6505002426E4 /* Cursor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB58B99165C6505002426E4 /* Cursor@2x.png */; };
 		BEB58B9D165C79D1002426E4 /* CDBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */; };
 		BEB58BA0165C88E9002426E4 /* CDColorFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB58B9F165C88E9002426E4 /* CDColorFinder.m */; };
@@ -270,6 +271,7 @@
 		BEEAB3C616BA8D2900B9C39F /* AssitDouble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEEAB3C216BA8D2900B9C39F /* AssitDouble@2x.png */; };
 		BEEAB3C716BA8D2900B9C39F /* AssitDouble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEEAB3C216BA8D2900B9C39F /* AssitDouble@2x.png */; };
 		BEEAB3C816BA8D2900B9C39F /* AssitDouble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEEAB3C216BA8D2900B9C39F /* AssitDouble@2x.png */; };
+		BEF007071702703F000B91C6 /* CDItemDetailTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEF007061702703F000B91C6 /* CDItemDetailTableCell.xib */; };
 		BEF3394016A24C0D0032A1B6 /* CDiTunesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */; };
 		BEF3394316A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF3394216A24DC10032A1B6 /* CDiTunesViewCell.m */; };
 		BEF3394416A24DC10032A1B6 /* CDiTunesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF3394216A24DC10032A1B6 /* CDiTunesViewCell.m */; };
@@ -513,8 +515,10 @@
 		BEAAF7F416F8911E00A698E6 /* CDItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDItem.m; sourceTree = "<group>"; };
 		BEAAF7F716F8A30200A698E6 /* CDItemNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDItemNetwork.h; sourceTree = "<group>"; };
 		BEAAF7F816F8A30200A698E6 /* CDItemNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDItemNetwork.m; sourceTree = "<group>"; };
-		BEADC16916FFE7C600347D77 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
-		BEADC16A16FFE7C600347D77 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		BEB1CCF61702C744004C8A79 /* CDItemDetailTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDItemDetailTableCell.h; sourceTree = "<group>"; };
+		BEB1CCF71702C744004C8A79 /* CDItemDetailTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDItemDetailTableCell.m; sourceTree = "<group>"; };
+		BEB1CD081702E386004C8A79 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		BEB1CD091702E386004C8A79 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		BEB58B99165C6505002426E4 /* Cursor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cursor@2x.png"; sourceTree = "<group>"; };
 		BEB58B9B165C79D1002426E4 /* CDBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBackgroundView.h; sourceTree = "<group>"; };
 		BEB58B9C165C79D1002426E4 /* CDBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBackgroundView.m; sourceTree = "<group>"; };
@@ -522,8 +526,8 @@
 		BEB58B9F165C88E9002426E4 /* CDColorFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDColorFinder.m; sourceTree = "<group>"; };
 		BEB5D32917018C8A00C6ED84 /* HolderCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolderCategory.h; sourceTree = "<group>"; };
 		BEB5D32A17018C8A00C6ED84 /* HolderCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolderCategory.m; sourceTree = "<group>"; };
-		BEB5D32F1701B2C600C6ED84 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/CDiTunesFooters.xib; sourceTree = "<group>"; };
-		BEB5D3311701B2D400C6ED84 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/CDiTunesFooters.xib"; sourceTree = "<group>"; };
+		BEB5D32F1701B2C600C6ED84 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CDiTunesFooters.xib; sourceTree = "<group>"; };
+		BEB5D3311701B2D400C6ED84 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/CDiTunesFooters.xib"; sourceTree = "<group>"; };
 		BEC0FEFA167EC7600081E67C /* HoldLanguagesLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoldLanguagesLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC0FEFB167EC7610081E67C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BEC0FF01167EC7610081E67C /* HoldLanguagesLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoldLanguagesLogicTests-Info.plist"; sourceTree = "<group>"; };
@@ -572,6 +576,7 @@
 		BEEAB3BA16BA8CC300B9C39F /* AssitSingle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AssitSingle@2x.png"; sourceTree = "<group>"; };
 		BEEAB3C116BA8D2900B9C39F /* AssitDouble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AssitDouble.png; sourceTree = "<group>"; };
 		BEEAB3C216BA8D2900B9C39F /* AssitDouble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AssitDouble@2x.png"; sourceTree = "<group>"; };
+		BEF007061702703F000B91C6 /* CDItemDetailTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CDItemDetailTableCell.xib; sourceTree = "<group>"; };
 		BEF3393E16A24C0D0032A1B6 /* CDiTunesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDiTunesViewController.h; sourceTree = "<group>"; };
 		BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDiTunesViewController.m; sourceTree = "<group>"; };
 		BEF3394116A24DC10032A1B6 /* CDiTunesViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDiTunesViewCell.h; sourceTree = "<group>"; };
@@ -1100,6 +1105,9 @@
 				BEF3394616A253370032A1B6 /* CDiTunesViewCell.xib */,
 				BEA644CD16FF2D9E004B1E44 /* CDItemTableCell.h */,
 				BEA644CE16FF2D9E004B1E44 /* CDItemTableCell.m */,
+				BEB1CCF61702C744004C8A79 /* CDItemDetailTableCell.h */,
+				BEB1CCF71702C744004C8A79 /* CDItemDetailTableCell.m */,
+				BEF007061702703F000B91C6 /* CDItemDetailTableCell.xib */,
 			);
 			name = TableViewCell;
 			sourceTree = "<group>";
@@ -1115,9 +1123,9 @@
 				BE9E2C7016F7321E00B8B4E0 /* Lyrics.m */,
 				BE9E2C6C16F7321E00B8B4E0 /* Image.h */,
 				BE9E2C6D16F7321E00B8B4E0 /* Image.m */,
+				BEB1CD081702E386004C8A79 /* Item.h */,
+				BEB1CD091702E386004C8A79 /* Item.m */,
 				BE0F6C7D16F2BE78004933A5 /* HoldLanguages.xcdatamodeld */,
-				BEADC16916FFE7C600347D77 /* Item.h */,
-				BEADC16A16FFE7C600347D77 /* Item.m */,
 			);
 			name = Generated;
 			sourceTree = "<group>";
@@ -1575,6 +1583,7 @@
 				BEFEE33D16F548C80084A287 /* 51VOAItem.lah in Resources */,
 				BE6196F816FD8E1F0020AA63 /* 51VOAList.lah in Resources */,
 				BEB5D32E1701B2C600C6ED84 /* CDiTunesFooters.xib in Resources */,
+				BEF007071702703F000B91C6 /* CDItemDetailTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1739,8 +1748,9 @@
 				BEA53E6116FBF56800528564 /* StoryViewCategory.m in Sources */,
 				BEA5F22416FE840800BC699C /* CDLoadMoreControl.m in Sources */,
 				BEA644CF16FF2D9E004B1E44 /* CDItemTableCell.m in Sources */,
-				BEADC16B16FFE7C600347D77 /* Item.m in Sources */,
 				BEB5D32B17018C8A00C6ED84 /* HolderCategory.m in Sources */,
+				BEB1CCF81702C744004C8A79 /* CDItemDetailTableCell.m in Sources */,
+				BEB1CD0A1702E386004C8A79 /* Item.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,13 +8,13 @@
 
 #import "CDiTunesViewController.h"
 #import "CDiTunesViewCell.h"
-#import "CDItemTableCell.h"
+#import "CDItemDetailTableCell.h"
 #import "CDiTunesFinder.h"
 #import "CDFileItem.h"
 #import "CDItem.h"
+#import "CoreDataModels.h"
 #import "CDAudioSharer.h"
 #import "CDAudioPlayer.h"
-#import "CoreDataModels.h"
 
 static NSString * const gItemsCacheName = @"Downloaded Items";
 static NSString * const gReuseCell = @"DownloadedItemsCell";
@@ -181,11 +181,8 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     NSInteger section = indexPath.section;
     if (section < _items.sections.count) {
         
-        CDItemTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
-        if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
-        
-        Item *item = [_items objectAtIndexPath:indexPath];
-        [cell configureWithItem:item];
+        CDItemDetailTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
+        if (cell == nil) cell = [[CDItemDetailTableCell alloc] initWithReuseIdentifier:gReuseCell];
         
         return cell;
     }else if (section == _items.sections.count){
@@ -193,14 +190,11 @@ static NSString * const footerXibName = @"CDiTunesFooters";
         CDiTunesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:gFileSharingCell];
         if (cell == nil) cell = [[CDiTunesViewCell alloc] initWithReuseIdentifier:gFileSharingCell];
         
-        CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];
-        [cell configureWithItem:item];
-        
         return cell;
     }
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:gReuseNoFile];
-    cell.textLabel.text = @"No files.";
+    cell.textLabel.text = @"No file.";
     cell.textLabel.textColor = [UIColor darkGrayColor];
     return cell;
 }
@@ -279,19 +273,19 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     
     }
 }
-/*
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self configureCell:cell atIndexPath:indexPath];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = indexPath.section;
     if (section < _items.sections.count) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[_items sections] objectAtIndex:section];
-        if (sectionInfo.numberOfObjects == 0) return nil;
-        
-    }else if (section == _items.sections.count){
-        if (_documents.count <= 1) return nil;
-
+        Item *item = [_items objectAtIndexPath:indexPath];
+        return [CDItemDetailTableCell heightWithItem:item];
     }
-    return indexPath;
-}*/
+    return 44.0f;
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section < _items.sections.count) {

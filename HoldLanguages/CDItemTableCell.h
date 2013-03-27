@@ -11,18 +11,18 @@
 
 @class CDScrollLabel, Item;
 @interface CDItemTableCell : UITableViewCell {
-    //CDScrollLabel *_title;
     UILabel *_title;
     UIView *_stageView;
-    UILabel *_label;
+    UILabel *_progressLabel;
     
-    BOOL _isProgressAvailable;
     BOOL _isProgressive;
     
     __weak NSTimer *_updater;
 }
-//@property(nonatomic, readonly)UILabel *title;
-@property(nonatomic, assign)BOOL isProgressAvailable;
+@property(nonatomic, strong)UIView *stageView;
+@property(nonatomic, strong)IBOutlet UILabel *title;
+@property(nonatomic, strong)IBOutlet UILabel *progressLabel;
+
 @property(nonatomic, assign)BOOL isProgressive;
 @property(nonatomic, setter = setProgress:)float progress;
 
@@ -33,7 +33,4 @@
 #pragma mark - Updater
 - (void)setupUpdaterWithItem:(Item *)item;
 - (void)invalidateUpdater;
-#pragma mark - Height
-+ (CGFloat)heightWithDictionary:(NSDictionary *)dictionary;
-+ (CGFloat)heightWithItem:(Item *)item;
 @end

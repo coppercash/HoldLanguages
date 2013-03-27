@@ -301,18 +301,21 @@ pageCapacity = _pageCapacity;
     CDItemTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
     if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
     
-    cell.isProgressAvailable = YES;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CDItemTableCell *theCell = (CDItemTableCell *)cell;
     
     NSUInteger index = indexPath.row;
     id data = [_itemList objectAtIndex:index];
     if ([data isKindOfClass:[NSDictionary class]]) {
-        [cell configureWithDictionary:(NSDictionary *)data];
+        [theCell configureWithDictionary:(NSDictionary *)data];
         
     }else if ([data isKindOfClass:[Item class]]){
-        [cell configureWithItem:(Item *)data];
+        [theCell configureWithItem:(Item *)data];
     }
-    
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
