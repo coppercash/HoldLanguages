@@ -13,36 +13,46 @@
 #import "CDItem.h"
 #import "CDItemNetwork.h"
 #import "CDItemTableCell.h"
+#import "CDItemDetailTableCell.h"
 #import "CDLoadMoreControl.h"
+#import "Reachability.h"
 
-static NSString *gReuseCell = @"RC";
+static NSString * const gReuseCell = @"RC";
+static NSString * const gReuseDetailCell = @"RDC";
 
 @interface CDOnlineViewController ()
 @property(nonatomic, strong)CDLoadMoreControl *loader;
 
 @property(nonatomic, strong)NSMutableArray *itemList;
 @property(nonatomic, strong)CD51VOA *VOA51;
-@property(nonatomic, strong)NSMutableDictionary *trash;
 
 @property(nonatomic, assign)NSInteger indexOfPage;
 @property(nonatomic, strong)NSString *currentPage;
 @property(nonatomic, assign)NSInteger indexInPage;
 @property(nonatomic, assign)NSUInteger pageCapacity;
 
+#pragma mark - Swipe
 - (void)swipe:(UISwipeGestureRecognizer *)swiper;
 - (void)tableView:(UITableView *)tableView swipeRowAtIndexPath:(NSIndexPath *)indexPath toDirection:(UISwipeGestureRecognizerDirection)direction;
+#pragma mark - Refresh & Load More
 - (void)refresh;
 - (void)didRefreshWith:(NSArray *)newItems;
 - (void)loadMore;
 - (void)didLoadMoreWith:(NSArray *)newItems;
 - (void)addItems:(NSArray *)newItems;
+#pragma mark - Download
 - (void)downloadWithRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)cancelDownloadWithRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)convertDictionary:(NSDictionary *)dictionary atIndexPath:(NSIndexPath *)indexPath completion:(void(^)(Item *item, NSIndexPath *indePath))completion;
+#pragma mark - Detail
+- (void)downloadTempImage:(Image *)image forIndexPath:(NSIndexPath *)indexPath;
+- (void)enterDetailModeWithIndexPath:(NSIndexPath *)indexPath;
+- (void)cancelDetailMode;
 @end
 
 @implementation CDOnlineViewController
 @synthesize loader = _loader;
-@synthesize VOA51 = _VOA51, itemList = _itemList, trash = _trash;
+@synthesize VOA51 = _VOA51, itemList = _itemList;
 @synthesize
 indexOfPage = _indexOfPage,
 currentPage = _currentPage,
@@ -81,8 +91,8 @@ pageCapacity = _pageCapacity;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.VOA51 = [[CD51VOA alloc] init];
+    
     self.itemList = [[NSMutableArray alloc] initWithCapacity:kRefreshCapacity];
-    self.trash = [[NSMutableDictionary alloc] initWithCapacity:kRefreshCapacity];
     
     self.pageCapacity = 10;
     self.indexOfPage = 0;
@@ -99,15 +109,23 @@ pageCapacity = _pageCapacity;
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
+    [Item removeInitItems];
 }
 
 - (void)didReceiveMemoryWarning{
     // Test self.view can be release (on the screen or not).
     if (self.view.window == nil){
         // Preserve data stored in the views that might be needed later.
+        NSError *error = nil;
+        [kMOContext save:&error];
+        AssertError(error);
         
         // Clean up other strong references to the view in the view hierarchy.
         self.loader = nil;
+        if (_imageNetwork) {
+            [_imageNetwork cancel];
+            _imageNetwork = nil;
+        }
         
         //Release self.view
         self.view = nil;
@@ -138,13 +156,13 @@ pageCapacity = _pageCapacity;
 }
 
 - (void)didRefreshWith:(NSArray *)newItems{
+    [self.refreshControl endRefreshing];
+    [_loader endLoadingMore];
+    
     [_itemList removeAllObjects];
     [self.tableView reloadData];
     
     [self addItems:newItems];
-    
-    [self.refreshControl endRefreshing];
-    [_loader endLoadingMore];
 }
 
 - (void)loadMore{
@@ -162,10 +180,10 @@ pageCapacity = _pageCapacity;
 }
 
 - (void)didLoadMoreWith:(NSArray *)newItems{
-    [self addItems:newItems];
-    
     [self.refreshControl endRefreshing];
     [_loader endLoadingMore];
+
+    [self addItems:newItems];
 }
 
 - (void)addItems:(NSArray *)newItems{
@@ -185,7 +203,6 @@ pageCapacity = _pageCapacity;
         NSString *urlString = [dic objectForKey:@"url"];
         NSArray *results = [Item itemsOfAbsolutePath:urlString];
         if (results.count >= 1) {
-            [_trash setObject:dic forKey:[NSIndexPath indexPathForRow:_itemList.count + index inSection:0]];    //relaim
             Item *item = [results objectAtIndex:0];
             [adding replaceObjectAtIndex:index withObject:item];
         }
@@ -199,34 +216,56 @@ pageCapacity = _pageCapacity;
     [tableView endUpdates];
 }
 
-- (void)downloadWithRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSUInteger index = indexPath.row;
-    NSDictionary *data = [_itemList objectAtIndex:index];
-    if (![data isKindOfClass:[NSDictionary class]]) return;
-    NSString *path = [data objectForKey:@"link"];
-    
+#pragma mark - Download
+- (void)convertDictionary:(NSDictionary *)dictionary atIndexPath:(NSIndexPath *)indexPath
+               completion:(void(^)(Item *item, NSIndexPath *indePath))completion{
+    NSString *path = [dictionary objectForKey:@"link"];
     LAHOperation *ope = [_VOA51 itemAtPath:path];
-    __weak CDNetwork *network = kSingletonNetwork;
+    
     __weak NSMutableArray *itemList = _itemList;
-    __weak UITableView *tableView = self.tableView;
     [ope addCompletion:^(LAHOperation *operation) {
         Item *item = [Item newItemWithDictionary:operation.container];
         NSAssert(item != nil, @"Can't new Item.");
         if (item == nil) return;
         
-        //reclaim
-        NSDictionary *dic = [itemList objectAtIndex:index];
-       [_trash setObject:dic forKey:indexPath];
+        //Replace models
+        [itemList replaceObjectAtIndex:indexPath.row withObject:item];
         
-        [itemList replaceObjectAtIndex:index withObject:item];
- 
-        [network downloadItem:item];    //item network;
-        
-        CDItemTableCell *cell = (CDItemTableCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [cell setIsProgressive:YES animated:YES];
-        [cell setupUpdaterWithItem:item];
+        //Do completion
+        if (completion) completion(item, indexPath);
     }];
     [ope start];
+}
+
+- (void)downloadWithRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSUInteger index = indexPath.row;
+    NSDictionary *data = [_itemList objectAtIndex:index];
+    
+    __weak CDNetwork *network = kSingletonNetwork;
+    __weak UITableView *tableView = self.tableView;
+    if ([data isKindOfClass:[NSDictionary class]]) {
+        
+        [self convertDictionary:data atIndexPath:indexPath completion:^(Item *item, NSIndexPath *indePath) {
+            //item network;
+            [network downloadItem:item];
+            
+            //Update table view
+            CDItemTableCell *cell = (CDItemTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+            [cell setIsProgressive:YES animated:YES];
+            [cell setupUpdaterWithItem:item];
+        }];
+        
+    } else if ([data isKindOfClass:[Item class]]) {
+        Item *item = (Item *)data;
+        
+        //item network;
+        [kSingletonNetwork downloadItem:item];
+        
+        //Update table view
+        CDItemTableCell *cell = (CDItemTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        [cell setIsProgressive:YES animated:YES];
+        [cell setupUpdaterWithItem:item];
+    }
 }
 
 - (void)cancelDownloadWithRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -237,6 +276,7 @@ pageCapacity = _pageCapacity;
     CDNetwork *network = kSingletonNetwork;
     [network cancelDownloadWithItem:item];
     
+    /*
     //Remove resources
     [item removeResource];
     [kMOContext deleteObject:item];
@@ -245,7 +285,8 @@ pageCapacity = _pageCapacity;
     NSDictionary *dic = [_trash objectForKey:indexPath];
     [_itemList replaceObjectAtIndex:indexPath.row withObject:dic];
     [_trash removeObjectForKey:indexPath];
-
+     */
+    
     //Update View
     CDItemTableCell *cell = (CDItemTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [cell setIsProgressive:NO animated:YES];
@@ -261,30 +302,105 @@ pageCapacity = _pageCapacity;
 }
 
 - (void)tableView:(UITableView *)tableView swipeRowAtIndexPath:(NSIndexPath *)indexPath toDirection:(UISwipeGestureRecognizerDirection)direction{
-    /*
-     direction == UISwipeGestureRecognizerDirectionLeft  && [data isKindOfClass:[NSDictionary class]];    //download
-     direction == UISwipeGestureRecognizerDirectionLeft  && [data isKindOfClass:[Item class]] && ((Item *)data).status.integerValue == ItemStatusDownloaded;   //remove
-     direction == UISwipeGestureRecognizerDirectionRight && [data isKindOfClass:[NSDictionary class]];   //return
-     direction == UISwipeGestureRecognizerDirectionRight && [data isKindOfClass:[Item class]] && ((Item *)data).status.integerValue == ItemStatusDownloading;    //cancel
-     */
-    id data = [_itemList objectAtIndex:indexPath.row];
+    //download  Left && (isDictionary || init item)
+    //cancel    Right && downloading item
+    //return    Right && !downloading item
+    
+    Item *data = [_itemList objectAtIndex:indexPath.row];
     switch (direction) {
         case UISwipeGestureRecognizerDirectionLeft:{
-            if ([data isKindOfClass:[NSDictionary class]]) {
+            if ([data isKindOfClass:[NSDictionary class]] ||
+                ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusInit)) {
+                
                 [self downloadWithRowAtIndexPath:indexPath];
-            } else if ([data isKindOfClass:[Item class]] && ((Item *)data).status.integerValue == ItemStatusDownloaded) {
+            
             }
         }break;
         case UISwipeGestureRecognizerDirectionRight:
-            if ([data isKindOfClass:[NSDictionary class]]) {
-                
-            } else if ([data isKindOfClass:[Item class]] && ((Item *)data).status.integerValue == ItemStatusDownloading) {
+            
+            if (![data isKindOfClass:[Item class]]) break;
+            if (data.status.integerValue == ItemStatusDownloading) {
                 [self cancelDownloadWithRowAtIndexPath:indexPath];
+            }else{
+                //return
             }
+            
             break;
         default:
             break;
     }
+}
+
+#pragma mark - Detail
+- (void)downloadTempImage:(Image *)image forIndexPath:(NSIndexPath *)indexPath{
+    NSURL *imageURL = [[NSURL alloc] initWithString:image.absoluteLink];
+    __weak UITableView *tableView = self.tableView;
+    CDNKOperation *ope =
+    [kSingletonNetwork
+     imageAtURL:imageURL
+     completionHandler:^(UIImage *fetchedImage, NSURL *url, BOOL isInCache) {
+         
+         CDItemDetailTableCell *cell = (CDItemDetailTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+         [cell loadImage:fetchedImage];
+         
+     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+         
+         AssertError(error);
+         
+     }];
+    
+    _imageNetwork = ope;
+}
+
+- (void)enterDetailModeWithIndexPath:(NSIndexPath *)indexPath{
+    DLogCurrentMethod;
+    self.tableView.scrollEnabled = NO;
+    _detailIndex = indexPath;
+    
+    NSDictionary *data = [_itemList objectAtIndex:indexPath.row];
+    if ([data isKindOfClass:[NSDictionary class]]) {
+        
+        __weak UITableView *tableView = self.tableView;
+        [self convertDictionary:data atIndexPath:indexPath completion:^(Item *item, NSIndexPath *indePath) {
+            
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:kDefaultCellAnimationType];
+            
+            Image *image = item.anyImage;
+            if (image) [self downloadTempImage:image forIndexPath:indexPath];
+            
+        }];
+    
+    }else if ([data isKindOfClass:[Item class]]) {
+        
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:kDefaultCellAnimationType];
+        
+        Item *item = (Item *)data;
+        ItemStatus status = item.status.integerValue;
+        if (status == ItemStatusInit || status == ItemStatusDownloading) {
+            //Download tmp image if image file related to Image doesn't exists.
+            Image *image = item.anyImage;
+            if (image && !image.fileExists) [self downloadTempImage:image forIndexPath:indexPath];
+        }
+    }
+}
+
+- (void)cancelDetailMode{
+    DLogCurrentMethod;
+    
+    //Deal with index
+    NSIndexPath *detailIndex = _detailIndex;
+    _detailIndex = nil; //Assign nil for tableView:cellForRowAtIndexPath: will test it to determine load what kink of cell
+    
+    // Cancel network and its block
+    if (_imageNetwork) {
+        [_imageNetwork cancel];
+        _imageNetwork = nil;
+    }
+    
+    //Update table view
+    [self.tableView reloadRowsAtIndexPaths:@[detailIndex] withRowAnimation:kDefaultCellAnimationType];
+    
+    self.tableView.scrollEnabled = YES;
 }
 
 #pragma mark - UITableViewDataSource
@@ -298,8 +414,17 @@ pageCapacity = _pageCapacity;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CDItemTableCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
-    if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
+    CDItemTableCell *cell = nil;
+
+    if ([_detailIndex isEqual:indexPath]) {
+        // Detail Cell in Detail Mode
+        cell = [[CDItemDetailTableCell alloc] initWithReuseIdentifier:nil];
+
+    }else{
+        //Non-Detail Mode and normal cell in Detail Mode
+        cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
+        if (cell == nil) cell = [[CDItemTableCell alloc] initWithReuseIdentifier:gReuseCell];
+    }
     
     return cell;
 }
@@ -319,6 +444,26 @@ pageCapacity = _pageCapacity;
 }
 
 #pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CGFloat height = 44.0f;
+    
+    if ([_detailIndex isEqual:indexPath]) {
+        // Detail Cell in Detail Mode
+        Item *item = [_itemList objectAtIndex:indexPath.row];
+        NSParameterAssert([item isKindOfClass:[Item class]]);
+        height = [CDItemDetailTableCell heightWithItem:item];
+    }
+    
+    return height;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_detailIndex == nil) {
+        [self enterDetailModeWithIndexPath:indexPath];
+    }else if (![indexPath isEqual:_detailIndex]) {
+        [self cancelDetailMode];
+    }
+}
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

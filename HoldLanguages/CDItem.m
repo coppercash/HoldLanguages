@@ -180,10 +180,32 @@ static NSString * const gKeyLyrics = @"lrc";
     }
 }
 
++ (void)removeInitItems{
+    NSManagedObjectContext *context = kMOContext;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status = %d", ItemStatusInit];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];
+    request.predicate = predicate;
+    
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    NSAssert(error == nil, @"%@", error.userInfo);
+    
+    for (Item *item in results) {
+        [item removeResource];
+        [context deleteObject:item];
+    }
+}
+
 #pragma mark - Getter
 - (NSString *)hostName{
     NSURL *url = [[NSURL alloc] initWithString:self.absolutePath];
     return url.host;
+}
+
+- (NSString *)relativePath{
+    NSURL *url = [[NSURL alloc] initWithString:self.absolutePath];
+    return url.relativePath;
 }
 
 - (Image *)anyImage{

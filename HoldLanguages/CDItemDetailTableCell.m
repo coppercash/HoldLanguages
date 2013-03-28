@@ -34,6 +34,7 @@ lyricsSymbol = _lyricsSymbol;
     if (self) {
         self.clipsToBounds = YES;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        _isProgressive = YES;   //For progressLabel in the xib is convenient to edit when it is progressive.
         
         UIView *view = [UIView viewFromXibNamed:NSStringFromClass(self.class) owner:self];
         view.frame = self.contentView.bounds;
@@ -66,8 +67,6 @@ lyricsSymbol = _lyricsSymbol;
         _content.frame = frame;
     }
     
-    
-    
     _audioSymbol.hidden = item.audio == nil;
     _lyricsSymbol.hidden = item.lyrics == nil;
 
@@ -90,6 +89,10 @@ lyricsSymbol = _lyricsSymbol;
         default:
             break;
     }
+}
+
+- (void)loadImage:(UIImage *)image{
+    _image.image = image;
 }
 
 #pragma mark - Progressive

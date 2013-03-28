@@ -8,3 +8,6 @@
 "iTunesViewHeaderDownloads" = "Downloads";
 "iTunesViewHeaderFileSharing" = "iTunes File Sharing";
 
+"NetworkError" = "Can't reach Internet";
+"Settings" = "Settings";
+"GetIt" = "Get it";

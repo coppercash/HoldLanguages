@@ -22,6 +22,21 @@
 - (NSString *)absolutePath{
     return directoryDocuments(self.path);
 }
+
+- (NSString *)absoluteLink{
+    NSString *http = @"http://";
+    NSString *link = self.link;
+    if (![link hasPrefix:http]) {
+        link = [http stringByAppendingString:[self.hostName stringByAppendingPathComponent:link]];
+    }
+    return link;
+}
+
+- (BOOL)fileExists{
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    BOOL exists = [manager fileExistsAtPath:self.absolutePath];
+    return exists;
+}
 @end
 
 @implementation Image (Enhance)
@@ -32,6 +47,21 @@
 - (NSString *)absolutePath{
     return directoryDocuments(self.path);
 }
+
+- (NSString *)absoluteLink{
+    NSString *http = @"http://";
+    NSString *link = self.link;
+    if (![link hasPrefix:http]) {
+        link = [http stringByAppendingString:[self.hostName stringByAppendingPathComponent:link]];
+    }
+    return link;
+}
+
+- (BOOL)fileExists{
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    BOOL exists = [manager fileExistsAtPath:self.absolutePath];
+    return exists;
+}
 @end
 
 @implementation Lyrics (Enhance)
@@ -41,6 +71,21 @@
 
 - (NSString *)absolutePath{
     return directoryDocuments(self.path);
+}
+
+- (NSString *)absoluteLink{
+    NSString *http = @"http://";
+    NSString *link = self.link;
+    if (![link hasPrefix:http]) {
+        link = [http stringByAppendingString:[self.hostName stringByAppendingPathComponent:link]];
+    }
+    return link;
+}
+
+- (BOOL)fileExists{
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    BOOL exists = [manager fileExistsAtPath:self.absolutePath];
+    return exists;
 }
 @end
 

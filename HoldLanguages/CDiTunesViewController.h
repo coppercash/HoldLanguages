@@ -15,7 +15,9 @@
     NSFetchedResultsController *_items;
     CDFileItem *_documents;
     
-    //Footers
+    //Headers & Footers
+    UIView *_downloadsHeader;
+    UIView *_fileSharingHeader;
     UIView *_downloadsFooter;
     UIView *_fileSharingFooter;
 }

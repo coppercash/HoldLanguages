@@ -101,10 +101,9 @@ static NSString * const gKeyDowloaded = @"dow";
     return amount <= 0 ? NSUIntegerMax : amount;
 }
 
-
 #pragma mark - Handlers
 - (void)addCompletion:(CDNKGroupCompletion)completion forKey:(id)key{
-    [_completions setObject:[completion copy] forKey:addressStringFromObject(key)];
+    [_completions setObject:[completion copy] forKey:key];
 }
 
 - (void)removeCompletionForKey:(id)key{
@@ -112,7 +111,7 @@ static NSString * const gKeyDowloaded = @"dow";
 }
 
 - (void)addCorrector:(CDNKGroupCorrector)corrector forKey:(id)key{
-    [_correctors setObject:[corrector copy] forKey:addressStringFromObject(key)];
+    [_correctors setObject:[corrector copy] forKey:key];
 }
 
 - (void)removeCorrectorForKey:(id)key{
@@ -120,11 +119,11 @@ static NSString * const gKeyDowloaded = @"dow";
 }
 
 - (void)addProgress:(CDNKGroupProgress)progress forKey:(id)key{
-    [_progresses setObject:[progress copy] forKey:addressStringFromObject(key)];
+    [_progresses setObject:[progress copy] forKey:key];
 }
 
 - (void)removeProgressForKey:(id)key{
-    [_progresses removeObjectForKey:addressStringFromObject(key)];
+    [_progresses removeObjectForKey:key];
 }
 
 #pragma mark - Event

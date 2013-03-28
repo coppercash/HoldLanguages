@@ -28,8 +28,10 @@ typedef void(^CDItemCorrector)(Item *item, NSError *error);
 - (void)configureWithDictionary:(NSDictionary *)dictionary forced:(BOOL)isForced;
 #pragma mark - Delete
 - (void)removeResource;
++ (void)removeInitItems;
 #pragma mark - Getter
 - (NSString *)hostName;
+- (NSString *)relativePath;
 - (Image *)anyImage;
 - (NSString *)contentWithTitle;
 - (BOOL)isEqualToItem:(Item *)anotherItem;

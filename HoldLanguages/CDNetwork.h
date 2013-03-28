@@ -30,9 +30,11 @@ typedef void (^CDError) (CDNKOperation *operation, NSError* error);
 
 @protocol CDNetworkTrans <NSObject>
 - (NSString *)link;
+- (NSString *)absoluteLink;
 - (NSString *)path;
 - (NSString *)absolutePath;
 - (NSString *)hostName;
+- (BOOL)fileExists;
 @end
 
 @protocol CDNetworkItem <NSObject>

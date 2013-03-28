@@ -40,8 +40,12 @@
 #pragma mark - Item
 - (CDItemNetwork *)downloadItem:(Item *)item{
     [item removeResource];
+    
+    item.downloadTry = [[NSDate alloc] init];
     item.status = [[NSNumber alloc] initWithInteger:ItemStatusDownloading];
+    
     CDItemNetwork *network = [[CDItemNetwork alloc] initWithItem:item];
+    
     CDNKOperation *audio = [self downloadItemComponent:item.audio network:network];
     [self downloadItemComponent:item.lyrics network:network];
     for (Image *img in item.images) {
@@ -55,9 +59,8 @@
     };
     [network addCompletion:^(CDNetworkGroup *group) {
         item.status = [[NSNumber alloc] initWithInteger:ItemStatusDownloaded];
-    } forKey:self];
+    } forKey:item.downloadTry];
     
-    item.downloadTry = [[NSDate alloc] init];
     
     [self addDownloadingItem:network];
     return network;
@@ -65,13 +68,8 @@
 
 - (CDNKOperation *)downloadItemComponent:(id<CDNetworkTrans>)transfer network:(CDItemNetwork *)network{
     if (transfer == nil || network == nil) return nil;
-    NSString *http = @"http://";
-    NSString *link = transfer.link;
-    if (![link hasPrefix:http]) {
-        link = [http stringByAppendingString:[transfer.hostName stringByAppendingPathComponent:link]];
-    }
-    
-    NSString *path = directoryDocuments(transfer.path);
+    NSString *link = transfer.absoluteLink;
+    NSString *path = transfer.absolutePath;
 
     CDNKOperation *operation = [self download:link to:path completion:^(MKNetworkOperation *operation, NSData *data) {
         [network removeOperation:operation error:nil];

@@ -13,10 +13,6 @@
 #import "CoreDataModels.h"
 
 @interface CDItemTableCell ()
-
-- (UIView *)initializeStandard;
-- (UIView *)initializeDetail;
-
 - (void)updateProgress:(NSTimer *)timer;
 @end
 
@@ -31,30 +27,25 @@
         self.clipsToBounds = YES;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        UIView *view = [self initializeStandard];
+        
+        UIView *view = [[UIView alloc] initWithFrame:self.bounds];
+        view.autoresizingMask = CDViewAutoresizingNoMaigin;
+        
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectInset(view.bounds, 10.0f, 0.0f)];
+        title.backgroundColor = [UIColor clearColor];
+        title.textColor = [UIColor whiteColor];
+        title.font = [UIFont boldSystemFontOfSize:17];
+        title.textAlignment = UITextAlignmentLeft;
+        title.autoresizingMask = CDViewAutoresizingNoMaigin;
+        
+        self.title = title;
+        [view addSubview:title];
+        
+        self.stageView = view;
         
         [self.contentView addSubview:view];
     }
     return self;
-}
-
-- (UIView *)initializeStandard{
-    UIView *view = [[UIView alloc] initWithFrame:self.bounds];
-    view.autoresizingMask = CDViewAutoresizingNoMaigin;
-    
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectInset(view.bounds, 10.0f, 0.0f)];
-    title.backgroundColor = [UIColor clearColor];
-    title.textColor = [UIColor whiteColor];
-    title.font = [UIFont boldSystemFontOfSize:17];
-    title.textAlignment = UITextAlignmentLeft;
-    title.autoresizingMask = CDViewAutoresizingNoMaigin;
-    
-    self.title = title;
-    [view addSubview:title];
-    
-    self.stageView = view;
-    
-    return view;
 }
 
 #pragma mark - Configure
@@ -113,7 +104,9 @@
 
 - (void)updateProgress:(NSTimer *)timer{
     Item *item = (Item *)timer.userInfo;
-    self.progress = item.progress.floatValue;
+    float progress = item.progress.floatValue;
+    self.progress = progress;
+    if (progress == 1.0f) [self invalidateUpdater];
 }
 
 #pragma mark - Progressive

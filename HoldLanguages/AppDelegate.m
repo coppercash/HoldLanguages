@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "AppDelegateReachability.h"
+
 #import "CDAudioSharer.h"
 #import "MainViewController.h"
 #import "CDNetwork.h"
@@ -18,6 +20,7 @@
 
 @implementation AppDelegate
 @synthesize panViewController = _panViewController, audioSharer = _audioSharer, progress = _progress, network = _network;
+@synthesize reachability = _reachability;
 @synthesize managedObjectContext = _managedObjectContext, managedObjectModel = _managedObjectModel, persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize status = _status;
 
@@ -26,6 +29,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [CDiTunesFinder organizeiTunesFileSharing];
+    [self registerReachabilityNotification];
     _status = malloc(sizeof(AppStatus));
     _status->audioSourceType = AudioSourceTypeDownloads;
     

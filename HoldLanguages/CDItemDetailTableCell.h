@@ -15,6 +15,7 @@
     UIImageView *_audioSymbol;
     UIImageView *_lyricsSymbol;
 }
+- (void)loadImage:(UIImage *)image;
 #pragma mark - Height
 + (CGFloat)heightWithItem:(Item *)item;
 @end

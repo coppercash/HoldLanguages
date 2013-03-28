@@ -17,7 +17,7 @@
         self.item = item;
         [self addProgress:^(CDNetworkGroup *group, double progress) {
             item.progress = [[NSNumber alloc] initWithFloat:progress];
-        } forKey:item];
+        } forKey:item.absolutePath];
     }
     return self;
 }

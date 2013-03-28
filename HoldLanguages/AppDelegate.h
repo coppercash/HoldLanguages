@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "AppStatus.h"
 
-@class CDPanViewController, CDAudioSharer, CDAudioProgress, CDNetwork;
+@class CDPanViewController, CDAudioSharer, CDAudioProgress, CDNetwork, Reachability;
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     CDPanViewController *_panViewController;
     CDAudioSharer *_audioSharer;
     CDAudioProgress *_progress;
     CDNetwork *_network;
+    Reachability *_reachability;
     
     AppStatus *_status;
 }
@@ -24,7 +25,8 @@
 @property(strong, nonatomic) CDAudioSharer *audioSharer;
 @property(strong, nonatomic) CDAudioProgress *progress;
 @property(strong, nonatomic) CDNetwork *network;
-@property(nonatomic)AppStatus *status;
+@property(nonatomic, strong)Reachability *reachability;
+@property(nonatomic, assign)AppStatus *status;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

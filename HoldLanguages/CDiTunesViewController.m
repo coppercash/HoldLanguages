@@ -20,11 +20,14 @@ static NSString * const gItemsCacheName = @"Downloaded Items";
 static NSString * const gReuseCell = @"DownloadedItemsCell";
 static NSString * const gFileSharingCell = @"FilesSharingCell";
 static NSString * const gReuseNoFile = @"NF";
+static NSString * const headerXibName = @"CDiTunesHeaders";
 static NSString * const footerXibName = @"CDiTunesFooters";
 
 @interface CDiTunesViewController ()
 @property(nonatomic, strong)NSFetchedResultsController *items;
 @property(nonatomic, strong)CDFileItem *documents;
+@property(nonatomic, strong)UIView *downloadsHeader;
+@property(nonatomic, strong)UIView *fileSharingHeader;
 @property(nonatomic, strong)UIView *downloadsFooter;
 @property(nonatomic, strong)UIView *fileSharingFooter;
 
@@ -49,6 +52,8 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     tableView.separatorColor = [UIColor darkGrayColor];
     
     //Footers
+    self.downloadsHeader = [UIView viewFromXibNamed:headerXibName owner:self atIndex:0];
+    self.fileSharingHeader = [UIView viewFromXibNamed:headerXibName owner:self atIndex:1];
     self.downloadsFooter = [UIView viewFromXibNamed:footerXibName owner:self atIndex:0];
     self.fileSharingFooter = [UIView viewFromXibNamed:footerXibName owner:self atIndex:1];
 }
@@ -285,6 +290,20 @@ static NSString * const footerXibName = @"CDiTunesFooters";
         return [CDItemDetailTableCell heightWithItem:item];
     }
     return 44.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section < _items.sections.count) {
+        
+        return _downloadsHeader;
+        
+    }else if (section == _items.sections.count){
+        
+        return _fileSharingHeader;
+        
+    }
+    
+    return nil;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
