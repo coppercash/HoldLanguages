@@ -10,6 +10,7 @@
 #import "CDImageMetroCell.h"
 #import "CDRepeatView.h"
 #import "CDAudioSharer.h"
+#import "CDItem.h"
 
 #import "RepeatViewCategory.h"
 #import "BackgroundViewCategory.h"
@@ -31,7 +32,12 @@
             return artist;
         }break;
         case 1:{
-            NSString* title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+            NSString* title = nil;
+            if (_item) {
+                title = _item.title;
+            }else{
+                title = [self.audioSharer valueForProperty:MPMediaItemPropertyTitle];
+            }
             if (title == nil) title = NSLocalizedString(@"TapHere", @"Tap here !");
             return title;
         }break;

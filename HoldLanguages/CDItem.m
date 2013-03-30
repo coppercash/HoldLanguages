@@ -131,6 +131,20 @@ static NSString * const gKeyLyrics = @"lrc";
                 if ([text isKindOfClass:[NSString class]]) {
                     if ([text isEqualToString:@"\r\n"]) continue;
                     [collector appendFormat:@"%@\n", text];
+                    
+                    /*
+                     if ([text isEqualToString:@"\r\n"]) {
+                     isFeed = YES;
+                     continue;
+                     }else{
+                     if (isFeed) {
+                     [collector appendFormat:@"\n"];
+                     isFeed = NO;
+                     }
+                     [collector appendFormat:@"%@", text];
+                     }
+                     */
+                    
                 }else if ([text isKindOfClass:[NSDictionary class]]) {
                     //Image Item
                     NSString *link = [text objectForKey:gKeyImgSrc];

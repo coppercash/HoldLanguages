@@ -45,6 +45,7 @@
         if (finished) {
             [_storyView removeFromSuperview];
             self.storyView = nil;
+            self.item = nil;
         }
     }];
 }

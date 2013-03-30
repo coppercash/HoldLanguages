@@ -64,7 +64,6 @@
     NSValue *area1 = [NSValue valueWithCGRect:CGRectMake(.8f, .25f, .2f, .25f)];
     _holder.areas = [[NSArray alloc] initWithObjects:area0, area1, nil];
     
-    
     [view addSubview:_backgroundView];
     [view addSubview:_holder];
 }
@@ -179,14 +178,6 @@
 
 #pragma mark - CDSubPanViewController
 - (void)willPresentWithUserInfo:(id)userInfo{
-    AudioSourceType type = App.status->audioSourceType;
-    switch (type) {
-        case AudioSourceTypeDownloads:{
-            [self.topBar setTitleText:userInfo];
-        }break;
-        default:
-            break;
-    }
 }
 
 #pragma mark - MPMediaPickerControllerDelegate

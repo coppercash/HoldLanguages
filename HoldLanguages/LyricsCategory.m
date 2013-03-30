@@ -80,7 +80,6 @@
     
     [self.lyricsView reloadData];
     
-    [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
     return YES;
 }
 

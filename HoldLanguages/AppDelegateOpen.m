@@ -21,11 +21,12 @@
 - (BOOL)openItem:(Item *)item{
     if (item.status.integerValue != ItemStatusDownloaded) return NO;
     
-    BOOL success = [self openAudioAt:item.audio.absolutePath];
     
     MainViewController *con = (MainViewController *)_panViewController.rootViewController;
     [con openItem:item];
     
+    BOOL success = [self openAudioAt:item.audio.absolutePath];
+
     return success;
 }
 
