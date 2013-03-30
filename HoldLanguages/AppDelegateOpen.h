@@ -12,7 +12,7 @@
 - (BOOL)openItem:(Item *)item;
 - (BOOL)openAudioAt:(NSString *)path;
 - (BOOL)openLyricsAt:(NSString *)path;
-- (BOOL)openText:(NSString *)text;
+//- (BOOL)openText:(NSString *)text;
 @end
 
 #define App ((AppDelegate *)[[UIApplication sharedApplication] delegate])

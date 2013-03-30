@@ -130,15 +130,14 @@ static NSString * const gKeyLyrics = @"lrc";
             for (id text in content) {
                 if ([text isKindOfClass:[NSString class]]) {
                     if ([text isEqualToString:@"\r\n"]) continue;
-                    [collector appendFormat:@"<%@>%@</%@>\n", gStroyTagBody, text, gStroyTagBody];
+                    [collector appendFormat:@"%@\n", text];
                 }else if ([text isKindOfClass:[NSDictionary class]]) {
                     //Image Item
                     NSString *link = [text objectForKey:gKeyImgSrc];
                     if (link == nil) continue;
                     
                     NSString *path = pathFromLink(link);
-                    [collector appendFormat:@"<%@>%@</%@>\n", gStroyTagImage, directoryDocuments(path), gStroyTagImage];
-                    
+
                     Image *image = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Image class]) inManagedObjectContext:context];
                     [self addImagesObject:image];
                     image.link = link;
@@ -215,11 +214,11 @@ static NSString * const gKeyLyrics = @"lrc";
     }
     return nil;
 }
-
+/*
 - (NSString *)contentWithTitle{
     NSString *text = [[NSString alloc] initWithFormat:@"<%@>%@</%@>\n%@", gStroyTagHead, self.title, gStroyTagHead, self.content.content];
     return text;
-}
+}*/
 
 - (NSString *)description{
     NSMutableString *des = [NSMutableString string];

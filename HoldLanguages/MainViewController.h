@@ -25,7 +25,8 @@
     CDLyrics *_lyrics;
     
     CDStoryView *_storyView;
-    NSString *_story;
+    Item *_item;
+    //NSString *_story;
     
     CDIntroductionView *_introductionView;
     SEL _introductionRevert;
@@ -58,7 +59,8 @@
 @property(nonatomic, strong)CDAudioSharer *audioSharer;
 @property(nonatomic, strong)CDAudioProgress *progress;
 @property(nonatomic, strong)CDLyrics* lyrics;
-@property(nonatomic, copy)NSString *story;
+@property(nonatomic, strong)Item* item;
+//@property(nonatomic, copy)NSString *story;
 @property(nonatomic, assign)SEL introductionRevert;
 
 @end

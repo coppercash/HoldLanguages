@@ -7,15 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-@class FTCoreTextView;
-@interface CDStoryView : UIScrollView {
-    FTCoreTextView *_textView;
+#import "AKOMultiPageTextView.h"
+@class Item;
+@interface CDStoryView : AKOMultiPageTextView <AKOMultiColumnTextViewDataSource> {
+    Item *_item;
+    NSInteger _pageIndex;
 }
-- (void)redrawContent;
-- (void)setContentString:(NSString *)content;
+@property(nonatomic, strong)Item *item;
+@property(nonatomic, readonly)NSInteger pageIndex;
+@property(nonatomic, getter = pageOnScreen)NSInteger pageOnScreen;
+//- (void)redrawContent;
+//- (void)setContentString:(NSString *)content;
 - (void)scrollFor:(CGFloat)increment animated:(BOOL)animated;
+- (void)scrollToPage:(NSInteger)index animated:(BOOL)animated; 
 @end
-
-extern NSString * const gStroyTagHead;
-extern NSString * const gStroyTagBody;
-extern NSString * const gStroyTagImage;

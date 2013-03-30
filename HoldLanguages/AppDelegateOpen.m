@@ -20,14 +20,12 @@
 @implementation AppDelegate (AppDelegateOpen)
 - (BOOL)openItem:(Item *)item{
     if (item.status.integerValue != ItemStatusDownloaded) return NO;
-    BOOL success = NO;
-    //[self openText:item.contentWithTitle];
-
     
-    if (![self openLyricsAt:item.lyrics.absolutePath]) {
-        [self openText:item.contentWithTitle];
-    }
-    success = [self openAudioAt:item.audio.absolutePath];
+    BOOL success = [self openAudioAt:item.audio.absolutePath];
+    
+    MainViewController *con = (MainViewController *)_panViewController.rootViewController;
+    [con openItem:item];
+    
     return success;
 }
 
@@ -47,9 +45,11 @@
     return [con openLyricsAtPath:path];
 }
 
+
+/*
 - (BOOL)openText:(NSString *)text{
     MainViewController *con = (MainViewController *)_panViewController.rootViewController;
     return [con openText:text];
-}
+}*/
 
 @end

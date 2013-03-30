@@ -18,7 +18,7 @@
 @synthesize holder = _holder, backgroundView = _backgroundView;
 @dynamic lyricsView, storyView, introductionView;
 @synthesize repeatView = _repeatView, ratesView = _ratesView;
-@synthesize audioSharer = _audioSharer, lyrics = _lyrics, story = _story, introductionRevert = _introductionRevert;
+@synthesize audioSharer = _audioSharer, lyrics = _lyrics, item = _item, introductionRevert = _introductionRevert;
 @synthesize mediaPicker = _mediaPicker;
 @synthesize progress = _progress;
 

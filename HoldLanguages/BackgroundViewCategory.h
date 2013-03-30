@@ -9,5 +9,4 @@
 #import "MainViewController.h"
 
 @interface MainViewController (BackgroundViewCategory)
-//- (void)switchAssistHidden;
 @end

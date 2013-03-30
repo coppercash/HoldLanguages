@@ -10,6 +10,8 @@
 #import "CDStoryView.h"
 #import "CDBackgroundView.h"
 #import "CDHolder.h"
+#import "CDItem.h"
+#import "CoreDataModels.h"
 
 #import "IntroductionCategory.h"
 #import "LyricsCategory.h"
@@ -20,7 +22,8 @@
     if (!_storyView) {
         self.storyView = [[CDStoryView alloc] initWithFrame:self.view.bounds];
         _storyView.autoresizingMask = kViewAutoresizingNoMarginSurround;
-        [_storyView setContentString:_story];
+        [_storyView setItem:_item];
+        //[_storyView setContentString:_story];
     }
     if (!_storyView.superview) {
         _storyView.alpha = 0.0f;
@@ -50,10 +53,18 @@
     _storyView = storyView;
 }
 
+- (BOOL)openItem:(Item *)item{
+    self.item = item;
+    if (![self openLyricsAtPath:item.lyrics.absolutePath]) {
+        [self.storyView setItem:item];
+    }
+    return YES;
+}
+/*
 - (BOOL)openText:(NSString *)text{
     self.story = text;
     [self.storyView setContentString:text];
     return YES;
-}
+}*/
 
 @end

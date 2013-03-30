@@ -15,27 +15,5 @@
 @end
 
 @implementation MainViewController (BackgroundViewCategory)
-/*
-- (void)switchAssistHidden{
-    CDBackgroundViewKey state = _backgroundView.state;
-    
-    if (state == CDBackgroundViewKeyNone) {
-        if (_lyrics != nil) {
-            [UIView animateWithDuration:0.3f animations:^{
-                self.lyricsView.alpha = 0.0f;
-            }];
-        }
-        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyAssist];
-        
-    }else{
-        if (_lyrics != nil) {
-            [UIView animateWithDuration:0.3f animations:^{
-                self.lyricsView.alpha = 1.0f;
-            }];
-        }
-        [self.backgroundView switchViewWithKey:CDBackgroundViewKeyNone];
-    }
-    
-}*/
 
 @end

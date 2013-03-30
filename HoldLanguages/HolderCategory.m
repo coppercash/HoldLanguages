@@ -12,6 +12,7 @@
 #import "CDRepeatView.h"
 #import "CDLyricsView.h"
 #import "CDAudioSharer.h"
+#import "CDStoryView.h"
 
 #import "RepeatViewCategory.h"
 #import "PullViewControllerCategory.h"
@@ -26,6 +27,9 @@
                 [self prepareToChangeRate];
             }break;
             case 1:{
+                
+            }break;
+            case 2:{
                 [self prepareToRepeat:direction];
             }break;
             default:
@@ -41,6 +45,9 @@
                 [_ratesView scrollFor:-increment animated:NO];
             }break;
             case 1:{
+                [_storyView scrollFor:-increment animated:NO];
+            }break;
+            case 2:{
                 [self countRepeatTimeWithDistance:distance];
             }
             default:
@@ -60,6 +67,15 @@
                 [_ratesView endScrolling];
             }break;
             case 1:{
+                
+                if (direction & CDDirectionLeft) {
+                    [_storyView scrollToPage:_storyView.pageIndex + 1 animated:YES];
+                }else if (direction & CDDirectionRight){
+                    [_storyView scrollToPage:_storyView.pageIndex - 1 animated:YES];
+                }
+            
+            }break;
+            case 2:{
                 [self repeatWithDirection:direction distance:distance];
             }break;
             default:
@@ -89,8 +105,10 @@
                 [_ratesView cancelScrolling];
             }break;
             case 1:{
+                
+            }break;
+            case 2:{
                 [_repeatView cancel];
-                DLog(@"Release Repeat View");
             }break;
             default:
                 break;
@@ -100,10 +118,24 @@
     }
 }
 
-- (void)holder:(CDHolder *)holder handleTap:(NSUInteger)count{
+- (void)holder:(CDHolder *)holder handleTap:(NSUInteger)count index:(NSInteger)index{
     switch (count) {
         case 1:{
             [self setBarsHidden:YES animated:YES];
+
+            switch (index) {
+                case 0:{
+                }break;
+                case 1:{
+                    [_storyView scrollToPage:_storyView.pageIndex - 1 animated:YES];
+                }break;
+                case 2:{
+                    [_storyView scrollToPage:_storyView.pageIndex + 1 animated:YES];
+                }break;
+                default:
+                    break;
+            }
+        
         }break;
         case 2:{
             [self.audioSharer playOrPause];
@@ -111,10 +143,6 @@
         default:
             break;
     }
-}
-
-- (void)holderTapDouble:(CDHolder *)holder{
-    [self.audioSharer playOrPause];
 }
 
 - (void)holderLongPressed:(CDHolder *)holder{

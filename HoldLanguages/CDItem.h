@@ -33,7 +33,7 @@ typedef void(^CDItemCorrector)(Item *item, NSError *error);
 - (NSString *)hostName;
 - (NSString *)relativePath;
 - (Image *)anyImage;
-- (NSString *)contentWithTitle;
+//- (NSString *)contentWithTitle;
 - (BOOL)isEqualToItem:(Item *)anotherItem;
 @end
 

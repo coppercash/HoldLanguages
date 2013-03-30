@@ -7,70 +7,88 @@
 //
 
 #import "CDStoryView.h"
-#import "FTCoreTextView.h"
+#import "CDItem.h"
+#import "CoreDataModels.h"
 
 @interface CDStoryView ()
-@property(nonatomic, strong)FTCoreTextView *textView;
+- (void)setXOffset:(CGFloat)xOffset animated:(BOOL)animated;
 @end
 
 @implementation CDStoryView
-@synthesize textView = _textView;
+@synthesize item = _item;
+@synthesize pageIndex = _pageIndex;
+@dynamic pageOnScreen;
 
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.textView = [[FTCoreTextView alloc] initWithFrame:CGRectInset(self.bounds, 20.0f, 0.0f)];
-        _textView.autoresizingMask = CDViewAutoresizingCenter;
+        self.backgroundColor = [UIColor clearColor];
+        self.color = [UIColor whiteColor];
+        self.dataSource = self;
+        [self.pageControl removeFromSuperview];
+        self.pageControl = nil;
         
-        FTCoreTextStyle *tS = [FTCoreTextStyle styleWithName:@"head"];   //Title Style
-        tS.textAlignment = FTCoreTextAlignementCenter;
-        tS.font = [UIFont fontWithName:@"TimesNewRomanPSMT" size:40.f];
-        tS.color = [UIColor whiteColor];
-        tS.paragraphInset = UIEdgeInsetsMake(0, 0, 25, 0);
-        
-        FTCoreTextStyle *bS = [FTCoreTextStyle styleWithName:@"body"];   //Body Style
-        bS.font = [UIFont fontWithName:@"TimesNewRomanPSMT" size:20.f];
-        bS.color = [UIColor whiteColor];
-        bS.paragraphInset = UIEdgeInsetsMake(10, 0, 10, 0);
-        
-        FTCoreTextStyle *iS = [FTCoreTextStyle new];    //Image Style
-        iS.name = FTCoreTextTagImage;
-        iS.textAlignment = FTCoreTextAlignementCenter;
-        iS.paragraphInset = UIEdgeInsetsMake(0,0,0,0);
-        
-        NSArray *styles = [[NSArray alloc] initWithObjects:tS, bS, iS, nil];
-        [_textView addStyles:styles];
-        
-        [self addSubview:_textView];
+        CGFloat fontSize = 20.0f;
+        self.columnCount = 1;
+        self.font = [UIFont systemFontOfSize:fontSize];
+        self.spacing = fontSize;
+        self.columnInset = CGPointMake(fontSize, 2 * fontSize);
     }
     return self;
 }
 
+- (void)dealloc{
+    self.dataSource = nil;
+}
+
 #pragma mark - Content
-- (void)redrawContent{
-    [_textView redraw];
+- (void)setItem:(Item *)item{
+    _item = item;
+    self.text = item.content.content;
 }
 
-- (void)setContentString:(NSString *)content{
-    _textView.text = content;
-    [_textView fitToSuggestedHeight];
-    self.contentSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(_textView.frame));
+#pragma mark - AKOMultiColumnTextViewDataSource
+- (UIView *)akoMultiColumnTextView:(AKOMultiColumnTextView *)textView viewForColumn:(NSInteger)column onPage:(NSInteger)page{
+    NSArray *images = _item.images.allObjects;
+    if (page < images.count) {
+        Image *img = [images objectAtIndex:page];
+        UIImage *image = [[UIImage alloc] initWithContentsOfFile:img.absolutePath];
+        return [[UIImageView alloc] initWithImage:image];
+    }
+    return nil;
 }
 
-- (void)setYOffset:(CGFloat)yOffset animated:(BOOL)animated{
-    CGPoint offset = self.contentOffset;
-    offset.y = yOffset;
-    [self setContentOffset:offset animated:animated];
-}
-
+#pragma mark - Scroll
 - (void)scrollFor:(CGFloat)increment animated:(BOOL)animated{
-    CGFloat yTarget = self.contentOffset.y + increment;
-    [self setYOffset:yTarget animated:animated];
+    CGFloat xTarget = _scrollView.contentOffset.x + increment;
+    [self setXOffset:xTarget animated:animated];
 }
 
+- (void)setXOffset:(CGFloat)xOffset animated:(BOOL)animated{
+    CGFloat xMin = 0.0f;
+    CGFloat xMax = _scrollView.contentSize.width - CGRectGetWidth(_scrollView.bounds);
+    CGPoint offset = _scrollView.contentOffset;
+    offset.x = limitedFloat(xOffset, xMin, xMax);
+    //offset.x = xOffset;
+    [_scrollView setContentOffset:offset animated:animated];
+}
+
+- (void)scrollToPage:(NSInteger)index animated:(BOOL)animated{
+    CGFloat pageWidth = CGRectGetWidth(_scrollView.bounds);
+    NSInteger min = 0;
+    NSInteger max = _scrollView.contentSize.width / pageWidth;
+    _pageIndex = limitedInteger(index, min, max);
+
+    CGFloat x = _pageIndex * pageWidth;
+    [self setXOffset:x animated:animated];
+}
+
+- (NSInteger)pageOnScreen{
+    CGFloat pageWidth = CGRectGetWidth(_scrollView.bounds);
+    CGFloat x = _scrollView.contentOffset.x + 0.5 * pageWidth;
+    NSInteger index = x / pageWidth;
+    return index;
+}
 
 @end
 
-NSString * const gStroyTagHead = @"head";
-NSString * const gStroyTagBody = @"body";
-NSString * const gStroyTagImage = @"_image";

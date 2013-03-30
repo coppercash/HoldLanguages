@@ -12,12 +12,12 @@
 
 @interface AKOMultiPageTextView : UIView <UIScrollViewDelegate>
 {
+    UIScrollView *_scrollView;
 @private
     NSMutableArray *_pages;
     NSString *_text;
     UIFont *_font;
     UIColor *_color;
-    UIScrollView *_scrollView;
     NSInteger _columnCount;
     UIPageControl *_pageControl;
     BOOL _pageControlUsed;
