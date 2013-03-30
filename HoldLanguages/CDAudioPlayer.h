@@ -43,11 +43,11 @@ typedef enum {
 - (void)playbackAt:(NSTimeInterval)playbackTime;
 - (void)playbackFor:(NSTimeInterval)increment;
 #pragma mark - Repeat
-- (void)repeatIn:(CDTimeRange)timeRange;
+- (void)repeatIn:(CDDoubleRange)timeRange;
 - (void)setRepeatA;
 - (void)setRepeatB;
 - (void)stopRepeating;
-- (CDTimeRange)repeatRange;
+- (CDDoubleRange)repeatRange;
 - (BOOL)isRepeating;
 - (BOOL)isWaitingForPointB;
 #pragma mark - Information

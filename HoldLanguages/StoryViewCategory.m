@@ -9,23 +9,50 @@
 #import "StoryViewCategory.h"
 #import "CDStoryView.h"
 #import "CDBackgroundView.h"
+#import "CDHolder.h"
+
+#import "IntroductionCategory.h"
+#import "LyricsCategory.h"
 
 @implementation MainViewController (StoryViewCategory)
-- (CDStoryView *)createStoryViewWihtFrame:(CGRect)frame{
-    self.storyView = [[CDStoryView alloc] initWithFrame:frame];
+
+- (CDStoryView *)storyView{
+    if (!_storyView) {
+        self.storyView = [[CDStoryView alloc] initWithFrame:self.view.bounds];
+        _storyView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        [_storyView setContentString:_story];
+    }
+    if (!_storyView.superview) {
+        _storyView.alpha = 0.0f;
+        [self.view insertSubview:_storyView belowSubview:_holder];
+        [UIView animateWithDuration:kSubviewsSwitchDuration animations:^{
+            _storyView.alpha = 1.0f;
+        }];
+        
+        [self removeLyricsView];
+        [self removeIntroductionView];
+    }
     return _storyView;
 }
 
-- (void)createStoryViewIn:(UIView *)view{
-    self.storyView = [[CDStoryView alloc] initWithFrame:view.bounds];
-    //_holder.brother = _storyView;
-    //[_holder addSubview:_storyView];
-    [view insertSubview:_storyView belowSubview:_holder];
+- (void)removeStoryView{
+    [UIView animateWithDuration:kSubviewsSwitchDuration animations:^{
+        _storyView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [_storyView removeFromSuperview];
+            self.storyView = nil;
+        }
+    }];
+}
+
+- (void)setStoryView:(CDStoryView *)storyView{
+    _storyView = storyView;
 }
 
 - (BOOL)openText:(NSString *)text{
-    if (_storyView == nil) [self createStoryViewIn:self.view];
-    [_storyView setContentString:text];
+    self.story = text;
+    [self.storyView setContentString:text];
     return YES;
 }
 

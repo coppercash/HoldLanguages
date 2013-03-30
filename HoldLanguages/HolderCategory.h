@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-
-@interface MainViewController (HolderCategory)
+#import "CDHolder.h"
+@interface MainViewController (HolderCategory) <CDHolderDelegate>
 
 @end

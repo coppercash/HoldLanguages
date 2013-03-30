@@ -52,7 +52,6 @@
 }
 
 - (void)setContentString:(NSString *)content{
-    DLog(@"%@", content);
     _textView.text = content;
     [_textView fitToSuggestedHeight];
     self.contentSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(_textView.frame));

@@ -12,6 +12,8 @@
 
 @class CD51VOA, CDLoadMoreControl;
 @interface CDOnlineViewController : UITableViewController <CDSubPanViewController> {
+    __weak CDPanViewController *_panViewController;
+    
     //Subviews
     CDLoadMoreControl *_loader;
     
@@ -30,7 +32,7 @@
     NSIndexPath *_detailIndex;
     __weak CDNKOperation *_imageNetwork;   //For cancel it after canceling detail mode.
 }
-
+@property(nonatomic, weak)CDPanViewController *panViewController;
 @end
 
 #define kRefreshCapacity 20

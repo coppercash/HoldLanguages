@@ -7,9 +7,14 @@
 //
 
 #import "HolderCategory.h"
-#import "MainViewController.h"
 #import "CDBackgroundView.h"
 #import "CDLyrics.h"
+#import "CDRepeatView.h"
+#import "CDLyricsView.h"
+#import "CDAudioSharer.h"
+
+#import "RepeatViewCategory.h"
+#import "PullViewControllerCategory.h"
 
 @implementation MainViewController (HolderCategory)
 
@@ -42,7 +47,7 @@
                 break;
         }
     }else if (direction & CDDirectionVertical){
-        [self.lyricsView scrollFor:-increment animated:NO];
+        [_lyricsView scrollFor:-increment animated:NO];
         
         [_backgroundView moveWithValue:increment];
     }

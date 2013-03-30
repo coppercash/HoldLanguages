@@ -11,8 +11,11 @@
 #import "CoreDataModels.h"
 #import "CDAudioSharer.h"
 #import "CDPanViewController.h"
-#import "MainViewController.h"
 #import "StoryViewCategory.h"
+
+#import "MainViewController.h"
+#import "LyricsCategory.h"
+
 
 @implementation AppDelegate (AppDelegateOpen)
 - (BOOL)openItem:(Item *)item{

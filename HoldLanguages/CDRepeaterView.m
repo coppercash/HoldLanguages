@@ -23,10 +23,10 @@
     return self;
 }
 
-- (void)setRepeatRaneg:(CDTimeRange)repeatRange{
+- (void)setRepeatRaneg:(CDDoubleRange)repeatRange{
     NSString *start = textWithTimeInterval(repeatRange.location);
     _start.text = start;
-    NSString *end = textWithTimeInterval(CDTimeRangeGetEnd(repeatRange));
+    NSString *end = textWithTimeInterval(CDMaxDoubleRange(repeatRange));
     _end.text = end;
 }
 

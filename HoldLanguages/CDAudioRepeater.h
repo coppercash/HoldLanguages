@@ -12,13 +12,13 @@
 @interface CDAudioRepeater : NSObject <CDAudioProgressDelegate>{
     id<CDAudioRepeaterSource> _player;
     CDAudioProgress *_progress;
-    CDTimeRange _repeatRange;
+    CDDoubleRange _repeatRange;
     NSTimeInterval _rangeEnd;
 }
 - (id)initWithPlayer:(id<CDAudioRepeaterSource>)player progress:(CDAudioProgress*)progress;
-- (void)repeatIn:(CDTimeRange)range;
+- (void)repeatIn:(CDDoubleRange)range;
 - (void)stopRepeating;
-- (CDTimeRange)repeatRange;
+- (CDDoubleRange)repeatRange;
 @end
 
 @protocol CDAudioRepeaterSource <NSObject>

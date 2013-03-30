@@ -9,7 +9,6 @@
 #import "MainViewController.h"
 
 @interface MainViewController (StoryViewCategory)
-- (void)createStoryViewIn:(UIView *)view;
-- (CDStoryView *)createStoryViewWihtFrame:(CGRect)frame;
+- (void)removeStoryView;
 - (BOOL)openText:(NSString *)text;
 @end

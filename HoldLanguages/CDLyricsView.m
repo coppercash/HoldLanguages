@@ -36,6 +36,11 @@
     return self;
 }
 
+- (void)dealloc{
+    _lyricsTable.dataSource = nil;
+    _lyricsTable.delegate = nil;
+}
+
 - (void)initialize{
     _animateTagetingIndex = NSUIntegerMax;
     
@@ -217,6 +222,11 @@ static NSString *reuseIdentifierFooter = @"ReuseFooter";
 - (void)scrollFor:(CGFloat)increment animated:(BOOL)animated{
     CGFloat yTarget = _lyricsTable.contentOffset.y + increment;
     [self setYOffset:yTarget animated:animated];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector{
+    DLog(@"respondsToSelector\n%@", NSStringFromSelector(aSelector));
+    return [super respondsToSelector:aSelector];
 }
 
 @end

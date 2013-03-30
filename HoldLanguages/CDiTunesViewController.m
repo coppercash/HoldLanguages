@@ -40,6 +40,7 @@ static NSString * const footerXibName = @"CDiTunesFooters";
 @end
 
 @implementation CDiTunesViewController
+@synthesize panViewController = _panViewController;
 @synthesize items = _items, documents = _documents;
 
 #pragma mark - Resource Management
@@ -67,6 +68,7 @@ static NSString * const footerXibName = @"CDiTunesFooters";
                                 [[NSSortDescriptor alloc] initWithKey:@"downloadTry" ascending:NO]
                                 ];
     
+    [NSFetchedResultsController deleteCacheWithName:gItemsCacheName];
     self.items = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:kMOContext sectionNameKeyPath:nil cacheName:gItemsCacheName];
     _items.delegate = self;
     
@@ -77,6 +79,7 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     NSError *error = nil;
     [_items performFetch:&error];
     AssertError(error);
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -87,6 +90,9 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     // Test self.view can be release (on the screen or not).
     if (self.view.window == nil){
         // Preserve data stored in the views that might be needed later.
+        NSError *error = nil;
+        [kMOContext save:&error];
+        AssertError(error);
         
         // Clean up other strong references to the view in the view hierarchy.
         self.downloadsFooter = nil;
@@ -174,8 +180,10 @@ static NSString * const footerXibName = @"CDiTunesFooters";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSUInteger number = 0;
     if (section < _items.sections.count) {
+        
         id <NSFetchedResultsSectionInfo> sectionInfo = [[_items sections] objectAtIndex:section];
         number = sectionInfo.numberOfObjects;
+
     }else if (section == _items.sections.count){
         number = _documents.count - 1;
     }
@@ -364,10 +372,24 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     
     switch(type) {
             
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                             withRowAnimation:kDefaultCellAnimationType];
-            break;
+        case NSFetchedResultsChangeInsert:{
+            
+            
+            // For coming Item when the _items is empty, and the footer won't disappear immediately.
+            NSInteger section = newIndexPath.section;
+            NSUInteger numberOfObjects = [[[_items sections] objectAtIndex:section] numberOfObjects];
+            if (section < _items.sections.count && numberOfObjects == 1) {
+                
+                [tableView reloadSections:[[NSIndexSet alloc] initWithIndex:section] withRowAnimation:kDefaultCellAnimationType];
+            
+            }else{
+                
+                [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                                 withRowAnimation:kDefaultCellAnimationType];
+
+            }
+        
+        }break;
             
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]

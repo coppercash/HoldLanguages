@@ -51,6 +51,7 @@ static NSString * const gReuseDetailCell = @"RDC";
 @end
 
 @implementation CDOnlineViewController
+@synthesize panViewController = _panViewController;
 @synthesize loader = _loader;
 @synthesize VOA51 = _VOA51, itemList = _itemList;
 @synthesize
@@ -304,9 +305,10 @@ pageCapacity = _pageCapacity;
 - (void)tableView:(UITableView *)tableView swipeRowAtIndexPath:(NSIndexPath *)indexPath toDirection:(UISwipeGestureRecognizerDirection)direction{
     //download  Left && (isDictionary || init item)
     //cancel    Right && downloading item
-    //return    Right && !downloading item
+    //return    Right && (isDictionary || !downloading item)
     
     Item *data = [_itemList objectAtIndex:indexPath.row];
+    
     switch (direction) {
         case UISwipeGestureRecognizerDirectionLeft:{
             if ([data isKindOfClass:[NSDictionary class]] ||
@@ -318,11 +320,14 @@ pageCapacity = _pageCapacity;
         }break;
         case UISwipeGestureRecognizerDirectionRight:
             
-            if (![data isKindOfClass:[Item class]]) break;
-            if (data.status.integerValue == ItemStatusDownloading) {
+            if ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusDownloading) {
+                
                 [self cancelDownloadWithRowAtIndexPath:indexPath];
+            
             }else{
-                //return
+                
+                [_panViewController switchToController:CDPanViewControllerTypeRoot withUserInfo:nil];
+
             }
             
             break;
@@ -357,14 +362,16 @@ pageCapacity = _pageCapacity;
     self.tableView.scrollEnabled = NO;
     _detailIndex = indexPath;
     
+    __weak UITableView *tableView = self.tableView;
     NSDictionary *data = [_itemList objectAtIndex:indexPath.row];
     if ([data isKindOfClass:[NSDictionary class]]) {
         
-        __weak UITableView *tableView = self.tableView;
         [self convertDictionary:data atIndexPath:indexPath completion:^(Item *item, NSIndexPath *indePath) {
             
+            // Unfold cell
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:kDefaultCellAnimationType];
-            
+            [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
             Image *image = item.anyImage;
             if (image) [self downloadTempImage:image forIndexPath:indexPath];
             
@@ -372,7 +379,9 @@ pageCapacity = _pageCapacity;
     
     }else if ([data isKindOfClass:[Item class]]) {
         
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:kDefaultCellAnimationType];
+        // Unfold cell
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:kDefaultCellAnimationType];
+        [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         
         Item *item = (Item *)data;
         ItemStatus status = item.status.integerValue;

@@ -25,7 +25,7 @@
 @property(nonatomic, strong)IBOutlet CDMinusButton *rightMinus;
 @property(nonatomic, strong)IBOutlet UILabel *start;
 @property(nonatomic, strong)IBOutlet UILabel *end;
-- (void)setRepeatRaneg:(CDTimeRange)repeatRange;
+- (void)setRepeatRaneg:(CDDoubleRange)repeatRange;
 @end
 
 @interface CDPlusButton : UIButton
