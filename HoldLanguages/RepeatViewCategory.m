@@ -9,6 +9,7 @@
 #import "RepeatViewCategory.h"
 #import "CDHolder.h"
 #import "CDAudioSharer.h"
+#import "CDPullControllerMetro.h"
 
 @interface MainViewController ()
 
@@ -17,25 +18,29 @@
 @implementation MainViewController (RepeatViewCategory)
 
 #pragma mark - Repeat
-- (void)loadRepeatView{
-    if (_repeatView != nil) [_repeatView removeFromSuperview];
-    
-    CGFloat hI = (1 - 0.96) / 2 * CGRectGetWidth(self.view.bounds);  //horizontal inset
-    CGRect frame = CGRectInset(self.view.bounds, hI, 0.0f);
-    CGFloat height = CGRectGetHeight(self.view.bounds);
-    CGFloat topMagin = 0.02 * height;
-    CGFloat bottomMagin = 0.17 * height;
-    frame.origin.y = height / 2 + topMagin;
-    frame.size.height = frame.size.height / 2 - topMagin - bottomMagin;
-    
-    _repeatView = [[CDRepeatView alloc] initWithFrame:frame delegate:self];
-    _repeatView.autoresizingMask = CDViewAutoresizingFloat;
-    [self.view insertSubview:_repeatView aboveSubview:_holder];
+- (CDRepeatView *)repeatView{
+    if (!_repeatView) {
+        CGRect frame = self.view.bounds;
+        frame = CGRectMake(kMargin,
+                           0.5f * CGRectGetHeight(frame) + 0.5 * kMarginSecondary,
+                           CGRectGetWidth(frame) - 2 * kMargin,
+                           0.5f * CGRectGetHeight(frame) - 2 * kMarginSecondary - kBottimBarHeight - kMarginSecondary);
+        _repeatView = [[CDRepeatView alloc] initWithFrame:frame delegate:self];
+        _repeatView.autoresizingMask = CDViewAutoresizingFloat;
+    }
+    if (!_repeatView.superview) {
+        [self.view insertSubview:_repeatView aboveSubview:_holder];
+    }
+    return _repeatView;
+}
+
+- (void)setRepeatView:(CDRepeatView *)repeatView{
+    _repeatView = repeatView;
 }
 
 - (void)prepareToRepeat:(CDDirection)direction{
     if (_audioSharer.canRepeating) {
-        if (_repeatView == nil) [self loadRepeatView];
+        [self repeatView];
         _repeatView.repeatDirection = direction;
         [_repeatView show];
         DLog(@"Create Repeat View");
@@ -72,12 +77,6 @@
 }
 
 #pragma mark - CDRepeatViewDelegate
-/*
- - (void)repeatViewDidPresent:(CDRepeatView*)repeatView{
- [repeatView.repeater setRepeatRaneg:_audioSharer.repeatRange];
- [_bottomBar setRepeatRanege:_audioSharer.repeatRange withDuration:_audioSharer.currentDuration];
- }*/
-
 - (void)repeatViewDidDismiss:(CDRepeatView*)repeatView{
     [_audioSharer stopRepeating];
     
@@ -109,18 +108,21 @@
 }
 
 #pragma mark - Rates
-- (void)prepareToChangeRate{
-    if (_ratesView == nil) {
-        CGFloat topMargin = 80.0f;
-        CGFloat bottomMargin = 5.0f;
+- (CDRatesView *)ratesView{
+    if (!_ratesView) {
         CGRect frame = self.view.bounds;
-        frame.origin.y = topMargin;
-        frame.size.height = frame.size.height / 2 - topMargin - bottomMargin;
-        self.ratesView = [[CDRatesView alloc] initWithFrame:frame rates:_audioSharer.rates delegate:self];
+        frame = CGRectMake(0.0f,
+                           kMargin,
+                           CGRectGetWidth(frame),
+                           0.25f * CGRectGetHeight(frame) - kMargin - 0.5 * kMarginSecondary);
+        _ratesView = [[CDRatesView alloc] initWithFrame:frame rates:_audioSharer.rates delegate:self];
         _ratesView.autoresizingMask = CDViewAutoresizingFloat;
+    }
+    if (!_ratesView.superview) {
         [self.view insertSubview:_ratesView belowSubview:_holder];
     }
-    [_ratesView startScrolling];
+    [_ratesView startScrolling];    //Ignite
+    return _ratesView;
 }
 
 - (void)ratesView:(CDRatesView *)rateView didChangeRateTo:(float)rate{
@@ -129,7 +131,11 @@
 
 - (void)ratesViewDidHide:(CDRatesView *)rateView{
     [_ratesView removeFromSuperview];
-    self.ratesView = nil;
+    _ratesView = nil;
+}
+
+- (void)setRatesView:(CDRatesView *)ratesView{
+    _ratesView = ratesView;
 }
 
 @end

@@ -23,11 +23,16 @@ typedef enum {
     CDSpotlightView *_spotlight;
     UIImage *_noizeImage;
     CDAnimationState _animationState;
+    
+    UIImageView *_leftPage;
+    UIImageView *_rightPage;
 }
 
 - (void)moveWithValue:(CGFloat)distance;
 - (void)move:(CDAnimationState)target;
 
+- (void)igniteLeftPage;
+- (void)igniteRightPage;
 @end
 
 

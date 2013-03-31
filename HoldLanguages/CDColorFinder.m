@@ -9,38 +9,57 @@
 #import "CDColorFinder.h"
 
 @implementation CDColorFinder
-- (UIColor*)colorOfBarLight{
-    UIColor* color = [UIColor color255WithRed:31. green:57. blue:72. alpha:kBarAlpha];
-    return color;
+
++ (UIColor *)colorOfDownloads{
+    return [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
 }
 
-- (UIColor*)colorOfBarDark{
-    UIColor* color = [UIColor color255WithRed:38. green:94. blue:129. alpha:kBarAlpha];
-    return color;
++ (UIColor *)colorOfFileSharing{
+    return [UIColor purpleColor];
 }
 
-- (UIColor*)colorOfRotatingCircle{
-    UIColor* color = [UIColor color255WithRed:77. green:144. blue:153. alpha:kBarAlpha];
-    return color;
++ (UIColor *)colorOfAudio{
+    return [UIColor redColor];
 }
 
-- (UIColor*)colorOfProgressViewBackground{
-    UIColor* color = [UIColor colorWithRed:0.0980f green:0.1137f blue:0.1294f alpha:1.0f];
-    return color;
++ (UIColor *)colorOfLyrics{
+    return [UIColor yellowColor];
 }
 
-- (UIColor*)colorOfProgressViewBackgroundGlow{
-    UIColor* color = [UIColor colorWithRed:0.0666f green:0.0784f blue:0.0901f alpha:1.0f];
-    return color;
++ (UIColor *)colorOfRates{
+    return [UIColor color255WithRed:240.0f green:130.0f blue:51.0f alpha:1.0f];
 }
 
-- (void)gradientComponentsProgressView:(CGFloat*)progressComponents{
-    UIColor* startColor = [UIColor color255WithRed:111. green:170. blue:184. alpha:1.0f];
-    UIColor* endColor = [UIColor color255WithRed:242. green:220. blue:119. alpha:1.0f];
-    //UIColor* startColor = [UIColor color255WithRed:77. green:144. blue:153. alpha:1.0f];
-    //UIColor* endColor = [UIColor color255WithRed:111. green:170. blue:184. alpha:1.0f];
-    [startColor getRed:progressComponents green:progressComponents + 1 blue:progressComponents + 2 alpha:progressComponents + 3];
-    [endColor getRed:progressComponents + 4 green:progressComponents + 5 blue:progressComponents + 6 alpha:progressComponents + 7];
++ (UIColor *)colorOfPages{
+    return kDebugColor;
+}
+
++ (UIColor *)colorOfRepeat{
+    return [UIColor color255WithRed:133 green:166 blue:38 alpha:1.0f];
+}
+
++ (UIColor *)colorOfBars{
+    return [UIColor color255WithRed:0.0f green:115.0f blue:180.0f alpha:1.0f];
+}
+
+@end
+
+@implementation UIView (Shadow)
+
+- (void)shadowed{
+    CALayer *layer = self.layer;
+    layer.shadowColor = [UIColor blackColor].CGColor;
+    layer.shadowOpacity = 0.7f;
+    layer.shadowOffset = CGSizeMake(0.0f, 3.0f);
+    layer.shadowPath = [UIBezierPath bezierPathWithRect:CGRectInset(self.bounds, - 2.0f, - 2.0f)].CGPath;
+}
+
+- (void)deshadowed{
+    CALayer *layer = self.layer;
+    layer.shadowColor = [UIColor blackColor].CGColor;
+    layer.shadowOpacity = 0.0f;
+    layer.shadowOffset = CGSizeMake(0.0, - 3.0);
+    layer.shadowPath = nil;
 }
 
 @end

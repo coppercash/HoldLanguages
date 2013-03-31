@@ -15,6 +15,7 @@
 #import "CoreDataModels.h"
 #import "CDAudioSharer.h"
 #import "CDAudioPlayer.h"
+#import "CDColorFinder.h"
 
 static NSString * const gItemsCacheName = @"Downloaded Items";
 static NSString * const gReuseCell = @"DownloadedItemsCell";
@@ -54,7 +55,11 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     
     //Footers
     self.downloadsHeader = [UIView viewFromXibNamed:headerXibName owner:self atIndex:0];
+    [_downloadsHeader shadowed];
+    _downloadsHeader.backgroundColor = [CDColorFinder colorOfDownloads];
     self.fileSharingHeader = [UIView viewFromXibNamed:headerXibName owner:self atIndex:1];
+    [_fileSharingHeader shadowed];
+    _fileSharingHeader.backgroundColor = [CDColorFinder colorOfFileSharing];
     self.downloadsFooter = [UIView viewFromXibNamed:footerXibName owner:self atIndex:0];
     self.fileSharingFooter = [UIView viewFromXibNamed:footerXibName owner:self atIndex:1];
 }

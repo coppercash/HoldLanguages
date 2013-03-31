@@ -7,11 +7,16 @@
 //
 
 #import "CDBackgroundView.h"
+#import "CDPullControllerMetro.h"
+#import "CDColorFinder.h"
 
 @interface CDBackgroundView ()
+@property(nonatomic, strong)UIImageView *leftPage;
+@property(nonatomic, strong)UIImageView *rightPage;
 @end
 
 @implementation CDBackgroundView
+@dynamic leftPage, rightPage;
 
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -21,9 +26,7 @@
         CGRect bounds = self.bounds;
         CGRect f = CGRectInset(bounds, 0.0f, (CGRectGetHeight(bounds) - CGRectGetWidth(bounds)) / 2);
         _spotlight = [[CDSpotlightView alloc] initWithFrame:f];
-        //_spotlight.backgroundColor = [UIColor clearColor];
         [self addSubview:_spotlight];
-        //self.backgroundColor = [UIColor color255WithRed:68.0 green:68.0 blue:68.0 alpha:1.0];
         self.backgroundColor = [UIColor color255WithRed:32.0 green:36.0 blue:41.0 alpha:1.0];
     }
     return self;
@@ -69,6 +72,76 @@
                      animations:^{
                          _spotlight.frame = frame;
                      } completion:nil];
+}
+
+#pragma mark - Page
+- (UIImageView *)leftPage{
+    if (!_leftPage) {
+        CGRect frame = self.bounds;
+        frame = CGRectMake(0.0f, 0.25 * CGRectGetHeight(frame),
+                           0.23 * CGRectGetWidth(frame), 0.25 * CGRectGetHeight(frame));
+        frame = CGRectInset(frame, 0.0f, kMarginSecondary);
+        frame = CGRectOffset(frame, kMargin, 0.0f);
+        _leftPage = [[UIImageView alloc] initWithFrame:frame];
+        _leftPage.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+        _leftPage.backgroundColor = [CDColorFinder colorOfPages];
+    }
+    if (!_leftPage.superview) {
+        _leftPage.alpha = 0.0f;
+        [self addSubview:_leftPage];
+    }
+    return _leftPage;
+}
+
+- (UIImageView *)rightPage{
+    if (!_rightPage) {
+        CGRect frame = self.bounds;
+        frame = CGRectMake(0.77 * CGRectGetWidth(frame), 0.25 * CGRectGetHeight(frame),
+                           0.23 * CGRectGetWidth(frame), 0.25 * CGRectGetHeight(frame));
+        frame = CGRectInset(frame, 0.0f, kMarginSecondary);
+        frame = CGRectOffset(frame, - kMargin, 0.0f);
+        _rightPage = [[UIImageView alloc] initWithFrame:frame];
+        _rightPage.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+        _rightPage.backgroundColor = [CDColorFinder colorOfPages];
+
+    }
+    if (!_rightPage.superview) {
+        _rightPage.alpha = 0.0f;
+        [self addSubview:_rightPage];
+    }
+    return _rightPage;
+}
+
+- (void)igniteLeftPage{
+    UIImageView *leftPage = self.leftPage;
+    [UIView animateWithDuration:0.1f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        leftPage.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        if (!finished) return;
+        [UIView animateWithDuration:0.5f delay:0.3f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            leftPage.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            if (!finished) return;
+            [leftPage removeFromSuperview];
+            _leftPage = nil;
+        }];
+    }];
+}
+
+- (void)igniteRightPage{
+    UIImageView *rightPage = self.rightPage;
+    [UIView animateWithDuration:0.1f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        rightPage.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        if (!finished) return;
+        [UIView animateWithDuration:0.5f delay:0.3f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            rightPage.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            if (!finished) return;
+            [rightPage removeFromSuperview];
+            _rightPage = nil;
+        }];
+    }];
 }
 
 @end

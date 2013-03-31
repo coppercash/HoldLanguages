@@ -9,6 +9,7 @@
 #import "CDItemDetailTableCell.h"
 #import "CDItem.h"
 #import "CoreDataModels.h"
+#import "CDColorFinder.h"
 
 @interface CDItemTableCell ()
 @property(nonatomic, strong)IBOutlet UIView *detailsView;
@@ -38,6 +39,9 @@ lyricsSymbol = _lyricsSymbol;
         
         UIView *view = [UIView viewFromXibNamed:NSStringFromClass(self.class) owner:self];
         view.frame = self.contentView.bounds;
+        _audioSymbol.backgroundColor = [CDColorFinder colorOfAudio];
+        _lyricsSymbol.backgroundColor = [CDColorFinder colorOfLyrics];
+        _progressLabel.backgroundColor = [CDColorFinder colorOfDownloads];
         
         self.stageView = view;
         [self.contentView addSubview:view];

@@ -216,9 +216,7 @@
                     [_audioSharer setRepeatB];
                 }else{
                     if (_audioSharer.canRepeating) {
-                        [self loadRepeatView];
-                        _repeatView.repeatDirection = CDDirectionRight;
-                        [_repeatView show];
+                        [self prepareToRepeat:CDDirectionRight];
                         [_audioSharer setRepeatA];
                     }
                 }

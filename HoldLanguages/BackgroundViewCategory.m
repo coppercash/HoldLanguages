@@ -15,5 +15,20 @@
 @end
 
 @implementation MainViewController (BackgroundViewCategory)
+- (CDBackgroundView *)backgroundView{
+    UIView *view = self.view;
+    if (!_backgroundView) {
+        _backgroundView = [[CDBackgroundView alloc] initWithFrame:view.bounds];
+        _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    }
+    if (!_backgroundView.superview) {
+        [view addSubview:_backgroundView];
+    }
+    return _backgroundView;
+}
+
+- (void)setBackgroundView:(CDBackgroundView *)backgroundView{
+    _backgroundView = backgroundView;
+}
 
 @end

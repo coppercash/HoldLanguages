@@ -19,12 +19,37 @@
 
 @implementation MainViewController (HolderCategory)
 
+- (CDHolder *)holder{
+    UIView *view = self.view;
+    if (!_holder) {
+        _holder = [[CDHolder alloc] initWithFrame:view.bounds];
+        _holder.delegate = self;
+        _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        NSValue *row0 = [NSValue valueWithCGSize:CGSizeMake(.0f, .25f)];
+        NSValue *row1 = [NSValue valueWithCGSize:CGSizeMake(.25f, .25f)];
+        NSValue *row2 = [NSValue valueWithCGSize:CGSizeMake(.5f, .5f)];
+        _holder.rows = [[NSArray alloc] initWithObjects:row0, row1, row2, nil];
+        
+        NSValue *area0 = [NSValue valueWithCGRect:CGRectMake(.0f, .25f, .2f, .25f)];
+        NSValue *area1 = [NSValue valueWithCGRect:CGRectMake(.8f, .25f, .2f, .25f)];
+        _holder.areas = [[NSArray alloc] initWithObjects:area0, area1, nil];
+    }
+    if (!_holder.superview) {
+        [view addSubview:_holder];
+    }
+    return _holder;
+}
+
+- (void)setHolder:(CDHolder *)holder{
+    _holder = holder;
+}
+
 #pragma mark - CDHolderDelegate
 - (void)holder:(CDHolder *)holder beginSwipingOnDirection:(CDDirection)direction index:(NSUInteger)index{
     if (direction & CDDirectionHorizontal) {
         switch (index) {
             case 0:{
-                [self prepareToChangeRate];
+                [self ratesView];
             }break;
             case 1:{
                 
@@ -40,14 +65,16 @@
 
 - (void)holder:(CDHolder *)holder continueSwipingOnDirection:(CDDirection)direction forIncrement:(CGFloat)increment fromStart:(CGFloat)distance index:(NSUInteger)index{
     if (direction & CDDirectionHorizontal) {
-        switch (index) {
+        switch (index) {    //Rates
             case 0:{
                 [_ratesView scrollFor:-increment animated:NO];
             }break;
-            case 1:{
+            case 1:{    //Pages
                 [_storyView scrollFor:-increment animated:NO];
+                [_backgroundView igniteLeftPage];
+                [_backgroundView igniteRightPage];
             }break;
-            case 2:{
+            case 2:{    //Repeat
                 [self countRepeatTimeWithDistance:distance];
             }
             default:
@@ -63,11 +90,11 @@
 - (void)holder:(CDHolder *)holder endSwipingOnDirection:(CDDirection)direction fromStart:(CGFloat)distance index:(NSUInteger)index{
     if (direction & CDDirectionHorizontal) {
         switch (index) {
-            case 0:{
+            case 0:{    //Rates
                 [_ratesView endScrolling];
             }break;
-            case 1:{
-                
+            case 1:{    //Pages
+
                 if (direction & CDDirectionLeft) {
                     [_storyView scrollToPage:_storyView.pageIndex + 1 animated:YES];
                 }else if (direction & CDDirectionRight){
@@ -75,7 +102,7 @@
                 }
             
             }break;
-            case 2:{
+            case 2:{    //Repeat
                 [self repeatWithDirection:direction distance:distance];
             }break;
             default:
@@ -101,13 +128,13 @@
 - (void)holder:(CDHolder *)holder cancelSwipingOnDirection:(CDDirection)direction index:(NSUInteger)index{
     if (direction & CDDirectionHorizontal) {
         switch (index) {
-            case 0:{
+            case 0:{    //Rates
                 [_ratesView cancelScrolling];
             }break;
             case 1:{
                 
             }break;
-            case 2:{
+            case 2:{    //Repeat
                 [_repeatView cancel];
             }break;
             default:
@@ -128,9 +155,11 @@
                 }break;
                 case 1:{
                     [_storyView scrollToPage:_storyView.pageIndex - 1 animated:YES];
+                    [_backgroundView igniteLeftPage];
                 }break;
                 case 2:{
                     [_storyView scrollToPage:_storyView.pageIndex + 1 animated:YES];
+                    [_backgroundView igniteRightPage];
                 }break;
                 default:
                     break;

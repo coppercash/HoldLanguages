@@ -12,11 +12,8 @@
 
 @interface MainViewController (RepeatViewCategory) <CDRepeatViewDelegate, CDRatesViewDelegate>
 
-- (void)loadRepeatView;
 - (void)prepareToRepeat:(CDDirection)direction;
 - (void)countRepeatTimeWithDistance:(CGFloat)distance;
 - (void)repeatWithDirection:(CDDirection)direction distance:(CGFloat)distance;
-
-- (void)prepareToChangeRate;
 
 @end

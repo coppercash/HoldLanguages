@@ -7,7 +7,6 @@
 //
 
 #import "CDLazyScrollView.h"
-#import "CDLazyScrollView.h"
 
 #define kRatesViewBackgroundColor [UIColor color255WithRed:240 green:130 blue:51 alpha:1.0f]
 

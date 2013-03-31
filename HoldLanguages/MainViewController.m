@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Coder Dreamer. All rights reserved.
 //
 #import "MainViewController.h"
-#import "CDBackgroundView.h"
+#import "CDColorFinder.h"
 
 #import "LyricsCategory.h"
 #import "PullViewControllerCategory.h"
@@ -15,9 +15,9 @@
 
 @implementation MainViewController
 @synthesize panViewController = _panViewController;
-@synthesize holder = _holder, backgroundView = _backgroundView;
+@dynamic holder, backgroundView;
 @dynamic lyricsView, storyView, introductionView;
-@synthesize repeatView = _repeatView, ratesView = _ratesView;
+@dynamic repeatView, ratesView;
 @synthesize audioSharer = _audioSharer, lyrics = _lyrics, item = _item, introductionRevert = _introductionRevert;
 @synthesize mediaPicker = _mediaPicker;
 @synthesize progress = _progress;
@@ -47,31 +47,14 @@
     
     self.wantsFullScreenLayout = YES;
     
-    UIView *view = self.view;
-    
-    self.backgroundView = [[CDBackgroundView alloc] initWithFrame:view.bounds];
-    _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
-    
-    self.holder = [[CDHolder alloc] initWithFrame:view.bounds];
-    _holder.delegate = self;
-    _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
-    NSValue *row0 = [NSValue valueWithCGSize:CGSizeMake(.0f, .25f)];
-    NSValue *row1 = [NSValue valueWithCGSize:CGSizeMake(.25f, .25f)];
-    NSValue *row2 = [NSValue valueWithCGSize:CGSizeMake(.5f, .5f)];
-    _holder.rows = [[NSArray alloc] initWithObjects:row0, row1, row2, nil];
-    
-    NSValue *area0 = [NSValue valueWithCGRect:CGRectMake(.0f, .25f, .2f, .25f)];
-    NSValue *area1 = [NSValue valueWithCGRect:CGRectMake(.8f, .25f, .2f, .25f)];
-    _holder.areas = [[NSArray alloc] initWithObjects:area0, area1, nil];
-    
-    [view addSubview:_backgroundView];
-    [view addSubview:_holder];
+    [self backgroundView];
+    [self holder];
 }
 
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    _bottomBar.backgroundColor = [UIColor color255WithRed:0.0f green:115.0f blue:180.0f alpha:1.0f];
+    _bottomBar.backgroundColor = [CDColorFinder colorOfBars];
     
     [_progress registerDelegate:self.bottomBar withTimes:kLabelsUpdateTimes];
     [_progress registerDelegate:self.bottomBar withTimes:kProgressViewUpdateTimes];

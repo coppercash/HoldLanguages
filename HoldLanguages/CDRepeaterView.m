@@ -8,6 +8,7 @@
 
 #import "CDRepeaterView.h"
 #import "UIBezierPath+Symbol.h"
+#import "CDColorFinder.h"
 
 @implementation CDRepeaterView
 @synthesize leftPlus = _leftPlus, leftMinus = _leftMinus, rightPlus = _rightPlus, rightMinus = _rightMinus;
@@ -16,9 +17,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
-        //_start.adjustsFontSizeToFitWidth = YES;
-        //_end.adjustsFontSizeToFitWidth = YES;
-        self.backgroundColor = kRepeatViewBackgroundColor;
+        self.backgroundColor = [CDColorFinder colorOfRepeat];
     }
     return self;
 }

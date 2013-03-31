@@ -11,6 +11,7 @@
 #import "CDString.h"
 #import "CDItem.h"
 #import "CoreDataModels.h"
+#import "CDColorFinder.h"
 
 @interface CDItemTableCell ()
 - (void)updateProgress:(NSTimer *)timer;
@@ -127,7 +128,7 @@
         label.font = [UIFont boldSystemFontOfSize:20.0f];
         label.textColor = [UIColor whiteColor];
         label.textAlignment = UITextAlignmentCenter;
-        label.backgroundColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
+        label.backgroundColor = [CDColorFinder colorOfDownloads];
         label.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
         self.progressLabel = label;
         [self.contentView addSubview:label];
