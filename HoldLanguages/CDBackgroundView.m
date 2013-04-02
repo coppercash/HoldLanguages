@@ -86,6 +86,8 @@
         frame = CGRectOffset(frame, kMargin, 0.0f);
         _leftPage = [[UIImageView alloc] initWithFrame:frame];
         _leftPage.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+        _leftPage.contentMode = UIViewContentModeCenter;
+        _leftPage.image = [UIImage pngImageWithName:kPageLeft];
         _leftPage.backgroundColor = [CDColorFinder colorOfPages];
     }
     if (!_leftPage.superview) {
@@ -104,6 +106,8 @@
         frame = CGRectOffset(frame, - kMargin, 0.0f);
         _rightPage = [[UIImageView alloc] initWithFrame:frame];
         _rightPage.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+        _rightPage.contentMode = UIViewContentModeCenter;
+        _rightPage.image = [UIImage pngImageWithName:kPageRight];
         _rightPage.backgroundColor = [CDColorFinder colorOfPages];
 
     }
@@ -155,7 +159,7 @@
         _playerDraw = [[CDMasterPlayerDraw alloc] initWithFrame:frame];
         _playerDraw.autoresizingMask = CDViewAutoresizingFloat;
         _playerDraw.backgroundColor = [CDColorFinder colorOfPages];
-        _playerDraw.drawColor = [UIColor grayColor];
+        _playerDraw.drawColor = [CDColorFinder colorOfBackgroundDraw];
     }
     if (!_playerDraw.superview) {
         _playerDraw.alpha = 0.0f;

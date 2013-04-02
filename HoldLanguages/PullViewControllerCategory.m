@@ -215,7 +215,7 @@
                 if (iW) {
                     [_audioSharer setRepeatB];
                 }else{
-                    if (_audioSharer.canRepeating) {
+                    if (_audioSharer.canRepeat) {
                         [self prepareToRepeat:CDDirectionRight];
                         [_audioSharer setRepeatA];
                     }

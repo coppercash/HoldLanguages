@@ -10,6 +10,8 @@
 
 #define kSwitchAnimationDuration 0.3f
 #define kOffsetMax 40.0f
+#define kPageLeft @"PageLeft"
+#define kPageRight @"PageRight"
 
 typedef enum {
     CDAnimationStateReset,

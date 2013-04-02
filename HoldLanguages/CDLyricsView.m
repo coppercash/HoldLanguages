@@ -224,11 +224,6 @@ static NSString *reuseIdentifierFooter = @"ReuseFooter";
     [self setYOffset:yTarget animated:animated];
 }
 
-- (BOOL)respondsToSelector:(SEL)aSelector{
-    DLog(@"respondsToSelector\n%@", NSStringFromSelector(aSelector));
-    return [super respondsToSelector:aSelector];
-}
-
 @end
 
 NSString * convertedLyricsInfo(NSArray *lyricsInfos){

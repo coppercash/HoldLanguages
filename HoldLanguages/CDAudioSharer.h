@@ -43,7 +43,7 @@
 - (void)stopRepeating;
 //- (CDDoubleRange)repeatRange;
 //- (BOOL)isRepeating;
-- (BOOL)canRepeating;
+- (BOOL)canRepeat;
 #pragma mark - Infomation
 - (CDCycleArray*)rates;
 - (NSTimeInterval)currentPlaybackTime;

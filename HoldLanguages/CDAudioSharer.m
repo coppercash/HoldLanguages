@@ -168,7 +168,7 @@
     return [_audioPlayer isRepeating];
 }*/
 
-- (BOOL)canRepeating{
+- (BOOL)canRepeat{
     if (_audioPlayer == nil) return NO;
     if (_audioPlayer.state == CDAudioPlayerStateStopped) return NO;
     return YES;

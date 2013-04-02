@@ -63,6 +63,7 @@
 }
 
 - (void)audioSharer:(CDAudioSharer *)audioSharer didRepeatInRange:(CDDoubleRange)range{
+    DLogCurrentMethod;
     [_repeatView.repeater setRepeatRaneg:range];
     [_bottomBar setRepeatRanege:range withDuration:audioSharer.audioPlayer.currentDuration];
     [_repeatView present];

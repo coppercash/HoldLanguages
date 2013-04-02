@@ -43,7 +43,7 @@ static CGRect gNameFrame;
     } else if ([fileName.pathExtension caseInsensitiveCompare:@"lrc"] == NSOrderedSame){
         _icon.image = [UIImage pngImageWithName:kFileIconLRC];
     }else if ([fileName.pathExtension caseInsensitiveCompare:@"mp3"] == NSOrderedSame){
-        _icon.image = [UIImage pngImageWithName:kFileIconMP3];
+        _icon.image = [UIImage pngImageWithName:kFileIconAudio];
     }
 }
 

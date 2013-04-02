@@ -11,19 +11,19 @@
 @implementation CDColorFinder
 
 + (UIColor *)colorOfDownloads{
-    return [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
+    return [UIColor color255WithRed:51.0f green:153.0f blue:51.0f alpha:1.0f];
 }
 
 + (UIColor *)colorOfFileSharing{
-    return [UIColor purpleColor];
+    return [UIColor color255WithRed:27.0f green:161.0f blue:226.0f alpha:1.0f];
 }
 
 + (UIColor *)colorOfAudio{
-    return [UIColor redColor];
+    return [UIColor color255WithRed:229.0f green:20.0f blue:0.0f alpha:1.0f];
 }
 
 + (UIColor *)colorOfLyrics{
-    return [UIColor yellowColor];
+    return [UIColor color255WithRed:222.0f green:147.0f blue:23.0f alpha:1.0f];
 }
 
 + (UIColor *)colorOfRates{
@@ -31,11 +31,15 @@
 }
 
 + (UIColor *)colorOfPages{
-    return kDebugColor;
+    return [UIColor color255WithRed:3.0f green:72.0f blue:136.0f alpha:1.0f];
 }
 
 + (UIColor *)colorOfRepeat{
-    return [UIColor color255WithRed:133 green:166 blue:38 alpha:1.0f];
+    return [UIColor color255WithRed:150.0f green:178.0f blue:50.0f alpha:1.0f];
+}
+
++ (UIColor *)colorOfBackgroundDraw{
+    return [UIColor darkGrayColor];
 }
 
 + (UIColor *)colorOfBars{

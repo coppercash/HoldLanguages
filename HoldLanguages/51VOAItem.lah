@@ -21,6 +21,14 @@ ope'ope'('root'):
                 rec("a", isDem="YES"):
                     rec("img", "src"="/images/icon/lrc.gif")
                     'lrc'
+            
+            rec'id0'("div", "boxout"):
+                rec("img"):
+                    'imgSrc'
+            rec'id1'("div", "contentImage"):
+                rec("img"):
+                    'imgSrc'
+
             rec("span", "byline"):
                 rec(isText="YES"):
                     'text'
@@ -51,10 +59,11 @@ ope'ope'('root'):
                 rec(isText="YES"):
                     'text'
 
-            rec'id0'("div", "boxout"):
-                rec("img"):
-                    'imgSrc'
-            rec'id1'("div", "contentImage"):
-                rec("img"):
-                    'imgSrc'
+            rec("div", "articleBody"):
+                rec("p"):
+                    rec(isText="YES"):
+                        'text'
+                     rec("font"):
+                        rec(isText="YES"):
+                            'text'
 

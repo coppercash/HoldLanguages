@@ -30,6 +30,7 @@
     }
     if (!_repeatView.superview) {
         [self.view insertSubview:_repeatView aboveSubview:_holder];
+        [_repeatView show];
     }
     return _repeatView;
 }
@@ -39,11 +40,9 @@
 }
 
 - (void)prepareToRepeat:(CDDirection)direction{
-    if (_audioSharer.canRepeating) {
+    if (_audioSharer.canRepeat) {
         [self repeatView];
         _repeatView.repeatDirection = direction;
-        [_repeatView show];
-        DLog(@"Create Repeat View");
     }
 }
 
@@ -52,7 +51,6 @@
         float rate = _audioSharer.repeatRate;
         NSTimeInterval length = rate * distance;
         [_repeatView setValueOfCounterView:length];
-        DLog(@"Will repeat for %f", length);
     }
 }
 
@@ -60,7 +58,7 @@
     CDDirection currentDirection = CDDirectionNone;
     if (distance < 0) currentDirection = CDDirectionLeft;
     if (distance > 0) currentDirection = CDDirectionRight;
-    BOOL sameDirection = direction == currentDirection;
+    BOOL sameDirection = (direction == currentDirection);
     
     if (sameDirection && !_audioSharer.audioPlayer.isRepeating ) {
         float rate = _audioSharer.repeatRate;

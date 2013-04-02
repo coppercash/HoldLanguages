@@ -21,6 +21,7 @@
 + (UIColor *)colorOfRates;
 + (UIColor *)colorOfPages;
 + (UIColor *)colorOfRepeat;
++ (UIColor *)colorOfBackgroundDraw;
 
 + (UIColor *)colorOfBars;
 
