@@ -52,7 +52,7 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     UITableView *tableView = self.tableView;
     tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
     tableView.separatorColor = [UIColor darkGrayColor];
-    
+
     //Footers
     self.downloadsHeader = [UIView viewFromXibNamed:headerXibName owner:self atIndex:0];
     [_downloadsHeader shadowed];

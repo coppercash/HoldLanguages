@@ -1,0 +1,12 @@
+arr'root':
+    dic(id='id'):
+        fet'name'(_text, key="name")
+        fet'link'("href", key="link")
+        
+ope'ope'('root', path="/VOA_Special_English/"):
+    rec("div", "id"="leftNav"):
+        rec("ul"):
+            rec'id'("li", range=(0, 17)):
+                rec'a'("a"):
+                    'name'
+                    'link'

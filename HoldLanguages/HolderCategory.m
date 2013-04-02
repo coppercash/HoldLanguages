@@ -71,8 +71,8 @@
             }break;
             case 1:{    //Pages
                 [_storyView scrollFor:-increment animated:NO];
-                [_backgroundView igniteLeftPage];
-                [_backgroundView igniteRightPage];
+                if (_storyView) [_backgroundView igniteLeftPage];
+                if (_storyView) [_backgroundView igniteRightPage];
             }break;
             case 2:{    //Repeat
                 [self countRepeatTimeWithDistance:distance];
@@ -155,11 +155,11 @@
                 }break;
                 case 1:{
                     [_storyView scrollToPage:_storyView.pageIndex - 1 animated:YES];
-                    [_backgroundView igniteLeftPage];
+                    if (_storyView) [_backgroundView igniteLeftPage];
                 }break;
                 case 2:{
                     [_storyView scrollToPage:_storyView.pageIndex + 1 animated:YES];
-                    [_backgroundView igniteRightPage];
+                    if (_storyView) [_backgroundView igniteRightPage];
                 }break;
                 default:
                     break;

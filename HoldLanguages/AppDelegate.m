@@ -16,7 +16,9 @@
 
 #import "CDPanViewController.h"
 #import "CDiTunesViewController.h"
+#import "CDOnlineNavController.h"
 #import "CDOnlineViewController.h"
+#import "CDCategoryViewController.h"
 
 @implementation AppDelegate
 @synthesize panViewController = _panViewController, audioSharer = _audioSharer, progress = _progress, network = _network;
@@ -43,7 +45,7 @@
     MainViewController *mainViewController = [[MainViewController alloc] init];
     self.panViewController = [[CDPanViewController alloc] initWithRootViewController:mainViewController];
     _panViewController.leftControllerClass = [CDiTunesViewController class];
-    _panViewController.rightControllerClass = [CDOnlineViewController class];
+    _panViewController.rightControllerClass = [CDOnlineNavController class];
     
     self.window.rootViewController = self.panViewController;
     [self.window makeKeyAndVisible];

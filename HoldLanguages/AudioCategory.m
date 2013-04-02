@@ -13,6 +13,7 @@
 #import "CDRepeatView.h"
 #import "CDRepeaterView.h"
 #import "CDHolder.h"
+#import "CDBackgroundView.h"
 
 #import "LyricsCategory.h"
 
@@ -27,10 +28,12 @@
 - (void)audioSharer:(CDAudioSharer *)audioSharer stateDidChange:(CDAudioPlayerState)state{
     switch (state) {
         case CDAudioPlayerStatePlaying:{
+            [_backgroundView ignitePlayerDraw:YES];
             _bottomBar.masterButton.isPlaying = YES;
             [_progress setupUpdater];
         }break;
         case CDAudioPlayerStatePaused:{
+            [_backgroundView ignitePlayerDraw:NO];
             _bottomBar.masterButton.isPlaying = NO;
             [_progress stopUpdater];
         }break;

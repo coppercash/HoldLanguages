@@ -10,15 +10,15 @@
 
 @implementation CD51VOA
 - (id)init{
-    self = [super initWithHostName:@"www.51voa.com"];
+    self = [super initWithHostName:g51PathHome];
     return self;
 }
-
+/*
 - (LAHOperation *)homePage{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"51VOA" ofType:@"lah"];
     LAHOperation *operation = [self operationWithFile:path key:@"ope"];
     return operation;
-}
+}*/
 
 - (LAHOperation *)itemAtPath:(NSString *)path{
     NSString *lahPath = [[NSBundle mainBundle] pathForResource:@"51VOAItem" ofType:@"lah"];
@@ -45,8 +45,15 @@
     return operation;
 }
 
+- (LAHOperation *)categoty{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"51VOACategory" ofType:@"lah"];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    LAHOperation *operation = [self operationWithFile:path key:@"ope" dictionary:dic];
+    
+    return operation;
+}
+
 @end
 
 NSString * const g51PathHome = @"www.51voa.com";
-NSString * const g51PathStandard = @"/VOA_Standard_1.html";
 

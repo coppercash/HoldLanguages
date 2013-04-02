@@ -7,6 +7,7 @@
 //
 
 #import "CDOnlineViewController.h"
+#import "CDOnlineNavController.h"
 #import "CD51VOA.h"
 #import "Item.h"
 #import "CoreDataModels.h"
@@ -27,9 +28,9 @@ static NSString * const gReuseDetailCell = @"RDC";
 @property(nonatomic, strong)CD51VOA *VOA51;
 
 @property(nonatomic, assign)NSInteger indexOfPage;
-@property(nonatomic, strong)NSString *currentPage;
 @property(nonatomic, assign)NSInteger indexInPage;
 @property(nonatomic, assign)NSUInteger pageCapacity;
+@property(nonatomic, strong)NSString *currentPage;
 
 #pragma mark - Swipe
 - (void)swipe:(UISwipeGestureRecognizer *)swiper;
@@ -86,19 +87,18 @@ pageCapacity = _pageCapacity;
     self.loader = loader;
     tableView.tableFooterView = loader;
     [loader addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventValueChanged];
+    
 }
 
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.VOA51 = [[CD51VOA alloc] init];
+    CDOnlineNavController *nav = (CDOnlineNavController *)self.navigationController;
     
     self.itemList = [[NSMutableArray alloc] initWithCapacity:kRefreshCapacity];
+    self.VOA51 = nav.VOA51;
     
     self.pageCapacity = 10;
-    self.indexOfPage = 0;
-    self.currentPage = g51PathStandard;
-    self.indexInPage = 0;
     
     [self refresh];
     [self.refreshControl beginRefreshing];
@@ -106,6 +106,9 @@ pageCapacity = _pageCapacity;
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    CDOnlineNavController *nav = (CDOnlineNavController *)self.navigationController;
+    [nav backButton];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -145,8 +148,9 @@ pageCapacity = _pageCapacity;
         return;
     }
     
-    self.currentPage = g51PathStandard;
+    self.currentPage = _rootPage;
     self.indexInPage = 0;
+    self.indexOfPage = 0;
     
     __weak CDOnlineViewController *bSelf = self;
     LAHOperation *ope = [_VOA51 listAt:_currentPage inRange:NSMakeRange(_indexInPage, kRefreshCapacity)];
@@ -326,8 +330,7 @@ pageCapacity = _pageCapacity;
             
             }else{
                 
-                [_panViewController switchToController:CDPanViewControllerTypeRoot withUserInfo:nil];
-
+                [self.navigationController popViewControllerAnimated:YES];
             }
             
             break;

@@ -170,7 +170,7 @@
     _topBar.leftButton.contentMode = UIViewContentModeCenter;
     [_topBar.leftButton setImage:[UIImage pngImageWithName:@"TopBariTunes"] forState:UIControlStateNormal];
     _topBar.rightButton.contentMode = UIViewContentModeCenter;
-    [_topBar.rightButton setImage:[UIImage pngImageWithName:@"TopBariTunes"] forState:UIControlStateNormal];
+    [_topBar.rightButton setImage:[UIImage pngImageWithName:@"TopBarOnline"] forState:UIControlStateNormal];
 }
 
 #pragma mark - CDPullBottomBarDelegate & DataSource

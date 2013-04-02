@@ -17,7 +17,7 @@ typedef enum {
     CDAnimationStateDown
 }CDAnimationState;
 
-@class CDSpotlightView;
+@class CDSpotlightView, CDMasterPlayerDraw;
 @protocol CDBackgroundViewDatasource;
 @interface CDBackgroundView : UIView {
     CDSpotlightView *_spotlight;
@@ -26,6 +26,7 @@ typedef enum {
     
     UIImageView *_leftPage;
     UIImageView *_rightPage;
+    CDMasterPlayerDraw *_playerDraw;
 }
 
 - (void)moveWithValue:(CGFloat)distance;
@@ -33,6 +34,7 @@ typedef enum {
 
 - (void)igniteLeftPage;
 - (void)igniteRightPage;
+- (void)ignitePlayerDraw:(BOOL)isPlaying;
 @end
 
 

@@ -9,14 +9,16 @@
 #import "CDBackgroundView.h"
 #import "CDPullControllerMetro.h"
 #import "CDColorFinder.h"
+#import "CDMasterButton.h"
 
 @interface CDBackgroundView ()
 @property(nonatomic, strong)UIImageView *leftPage;
 @property(nonatomic, strong)UIImageView *rightPage;
+@property(nonatomic, strong)CDMasterPlayerDraw *playerDraw;
 @end
 
 @implementation CDBackgroundView
-@dynamic leftPage, rightPage;
+@dynamic leftPage, rightPage, playerDraw;
 
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -140,6 +142,41 @@
             if (!finished) return;
             [rightPage removeFromSuperview];
             _rightPage = nil;
+        }];
+    }];
+}
+
+#pragma mark - Player
+- (CDMasterPlayerDraw *)playerDraw{
+    if (!_playerDraw) {
+        CGRect bounds = self.bounds;
+        CGFloat size = 0.382f * CGRectGetWidth(bounds);
+        CGRect frame = CGRectMake(CGRectGetMidX(bounds) - 0.5 * size, CGRectGetMidY(bounds) - 0.5 * size, size, size);
+        _playerDraw = [[CDMasterPlayerDraw alloc] initWithFrame:frame];
+        _playerDraw.autoresizingMask = CDViewAutoresizingFloat;
+        _playerDraw.backgroundColor = [CDColorFinder colorOfPages];
+        _playerDraw.drawColor = [UIColor grayColor];
+    }
+    if (!_playerDraw.superview) {
+        _playerDraw.alpha = 0.0f;
+        [self addSubview:_playerDraw];
+    }
+    return _playerDraw;
+}
+
+- (void)ignitePlayerDraw:(BOOL)isPlaying{
+    CDMasterPlayerDraw *playerDraw = self.playerDraw;
+    playerDraw.isPlaying = !isPlaying;
+    [UIView animateWithDuration:kDefaultAnimationDuration delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        playerDraw.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        if (!finished) return;
+        [UIView animateWithDuration:0.5f delay:0.3f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            playerDraw.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            if (!finished) return;
+            [playerDraw removeFromSuperview];
+            _playerDraw = nil;
         }];
     }];
 }

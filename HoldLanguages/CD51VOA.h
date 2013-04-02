@@ -9,10 +9,9 @@
 #import "LAH_MKNetwork_Hpple.h"
 
 @interface CD51VOA : LAH_MKNetworkKit_Hpple
-- (LAHOperation *)homePage;
+- (LAHOperation *)categoty;
 - (LAHOperation *)itemAtPath:(NSString *)path;
 - (LAHOperation *)listAt:(NSString *)link inRange:(NSRange)range;
 @end
 
 extern NSString * const g51PathHome;
-extern NSString * const g51PathStandard;

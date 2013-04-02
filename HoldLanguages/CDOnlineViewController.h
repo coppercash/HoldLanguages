@@ -20,7 +20,7 @@
     //Models
     NSMutableArray *_itemList;
     CD51VOA *_VOA51;
-    //NSMutableDictionary *_trash;
+    NSString *_rootPage;
     
     //Joiner
     NSUInteger _pageCapacity;
@@ -33,6 +33,7 @@
     __weak CDNKOperation *_imageNetwork;   //For cancel it after canceling detail mode.
 }
 @property(nonatomic, weak)CDPanViewController *panViewController;
+@property(nonatomic, strong)NSString *rootPage;
 @end
 
 #define kRefreshCapacity 20

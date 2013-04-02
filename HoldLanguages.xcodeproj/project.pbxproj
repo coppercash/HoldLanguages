@@ -123,6 +123,8 @@
 		BEA53E2916FBF2CA00528564 /* CDStoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA53E2816FBF2CA00528564 /* CDStoryView.m */; };
 		BEA53E6116FBF56800528564 /* StoryViewCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA53E6016FBF56800528564 /* StoryViewCategory.m */; };
 		BEA53E6316FBF7A300528564 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA53E6216FBF7A300528564 /* CoreText.framework */; };
+		BEA55F56170928BD00C301D3 /* 51VOACategory.lah in Resources */ = {isa = PBXBuildFile; fileRef = BEA55F55170928BD00C301D3 /* 51VOACategory.lah */; };
+		BEA55F6617092A8700C301D3 /* CDCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA55F6517092A8700C301D3 /* CDCategoryViewController.m */; };
 		BEA5E681169E55A80048306A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE964EB71654E6C1000DDB28 /* QuartzCore.framework */; };
 		BEA5E683169E55BB0048306A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
 		BEA5E684169E55D70048306A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE82F6E3164E318E007EBEAB /* AppDelegate.m */; };
@@ -159,6 +161,9 @@
 		BEAAF7F216F876B600A698E6 /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAAF7F116F876B500A698E6 /* Audio.m */; };
 		BEAAF7F516F8911E00A698E6 /* CDItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAAF7F416F8911E00A698E6 /* CDItem.m */; };
 		BEAAF7F916F8A30200A698E6 /* CDItemNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAAF7F816F8A30200A698E6 /* CDItemNetwork.m */; };
+		BEAF02E4170A75C700730B1E /* CDOnlineNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAF02E3170A75C700730B1E /* CDOnlineNavController.m */; };
+		BEAF02F3170AAD8F00730B1E /* TopBarOnline.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAF02F2170AAD8F00730B1E /* TopBarOnline.png */; };
+		BEAF02F5170AADC400730B1E /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BEAF02F4170AADC400730B1E /* BackButton.png */; };
 		BEAF556E1704426F00288585 /* PullViewControllerCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAF556D1704426F00288585 /* PullViewControllerCategory.m */; };
 		BEAF5580170443DD00288585 /* RepeatViewCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAF557F170443DC00288585 /* RepeatViewCategory.m */; };
 		BEAF55841704463800288585 /* LyricsCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAF55831704463800288585 /* LyricsCategory.m */; };
@@ -509,6 +514,9 @@
 		BEA53E5F16FBF56800528564 /* StoryViewCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryViewCategory.h; sourceTree = "<group>"; };
 		BEA53E6016FBF56800528564 /* StoryViewCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryViewCategory.m; sourceTree = "<group>"; };
 		BEA53E6216FBF7A300528564 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		BEA55F55170928BD00C301D3 /* 51VOACategory.lah */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 51VOACategory.lah; sourceTree = "<group>"; };
+		BEA55F6417092A8700C301D3 /* CDCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCategoryViewController.h; sourceTree = "<group>"; };
+		BEA55F6517092A8700C301D3 /* CDCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCategoryViewController.m; sourceTree = "<group>"; };
 		BEA5F22216FE840800BC699C /* CDLoadMoreControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLoadMoreControl.h; sourceTree = "<group>"; };
 		BEA5F22316FE840800BC699C /* CDLoadMoreControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLoadMoreControl.m; sourceTree = "<group>"; };
 		BEA644CD16FF2D9E004B1E44 /* CDItemTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDItemTableCell.h; sourceTree = "<group>"; };
@@ -525,6 +533,10 @@
 		BEAAF7F416F8911E00A698E6 /* CDItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDItem.m; sourceTree = "<group>"; };
 		BEAAF7F716F8A30200A698E6 /* CDItemNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDItemNetwork.h; sourceTree = "<group>"; };
 		BEAAF7F816F8A30200A698E6 /* CDItemNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDItemNetwork.m; sourceTree = "<group>"; };
+		BEAF02E2170A75C700730B1E /* CDOnlineNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOnlineNavController.h; sourceTree = "<group>"; };
+		BEAF02E3170A75C700730B1E /* CDOnlineNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOnlineNavController.m; sourceTree = "<group>"; };
+		BEAF02F2170AAD8F00730B1E /* TopBarOnline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TopBarOnline.png; sourceTree = "<group>"; };
+		BEAF02F4170AADC400730B1E /* BackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackButton.png; sourceTree = "<group>"; };
 		BEAF556C1704426F00288585 /* PullViewControllerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullViewControllerCategory.h; sourceTree = "<group>"; };
 		BEAF556D1704426F00288585 /* PullViewControllerCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullViewControllerCategory.m; sourceTree = "<group>"; };
 		BEAF557E170443DC00288585 /* RepeatViewCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatViewCategory.h; sourceTree = "<group>"; };
@@ -988,6 +1000,10 @@
 		BE9ABBD816F2F0A3001B0465 /* CDOnlineViewController */ = {
 			isa = PBXGroup;
 			children = (
+				BEAF02E2170A75C700730B1E /* CDOnlineNavController.h */,
+				BEAF02E3170A75C700730B1E /* CDOnlineNavController.m */,
+				BEA55F6417092A8700C301D3 /* CDCategoryViewController.h */,
+				BEA55F6517092A8700C301D3 /* CDCategoryViewController.m */,
 				BE9ABBC816F2F09C001B0465 /* CDOnlineViewController.h */,
 				BE9ABBC916F2F09C001B0465 /* CDOnlineViewController.m */,
 			);
@@ -1007,6 +1023,7 @@
 				BEEAB2AE16BA4A7B00B9C39F /* RepeatIcon@2x.png */,
 				BE9EEFA816AF8DA600897D6A /* RepeatIcon.png */,
 				BEA04A2B16BBC92800CE6A42 /* noise.png */,
+				BEAF02F4170AADC400730B1E /* BackButton.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1014,8 +1031,9 @@
 		BE9ABBF316F31E28001B0465 /* LAH */ = {
 			isa = PBXGroup;
 			children = (
-				BEFEE33C16F548C80084A287 /* 51VOAItem.lah */,
+				BEA55F55170928BD00C301D3 /* 51VOACategory.lah */,
 				BE6196F716FD8E1F0020AA63 /* 51VOAList.lah */,
+				BEFEE33C16F548C80084A287 /* 51VOAItem.lah */,
 				BE9ABBF116F31E23001B0465 /* 51VOA.lah */,
 			);
 			name = LAH;
@@ -1269,6 +1287,7 @@
 			children = (
 				BEEAB2A616BA1FC100B9C39F /* TopBariTunes@2x.png */,
 				BEEAB2A716BA1FC100B9C39F /* TopBariTunes.png */,
+				BEAF02F2170AAD8F00730B1E /* TopBarOnline.png */,
 			);
 			name = TopBar;
 			sourceTree = "<group>";
@@ -1621,6 +1640,9 @@
 				BEB5D32E1701B2C600C6ED84 /* CDiTunesFooters.xib in Resources */,
 				BEF007071702703F000B91C6 /* CDItemDetailTableCell.xib in Resources */,
 				BEB1CD0D1702F5A2004C8A79 /* CDiTunesHeaders.xib in Resources */,
+				BEA55F56170928BD00C301D3 /* 51VOACategory.lah in Resources */,
+				BEAF02F3170AAD8F00730B1E /* TopBarOnline.png in Resources */,
+				BEAF02F5170AADC400730B1E /* BackButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1802,6 +1824,8 @@
 				BEAF559117045ECF00288585 /* IntroductionCategory.m in Sources */,
 				BE2CF42A1706A404000B6DE7 /* AKOMultiColumnTextView.m in Sources */,
 				BE2CF42B1706A404000B6DE7 /* AKOMultiPageTextView.m in Sources */,
+				BEA55F6617092A8700C301D3 /* CDCategoryViewController.m in Sources */,
+				BEAF02E4170A75C700730B1E /* CDOnlineNavController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

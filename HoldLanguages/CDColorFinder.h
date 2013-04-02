@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define kBarAlpha 0.7f
+#define kDefaultAnimationDuration 0.1f
 
 @interface CDColorFinder : NSObject
 
