@@ -7,30 +7,62 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "CDPullViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "CDPullControllerMetro.h"
-#import "CDHolder.h"
-#import "CDLyricsView.h"
-#import "CDAudioSharer.h"
-//#import "CDBackgroundView.h"
-#import "CDProgress.h"
 #import "CDPanViewController.h"
-#import "CDRatesView.h"
-#import "CDRepeatView.h"
 
-@class CDAudioSharer, CDLyrics, CDBackgroundView;
-@interface MainViewController : CDPullControllerMetro<MPMediaPickerControllerDelegate, CDHolderDelegate, CDLyricsViewLyricsSource, CDAudioPlayerDelegate, CDAudioProgressDelegate, CDSubPanViewController, CDRatesViewDelegate, CDRepeatViewDelegate>{
+@class CDLyricsView, CDBackgroundView, CDStoryView, CDIntroductionView;
+@class CDHolder;
+@class CDRepeatView, CDRatesView;
+@class CDAudioSharer, CDLyrics;
+@interface MainViewController : CDPullControllerMetro<MPMediaPickerControllerDelegate, CDSubPanViewController>{
+    __weak CDPanViewController *_panViewController;
+    
+    //Subviews
+    CDHolder *_holder;
+    
+    CDLyricsView *_lyricsView;
+    CDLyrics *_lyrics;
+    
+    CDStoryView *_storyView;
+    Item *_item;
+    //NSString *_story;
+    
+    CDIntroductionView *_introductionView;
+    SEL _introductionRevert;
+    BOOL _isIntroOn;
+
     CDBackgroundView *_backgroundView;
+
+    
+    CDRatesView *_ratesView;
+    CDRepeatView *_repeatView;
+    
+    MPMediaPickerController *_mediaPicker;
+
+    CDAudioSharer *_audioSharer;
+    CDAudioProgress *_progress;
 }
-@property(nonatomic, strong)CDPanViewController *panViewController;
+@property(nonatomic, weak)CDPanViewController *panViewController;
+
 @property(nonatomic, strong)CDHolder *holder;
 @property(nonatomic, strong)CDLyricsView *lyricsView;
-@property(nonatomic, readonly)CDBackgroundView *backgroundView;
-@property(nonatomic, strong)CDAudioSharer *audioSharer;
-@property(nonatomic, strong)CDLyrics* lyrics;
-@property(nonatomic, strong)MPMediaPickerController *mediaPicker;
-@property(nonatomic, strong)CDAudioProgress *progress;
+@property(nonatomic, strong)CDStoryView *storyView;
+@property(nonatomic, strong)CDIntroductionView *introductionView;
+@property(nonatomic, strong)CDBackgroundView *backgroundView;
+
 @property(nonatomic, strong)CDRatesView *ratesView;
 @property(nonatomic, strong)CDRepeatView *repeatView;
+
+@property(nonatomic, strong)MPMediaPickerController *mediaPicker;
+
+@property(nonatomic, strong)CDAudioSharer *audioSharer;
+@property(nonatomic, strong)CDAudioProgress *progress;
+@property(nonatomic, strong)CDLyrics* lyrics;
+@property(nonatomic, strong)Item* item;
+//@property(nonatomic, copy)NSString *story;
+@property(nonatomic, assign)SEL introductionRevert;
+
 @end
+
+#define kSubviewsSwitchDuration 0.3f

@@ -9,6 +9,7 @@
 #import "CDRepeatView.h"
 #import "CDCounterView.h"
 #import "CDRepeaterView.h"
+#import "CDColorFinder.h"
 
 @interface CDRepeatView ()
 @end
@@ -27,7 +28,7 @@
         self.animatedShowing = YES;
         
         _counter = [[CDCounterView alloc] initWithFrame:self.bounds];
-        _counter.backgroundColor = kRepeatViewBackgroundColor;
+        _counter.backgroundColor = [CDColorFinder colorOfRepeat];
         
         _repeater = (CDRepeaterView*)[UIView viewFromXibNamed:NSStringFromClass([CDRepeaterView class]) owner:self];
         

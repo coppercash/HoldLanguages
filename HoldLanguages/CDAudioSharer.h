@@ -37,13 +37,13 @@
 - (void)playbackFor:(NSTimeInterval)playbackTime;
 - (void)playbackAt:(NSTimeInterval)playbackTime;
 #pragma mark - Repeat
-- (BOOL)repeatIn:(CDTimeRange)timeRange;
+- (BOOL)repeatIn:(CDDoubleRange)timeRange;
 - (void)setRepeatA;
 - (void)setRepeatB;
 - (void)stopRepeating;
-//- (CDTimeRange)repeatRange;
+//- (CDDoubleRange)repeatRange;
 //- (BOOL)isRepeating;
-- (BOOL)canRepeating;
+- (BOOL)canRepeat;
 #pragma mark - Infomation
 - (CDCycleArray*)rates;
 - (NSTimeInterval)currentPlaybackTime;
@@ -59,7 +59,7 @@
 - (void)audioSharer:(CDAudioSharer*)audioSharer stateDidChange:(CDAudioPlayerState)state;
 - (void)audioSharerNowPlayingItemDidChange:(CDAudioSharer*)audioSharer;
 
-- (void)audioSharer:(CDAudioSharer *)audioSharer didRepeatInRange:(CDTimeRange)range;
+- (void)audioSharer:(CDAudioSharer *)audioSharer didRepeatInRange:(CDDoubleRange)range;
 - (void)audioSharer:(CDAudioSharer *)audioSharer didSetRepeatA:(NSTimeInterval)pointA;
 - (void)audioSharerDidCancelRepeating:(CDAudioSharer *)audioSharer;
 

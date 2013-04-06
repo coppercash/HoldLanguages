@@ -73,9 +73,16 @@
 
 #pragma mark - Control
 - (void)play{
-    [_player prepareToPlay];
-    [_player play];
-    if (_player.playing) _state = CDAudioPlayerStatePlaying;
+    @try {
+        [_player prepareToPlay];
+        [_player play];
+    }
+    @catch (NSException *exception) {
+        DLog(@"\n%@\n%@", NSStringFromSelector(@selector(_cmd)), exception.userInfo);
+    }
+    @finally {
+        if (_player.playing) _state = CDAudioPlayerStatePlaying;
+    }
 }
 
 - (void)stop{
@@ -143,8 +150,8 @@
 #pragma mark - Playback
 - (void)playbackAt:(NSTimeInterval)playbackTime{
     if (self.isRepeating) {
-        CDTimeRange range = _repeater.repeatRange;
-        playbackTime = limitedDouble(playbackTime, range.location, CDTimeRangeGetEnd(range));
+        CDDoubleRange range = _repeater.repeatRange;
+        playbackTime = limitedDouble(playbackTime, range.location, CDMaxDoubleRange(range));
     }
     [_player setCurrentTime:playbackTime];
 }
@@ -165,7 +172,7 @@
 }
 
 #pragma mark - Repeater
-- (void)repeatIn:(CDTimeRange)timeRange{
+- (void)repeatIn:(CDDoubleRange)timeRange{
     if (_player == nil) return;
     if (!self.isRepeating) {
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -181,7 +188,7 @@
 
 - (void)setRepeatB{
     NSTimeInterval length = self.currentPlaybackTime - _pointA;
-    [self repeatIn:CDMakeTimeRange(_pointA, length)];
+    [self repeatIn:CDMakeDoubleRange(_pointA, length)];
 }
 
 - (void)stopRepeating{
@@ -191,7 +198,7 @@
     SafeMemberRelease(_repeater);
 }
 
-- (CDTimeRange)repeatRange{
+- (CDDoubleRange)repeatRange{
     return _repeater.repeatRange;
 }
 
@@ -232,6 +239,11 @@
         value = [currentAudio valueForKey:property];
     }
     return value;
+}
+
+- (NSString *)currentAudioPath{
+    NSString *path = _player.url.path;
+    return path;
 }
 
 #pragma mark - AVAudioPlayerDelegate

@@ -124,7 +124,7 @@
 }
 
 #pragma mark - Repeat
-- (BOOL)repeatIn:(CDTimeRange)timeRange{
+- (BOOL)repeatIn:(CDDoubleRange)timeRange{
     [_audioPlayer repeatIn:timeRange];
     if (_audioPlayer.isRepeating) {
         for (id<CDAudioPlayerDelegate> delegate in _delegates) {
@@ -153,7 +153,7 @@
 }
 
 /*
-- (CDTimeRange)repeatRange{
+- (CDDoubleRange)repeatRange{
     return [_audioPlayer repeatRange];
 }*/
 
@@ -168,7 +168,7 @@
     return [_audioPlayer isRepeating];
 }*/
 
-- (BOOL)canRepeating{
+- (BOOL)canRepeat{
     if (_audioPlayer == nil) return NO;
     if (_audioPlayer.state == CDAudioPlayerStateStopped) return NO;
     return YES;

@@ -7,13 +7,32 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppStatus.h"
 
-@class CDPanViewController, CDAudioSharer, CDAudioProgress;
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@class CDPanViewController, CDAudioSharer, CDAudioProgress, CDNetwork, Reachability;
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    CDPanViewController *_panViewController;
+    CDAudioSharer *_audioSharer;
+    CDAudioProgress *_progress;
+    CDNetwork *_network;
+    Reachability *_reachability;
+    
+    AppStatus *_status;
+}
 
 @property(strong, nonatomic) UIWindow *window;
 @property(strong, nonatomic) CDPanViewController *panViewController;
 @property(strong, nonatomic) CDAudioSharer *audioSharer;
 @property(strong, nonatomic) CDAudioProgress *progress;
+@property(strong, nonatomic) CDNetwork *network;
+@property(nonatomic, strong)Reachability *reachability;
+@property(nonatomic, assign)AppStatus *status;
+
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
 
 @end

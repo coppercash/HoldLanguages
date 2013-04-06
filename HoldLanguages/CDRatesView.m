@@ -9,6 +9,8 @@
 #import "CDRatesView.h"
 #import "CDCycleArray.h"
 #import "CDBigLabelView.h"
+#import "CDPullControllerMetro.h"
+#import "CDColorFinder.h"
 
 @implementation CDRatesView
 
@@ -20,7 +22,7 @@
         
         self.lazyDelegate = self, self.dataSource = self;
         self.animatedHiding = YES, self.animatedShowing = YES;
-        self.widthProportion = 0.96;
+        self.widthProportion = (CGRectGetWidth(frame) - 2 * kMargin) / CGRectGetWidth(frame);
     }
     return self;
 }
@@ -45,7 +47,7 @@
     rate = [rate stringByAppendingString:@" X"];
     
     UIView *view = [[CDBigLabelView alloc] initWithText:rate];
-    view.backgroundColor = kRatesViewBackgroundColor;
+    view.backgroundColor = [CDColorFinder colorOfRates];
     return view;
 }
 

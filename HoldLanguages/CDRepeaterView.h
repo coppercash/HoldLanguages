@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define kRepeatViewBackgroundColor [UIColor color255WithRed:133 green:166 blue:38 alpha:1.0f]
-
 @class CDPlusButton, CDMinusButton;
 @interface CDRepeaterView : UIView{
     CDPlusButton *_leftPlus;
@@ -25,7 +23,7 @@
 @property(nonatomic, strong)IBOutlet CDMinusButton *rightMinus;
 @property(nonatomic, strong)IBOutlet UILabel *start;
 @property(nonatomic, strong)IBOutlet UILabel *end;
-- (void)setRepeatRaneg:(CDTimeRange)repeatRange;
+- (void)setRepeatRaneg:(CDDoubleRange)repeatRange;
 @end
 
 @interface CDPlusButton : UIButton

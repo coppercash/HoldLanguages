@@ -11,6 +11,7 @@
 #import "CDScrollLabel.h"
 
 @implementation CDiTunesViewCell
+@synthesize icon = _icon, name = _name;
 static CGPoint gIconCenter;
 static CGRect gNameFrame;
 - (id)initWithReuseIdentifier:(NSString *)identifier{
@@ -30,14 +31,7 @@ static CGRect gNameFrame;
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-- (void)setupWithItem:(CDFileItem *)item{
+- (void)configureWithItem:(CDFileItem *)item{
     NSString *fileName = item.name;
     _name.text = fileName;
     
@@ -49,7 +43,7 @@ static CGRect gNameFrame;
     } else if ([fileName.pathExtension caseInsensitiveCompare:@"lrc"] == NSOrderedSame){
         _icon.image = [UIImage pngImageWithName:kFileIconLRC];
     }else if ([fileName.pathExtension caseInsensitiveCompare:@"mp3"] == NSOrderedSame){
-        _icon.image = [UIImage pngImageWithName:kFileIconMP3];
+        _icon.image = [UIImage pngImageWithName:kFileIconAudio];
     }
 }
 
@@ -68,7 +62,7 @@ static CGRect gNameFrame;
 }
 
 #pragma mark - CDScrollLabelDelegate
-#define kAnimationInterval 3.0f
+#define kAnimationInterval 5.0f
 - (NSTimeInterval)scrollLabelShouldStartAnimating:(CDScrollLabel *)scrollLabel{
     return kAnimationInterval;
 }

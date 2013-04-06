@@ -7,18 +7,19 @@
 //
 
 #import "CDBackgroundView.h"
+#import "CDPullControllerMetro.h"
+#import "CDColorFinder.h"
+#import "CDMasterButton.h"
 
 @interface CDBackgroundView ()
-//- (void)createMissingLyricsView;
-//- (void)destroyMissingLyricsView;
-- (void)createAssistView;
-- (void)destroyAssistView;
+@property(nonatomic, strong)UIImageView *leftPage;
+@property(nonatomic, strong)UIImageView *rightPage;
+@property(nonatomic, strong)CDMasterPlayerDraw *playerDraw;
 @end
 
 @implementation CDBackgroundView
-@synthesize state = _state;
-@synthesize missingLyrics = _missingLyrics, assistView = _assistView;
-@synthesize dataSource = _dataSource;
+@dynamic leftPage, rightPage, playerDraw;
+
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self){
@@ -27,9 +28,7 @@
         CGRect bounds = self.bounds;
         CGRect f = CGRectInset(bounds, 0.0f, (CGRectGetHeight(bounds) - CGRectGetWidth(bounds)) / 2);
         _spotlight = [[CDSpotlightView alloc] initWithFrame:f];
-        //_spotlight.backgroundColor = [UIColor clearColor];
         [self addSubview:_spotlight];
-        //self.backgroundColor = [UIColor color255WithRed:68.0 green:68.0 blue:68.0 alpha:1.0];
         self.backgroundColor = [UIColor color255WithRed:32.0 green:36.0 blue:41.0 alpha:1.0];
     }
     return self;
@@ -77,88 +76,114 @@
                      } completion:nil];
 }
 
-#pragma mark - Switch Background
-- (void)switchViewWithKey:(CDBackgroundViewKey)key{
-    switch (key) {
-        case CDBackgroundViewKeyNone:{
-            //[self destroyMissingLyricsView];
-            [self destroyAssistView];
-        }break;
-        case CDBackgroundViewKeyMissingLyrics:{
-            [self destroyAssistView];
-            
-            //[self createMissingLyricsView];
-        }break;
-        case CDBackgroundViewKeyAssist:{
-            //[self destroyMissingLyricsView];
-            
-            [self createAssistView];
-        }break;
-        default:
-            break;
+#pragma mark - Page
+- (UIImageView *)leftPage{
+    if (!_leftPage) {
+        CGRect frame = self.bounds;
+        frame = CGRectMake(0.0f, 0.25 * CGRectGetHeight(frame),
+                           0.23 * CGRectGetWidth(frame), 0.25 * CGRectGetHeight(frame));
+        frame = CGRectInset(frame, 0.0f, kMarginSecondary);
+        frame = CGRectOffset(frame, kMargin, 0.0f);
+        _leftPage = [[UIImageView alloc] initWithFrame:frame];
+        _leftPage.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+        _leftPage.contentMode = UIViewContentModeCenter;
+        _leftPage.image = [UIImage pngImageWithName:kPageLeft];
+        _leftPage.backgroundColor = [CDColorFinder colorOfPages];
     }
-    _state = key;
-}
-
-- (void)createAssistView{
-    if (_assistView == nil) {
-        _assistView = [UIView viewFromXibNamed:@"CDBackgroundView" owner:self atIndex:0];
-        [self addSubview:_assistView];
+    if (!_leftPage.superview) {
+        _leftPage.alpha = 0.0f;
+        [self addSubview:_leftPage];
     }
-    _assistView.backgroundColor = [UIColor clearColor];
-    _assistView.frame = CGRectMake(0.0f,
-                                   CGRectGetMidY(self.frame) - _assistView.bounds.size.height / 2,
-                                   self.bounds.size.width,
-                                   _assistView.bounds.size.height);
-    _assistView.alpha = 0.0f;
-
-    void(^animations)(void) = ^(void){
-        _assistView.alpha = 1.0f;
-    };
-    [UIView animateWithDuration:kSwitchAnimationDuration animations:animations];
+    return _leftPage;
 }
 
-- (void)destroyAssistView{
-    if (_assistView == nil) return;
-    void(^animations)(void) = ^(void){
-        _assistView.alpha = 0.0f;
-    };
-    void(^completion)(BOOL) = ^(BOOL finished){
-        [_assistView removeFromSuperview];
-        _assistView = nil;
-    };
-    [UIView animateWithDuration:kSwitchAnimationDuration animations:animations completion:completion];
+- (UIImageView *)rightPage{
+    if (!_rightPage) {
+        CGRect frame = self.bounds;
+        frame = CGRectMake(0.77 * CGRectGetWidth(frame), 0.25 * CGRectGetHeight(frame),
+                           0.23 * CGRectGetWidth(frame), 0.25 * CGRectGetHeight(frame));
+        frame = CGRectInset(frame, 0.0f, kMarginSecondary);
+        frame = CGRectOffset(frame, - kMargin, 0.0f);
+        _rightPage = [[UIImageView alloc] initWithFrame:frame];
+        _rightPage.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+        _rightPage.contentMode = UIViewContentModeCenter;
+        _rightPage.image = [UIImage pngImageWithName:kPageRight];
+        _rightPage.backgroundColor = [CDColorFinder colorOfPages];
+
+    }
+    if (!_rightPage.superview) {
+        _rightPage.alpha = 0.0f;
+        [self addSubview:_rightPage];
+    }
+    return _rightPage;
 }
 
-/*
- - (void)createMissingLyricsView{
- if (_missingLyrics == nil) {
- _missingLyrics = [UIView viewFromXibNamed:@"CDBackgroundView" owner:self atIndex:0];
- [self addSubview:_missingLyrics];
- }
- _missingLyrics.backgroundColor = [UIColor clearColor];
- _missingLyrics.center = self.center;
- _missingLyrics.alpha = 0.0f;
- NSString* audioName = [_dataSource backgroundViewNeedsAudioName:self];
- _audioName.text = [[NSString alloc] initWithFormat:@"%@.lrc", audioName];
- 
- void(^animations)(void) = ^(void){
- _missingLyrics.alpha = 1.0f;
- };
- [UIView animateWithDuration:kSwitchAnimationDuration animations:animations];
- }
- 
- - (void)destroyMissingLyricsView{
- if (_missingLyrics == nil) return;
- void(^animations)(void) = ^(void){
- _missingLyrics.alpha = 0.0f;
- };
- void(^completion)(BOOL) = ^(BOOL finished){
- [_missingLyrics removeFromSuperview];
- _missingLyrics = nil;
- };
- [UIView animateWithDuration:kSwitchAnimationDuration animations:animations completion:completion];
- }*/
+- (void)igniteLeftPage{
+    UIImageView *leftPage = self.leftPage;
+    [UIView animateWithDuration:0.1f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        leftPage.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        if (!finished) return;
+        [UIView animateWithDuration:0.5f delay:0.3f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            leftPage.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            if (!finished) return;
+            [leftPage removeFromSuperview];
+            _leftPage = nil;
+        }];
+    }];
+}
+
+- (void)igniteRightPage{
+    UIImageView *rightPage = self.rightPage;
+    [UIView animateWithDuration:0.1f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        rightPage.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        if (!finished) return;
+        [UIView animateWithDuration:0.5f delay:0.3f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            rightPage.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            if (!finished) return;
+            [rightPage removeFromSuperview];
+            _rightPage = nil;
+        }];
+    }];
+}
+
+#pragma mark - Player
+- (CDMasterPlayerDraw *)playerDraw{
+    if (!_playerDraw) {
+        CGRect bounds = self.bounds;
+        CGFloat size = 0.382f * CGRectGetWidth(bounds);
+        CGRect frame = CGRectMake(CGRectGetMidX(bounds) - 0.5 * size, CGRectGetMidY(bounds) - 0.5 * size, size, size);
+        _playerDraw = [[CDMasterPlayerDraw alloc] initWithFrame:frame];
+        _playerDraw.autoresizingMask = CDViewAutoresizingFloat;
+        _playerDraw.backgroundColor = [CDColorFinder colorOfPages];
+        _playerDraw.drawColor = [CDColorFinder colorOfBackgroundDraw];
+    }
+    if (!_playerDraw.superview) {
+        _playerDraw.alpha = 0.0f;
+        [self addSubview:_playerDraw];
+    }
+    return _playerDraw;
+}
+
+- (void)ignitePlayerDraw:(BOOL)isPlaying{
+    CDMasterPlayerDraw *playerDraw = self.playerDraw;
+    playerDraw.isPlaying = !isPlaying;
+    [UIView animateWithDuration:kDefaultAnimationDuration delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        playerDraw.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        if (!finished) return;
+        [UIView animateWithDuration:0.5f delay:0.3f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            playerDraw.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            if (!finished) return;
+            [playerDraw removeFromSuperview];
+            _playerDraw = nil;
+        }];
+    }];
+}
 
 @end
 

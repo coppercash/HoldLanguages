@@ -8,10 +8,17 @@
 
 #import "CDFileItem.h"
 @interface CDFileItem()
+@property(nonatomic, strong)NSString *name;
+@property(nonatomic, strong)NSArray *subItems;
+@property(nonatomic, weak)CDFileItem *superItem;
+
 - (NSArray *)openDirectory:(NSString *)path;
 @end
 
 @implementation CDFileItem
+@synthesize name = _name, subItems = _subItems;
+@synthesize visibleExtension = _visibleExtension;
+@synthesize isOpened = _isOpened, degree = _degree;
 - (id)initWithName:(NSString *)name{
     self = [super init];
     if (self) {
@@ -20,18 +27,15 @@
     return self;
 }
 
-- (BOOL)isDirectory{
-    NSFileManager *fileManeger = [NSFileManager defaultManager];
-    BOOL isDir = NO;
-    [fileManeger fileExistsAtPath:self.absolutePath isDirectory:&isDir];
-    return isDir;
-}
-
+#pragma mark - Open
 - (void)setIsOpened:(BOOL)isOpened{
     if (_isOpened == isOpened) return;
     if (self.isDirectory) {
-        if (_isOpened) _subItems = nil;
-        else _subItems = [self openDirectory:self.absolutePath];
+        if (_isOpened) {
+            self.subItems = nil;
+        } else {
+            self.subItems = [self openDirectory:self.absolutePath];
+        }
     }
     _isOpened = isOpened;
 }
@@ -46,11 +50,26 @@
     
     NSMutableArray *newSubFiles = [[NSMutableArray alloc] initWithCapacity:subFiles.count];
     for (NSURL *url in subFiles) {
+        BOOL isVisible = NO;
         BOOL isDirectory = NO;
         [fileManeger fileExistsAtPath:url.path isDirectory:&isDirectory];
+        if (isDirectory) {
+            isVisible |= [_visibleExtension containsObject:CDFIIsDir];
+        }else{
+            isVisible |= [_visibleExtension containsObject:url.pathExtension];
+        }
+        
+        /*
         BOOL isVisible = [_visibleExtension containsObject:url.pathExtension];
         
-        if (!isDirectory && !isVisible) continue;
+        if (!isVisible) {
+            BOOL isDirectory = NO;
+            [fileManeger fileExistsAtPath:url.path isDirectory:&isDirectory];
+            if (isDirectory) isVisible |= [_visibleExtension containsObject:CDFIIsDir];
+        }*/
+        
+        
+        if (!isVisible) continue;
         CDFileItem *item = [[CDFileItem alloc] initWithName:url.lastPathComponent];
         item.superItem = self;
         item.degree = _degree + 1;
@@ -58,6 +77,14 @@
         [newSubFiles addObject:item];
     }
     return [[NSArray alloc] initWithArray:newSubFiles];
+}
+
+#pragma mark - Info
+- (BOOL)isDirectory{
+    NSFileManager *fileManeger = [NSFileManager defaultManager];
+    BOOL isDir = NO;
+    [fileManeger fileExistsAtPath:self.absolutePath isDirectory:&isDir];
+    return isDir;
 }
 
 - (NSString *)absolutePath{
@@ -80,6 +107,7 @@
     return count;
 }
 
+#pragma mark - Item
 - (CDFileItem *)itemWithIndex:(NSInteger)index{
     if (index == 0) return self;
     for (CDFileItem *item in _subItems) {
@@ -92,4 +120,21 @@
     return nil ;
 }
 
+- (void)removeFileOfItemAtIndex:(NSInteger)index{
+    //Remove file
+    CDFileItem *item = [self itemWithIndex:index];
+    NSString *path = item.absolutePath;
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    if ([manager fileExistsAtPath:path]) {
+        NSError *error = nil;
+        [manager removeItemAtPath:path error:&error];
+        AssertError(error);
+    }
+    
+    //Reload
+    self.subItems = [self openDirectory:self.absolutePath];
+}
+
 @end
+
+NSString * const CDFIIsDir = @"_dir";

@@ -19,6 +19,7 @@ typedef enum {
 @property(nonatomic, strong) UIViewController<CDSubPanViewController> *rightViewController;
 @property(nonatomic, strong) UIViewController<CDSubPanViewController> *rootViewController;
 @property(nonatomic, strong) Class leftControllerClass;
+@property(nonatomic, strong) Class rightControllerClass;
 
 - (id)initWithRootViewController:(UIViewController<CDSubPanViewController> *)controller;
 - (void)switchToController:(CDPanViewControllerType)type withUserInfo:(id)userInfo;

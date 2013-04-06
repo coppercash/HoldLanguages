@@ -8,13 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-#define kBarAlpha 0.7f
+#define kDefaultAnimationDuration 0.1f
 
 @interface CDColorFinder : NSObject
-- (UIColor*)colorOfBarLight;
-- (UIColor*)colorOfBarDark;
-- (UIColor*)colorOfRotatingCircle;
-- (UIColor*)colorOfProgressViewBackground;
-- (UIColor*)colorOfProgressViewBackgroundGlow;
-- (void)gradientComponentsProgressView:(CGFloat*)progressComponents;
+
++ (UIColor *)colorOfDownloads;
++ (UIColor *)colorOfFileSharing;
+
++ (UIColor *)colorOfAudio;
++ (UIColor *)colorOfLyrics;
+
++ (UIColor *)colorOfRates;
++ (UIColor *)colorOfPages;
++ (UIColor *)colorOfRepeat;
++ (UIColor *)colorOfBackgroundDraw;
+
++ (UIColor *)colorOfBars;
+
+@end
+
+@interface UIView (Shadow)
+- (void)shadowed;
+- (void)deshadowed;
 @end

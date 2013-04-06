@@ -9,8 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "CDPanViewController.h"
 @class CDFileItem;
-@interface CDiTunesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CDSubPanViewController>
-@property(strong, readonly, nonatomic)CDFileItem *documents;
-@property(strong, readonly, nonatomic)UITableView *tableView;
-@property(strong, nonatomic)CDPanViewController *panViewController;
+@interface CDiTunesViewController : UITableViewController <NSFetchedResultsControllerDelegate, CDSubPanViewController>{
+    __weak CDPanViewController *_panViewController;
+    
+    NSFetchedResultsController *_items;
+    CDFileItem *_documents;
+    
+    //Headers & Footers
+    UIView *_downloadsHeader;
+    UIView *_fileSharingHeader;
+    UIView *_downloadsFooter;
+    UIView *_fileSharingFooter;
+}
+@property(nonatomic, weak)CDPanViewController *panViewController;
 @end
+
+#define kDefaultCellAnimationType UITableViewRowAnimationMiddle

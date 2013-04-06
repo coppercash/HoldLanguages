@@ -12,7 +12,9 @@
     NSString *_rootPath;
     NSFileManager *_fileManager;
 }
-NSString* documentsPath();
+NSString* directoryDocuments(NSString *subpath);
+NSString* directoryRelativeDownload(NSString *subpath);
+NSString* directoryAbsoluteDownload(NSString *subpath);
 + (NSString*)findFileWithName:(NSString*)name ofType:(NSString*)extension;
-
++ (void)organizeiTunesFileSharing;
 @end

@@ -18,13 +18,13 @@
     return self;
 }
 
-- (void)repeatIn:(CDTimeRange)range{
+- (void)repeatIn:(CDDoubleRange)range{
     if (range.length <= 0) return;
-    CDTimeRange wholeRange = CDMakeTimeRange(0.0f, _player.currentDuration);
-    range = CDIntersectionTimeRange(range, wholeRange);
+    CDDoubleRange wholeRange = CDMakeDoubleRange(0.0f, _player.currentDuration);
+    range = CDIntersectionDoubleRange(range, wholeRange);
     
     _repeatRange = range;
-    _rangeEnd = CDTimeRangeGetEnd(_repeatRange);
+    _rangeEnd = CDMaxDoubleRange(_repeatRange);
     [_progress registerDelegate:self withTimes:1];
 
     NSTimeInterval location = _repeatRange.location;
@@ -37,7 +37,7 @@
     [_progress removeDelegate:self];
 }
 
-- (CDTimeRange)repeatRange{
+- (CDDoubleRange)repeatRange{
     return _repeatRange;
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "CDPanViewController.h"
-#define kMenuFullWidth self.view.bounds.size.width * 0.7f
+#define kMenuFullWidth self.view.bounds.size.width * 0.85f
 #define kMenuDisplayedWidth self.view.bounds.size.width * 0.7f
 #define kMenuOverlayWidth (self.view.bounds.size.width - kMenuDisplayedWidth)
 #define kMenuBounceOffset 10.0f
@@ -23,6 +23,7 @@
 
 @implementation CDPanViewController
 @synthesize leftViewController=_left, rightViewController=_right, rootViewController=_root;
+@synthesize leftControllerClass = _leftControllerClass, rightControllerClass = _rightControllerClass;
 @synthesize userInfo = _userInfo;
 
 - (id)initWithRootViewController:(UIViewController<CDSubPanViewController> *)controller{
@@ -33,10 +34,15 @@
     return self;
 }
 
+- (void)loadView{
+    self.wantsFullScreenLayout = YES;
+    [super loadView];
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.wantsFullScreenLayout = YES;
+
 }
 
 - (void)didReceiveMemoryWarning{
@@ -97,17 +103,33 @@
 #pragma mark - Set Controller
 - (void)setRightViewController:(UIViewController<CDSubPanViewController> *)rightController{
     _right = rightController;
+    UIView *view = self.rightViewController.view;
+    
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    frame.origin.y = CGRectGetMinY(view.frame);
+    frame.size.height = CGRectGetHeight(view.frame);
+    frame.origin.x = CGRectGetWidth(frame) - kMenuFullWidth;
+	frame.size.width = kMenuFullWidth;
+    view.frame = frame;
+     
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
+    [self.view insertSubview:view atIndex:0];
     _menuFlags.canShowRight = (self.rightViewController != nil);
 }
 
 - (void)setLeftViewController:(UIViewController<CDSubPanViewController> *)leftController{
     _left = leftController;
     UIView *view = self.leftViewController.view;
-	CGRect frame = self.view.bounds;
-	frame.size.width = kMenuFullWidth;
+    
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    frame.origin.y = CGRectGetMinY(view.frame);
+    frame.size.height = CGRectGetHeight(view.frame);
+    frame.size.width = kMenuFullWidth;
     view.frame = frame;
-    [self.view insertSubview:view atIndex:0];
+    
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight;
+    
+    [self.view insertSubview:view atIndex:0];
     _menuFlags.canShowLeft = (self.leftViewController != nil);
 }
 
@@ -125,18 +147,9 @@
 
 #pragma mark - GestureRecognizers
 - (void)panRootControllerWithIncrement:(CGPoint)increment{
-    CGFloat maxLeft = _menuFlags.canShowLeft ? CGRectGetMaxX(_left.view.frame) : 0.0f;
-    CGFloat maxRight = _menuFlags.canShowRight ? CGRectGetMinX(_right.view.frame) : 0.0f;
-    
-    CGRect targetFrame = CGRectOffset(_root.view.frame, increment.x, increment.y);
+    CGFloat xInc = limitedFloat(increment.x, - CGRectGetWidth(_right.view.frame), CGRectGetWidth(_left.view.frame));
     CGPoint center = _root.view.center;
-    if (CGRectGetMinX(targetFrame) >= maxLeft) {
-        center.x = maxLeft + CGRectGetMidX(_root.view.bounds);
-    }else if (CGRectGetWidth(_root.view.bounds) - CGRectGetMaxX(targetFrame) >= maxRight) {
-        center.x = (CGRectGetWidth(_root.view.bounds) - maxRight) - CGRectGetMidX(_root.view.bounds);
-    }else{
-        center.x += increment.x;
-    }
+    center.x += xInc;
     _root.view.center = center;
 }
 
@@ -230,31 +243,30 @@
     _menuFlags.showingRightView = YES;
     [self showShadow:YES];
     
-    UIView *view = self.rightViewController.view;
-    CGRect frame = self.view.bounds;
-	frame.origin.x += frame.size.width - kMenuFullWidth;
-	frame.size.width = kMenuFullWidth;
-    view.frame = frame;
-    [self.view insertSubview:view atIndex:0];
+    [self.rightViewController viewWillAppear:animated];
     
-    frame = _root.view.frame;
-    frame.origin.x = -(frame.size.width - kMenuOverlayWidth);
-    
-    BOOL _enabled = [UIView areAnimationsEnabled];
-    if (!animated) {
-        [UIView setAnimationsEnabled:NO];
-    }
-    
+    //   ____________
+    //  |    |  |    |
+    //  |    |  |    |
+    //  |    |  |    |
+    //  |    |  |    |
+    //  |    |  |    |
+    //  |____|__|____|
+    //      ||
+    CGPoint center = _root.view.center;
+    center.x = CGRectGetMinX(_right.view.frame) - 0.5 * CGRectGetWidth(_root.view.frame);
+
     _root.view.userInteractionEnabled = NO;
-    [UIView animateWithDuration:.3 animations:^{
-        _root.view.frame = frame;
-    } completion:^(BOOL finished) {
+    if (animated) {
+        [UIView animateWithDuration:.3 animations:^{
+            _root.view.center = center;
+        } completion:^(BOOL finished) {
+            [_tap setEnabled:YES];
+            [self didSwitchToControllerType:CDPanViewControllerTypeRight];
+        }];
+    }else{
+        _root.view.center = center;
         [_tap setEnabled:YES];
-        [self didSwitchToControllerType:CDPanViewControllerTypeRight];
-    }];
-    
-    if (!animated) {
-        [UIView setAnimationsEnabled:_enabled];
         [self didSwitchToControllerType:CDPanViewControllerTypeRight];
     }
 }

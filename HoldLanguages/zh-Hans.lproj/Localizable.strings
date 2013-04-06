@@ -4,3 +4,10 @@
 "by" = "作者";
 
 "TapHere" = "点这里！";
+
+"iTunesViewHeaderDownloads" = "下载";
+"iTunesViewHeaderFileSharing" = "iTunes文件共享";
+
+"NetworkError" = "无法连接互联网";
+"Settings" = "设置";
+"GetIt" = "知道了";

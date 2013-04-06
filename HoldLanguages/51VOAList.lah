@@ -1,0 +1,15 @@
+arr'root':
+    dic(id='id'):
+        fet'title'(_text, key="title")
+        fet'link'("href", key="link")
+        fet'url'(_url, key="url")
+        
+ope'ope'('root'):
+    rec("span", "id"={"blist", "list"}):
+        rec("ul"):
+            rec'id'("li"):
+                rec'a'("a", text=_all):
+                    dow("href"):
+                        'url'
+                    'title'
+                    'link'
