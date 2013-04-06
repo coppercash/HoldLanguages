@@ -201,21 +201,11 @@ static NSString *reuseIdentifierFooter = @"ReuseFooter";
 }
 
 - (void)setYOffset:(CGFloat)yOffset animated:(BOOL)animated{
-    //CGFloat yMin = 0.0f;
-    //CGFloat yMax = _lyricsTable.contentSize.height - CGRectGetHeight(_lyricsTable.bounds);
     CGPoint offset = _lyricsTable.contentOffset;
     offset.y = limitedFloat(yOffset,
                             0.0f,
                             _lyricsTable.contentSize.height - CGRectGetHeight(_lyricsTable.bounds)
                             );
-    /*
-    if (yOffset < yMin) {
-        offset.y = yMin;
-    }else if (yOffset > yMax) {
-        offset.y = yMax;
-    }else{
-        offset.y = yOffset;
-    }*/
     [_lyricsTable setContentOffset:offset animated:animated];
 }
 

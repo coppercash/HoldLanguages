@@ -61,16 +61,18 @@ lyricsSymbol = _lyricsSymbol;
     _content.text = item.content.content;
     
     Image *image = item.anyImage;
+    _image.image = [[UIImage alloc] initWithContentsOfFile:item.anyImage.absolutePath];
+    CGRect cFrame = _content.frame; //Content frame
     if (image) {
-        _image.image = [[UIImage alloc] initWithContentsOfFile:item.anyImage.absolutePath];
-    }else{
-        CGRect frame = _content.frame;
-        CGFloat width = CGRectGetMaxX(frame);
-        frame.origin.x = 0.0f;
-        frame.size.width = width;
+        cFrame.origin.x = 98.0f;
+        cFrame.size.width = 121.0f;
         _content.frame = frame;
+    }else{
+        cFrame.origin.x = 0.0f;
+        cFrame.size.width = 219.0f;
     }
-    
+    _content.frame = cFrame;
+
     _audioSymbol.hidden = item.audio == nil;
     _lyricsSymbol.hidden = item.lyrics == nil;
 

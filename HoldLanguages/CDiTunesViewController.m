@@ -113,6 +113,12 @@ static NSString * const footerXibName = @"CDiTunesFooters";
     [super didReceiveMemoryWarning];
 }
 
+- (void)dealloc{
+    NSError *error = nil;
+    [kMOContext save:&error];
+    AssertError(error);
+}
+
 #pragma mark - Events
 - (void)selectCellInFileSharingSection:(NSIndexPath *)indexPath tableView:(UITableView *)tableView{
     CDFileItem *item = [_documents itemWithIndex:indexPath.row + 1];

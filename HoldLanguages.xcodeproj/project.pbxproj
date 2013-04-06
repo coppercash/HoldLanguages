@@ -111,8 +111,6 @@
 		BEA2EE4516632EA4009456AA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4016632EA4009456AA /* Default-568h@2x.png */; };
 		BEA2EE4616632EA4009456AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4116632EA4009456AA /* Default.png */; };
 		BEA2EE4716632EA4009456AA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4216632EA4009456AA /* Default@2x.png */; };
-		BEA2EE4816632EA4009456AA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4316632EA4009456AA /* Icon.png */; };
-		BEA2EE4916632EA4009456AA /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA2EE4416632EA4009456AA /* Icon@2x.png */; };
 		BEA53E2916FBF2CA00528564 /* CDStoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA53E2816FBF2CA00528564 /* CDStoryView.m */; };
 		BEA53E6116FBF56800528564 /* StoryViewCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA53E6016FBF56800528564 /* StoryViewCategory.m */; };
 		BEA53E6316FBF7A300528564 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA53E6216FBF7A300528564 /* CoreText.framework */; };
@@ -200,6 +198,8 @@
 		BEC189E716AB8EC400F56053 /* CDBigLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC189E616AB8EC400F56053 /* CDBigLabelView.m */; };
 		BEC189E816AB8EC400F56053 /* CDBigLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC189E616AB8EC400F56053 /* CDBigLabelView.m */; };
 		BEC189E916AB8EC400F56053 /* CDBigLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC189E616AB8EC400F56053 /* CDBigLabelView.m */; };
+		BED21E1F170C6D2700FC0295 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BED21E1E170C6D2700FC0295 /* icon@2x.png */; };
+		BED21E2E170C6D2B00FC0295 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BED21E2D170C6D2B00FC0295 /* icon.png */; };
 		BED7594C16A7EA8100D980E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9D814716A68E3D00AD091F /* AVFoundation.framework */; };
 		BED7594D16A7EA9F00D980E7 /* CDiTunesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF3393F16A24C0D0032A1B6 /* CDiTunesViewController.m */; };
 		BEE661821660DC0B00FFBC33 /* CDIntroductionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEE661841660DC0B00FFBC33 /* CDIntroductionView.xib */; };
@@ -513,8 +513,6 @@
 		BEA2EE4016632EA4009456AA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BEA2EE4116632EA4009456AA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		BEA2EE4216632EA4009456AA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		BEA2EE4316632EA4009456AA /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		BEA2EE4416632EA4009456AA /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		BEA53E2716FBF2CA00528564 /* CDStoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStoryView.h; sourceTree = "<group>"; };
 		BEA53E2816FBF2CA00528564 /* CDStoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDStoryView.m; sourceTree = "<group>"; };
 		BEA53E5F16FBF56800528564 /* StoryViewCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryViewCategory.h; sourceTree = "<group>"; };
@@ -601,6 +599,8 @@
 		BEC189DE16AB7CB700F56053 /* CDHolder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CDHolder.xcodeproj; path = ../CDHolder/CDHolder.xcodeproj; sourceTree = "<group>"; };
 		BEC189E516AB8EC400F56053 /* CDBigLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDBigLabelView.h; sourceTree = "<group>"; };
 		BEC189E616AB8EC400F56053 /* CDBigLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDBigLabelView.m; sourceTree = "<group>"; };
+		BED21E1E170C6D2700FC0295 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
+		BED21E2D170C6D2B00FC0295 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		BEE661831660DC0B00FFBC33 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CDIntroductionView.xib; sourceTree = "<group>"; };
 		BEE661851660DC1000FFBC33 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/CDIntroductionView.xib"; sourceTree = "<group>"; };
 		BEEAB27016BA145D00B9C39F /* CDImageMetroCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDImageMetroCell.h; sourceTree = "<group>"; };
@@ -1039,9 +1039,9 @@
 		BE9ABBE316F31E16001B0465 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BEA2EE2E16632088009456AA /* iOS */,
 				BEEAB2A516BA1FB500B9C39F /* TopBar */,
 				BEEAB25A16BA12C100B9C39F /* BottomBar */,
-				BEA2EE2E16632088009456AA /* iOS */,
 				BE256FA91666EA18001665EF /* Assist */,
 				BE52320E16B939540051ACFB /* iTunesFinder */,
 				BEA64916170B0473001DE5B8 /* Symbols */,
@@ -1152,11 +1152,11 @@
 		BEA2EE2E16632088009456AA /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				BED21E2D170C6D2B00FC0295 /* icon.png */,
+				BED21E1E170C6D2700FC0295 /* icon@2x.png */,
 				BEA2EE4016632EA4009456AA /* Default-568h@2x.png */,
 				BEA2EE4116632EA4009456AA /* Default.png */,
 				BEA2EE4216632EA4009456AA /* Default@2x.png */,
-				BEA2EE4316632EA4009456AA /* Icon.png */,
-				BEA2EE4416632EA4009456AA /* Icon@2x.png */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -1641,8 +1641,6 @@
 				BEA2EE4516632EA4009456AA /* Default-568h@2x.png in Resources */,
 				BEA2EE4616632EA4009456AA /* Default.png in Resources */,
 				BEA2EE4716632EA4009456AA /* Default@2x.png in Resources */,
-				BEA2EE4816632EA4009456AA /* Icon.png in Resources */,
-				BEA2EE4916632EA4009456AA /* Icon@2x.png in Resources */,
 				BE256FAD1666EBB3001665EF /* Cursor.png in Resources */,
 				BEF3394716A253370032A1B6 /* CDiTunesViewCell.xib in Resources */,
 				BE9EEFA516AF8A6D00897D6A /* CDCounterView.xib in Resources */,
@@ -1705,6 +1703,8 @@
 				BEA64927170B1D81001DE5B8 /* AssistDownload@2x.png in Resources */,
 				BEA6492A170B1D9A001DE5B8 /* AssistOnline.png in Resources */,
 				BEA6492B170B1D9A001DE5B8 /* AssistOnline@2x.png in Resources */,
+				BED21E1F170C6D2700FC0295 /* icon@2x.png in Resources */,
+				BED21E2E170C6D2B00FC0295 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

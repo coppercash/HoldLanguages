@@ -45,6 +45,7 @@
         _lyricsView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         if (finished) {
+            self.lyrics = nil;
             [_lyricsView removeFromSuperview];
             self.lyricsView = nil;
         }

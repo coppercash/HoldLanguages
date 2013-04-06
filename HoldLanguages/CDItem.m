@@ -9,6 +9,7 @@
 #import "CDItem.h"
 #import "CoreDataModels.h"
 #import "CDStoryView.h"
+#import "CDString.h"
 
 #import "CDiTunesFinder.h"
 
@@ -129,21 +130,9 @@ static NSString * const gKeyLyrics = @"lrc";
             NSMutableString *collector = [[NSMutableString alloc] init];
             for (id text in content) {
                 if ([text isKindOfClass:[NSString class]]) {
-                    if ([text isEqualToString:@"\r\n"]) continue;
-                    [collector appendFormat:@"%@\n", text];
                     
-                    /*
-                     if ([text isEqualToString:@"\r\n"]) {
-                     isFeed = YES;
-                     continue;
-                     }else{
-                     if (isFeed) {
-                     [collector appendFormat:@"\n"];
-                     isFeed = NO;
-                     }
-                     [collector appendFormat:@"%@", text];
-                     }
-                     */
+                    if ([(NSString *)text isVisuallyEmpty]) continue;
+                    [collector appendFormat:@"%@\n", text];
                     
                 }else if ([text isKindOfClass:[NSDictionary class]]) {
                     //Image Item

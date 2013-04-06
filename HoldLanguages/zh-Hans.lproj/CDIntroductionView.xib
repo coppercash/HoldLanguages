@@ -161,6 +161,7 @@
 						<int key="NSvFlags">301</int>
 						<string key="NSFrame">{{270, 455}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="1023848586"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="IBUIContentMode">4</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>

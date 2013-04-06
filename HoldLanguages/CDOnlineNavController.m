@@ -34,18 +34,22 @@
     self.navigationBarHidden = YES;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     self.view.frame = [[UIScreen mainScreen] applicationFrame];
     
     self.VOA51 = [[CD51VOA alloc] init];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc{
+    NSError *error = nil;
+    [kMOContext save:&error];
+    AssertError(error);
 }
 
 #pragma mark - Back Button
