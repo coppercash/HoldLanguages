@@ -9,6 +9,5 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate (AppDelegateReachability) <UIAlertViewDelegate>
-- (void)registerReachabilityNotification;
-- (void)reachabilityChanged:(NSNotification *)note;
+- (void)alertUnreachable;
 @end
