@@ -25,8 +25,8 @@
 @property(strong, nonatomic) CDAudioSharer *audioSharer;
 @property(strong, nonatomic) CDAudioProgress *progress;
 @property(strong, nonatomic) CDNetwork *network;
-@property(nonatomic, strong)Reachability *reachability;
-@property(nonatomic, assign)AppStatus *status;
+@property(nonatomic, readonly) Reachability *reachability;
+@property(nonatomic, assign) AppStatus *status;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

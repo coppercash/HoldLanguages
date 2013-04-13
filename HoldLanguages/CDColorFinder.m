@@ -48,6 +48,7 @@
 
 @end
 
+
 @implementation UIView (Shadow)
 
 - (void)shadowed{
@@ -66,4 +67,21 @@
     layer.shadowPath = nil;
 }
 
+@end
+
+
+@implementation UITableViewController (Theme)
+- (void)formated{
+    UITableView *tableView = self.tableView;
+    tableView.separatorColor = [UIColor darkGrayColor];
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
+    
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+    swipe.direction = UISwipeGestureRecognizerDirectionRight;
+    [tableView addGestureRecognizer:swipe];
+    
+    UIRefreshControl *refresher = [[UIRefreshControl alloc] init];
+    self.refreshControl = refresher;
+    [refresher addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+}
 @end

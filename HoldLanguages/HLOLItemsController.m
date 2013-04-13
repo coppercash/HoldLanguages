@@ -6,41 +6,22 @@
 //  Copyright (c) 2013 Coder Dreamer. All rights reserved.
 //
 
-#import "CDOnlineViewController.h"
-#import "CDOnlineNavController.h"
-#import "CD51VOA.h"
-#import "Item.h"
+#import "HLOLItemsController.h"
+#import "HLOLNavigationController.h"
 #import "CoreDataModels.h"
 #import "CDItem.h"
 #import "CDItemNetwork.h"
 #import "CDItemTableCell.h"
 #import "CDItemDetailTableCell.h"
 #import "CDLoadMoreControl.h"
-#import "Reachability.h"
+#import "HLModelsGroup.h"
 
 static NSString * const gReuseCell = @"RC";
 static NSString * const gReuseDetailCell = @"RDC";
 
-@interface CDOnlineViewController ()
-@property(nonatomic, strong)CDLoadMoreControl *loader;
-
-@property(nonatomic, strong)NSMutableArray *itemList;
-@property(nonatomic, strong)CD51VOA *VOA51;
-
-@property(nonatomic, assign)NSInteger indexOfPage;
-@property(nonatomic, assign)NSInteger indexInPage;
-@property(nonatomic, assign)NSUInteger pageCapacity;
-@property(nonatomic, strong)NSString *currentPage;
-
+@interface HLOLItemsController ()
 #pragma mark - Swipe
-- (void)swipe:(UISwipeGestureRecognizer *)swiper;
 - (void)tableView:(UITableView *)tableView swipeRowAtIndexPath:(NSIndexPath *)indexPath toDirection:(UISwipeGestureRecognizerDirection)direction;
-#pragma mark - Refresh & Load More
-- (void)refresh;
-- (void)didRefreshWith:(NSArray *)newItems;
-- (void)loadMore;
-- (void)didLoadMoreWith:(NSArray *)newItems;
-- (void)addItems:(NSArray *)newItems;
 #pragma mark - Download
 - (void)downloadWithRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)cancelDownloadWithRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -51,64 +32,28 @@ static NSString * const gReuseDetailCell = @"RDC";
 - (void)cancelDetailMode;
 @end
 
-@implementation CDOnlineViewController
-@synthesize panViewController = _panViewController;
-@synthesize loader = _loader;
-@synthesize VOA51 = _VOA51, itemList = _itemList;
-@synthesize
-indexOfPage = _indexOfPage,
-currentPage = _currentPage,
-indexInPage = _indexInPage,
-pageCapacity = _pageCapacity;
+@implementation HLOLItemsController
 
 #pragma mark - Class Basic
 
 #pragma mark - Resource Management
 - (void)loadView{
-    self.wantsFullScreenLayout = NO;
     [super loadView];
     
     UITableView *tableView = self.tableView;
-    tableView.separatorColor = [UIColor darkGrayColor];
-    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage pngImageWithName:@"iTunesColorPattern"]];
     
-    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
-    left.direction = UISwipeGestureRecognizerDirectionLeft;
     UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
     right.direction = UISwipeGestureRecognizerDirectionRight;
-    [tableView addGestureRecognizer:left];
     [tableView addGestureRecognizer:right];
-    
-    UIRefreshControl *refresher = [[UIRefreshControl alloc] init];
-    self.refreshControl = refresher;
-    [refresher addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    
-    CDLoadMoreControl *loader = [[CDLoadMoreControl alloc] init];
-    self.loader = loader;
-    tableView.tableFooterView = loader;
-    [loader addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventValueChanged];
-    
 }
 
 - (void)viewDidLoad{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    CDOnlineNavController *nav = (CDOnlineNavController *)self.navigationController;
-    
-    self.itemList = [[NSMutableArray alloc] initWithCapacity:kRefreshCapacity];
-    self.VOA51 = nav.VOA51;
-    
     self.pageCapacity = 10;
-    
-    [self refresh];
-    [self.refreshControl beginRefreshing];
+    [super viewDidLoad];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    CDOnlineNavController *nav = (CDOnlineNavController *)self.navigationController;
-    [nav backButton];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -141,91 +86,13 @@ pageCapacity = _pageCapacity;
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Events
-- (void)refresh{
-    if (_loader.loadingMore) {
-        [self.refreshControl endRefreshing];
-        return;
-    }
-    
-    self.currentPage = _rootPage;
-    self.indexInPage = 0;
-    self.indexOfPage = 0;
-    
-    __weak CDOnlineViewController *bSelf = self;
-    LAHOperation *ope = [_VOA51 listAt:_currentPage inRange:NSMakeRange(_indexInPage, kRefreshCapacity)];
-    [ope addCompletion:^(LAHOperation *operation) {
-        [bSelf didRefreshWith:operation.container];
-    }];
-    [ope start];
-}
-
-- (void)didRefreshWith:(NSArray *)newItems{
-    [self.refreshControl endRefreshing];
-    [_loader endLoadingMore];
-    
-    [_itemList removeAllObjects];
-    [self.tableView reloadData];
-    
-    [self addItems:newItems];
-}
-
-- (void)loadMore{
-    if (self.refreshControl.refreshing) {
-        [_loader endLoadingMore];
-        return;
-    }
-    
-    __weak CDOnlineViewController *bSelf = self;
-    LAHOperation *ope = [_VOA51 listAt:_currentPage inRange:NSMakeRange(_indexInPage, _pageCapacity)];
-    [ope addCompletion:^(LAHOperation *operation) {
-        [bSelf didLoadMoreWith:operation.container];
-    }];
-    [ope start];
-}
-
-- (void)didLoadMoreWith:(NSArray *)newItems{
-    [self.refreshControl endRefreshing];
-    [_loader endLoadingMore];
-
-    [self addItems:newItems];
-}
-
-- (void)addItems:(NSArray *)newItems{
-    NSUInteger count = newItems.count;
-    
-    NSInteger newIndex = self.indexInPage + count;
-    NSMutableArray *collector = [[NSMutableArray alloc] initWithCapacity:count];
-    for (NSUInteger index = _indexInPage; index < newIndex; index++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-        [collector addObject:indexPath];
-    }
-    self.indexInPage = newIndex;
-    
-    NSMutableArray *adding = [[NSMutableArray alloc] initWithArray:newItems];
-    NSUInteger index = 0;
-    for (NSDictionary *dic in newItems) {
-        NSString *urlString = [dic objectForKey:@"url"];
-        NSArray *results = [Item itemsOfAbsolutePath:urlString];
-        if (results.count >= 1) {
-            Item *item = [results objectAtIndex:0];
-            [adding replaceObjectAtIndex:index withObject:item];
-        }
-        index ++;
-    }
-    
-    UITableView *tableView = self.tableView;
-    [tableView beginUpdates];
-    [_itemList addObjectsFromArray:adding];
-    [tableView insertRowsAtIndexPaths:collector withRowAnimation:UITableViewRowAnimationMiddle];
-    [tableView endUpdates];
-}
-
 #pragma mark - Download
 - (void)convertDictionary:(NSDictionary *)dictionary atIndexPath:(NSIndexPath *)indexPath
                completion:(void(^)(Item *item, NSIndexPath *indePath))completion{
-    NSString *path = [dictionary objectForKey:@"link"];
-    LAHOperation *ope = [_VOA51 itemAtPath:path];
+    
+    NSString *link = [dictionary objectForKey:@"link"];
+    LAHOperation *ope = _models.itemOperation;
+    ope.link = link;
     
     __weak NSMutableArray *itemList = _itemList;
     [ope addCompletion:^(LAHOperation *operation) {
@@ -280,17 +147,6 @@ pageCapacity = _pageCapacity;
     //Cancel downloading
     CDNetwork *network = kSingletonNetwork;
     [network cancelDownloadWithItem:item];
-    
-    /*
-    //Remove resources
-    [item removeResource];
-    [kMOContext deleteObject:item];
-    
-    //Replace models
-    NSDictionary *dic = [_trash objectForKey:indexPath];
-    [_itemList replaceObjectAtIndex:indexPath.row withObject:dic];
-    [_trash removeObjectForKey:indexPath];
-     */
     
     //Update View
     CDItemTableCell *cell = (CDItemTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -475,11 +331,6 @@ pageCapacity = _pageCapacity;
     }else if (![indexPath isEqual:_detailIndex]) {
         [self cancelDetailMode];
     }
-}
-
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [_loader testLoadingMore:scrollView];
 }
 
 @end

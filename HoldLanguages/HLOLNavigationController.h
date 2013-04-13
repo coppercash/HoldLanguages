@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CDPanViewController.h"
 
-@class CD51VOA;
-@interface CDOnlineNavController : UINavigationController <CDSubPanViewController> {
+@class HLModelsGroup;
+@interface HLOLNavigationController : UINavigationController <CDSubPanViewController> {
     __weak CDPanViewController *_panViewController;
-    CD51VOA *_VOA51;
     UIButton *_backButton;
 }
 @property(nonatomic, weak)CDPanViewController *panViewController;
-@property(nonatomic, readonly)CD51VOA *VOA51;
 @property(nonatomic, readonly)UIButton *backButton;
-- (void)destroyBackButton;
+- (void)removeBackButton;
+- (void)pushWithModelsGroup:(HLModelsGroup *)group link:(NSString *)link;
 @end
