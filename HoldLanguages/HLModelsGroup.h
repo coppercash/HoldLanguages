@@ -13,8 +13,10 @@
 }
 @property(nonatomic, copy)NSString *name;
 @property(nonatomic, readonly)BOOL isPenultDegree;
-@property(nonatomic, readonly)BOOL isRootDegree;
 @property(nonatomic, readonly)LAHOperation *itemOperation;
+@property(nonatomic, readonly)LAHRecognizer *ranger;
+@property(nonatomic, readonly)NSRange initRange;
+- (void)resetRange;
 @end
 
 extern NSString * const gHLMGKeyName;
@@ -23,3 +25,5 @@ extern NSString * const gHLMGKeyLink;
 extern NSString * const gHLMGKeyURL;
 extern NSString * const gHLMGKeyCommand;
 extern NSString * const gHLMGKeyOperation;
+extern NSString * const gHLMGKeyRange;
+extern NSString * const gHLMGKeyRangeInitValue;

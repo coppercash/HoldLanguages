@@ -10,4 +10,5 @@
 
 @interface AppDelegate (AppDelegateReachability) <UIAlertViewDelegate>
 - (void)alertUnreachable;
+- (void)reachabilityChanged:(NSNotification*)note;
 @end

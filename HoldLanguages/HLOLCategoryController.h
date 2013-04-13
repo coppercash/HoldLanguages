@@ -18,7 +18,7 @@
     __weak LAHOperation *_network;
     
     //Joiner
-    NSUInteger _pageCapacity;
+    NSUInteger _breakCapacity;
     NSUInteger _entireCapacity;
     NSString *_firstPage;
     NSString *_currentPage;
@@ -35,7 +35,7 @@
 @property(nonatomic, strong)NSMutableArray *itemList;
 @property(nonatomic, weak)LAHOperation *network;
 
-@property(nonatomic, assign)NSUInteger pageCapacity;
+@property(nonatomic, assign)NSUInteger breakCapacity;
 @property(nonatomic, assign)NSUInteger entireCapacity;
 @property(nonatomic, copy)NSString *firstPage;
 @property(nonatomic, copy)NSString *currentPage;
@@ -56,4 +56,3 @@
 @end
 
 #define kRefreshCapacity 20
-#define kNumberOfCategories 17

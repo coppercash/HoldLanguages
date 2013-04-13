@@ -17,22 +17,25 @@
 - (Reachability *)reachability{
     if (!_reachability) {
         
-        Reachability * reach = [Reachability reachabilityForInternetConnection];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reachabilityChanged:)
+                                                     name:kReachabilityChangedNotification
+                                                   object:nil];
         
-        __weak AppDelegate *appDelegate = self;
-        reach.unreachableBlock = ^(Reachability * reachability)
-        {
-            DLog(@"Unreachable block fired.");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [appDelegate alertUnreachable];
-            });
-        };
+        _reachability = [Reachability reachabilityForInternetConnection];
         
-        _reachability = reach;
-
     }
     
     return _reachability;
+}
+
+- (void)reachabilityChanged:(NSNotification*)note
+{
+    Reachability * reach = [note object];
+    
+    if(![reach isReachable]){
+        [self alertUnreachable];
+    }
 }
 
 - (void)alertUnreachable{

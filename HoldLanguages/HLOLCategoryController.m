@@ -25,7 +25,7 @@ entireCapacity = _entireCapacity,
 firstPage = _firstPage,
 currentPage = _currentPage,
 indexInPage = _indexInPage,
-pageCapacity = _pageCapacity;
+breakCapacity = _breakCapacity;
 
 - (void)loadView{
     self.wantsFullScreenLayout = NO;
@@ -41,6 +41,7 @@ pageCapacity = _pageCapacity;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
     
     [self itemList];
     
@@ -83,8 +84,10 @@ pageCapacity = _pageCapacity;
 
 - (void)setModels:(HLModelsGroup *)models{
     _models = models;
-    _firstPage = models.operation.link;
-    
+    self.firstPage = models.operation.link;
+    self.currentPage = _firstPage;
+    self.breakCapacity = 10;
+    self.entireCapacity = _models.initRange.length;
 }
 
 #pragma mark - Refresh & Load More
@@ -98,8 +101,13 @@ pageCapacity = _pageCapacity;
     self.indexInPage = 0;
     self.indexOfPage = 0;
     
+    NSRange entireRange = NSMakeRange(0, _entireCapacity);
+    NSRange targetRange = NSMakeRange(_indexInPage, kRefreshCapacity);
+    NSRange intersection = NSIntersectionRange(entireRange, targetRange);
+    
     __weak HLOLCategoryController *bSelf = self;
     LAHOperation *ope = _models.operation;
+    _models.ranger.range = intersection;
     [ope addCompletion:^(LAHOperation *operation) {
         [bSelf didRefreshWith:operation.container];
     }];
@@ -110,13 +118,10 @@ pageCapacity = _pageCapacity;
     [self.refreshControl endRefreshing];
     [_loader endLoadingMore];
     
-    self.itemList = [[NSMutableArray alloc] initWithArray:newItems];
-    
-    //[_itemList removeAllObjects];
-    //[_itemList addObjectsFromArray:newItems];
-    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    //[self didReceiveResponse:newItems];
+    [self.itemList removeAllObjects];
+    [self.tableView reloadData];
+
+    [self didReceiveResponse:newItems];
 }
 
 - (void)loadMore{
@@ -125,8 +130,17 @@ pageCapacity = _pageCapacity;
         return;
     }
     
+    NSRange entireRange = NSMakeRange(0, _entireCapacity);
+    NSRange targetRange = NSMakeRange(_indexInPage, _breakCapacity);
+    NSRange intersection = NSIntersectionRange(entireRange, targetRange);
+    if (intersection.length == 0) {
+        [_loader endLoadingMore];
+        return;
+    }
+    
     __weak HLOLCategoryController *bSelf = self;
     LAHOperation *ope = _models.operation;
+    _models.ranger.range = intersection;
     [ope addCompletion:^(LAHOperation *operation) {
         [bSelf didLoadMoreWith:operation.container];
     }];
@@ -141,7 +155,7 @@ pageCapacity = _pageCapacity;
 }
 
 - (void)didReceiveResponse:(id)response{
-    NSAssert([response isKindOfClass:[NSArray class]], @"%@ must recieve a NSArray as data.", NSStringFromClass(self.class));
+    NSAssert([response isKindOfClass:[NSArray class]] || response == nil, @"%@ must recieve a NSArray as data.", NSStringFromClass(self.class));
     
     NSArray *newItems = response;
     NSUInteger count = newItems.count;
@@ -153,14 +167,19 @@ pageCapacity = _pageCapacity;
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
         [insertIndexes addObject:indexPath];
     }
-    self.indexInPage = newIndex;
-    
+    [_itemList addObjectsFromArray:newItems];
+
+    //Update tableView
     UITableView *tableView = self.tableView;
     [tableView beginUpdates];
-    [_itemList addObjectsFromArray:newItems];
     [tableView insertRowsAtIndexPaths:insertIndexes withRowAnimation:UITableViewRowAnimationMiddle];
     [tableView endUpdates];
 
+    //Must after statements up, because last functions use the vars before update;
+    self.indexInPage += count;
+    if (newItems.count < _breakCapacity) {
+        self.entireCapacity = _itemList.count;
+    }
 }
 
 #pragma mark - Swipe

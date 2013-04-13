@@ -42,13 +42,13 @@ static NSString * const gReuseDetailCell = @"RDC";
     
     UITableView *tableView = self.tableView;
     
-    UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
-    right.direction = UISwipeGestureRecognizerDirectionRight;
-    [tableView addGestureRecognizer:right];
+    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+    left.direction = UISwipeGestureRecognizerDirectionLeft;
+    [tableView addGestureRecognizer:left];
 }
 
 - (void)viewDidLoad{
-    self.pageCapacity = 10;
+    self.breakCapacity = 10;
     [super viewDidLoad];
 }
 
@@ -84,6 +84,48 @@ static NSString * const gReuseDetailCell = @"RDC";
     // iOS5 & earlier test self.view == nil, if not viewWillUnload -> release self.view -> viewDidUnload.
     // In this implementation self.view is always nil, so iOS5 & earlier should do nothing.
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Refresh & Load More
+- (void)didReceiveResponse:(id)response{
+    NSAssert([response isKindOfClass:[NSArray class]] || response == nil, @"%@ must recieve a NSArray as data.", NSStringFromClass(self.class));
+    
+    NSArray *newItems = response;
+    NSUInteger count = newItems.count;
+    
+    //Determine new index and indexes will be inserted
+    NSInteger newIndex = self.indexInPage + count;
+    NSMutableArray *insertIndexes = [[NSMutableArray alloc] initWithCapacity:count];
+    for (NSUInteger index = _indexInPage; index < newIndex; index++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [insertIndexes addObject:indexPath];
+    }
+
+    //Replace dictionary with item already exits.
+    NSMutableArray *adding = [[NSMutableArray alloc] initWithArray:newItems];
+    NSUInteger index = 0;
+    for (NSDictionary *dic in newItems) {
+        NSString *urlString = [dic objectForKey:gHLMGKeyURL];
+        NSArray *results = [Item itemsOfAbsolutePath:urlString];
+        if (results.count >= 1) {
+            Item *item = [results objectAtIndex:0];
+            [adding replaceObjectAtIndex:index withObject:item];
+        }
+        index ++;
+    }
+    [_itemList addObjectsFromArray:adding];
+
+    //Update tableView
+    UITableView *tableView = self.tableView;
+    [tableView beginUpdates];
+    [tableView insertRowsAtIndexPaths:insertIndexes withRowAnimation:UITableViewRowAnimationMiddle];
+    [tableView endUpdates];
+    
+    //Must after statements up, because last functions use the vars before update;
+    self.indexInPage += count;
+    if (newItems.count < _breakCapacity) {
+        self.entireCapacity = _itemList.count;
+    }
 }
 
 #pragma mark - Download

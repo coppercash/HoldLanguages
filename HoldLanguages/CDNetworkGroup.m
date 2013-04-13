@@ -17,7 +17,6 @@
 - (long long)expectedContentLength;
 - (long long)downloadedContentLength;
 - (void)progress:(double)progress changedBy:(CDNKOperation *)operation;
-- (void)complete;
 - (void)error:(NSError *)error;
 @end
 
@@ -135,6 +134,7 @@ static NSString * const gKeyDowloaded = @"dow";
 }
 
 - (void)complete{
+    [self progress:1.0f changedBy:nil];
     for (NSString *key in _completions.allKeys) {
         CDNKGroupCompletion c = [_completions objectForKey:key];
         c(self);

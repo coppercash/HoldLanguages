@@ -1,19 +1,19 @@
 arr'con0':
-    dic(id='id0'):
+    dic(id='range0'):
         fet'title0'(_text, key="title")
         fet'link0'("href", key="link")
         
 ope'ope0'('con0', path="http://www.51voa.com/VOA_Special_English/"):
     rec("div", "id"="leftNav"):
         rec("ul"):
-            rec'id0'("li", range=(0, 17)):
+            rec'range0'("li", range=(0, 17)):
                 rec'a'("a"):
                     'title0'
                     'link0'
 
 
 arr'con1':
-    dic(id='id1'):
+    dic(id='range1'):
         fet'title1'(_text, key="title")
         fet'link1'("href", key="link")
         fet'url1'(_url, key="url")
@@ -21,7 +21,7 @@ arr'con1':
 ope'ope1'('con1'):
     rec("span", "id"={"blist", "list"}):
         rec("ul"):
-            rec'id1'("li"):
+            rec'range1'("li"):
                 rec'a'("a", text=_all):
                     dow("href"):
                         'url1'
