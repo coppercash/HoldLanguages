@@ -1,0 +1,84 @@
+dic'con0':
+    arr(key="items"):
+        dic(id={'range0_0', 'rang0_1'}):
+            fet'title0'(_text, key="title")
+            fet'link0'("href", key="link")
+        
+ope'ope0'('con0', path="http://www.hjenglish.com/tingli/"):
+    rec("div", "id"="container"):
+        rec("div", "id"="main"):
+            rec'range0_0'("div", "class"={"main_article_list default fl", "main_article_list default fr"}, range=(2, 1)):
+                'tab_bar'
+            rec'rang0_1'("div", "class"={"main_article_list default fl", "main_article_list default fr"}, range=(4, 6)):
+                rec'tab_bar'("div", "class"="tab_bar"):
+                    rec("ul"):
+                        rec("li", "class"="default"):
+                            rec("a"):
+                                'title0'
+                                'link0'
+
+
+dic'con1':
+    arr(key="items"):
+        dic(id='range1'):
+            fet'title1'(_text, key="title")
+            fet'link1'("href", key="link")
+            fet'url1'(_url, key="url")
+    fet'next1'("href", key="next")
+
+ope'ope1'('con1'):
+    rec("div", "id"="main"):
+        rec("div", "id"="module_content_1"):
+            rec("div", "class"="list_content"):
+                rec("ul"):
+                    rec'range1'("li"):
+                        rec("div", "class"="article_hot"):
+                            rec("div", "class"="article_list_title"):
+                                rec("div", "class"="fl article_link"):
+                                    'a1'
+                        rec("div", "class"="fl article_link"):
+                            rec'a1'("a"):
+                                'title1'
+                                'link1'
+                                dow("href"):
+                                    'url1'
+            rec("div", "id"="ctl00_MoreContentRecommend"):
+                rec("div", "id"="ctl00_split_page"):
+                    rec("a", "text"=" Next  >"):
+                        'next1'
+                                        
+
+dic'con2':
+    fet'title2'(_text, key="title")
+    fet'url2'(_url, key="url")
+    fet'audio'("flashvars", key="audio", reg="^_file=(http:\/\/.*\.mp3)$")
+    fet'lrc'("href", key="lrc")
+    arr(key="content"):
+        fet'text'(_content)
+        dic(id={'id2_0', 'id2_1'}):
+            fet'imgSrc'("src", key="imgSrc")
+    
+ope'ope2'('con2'):
+    'url2'
+    rec("div", "id"="containter"):
+        rec("div", "id"="main_small"):
+            rec("div", "id"="article_box"):
+                rec("div", "id"="article_content"):
+                    rec("h1", id="article_title"):
+                        'title2'
+                    rec("div", "id"="article_main"):
+                        rec("article", "id"="article"):
+                            rec("div", "id"="listen_summary"):
+                                rec("a"):
+                                    rec("img"):
+                                        'imgSrc'
+                            rec("div", "id"="listen_audio"):
+                                rec("embed", "id"="newhjvoaplayer"):
+                                    'audio'
+                            rec("div", "id"="listen_source"):
+                                rec(isText="YES"):
+                                    'text'
+                            rec("div", "id"="listen_trans"):
+                                rec(isText="YES"):
+                                    'text'
+                        

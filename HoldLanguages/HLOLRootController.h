@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@class MKNetworkOperation;
-@interface HLOLRootController : UITableViewController {
+#import "CDNetwork.h"
+@class MKNetworkOperation, CDFileItem;
+@interface HLOLRootController : UITableViewController <UIAlertViewDelegate>{
     NSString *_link;
-    NSArray *_groups;
-    __weak MKNetworkOperation *_network;
+    NSMutableArray *_groups;
+    CDFileItem *_documents;
+    CDNKEngine *_engine;
+    __weak CDNKOperation *_network;
 }
 
 @end

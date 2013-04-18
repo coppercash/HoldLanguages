@@ -90,11 +90,13 @@
 
 @end
 
-NSString * const gHLMGKeyName = @"name";
+NSString * const gHLMGJsonKeyName = @"Nam";
+NSString * const gHLMGJsonKeyCommand = @"Cmd";
 NSString * const gHLMGKeyTitle = @"title";
 NSString * const gHLMGKeyLink = @"link";
 NSString * const gHLMGKeyURL = @"url";
-NSString * const gHLMGKeyCommand = @"comm";
 NSString * const gHLMGKeyOperation = @"ope";
 NSString * const gHLMGKeyRange = @"range";
 NSString * const gHLMGKeyRangeInitValue = @"RIV";
+NSString * const gHLMGKeyItems = @"items";
+NSString * const gHLMGKeyNextPage = @"next";

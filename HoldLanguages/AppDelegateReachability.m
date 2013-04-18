@@ -40,6 +40,9 @@
 
 - (void)alertUnreachable{
     DLogCurrentMethod;
+    if (_isReachabilyAlert) return;
+    _isReachabilyAlert = YES;
+    
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:NSLocalizedString(@"NetworkError", @"NetworkError")
                           message:nil
@@ -47,6 +50,10 @@
                           cancelButtonTitle:NSLocalizedString(@"GetIt", @"GetIt")
                           otherButtonTitles:nil];
     [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    _isReachabilyAlert = NO;
 }
 
 @end

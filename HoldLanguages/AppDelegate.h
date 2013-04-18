@@ -16,6 +16,7 @@
     CDAudioProgress *_progress;
     CDNetwork *_network;
     Reachability *_reachability;
+    BOOL _isReachabilyAlert;
     
     AppStatus *_status;
 }

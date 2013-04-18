@@ -54,9 +54,7 @@
 - (void)testLoadingMore:(UIScrollView *)scrollView{
     CGFloat threshold = 70.0;
     CGFloat dFB = scrollView.contentSize.height - scrollView.contentOffset.y - CGRectGetHeight(scrollView.bounds);  //dictance from bottom
-    //DLog(@"contentHeight:%f\tcontentOffset:%f\theght:%f", scrollView.contentSize.height, scrollView.contentOffset.y, CGRectGetHeight(scrollView.bounds));
-    //DLog(@"%f\t%f", threshold, dFB);
-    if (dFB < threshold) {
+    if (0 < dFB && dFB < threshold) {
         [self beginLoadingMore];
     }
 }

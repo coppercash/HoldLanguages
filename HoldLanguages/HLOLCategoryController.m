@@ -12,6 +12,7 @@
 #import "HLModelsGroup.h"
 #import "CDLoadMoreControl.h"
 #import "CDColorFinder.h"
+#import "HLCategoryTableCell.h"
 
 @interface HLOLCategoryController ()
 @end
@@ -20,6 +21,7 @@
 @synthesize itemList = _itemList;
 @synthesize models = _models, network = _network;
 @synthesize
+joiner = _joiner,
 indexOfPage = _indexOfPage,
 entireCapacity = _entireCapacity,
 firstPage = _firstPage,
@@ -41,7 +43,6 @@ breakCapacity = _breakCapacity;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
     
     [self itemList];
     
@@ -82,11 +83,18 @@ breakCapacity = _breakCapacity;
     return _itemList;
 }
 
+- (NSMutableArray *)joiner{
+    if (!_joiner) {
+        _joiner = [[NSMutableArray alloc] initWithCapacity:_breakCapacity];
+    }
+    return _joiner;
+}
+
 - (void)setModels:(HLModelsGroup *)models{
     _models = models;
     self.firstPage = models.operation.link;
     self.currentPage = _firstPage;
-    self.breakCapacity = 10;
+    self.breakCapacity = 9;
     self.entireCapacity = _models.initRange.length;
 }
 
@@ -101,85 +109,138 @@ breakCapacity = _breakCapacity;
     self.indexInPage = 0;
     self.indexOfPage = 0;
     
-    NSRange entireRange = NSMakeRange(0, _entireCapacity);
-    NSRange targetRange = NSMakeRange(_indexInPage, kRefreshCapacity);
-    NSRange intersection = NSIntersectionRange(entireRange, targetRange);
+    NSUInteger nOIIPP = 0;                                      //number Of Items In Previous Page
+    NSRange tPPOER = NSMakeRange(0, _entireCapacity - nOIIPP);      //target Page Part Of Entire Range
+    NSRange uRITP = NSMakeRange(_indexInPage, kRefreshCapacity);  //unlimited Range In Target Page
+    NSRange limitedRange = NSIntersectionRange(tPPOER, uRITP);
     
     __weak HLOLCategoryController *bSelf = self;
     LAHOperation *ope = _models.operation;
-    _models.ranger.range = intersection;
+    ope.link = _currentPage;
+    _models.ranger.range = limitedRange;
     [ope addCompletion:^(LAHOperation *operation) {
         [bSelf didRefreshWith:operation.container];
+    }];
+    [ope addCorrector:^(LAHOperation *operation, NSError *error) {
+        [self alertNetworkError];
+        //AssertError(error);
     }];
     [ope start];
 }
 
-- (void)didRefreshWith:(NSArray *)newItems{
-    [self.refreshControl endRefreshing];
-    [_loader endLoadingMore];
-    
+- (void)didRefreshWith:(id)response{
     [self.itemList removeAllObjects];
     [self.tableView reloadData];
 
-    [self didReceiveResponse:newItems];
+    if ([self joinItemsWithResponse:response]){
+        //Must after statements above, in order to avoid load more while refreshing.
+        [self.refreshControl endRefreshing];
+        [_loader endLoadingMore];
+    }
 }
 
-- (void)loadMore{
+- (void)loadMore:(NSUInteger)count{
     if (self.refreshControl.refreshing) {
         [_loader endLoadingMore];
         return;
     }
     
-    NSRange entireRange = NSMakeRange(0, _entireCapacity);
-    NSRange targetRange = NSMakeRange(_indexInPage, _breakCapacity);
-    NSRange intersection = NSIntersectionRange(entireRange, targetRange);
-    if (intersection.length == 0) {
+    NSUInteger nOIIPP = _itemList.count + _joiner.count;        //number Of Items In Previous Page
+    NSRange tPPOER = NSMakeRange(0, _entireCapacity - nOIIPP);      //target Page Part Of Entire Range
+    NSRange uRITP = NSMakeRange(_indexInPage, _breakCapacity);  //unlimited Range In Target Page
+    NSRange limitedRange = NSIntersectionRange(tPPOER, uRITP);
+    if (limitedRange.length == 0) {
         [_loader endLoadingMore];
         return;
     }
     
     __weak HLOLCategoryController *bSelf = self;
     LAHOperation *ope = _models.operation;
-    _models.ranger.range = intersection;
+    ope.link = _currentPage;
+    _models.ranger.range = limitedRange;
     [ope addCompletion:^(LAHOperation *operation) {
         [bSelf didLoadMoreWith:operation.container];
+    }];
+    [ope addCorrector:^(LAHOperation *operation, NSError *error) {
+        [self alertNetworkError];
+        //AssertError(error);
     }];
     [ope start];
 }
 
-- (void)didLoadMoreWith:(NSArray *)newItems{
-    [self.refreshControl endRefreshing];
-    [_loader endLoadingMore];
-    
-    [self didReceiveResponse:newItems];
+- (void)loadMore{
+    [self loadMore:_breakCapacity];
 }
 
-- (void)didReceiveResponse:(id)response{
-    NSAssert([response isKindOfClass:[NSArray class]] || response == nil, @"%@ must recieve a NSArray as data.", NSStringFromClass(self.class));
+- (void)didLoadMoreWith:(id)response{
+    if ([self joinItemsWithResponse:response]){
+        //Must after statements above, in order to avoid load more while refreshing.
+        [self.refreshControl endRefreshing];
+        [_loader endLoadingMore];
+    }
+}
+
+#pragma mark - Joiner
+- (BOOL)joinItemsWithResponse:(id)response{
+    NSDictionary *dic = response;
+    NSArray *items = [dic objectForKey:gHLMGKeyItems];
+    NSString *nextPage = [dic objectForKey:gHLMGKeyNextPage];
+    BOOL finish = YES;
     
-    NSArray *newItems = response;
-    NSUInteger count = newItems.count;
+    if (items.count < _breakCapacity) {
+        
+        [self.joiner addObjectsFromArray:items];
+        if (_joiner.count < _breakCapacity && nextPage) {
+            
+            finish = NO;
+            
+            self.currentPage = nextPage;
+            self.indexInPage = 0;
+            self.indexOfPage += 1;
+            [self loadMore:_breakCapacity - _joiner.count];
+            
+        } else {
+            [self fillListWithItems:_joiner];
+        }
+        
+    } else {
+        
+        [self fillListWithItems:items];
+    
+    }
+    return finish;
+}
+
+- (void)fillListWithItems:(NSArray *)items{
+    NSAssert([items isKindOfClass:[NSArray class]] || items == nil, @"%@ must recieve a NSArray as data.", NSStringFromClass(self.class));
+    
+    //NSArray *newItems = response;
+    NSUInteger count = items.count;
     
     //Determine new index and indexes will be inserted
-    NSInteger newIndex = self.indexInPage + count;
+    NSInteger currentIndex = _itemList.count;
+    NSInteger newIndex = currentIndex + count;
     NSMutableArray *insertIndexes = [[NSMutableArray alloc] initWithCapacity:count];
-    for (NSUInteger index = _indexInPage; index < newIndex; index++) {
+    for (NSUInteger index = currentIndex; index < newIndex; index++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
         [insertIndexes addObject:indexPath];
     }
-    [_itemList addObjectsFromArray:newItems];
+    [_itemList addObjectsFromArray:items];
 
     //Update tableView
     UITableView *tableView = self.tableView;
     [tableView beginUpdates];
-    [tableView insertRowsAtIndexPaths:insertIndexes withRowAnimation:UITableViewRowAnimationMiddle];
+    [tableView insertRowsAtIndexPaths:insertIndexes withRowAnimation:kDefaultCellAnimationType];
     [tableView endUpdates];
 
     //Must after statements up, because last functions use the vars before update;
+    [_joiner removeAllObjects];
     self.indexInPage += count;
-    if (newItems.count < _breakCapacity) {
+    if (items.count < _breakCapacity) {
         self.entireCapacity = _itemList.count;
     }
+    
+    DLog(@"Items List contains %d items.", _itemList.count);
 }
 
 #pragma mark - Swipe
@@ -201,9 +262,9 @@ static NSString * const gReuseCell = @"RC";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:gReuseCell];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:gReuseCell];
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+        cell = [[HLCategoryTableCell alloc] initWithReuseIdentifier:gReuseCell];
+        //cell.textLabel.textColor = [UIColor whiteColor];
+        //cell.textLabel.font = [UIFont boldSystemFontOfSize:16.0f];
     }
     
     return cell;
@@ -213,7 +274,9 @@ static NSString * const gReuseCell = @"RC";
     
     NSDictionary *dic = [_itemList objectAtIndex:indexPath.row];
     NSString *title = [dic objectForKey:gHLMGKeyTitle];
-    cell.textLabel.text = title;
+    HLCategoryTableCell *categoryCell = (HLCategoryTableCell *)cell;
+    categoryCell.title.text = title;
+
 }
 
 #pragma mark - UITableViewDelegate
@@ -229,6 +292,41 @@ static NSString * const gReuseCell = @"RC";
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [_loader testLoadingMore:scrollView];
+}
+
+#pragma mark  - Alert
+- (void)alertNetworkError{
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"NetworkError", @"NetworkError")
+                          message:nil
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"GetIt", @"GetIt")
+                          otherButtonTitles: nil];
+    [alert show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:{
+            [self alertVIewDismissWithTitle:alertView.title];
+        }break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)alertVIewDismissWithTitle:(NSString *)title{
+    if ([title isEqualToString:NSLocalizedString(@"NetworkError", @"NetworkError")]) {
+        [self handleNetWorkError];
+    }
+}
+
+- (void)handleNetWorkError{
+    HLOLNavigationController *nav = (HLOLNavigationController *)self.navigationController;
+    [nav popViewControllerAnimated:YES];
 }
 
 @end

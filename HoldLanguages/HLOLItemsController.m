@@ -30,6 +30,9 @@ static NSString * const gReuseDetailCell = @"RDC";
 - (void)downloadTempImage:(Image *)image forIndexPath:(NSIndexPath *)indexPath;
 - (void)enterDetailModeWithIndexPath:(NSIndexPath *)indexPath;
 - (void)cancelDetailMode;
+#pragma mark - Alert
+- (void)alertCellNetworkError;
+- (void)handleCellNetworkError;
 @end
 
 @implementation HLOLItemsController
@@ -48,7 +51,6 @@ static NSString * const gReuseDetailCell = @"RDC";
 }
 
 - (void)viewDidLoad{
-    self.breakCapacity = 10;
     [super viewDidLoad];
 }
 
@@ -86,12 +88,29 @@ static NSString * const gReuseDetailCell = @"RDC";
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Refresh & Load More
-- (void)didReceiveResponse:(id)response{
-    NSAssert([response isKindOfClass:[NSArray class]] || response == nil, @"%@ must recieve a NSArray as data.", NSStringFromClass(self.class));
+#pragma mark - Joiner
+- (void)fillListWithItems:(NSArray *)items{
+    NSAssert([items isKindOfClass:[NSArray class]] || items == nil, @"%@ must recieve a NSArray as data.", NSStringFromClass(self.class));
     
-    NSArray *newItems = response;
-    NSUInteger count = newItems.count;
+    //Replace dictionary with item already exits.
+    NSMutableArray *replacedItems = [[NSMutableArray alloc] initWithArray:items];
+    NSUInteger index = 0;
+    for (NSDictionary *dic in items) {
+        NSString *urlString = [dic objectForKey:gHLMGKeyURL];
+        NSArray *results = [Item itemsOfAbsolutePath:urlString];
+        if (results.count >= 1) {
+            Item *item = [results objectAtIndex:0];
+            [replacedItems replaceObjectAtIndex:index withObject:item];
+        }
+        index ++;
+    }
+    
+    [super fillListWithItems:replacedItems];
+    
+    
+    /*
+    //NSArray *newItems = response;
+    NSUInteger count = items.count;
     
     //Determine new index and indexes will be inserted
     NSInteger newIndex = self.indexInPage + count;
@@ -102,9 +121,9 @@ static NSString * const gReuseDetailCell = @"RDC";
     }
 
     //Replace dictionary with item already exits.
-    NSMutableArray *adding = [[NSMutableArray alloc] initWithArray:newItems];
+    NSMutableArray *adding = [[NSMutableArray alloc] initWithArray:items];
     NSUInteger index = 0;
-    for (NSDictionary *dic in newItems) {
+    for (NSDictionary *dic in items) {
         NSString *urlString = [dic objectForKey:gHLMGKeyURL];
         NSArray *results = [Item itemsOfAbsolutePath:urlString];
         if (results.count >= 1) {
@@ -122,10 +141,11 @@ static NSString * const gReuseDetailCell = @"RDC";
     [tableView endUpdates];
     
     //Must after statements up, because last functions use the vars before update;
+    [_joiner removeAllObjects];
     self.indexInPage += count;
-    if (newItems.count < _breakCapacity) {
+    if (items.count < _breakCapacity) {
         self.entireCapacity = _itemList.count;
-    }
+    }*/
 }
 
 #pragma mark - Download
@@ -147,6 +167,9 @@ static NSString * const gReuseDetailCell = @"RDC";
         
         //Do completion
         if (completion) completion(item, indexPath);
+    }];
+    [ope addCorrector:^(LAHOperation *operation, NSError *error) {
+        [self alertCellNetworkError];
     }];
     [ope start];
 }
@@ -373,6 +396,30 @@ static NSString * const gReuseDetailCell = @"RDC";
     }else if (![indexPath isEqual:_detailIndex]) {
         [self cancelDetailMode];
     }
+}
+
+#pragma mark - Alert
+- (void)alertCellNetworkError{
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"CellNetworkError", @"CellNetworkError")
+                          message:nil
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"GetIt", @"GetIt")
+                          otherButtonTitles: nil];
+    [alert show];
+    
+}
+
+- (void)alertVIewDismissWithTitle:(NSString *)title{
+    [super alertVIewDismissWithTitle:title];
+    if ([title isEqualToString:NSLocalizedString(@"CellNetworkError", @"CellNetworkError")]) {
+        [self handleCellNetworkError];
+    }
+}
+
+- (void)handleCellNetworkError{
+    [self cancelDetailMode];
 }
 
 @end

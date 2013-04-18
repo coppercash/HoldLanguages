@@ -19,11 +19,13 @@
 - (void)resetRange;
 @end
 
-extern NSString * const gHLMGKeyName;
+extern NSString * const gHLMGJsonKeyName;
+extern NSString * const gHLMGJsonKeyCommand;
 extern NSString * const gHLMGKeyTitle;
 extern NSString * const gHLMGKeyLink;
 extern NSString * const gHLMGKeyURL;
-extern NSString * const gHLMGKeyCommand;
 extern NSString * const gHLMGKeyOperation;
 extern NSString * const gHLMGKeyRange;
 extern NSString * const gHLMGKeyRangeInitValue;
+extern NSString * const gHLMGKeyItems;
+extern NSString * const gHLMGKeyNextPage;
