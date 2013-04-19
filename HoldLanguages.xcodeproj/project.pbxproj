@@ -16,9 +16,7 @@
 		BE0F6C7F16F2BE78004933A5 /* HoldLanguages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BE0F6C7D16F2BE78004933A5 /* HoldLanguages.xcdatamodeld */; };
 		BE10E76C1717E81F00CDB057 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E76B1717E81F00CDB057 /* icon.png */; };
 		BE10E76E1717E82200CDB057 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE10E76D1717E82200CDB057 /* icon@2x.png */; };
-		BE10E793171819A100CDB057 /* 51VOA.lah in Resources */ = {isa = PBXBuildFile; fileRef = BE10E792171819A100CDB057 /* 51VOA.lah */; };
 		BE10E7A317181A4500CDB057 /* HLOLRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE10E7A217181A4500CDB057 /* HLOLRootController.m */; };
-		BE220E211702FBD1005CE659 /* AppDelegateReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BE220E201702FBD1005CE659 /* AppDelegateReachability.m */; };
 		BE256FAD1666EBB3001665EF /* Cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = BE256FAC1666EBB3001665EF /* Cursor.png */; };
 		BE2C11EB164F68C000B4F330 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C11E9164F68C000B4F330 /* MainViewController.m */; };
 		BE2C11F3164F6CDE00B4F330 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2C11F2164F6CDE00B4F330 /* MediaPlayer.framework */; };
@@ -54,7 +52,6 @@
 		BE52321016B94B310051ACFB /* iTunesColorPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = BE52320F16B94B310051ACFB /* iTunesColorPattern.png */; };
 		BE52321116B94B310051ACFB /* iTunesColorPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = BE52320F16B94B310051ACFB /* iTunesColorPattern.png */; };
 		BE52321216B94B310051ACFB /* iTunesColorPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = BE52320F16B94B310051ACFB /* iTunesColorPattern.png */; };
-		BE6196F816FD8E1F0020AA63 /* 51VOAList.lah in Resources */ = {isa = PBXBuildFile; fileRef = BE6196F716FD8E1F0020AA63 /* 51VOAList.lah */; };
 		BE68D15E16AD45DC00B9F5FF /* CDRatesView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE68D15D16AD45DC00B9F5FF /* CDRatesView.m */; };
 		BE68D15F16AD45DC00B9F5FF /* CDRatesView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE68D15D16AD45DC00B9F5FF /* CDRatesView.m */; };
 		BE68D16016AD45DC00B9F5FF /* CDRatesView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE68D15D16AD45DC00B9F5FF /* CDRatesView.m */; };
@@ -120,7 +117,6 @@
 		BEA53E2916FBF2CA00528564 /* CDStoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA53E2816FBF2CA00528564 /* CDStoryView.m */; };
 		BEA53E6116FBF56800528564 /* StoryViewCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA53E6016FBF56800528564 /* StoryViewCategory.m */; };
 		BEA53E6316FBF7A300528564 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA53E6216FBF7A300528564 /* CoreText.framework */; };
-		BEA55F56170928BD00C301D3 /* 51VOACategory.lah in Resources */ = {isa = PBXBuildFile; fileRef = BEA55F55170928BD00C301D3 /* 51VOACategory.lah */; };
 		BEA55F6617092A8700C301D3 /* HLOLCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA55F6517092A8700C301D3 /* HLOLCategoryController.m */; };
 		BEA5E681169E55A80048306A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE964EB71654E6C1000DDB28 /* QuartzCore.framework */; };
 		BEA5E683169E55BB0048306A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE82F6D7164E318E007EBEAB /* CoreGraphics.framework */; };
@@ -158,7 +154,6 @@
 		BEA6CAEA16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */; };
 		BEA6CAEB16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */; };
 		BEA6CAEC16A8EDB900901EA3 /* CDAudioRepeater.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */; };
-		BEAA62A5171BDF7900D9ADFD /* HuJiang.lah in Resources */ = {isa = PBXBuildFile; fileRef = BEAA62A4171BDF7900D9ADFD /* HuJiang.lah */; };
 		BEAA62AA171C32DC00D9ADFD /* HLCategoryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAA62A9171C32DC00D9ADFD /* HLCategoryTableCell.m */; };
 		BEAA62AC171C330E00D9ADFD /* HLCategoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAA62AB171C330E00D9ADFD /* HLCategoryTableCell.xib */; };
 		BEAAF7A116F7F2C800A698E6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0F6BF516F2B7A2004933A5 /* CoreData.framework */; };
@@ -320,7 +315,6 @@
 		BEFC395816A0DD7000D9482C /* CDPanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC395616A0DD7000D9482C /* CDPanViewController.m */; };
 		BEFC397F16A1772100D9482C /* CDFileItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC397E16A1772100D9482C /* CDFileItem.m */; };
 		BEFC398016A1772100D9482C /* CDFileItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFC397E16A1772100D9482C /* CDFileItem.m */; };
-		BEFEE33D16F548C80084A287 /* 51VOAItem.lah in Resources */ = {isa = PBXBuildFile; fileRef = BEFEE33C16F548C80084A287 /* 51VOAItem.lah */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -427,11 +421,8 @@
 		BE0F6C7E16F2BE78004933A5 /* HoldLanguages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HoldLanguages.xcdatamodel; sourceTree = "<group>"; };
 		BE10E76B1717E81F00CDB057 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		BE10E76D1717E82200CDB057 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
-		BE10E792171819A100CDB057 /* 51VOA.lah */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 51VOA.lah; sourceTree = "<group>"; };
 		BE10E7A117181A4500CDB057 /* HLOLRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLOLRootController.h; sourceTree = "<group>"; };
 		BE10E7A217181A4500CDB057 /* HLOLRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLOLRootController.m; sourceTree = "<group>"; };
-		BE220E1F1702FBD1005CE659 /* AppDelegateReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegateReachability.h; sourceTree = "<group>"; };
-		BE220E201702FBD1005CE659 /* AppDelegateReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegateReachability.m; sourceTree = "<group>"; };
 		BE256FAC1666EBB3001665EF /* Cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cursor.png; sourceTree = "<group>"; };
 		BE2C11E8164F68C000B4F330 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		BE2C11E9164F68C000B4F330 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -452,7 +443,6 @@
 		BE3DBA0B16A1844F003CAAFE /* HoldLanguagesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HoldLanguagesTests.m; sourceTree = "<group>"; };
 		BE3DBA0D16A1844F003CAAFE /* HoldLanguagesTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HoldLanguagesTests-Prefix.pch"; sourceTree = "<group>"; };
 		BE52320F16B94B310051ACFB /* iTunesColorPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesColorPattern.png; sourceTree = "<group>"; };
-		BE6196F716FD8E1F0020AA63 /* 51VOAList.lah */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 51VOAList.lah; sourceTree = "<group>"; };
 		BE68D15C16AD45DC00B9F5FF /* CDRatesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRatesView.h; sourceTree = "<group>"; };
 		BE68D15D16AD45DC00B9F5FF /* CDRatesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDRatesView.m; sourceTree = "<group>"; };
 		BE737623171EE55800618CDE /* HLClient.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = HLClient.p12; sourceTree = "<group>"; };
@@ -533,7 +523,6 @@
 		BEA53E5F16FBF56800528564 /* StoryViewCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryViewCategory.h; sourceTree = "<group>"; };
 		BEA53E6016FBF56800528564 /* StoryViewCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryViewCategory.m; sourceTree = "<group>"; };
 		BEA53E6216FBF7A300528564 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		BEA55F55170928BD00C301D3 /* 51VOACategory.lah */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 51VOACategory.lah; sourceTree = "<group>"; };
 		BEA55F6417092A8700C301D3 /* HLOLCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLOLCategoryController.h; sourceTree = "<group>"; };
 		BEA55F6517092A8700C301D3 /* HLOLCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLOLCategoryController.m; sourceTree = "<group>"; };
 		BEA5F22216FE840800BC699C /* CDLoadMoreControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLoadMoreControl.h; sourceTree = "<group>"; };
@@ -558,7 +547,6 @@
 		BEA64929170B1D9A001DE5B8 /* AssistOnline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AssistOnline@2x.png"; sourceTree = "<group>"; };
 		BEA6CAE816A8EDB900901EA3 /* CDAudioRepeater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioRepeater.h; sourceTree = "<group>"; };
 		BEA6CAE916A8EDB900901EA3 /* CDAudioRepeater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioRepeater.m; sourceTree = "<group>"; };
-		BEAA62A4171BDF7900D9ADFD /* HuJiang.lah */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HuJiang.lah; sourceTree = "<group>"; };
 		BEAA62A8171C32DC00D9ADFD /* HLCategoryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLCategoryTableCell.h; sourceTree = "<group>"; };
 		BEAA62A9171C32DC00D9ADFD /* HLCategoryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLCategoryTableCell.m; sourceTree = "<group>"; };
 		BEAA62AB171C330E00D9ADFD /* HLCategoryTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLCategoryTableCell.xib; sourceTree = "<group>"; };
@@ -667,7 +655,6 @@
 		BEFC395616A0DD7000D9482C /* CDPanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPanViewController.m; sourceTree = "<group>"; };
 		BEFC397D16A1772100D9482C /* CDFileItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDFileItem.h; sourceTree = "<group>"; };
 		BEFC397E16A1772100D9482C /* CDFileItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDFileItem.m; sourceTree = "<group>"; };
-		BEFEE33C16F548C80084A287 /* 51VOAItem.lah */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 51VOAItem.lah; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -879,7 +866,6 @@
 			isa = PBXGroup;
 			children = (
 				BE737623171EE55800618CDE /* HLClient.p12 */,
-				BE9ABBF316F31E28001B0465 /* LAH */,
 				BE9ABBE316F31E16001B0465 /* Images */,
 			);
 			name = Resources;
@@ -1077,18 +1063,6 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		BE9ABBF316F31E28001B0465 /* LAH */ = {
-			isa = PBXGroup;
-			children = (
-				BE10E792171819A100CDB057 /* 51VOA.lah */,
-				BEAA62A4171BDF7900D9ADFD /* HuJiang.lah */,
-				BEA55F55170928BD00C301D3 /* 51VOACategory.lah */,
-				BE6196F716FD8E1F0020AA63 /* 51VOAList.lah */,
-				BEFEE33C16F548C80084A287 /* 51VOAItem.lah */,
-			);
-			name = LAH;
-			sourceTree = "<group>";
-		};
 		BE9B62CA16A4EE7000484AE9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1139,8 +1113,6 @@
 				BE82F6E3164E318E007EBEAB /* AppDelegate.m */,
 				BEA18AE616FB177600FC1A26 /* AppDelegateOpen.h */,
 				BEA18AE716FB177600FC1A26 /* AppDelegateOpen.m */,
-				BE220E1F1702FBD1005CE659 /* AppDelegateReachability.h */,
-				BE220E201702FBD1005CE659 /* AppDelegateReachability.m */,
 				BEA18AEB16FB518B00FC1A26 /* AppStatus.h */,
 			);
 			name = Singleton;
@@ -1706,12 +1678,9 @@
 				BEEAB3C316BA8D2900B9C39F /* AssitDouble.png in Resources */,
 				BEEAB3C616BA8D2900B9C39F /* AssitDouble@2x.png in Resources */,
 				BEA04A2C16BBC92800CE6A42 /* noise.png in Resources */,
-				BEFEE33D16F548C80084A287 /* 51VOAItem.lah in Resources */,
-				BE6196F816FD8E1F0020AA63 /* 51VOAList.lah in Resources */,
 				BEB5D32E1701B2C600C6ED84 /* CDiTunesFooters.xib in Resources */,
 				BEF007071702703F000B91C6 /* CDItemDetailTableCell.xib in Resources */,
 				BEB1CD0D1702F5A2004C8A79 /* CDiTunesHeaders.xib in Resources */,
-				BEA55F56170928BD00C301D3 /* 51VOACategory.lah in Resources */,
 				BEAF02F3170AAD8F00730B1E /* TopBarOnline.png in Resources */,
 				BEAF02F5170AADC400730B1E /* BackButton.png in Resources */,
 				BEA6490B170AF2E7001DE5B8 /* TopBarOnline@2x.png in Resources */,
@@ -1732,8 +1701,6 @@
 				BEA6492B170B1D9A001DE5B8 /* AssistOnline@2x.png in Resources */,
 				BE10E76C1717E81F00CDB057 /* icon.png in Resources */,
 				BE10E76E1717E82200CDB057 /* icon@2x.png in Resources */,
-				BE10E793171819A100CDB057 /* 51VOA.lah in Resources */,
-				BEAA62A5171BDF7900D9ADFD /* HuJiang.lah in Resources */,
 				BEAA62AC171C330E00D9ADFD /* HLCategoryTableCell.xib in Resources */,
 				BE737624171EE55800618CDE /* HLClient.p12 in Resources */,
 			);
@@ -1905,7 +1872,6 @@
 				BEB5D32B17018C8A00C6ED84 /* HolderCategory.m in Sources */,
 				BEB1CCF81702C744004C8A79 /* CDItemDetailTableCell.m in Sources */,
 				BEB1CD0A1702E386004C8A79 /* Item.m in Sources */,
-				BE220E211702FBD1005CE659 /* AppDelegateReachability.m in Sources */,
 				BEAF556E1704426F00288585 /* PullViewControllerCategory.m in Sources */,
 				BEAF5580170443DD00288585 /* RepeatViewCategory.m in Sources */,
 				BEAF55841704463800288585 /* LyricsCategory.m in Sources */,

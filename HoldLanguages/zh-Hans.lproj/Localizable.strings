@@ -9,7 +9,7 @@
 "iTunesViewHeaderFileSharing" = "iTunes文件共享";
 
 "NetworkError" = "抱歉，无法连接互联网";
-"ServerError" = "抱歉, 我们的服务器正在维护中";
+"ServerError" = "抱歉, 无法连接服务器";
 "CellNetworkError" = "抱歉，无法连接互联网以获取详细信息";
 "Settings" = "设置";
 "GetIt" = "知道了";

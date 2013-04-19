@@ -9,7 +9,7 @@
 "iTunesViewHeaderFileSharing" = "iTunes File Sharing";
 
 "NetworkError" = "Sorry, can't reach Internet";
-"ServerError" = "Sorry, our server is being maintained";
+"ServerError" = "Sorry, can't reach the server";
 "CellNetworkError" = "Sorry, can't reach Internet to get detail information";
 "Settings" = "Settings";
 "GetIt" = "Get it";
