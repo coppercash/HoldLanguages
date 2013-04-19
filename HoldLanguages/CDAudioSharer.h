@@ -12,8 +12,9 @@
 #import "CDCycleArray.h"
 
 @protocol CDAudioPlayerDelegate,CDAudioPlayer;
-@class MPMediaItemCollection;
+@class MPMediaItemCollection, AVAudioSession;
 @interface CDAudioSharer : UIResponder <CDAudioProgressDataSource>{
+    AVAudioSession *_audioSession;
     NSArray *_delegates;
     id<CDAudioPlayer> _audioPlayer;
 }
@@ -41,13 +42,10 @@
 - (void)setRepeatA;
 - (void)setRepeatB;
 - (void)stopRepeating;
-//- (CDDoubleRange)repeatRange;
-//- (BOOL)isRepeating;
 - (BOOL)canRepeat;
 #pragma mark - Infomation
 - (CDCycleArray*)rates;
 - (NSTimeInterval)currentPlaybackTime;
-//- (NSTimeInterval)currentDuration;
 - (float)playbackRate;
 - (float)repeatRate;
 - (id)valueForProperty:(NSString *)property;

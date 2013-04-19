@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define kDefaultAnimationDuration 0.1f
+#define kDefaultTableViewCellAniamtion UITableViewRowAnimationMiddle
 
 @interface CDColorFinder : NSObject
 
@@ -30,4 +31,8 @@
 @interface UIView (Shadow)
 - (void)shadowed;
 - (void)deshadowed;
+@end
+
+@interface UITableViewController (Theme)
+- (void)formated;
 @end

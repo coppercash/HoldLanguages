@@ -96,10 +96,14 @@
 
 #pragma mark - Updater
 - (void)setupUpdaterWithItem:(Item *)item{
+    if (_updater) {
+        [self invalidateUpdater];
+    }
     _updater = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(updateProgress:) userInfo:item repeats:YES];
 }
 
 - (void)invalidateUpdater{
+    if (!_updater) return;
     [_updater invalidate]; _updater = nil;
 }
 

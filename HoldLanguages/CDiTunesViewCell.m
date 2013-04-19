@@ -21,7 +21,6 @@ static CGRect gNameFrame;
         gIconCenter = _icon.center;
         gNameFrame = _name.frame;
         self.contentView.backgroundColor = [UIColor clearColor];
-        self.backgroundColor = [UIColor darkGrayColor];
         
         _name.textColor = [UIColor whiteColor];
         _name.font = [UIFont boldSystemFontOfSize:17];

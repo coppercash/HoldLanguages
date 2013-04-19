@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "AppDelegateReachability.h"
 
 #import "CDAudioSharer.h"
 #import "MainViewController.h"
@@ -16,13 +15,12 @@
 
 #import "CDPanViewController.h"
 #import "CDiTunesViewController.h"
-#import "CDOnlineNavController.h"
-#import "CDOnlineViewController.h"
-#import "CDCategoryViewController.h"
+#import "HLOLNavigationController.h"
+#import "HLOLItemsController.h"
+#import "HLOLCategoryController.h"
 
 @implementation AppDelegate
 @synthesize panViewController = _panViewController, audioSharer = _audioSharer, progress = _progress, network = _network;
-@synthesize reachability = _reachability;
 @synthesize managedObjectContext = _managedObjectContext, managedObjectModel = _managedObjectModel, persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize status = _status;
 
@@ -44,7 +42,7 @@
     MainViewController *mainViewController = [[MainViewController alloc] init];
     self.panViewController = [[CDPanViewController alloc] initWithRootViewController:mainViewController];
     _panViewController.leftControllerClass = [CDiTunesViewController class];
-    _panViewController.rightControllerClass = [CDOnlineNavController class];
+    _panViewController.rightControllerClass = [HLOLNavigationController class];
     
     self.window.rootViewController = self.panViewController;
     [self.window makeKeyAndVisible];
@@ -56,7 +54,6 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    [self.reachability stopNotifier];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -74,7 +71,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [self.reachability startNotifier];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

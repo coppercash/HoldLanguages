@@ -8,6 +8,8 @@
 "iTunesViewHeaderDownloads" = "下载";
 "iTunesViewHeaderFileSharing" = "iTunes文件共享";
 
-"NetworkError" = "无法连接互联网";
+"NetworkError" = "抱歉，无法连接互联网";
+"ServerError" = "抱歉, 无法连接服务器";
+"CellNetworkError" = "抱歉，无法连接互联网以获取详细信息";
 "Settings" = "设置";
 "GetIt" = "知道了";

@@ -24,6 +24,7 @@ typedef void (^CDNKGroupProgress) (CDNetworkGroup *group, double progress);
     CDNKGroupCompletion _releaser;
 }
 @property(nonatomic, copy)CDNKGroupCompletion releaser;
+@property(nonatomic, readonly)NSMutableArray *operations;
 - (void)addOperation:(CDNKOperation *)operation;
 - (void)removeOperation:(CDNKOperation *)operation error:(NSError *)error;
 - (void)addCompletion:(CDNKGroupCompletion)completion forKey:(id)key;
@@ -32,6 +33,7 @@ typedef void (^CDNKGroupProgress) (CDNetworkGroup *group, double progress);
 - (void)removeCorrectorForKey:(id)key;
 - (void)addProgress:(CDNKGroupProgress)progress forKey:(id)key;
 - (void)removeProgressForKey:(id)key;
+- (void)complete;
 #pragma mark - protected
 - (void)error:(NSError *)error;
 @end
