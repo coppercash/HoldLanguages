@@ -15,7 +15,7 @@
     CDAudioSharer *_audioSharer;
     CDAudioProgress *_progress;
     CDNetwork *_network;
-    Reachability *_reachability;
+    BOOL _isReachabilyAlert;
     
     AppStatus *_status;
 }
@@ -25,8 +25,7 @@
 @property(strong, nonatomic) CDAudioSharer *audioSharer;
 @property(strong, nonatomic) CDAudioProgress *progress;
 @property(strong, nonatomic) CDNetwork *network;
-@property(nonatomic, strong)Reachability *reachability;
-@property(nonatomic, assign)AppStatus *status;
+@property(nonatomic, assign) AppStatus *status;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

@@ -6,23 +6,25 @@
 //  Copyright (c) 2013 Coder Dreamer. All rights reserved.
 //
 
-#import "CDOnlineNavController.h"
-#import "CDCategoryViewController.h"
-#import "CD51VOA.h"
+#import "HLOLNavigationController.h"
+#import "HLOLRootController.h"
+#import "HLOLCategoryController.h"
+#import "HLOLItemsController.h"
+#import "HLModelsGroup.h"
 #import "CDPullControllerMetro.h"
 #import "CDColorFinder.h"
+#import "CDStack.h"
 
-@interface CDOnlineNavController ()
-@property(nonatomic, strong)CD51VOA *VOA51;
+@interface HLOLNavigationController ()
 @property(nonatomic, strong)UIButton *backButton;
 - (void)backButtonClicked:(UIButton *)button;
 @end
 
-@implementation CDOnlineNavController
+@implementation HLOLNavigationController
 @synthesize panViewController = _panViewController;
 @synthesize backButton = _backButton;
 - (id)init{
-    CDCategoryViewController *category = [[CDCategoryViewController alloc] init];
+    HLOLRootController *category = [[HLOLRootController alloc] init];
     self = [super initWithRootViewController:category];
     return self;
 }
@@ -37,8 +39,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.view.frame = [[UIScreen mainScreen] applicationFrame];
-    
-    self.VOA51 = [[CD51VOA alloc] init];
 }
 
 - (void)didReceiveMemoryWarning{
@@ -82,20 +82,53 @@
     return _backButton;
 }
 
-- (void)destroyBackButton{
+- (void)removeBackButton{
     [UIView animateWithDuration:kDefaultAnimationDuration delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        
         _backButton.alpha = 0.0f;
 
     } completion:^(BOOL finished) {
+        
         if (!finished) return;
         [_backButton removeFromSuperview];
         self.backButton = nil;
+    
     }];
 }
 
 #pragma mark - Events
 - (void)backButtonClicked:(UIButton *)button{
     [self popViewControllerAnimated:YES];
+}
+
+#pragma mark - Pop & Push
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated{
+    HLOLCategoryController *controller = (HLOLCategoryController *)[super popViewControllerAnimated:animated];
+    [controller.models pop];
+    
+    if (self.viewControllers.count == 1) {
+        [self removeBackButton];
+    }
+    
+    return controller;
+}
+
+- (void)pushWithModelsGroup:(HLModelsGroup *)group link:(NSString *)link{
+    NSAssert(group != nil, @"%@ can't push view controller without group.", NSStringFromClass(self.class));
+    
+    if (self.viewControllers.count > 1) [group pushWithLink:link];
+    
+    HLOLCategoryController *controller = nil;
+    if (group.isPenultDegree) {
+        controller = [[HLOLItemsController alloc] init];
+    }else{
+        controller = [[HLOLCategoryController alloc] init];
+    }
+    controller.models = group;
+    
+    [self pushViewController:controller animated:YES];
+    
+    [self backButton];
 }
 
 @end

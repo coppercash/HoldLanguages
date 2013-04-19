@@ -12,6 +12,7 @@
 @protocol CDNetworkTrans;
 @class Item, CDItemNetwork;
 
+typedef MKNetworkEngine CDNKEngine;
 typedef MKNetworkOperation CDNKOperation;
 typedef void (^CDDownload) (CDNKOperation *operation, NSData* data);
 typedef void (^CDError) (CDNKOperation *operation, NSError* error);

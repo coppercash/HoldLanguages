@@ -46,12 +46,14 @@
     
     CDItemNetwork *network = [[CDItemNetwork alloc] initWithItem:item];
     
+    //Download each component
     CDNKOperation *audio = [self downloadItemComponent:item.audio network:network];
     [self downloadItemComponent:item.lyrics network:network];
     for (Image *img in item.images) {
         [self downloadItemComponent:img network:network];
     }
     
+    //Set some download informatino
     __weak CDNetwork *bSelf = self;
     network.keyOperation = audio;
     network.releaser = ^(CDNetworkGroup *group) {
@@ -61,8 +63,10 @@
         item.status = [[NSNumber alloc] initWithInteger:ItemStatusDownloaded];
     } forKey:item.downloadTry];
     
-    
     [self addDownloadingItem:network];
+    
+    if (network.operations.count == 0) [network complete];
+    
     return network;
 }
 

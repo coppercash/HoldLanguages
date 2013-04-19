@@ -10,11 +10,13 @@
 #import "CDAVAudioPlayer.h"
 
 @interface CDAudioSharer ()
+@property(nonatomic, strong)AVAudioSession *audioSession;
 - (void)initialize;
 - (void)detectPlayerState;
 @end
 
 @implementation CDAudioSharer
+@synthesize audioSession = _audioSession;
 @synthesize audioPlayer = _audioPlayer;
 
 - (id)init{
@@ -32,6 +34,7 @@
     [session setCategory: AVAudioSessionCategoryPlayback error: &setCategoryErr];
     [session setActive: YES error: &activationErr];
     
+    self.audioSession = session;
     self.audioPlayer = [[CDAVAudioPlayer alloc] init];
 }
 

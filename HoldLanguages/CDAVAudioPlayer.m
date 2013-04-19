@@ -68,7 +68,6 @@
     _player.enableRate = YES;
     _player.rate = [_rates.currentObject floatValue];
     _player.numberOfLoops = -1;
-    _state = CDAudioPlayerStatePaused;
 }
 
 #pragma mark - Control
@@ -95,10 +94,6 @@
     [_player pause];
     if (!_player.playing) _state = CDAudioPlayerStatePaused;
 }
-/*
-- (BOOL)isPlaying{
-    return [_player isPlaying];
-}*/
 
 - (BOOL)next{
     NSArray *items = _itemCollection.items;
