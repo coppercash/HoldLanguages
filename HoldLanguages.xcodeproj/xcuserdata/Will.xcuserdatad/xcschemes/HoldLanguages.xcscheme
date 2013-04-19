@@ -98,7 +98,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Distribution"
-      customArchiveName = "HoldLanguages20130213"
+      customArchiveName = "HoldLanguages"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

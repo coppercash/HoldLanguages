@@ -55,9 +55,6 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    HLOLNavigationController *nav = (HLOLNavigationController *)self.navigationController;
-    [nav removeBackButton];
 }
 
 - (void)didReceiveMemoryWarning{

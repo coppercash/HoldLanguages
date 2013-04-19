@@ -101,10 +101,15 @@
     [self popViewControllerAnimated:YES];
 }
 
-#pragma mark - Pop
+#pragma mark - Pop & Push
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated{
     HLOLCategoryController *controller = (HLOLCategoryController *)[super popViewControllerAnimated:animated];
     [controller.models pop];
+    
+    if (self.viewControllers.count == 1) {
+        [self removeBackButton];
+    }
+    
     return controller;
 }
 
@@ -122,6 +127,8 @@
     controller.models = group;
     
     [self pushViewController:controller animated:YES];
+    
+    [self backButton];
 }
 
 @end
