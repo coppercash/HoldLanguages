@@ -46,24 +46,31 @@
 	// Do any additional setup after loading the view.
     
     [self documents];
-    
-    self.engine = [[CDNKEngine alloc] initWithHostName:@"173.208.240.146:8081"
-                                    customHeaderFields:@{@"holdlanguages-password" : @"holdlanguages-password-value"}];
+    [self engine];
     [self groups];
     [self refresh];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [_network cancel];
 }
 
 - (void)didReceiveMemoryWarning{
+    // Test self.view can be release (on the screen or not).
+    if (self.view.window == nil){
+        // Preserve data stored in the views that might be needed later.
+        
+        // Clean up other strong references to the view in the view hierarchy.
+        
+        //Release self.view
+        self.view = nil;
+    }
+    
+    // iOS6 & later did nothing.
+    // iOS5 & earlier test self.view == nil, if not viewWillUnload -> release self.view -> viewDidUnload.
+    // In this implementation self.view is always nil, so iOS5 & earlier should do nothing.
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc{
-    [_network cancel];
 }
 
 #pragma mark - Getter & Setter
@@ -81,6 +88,15 @@
         _documents.isOpened = YES;
     }
     return _documents;
+}
+
+- (CDNKEngine *)engine{
+    if (!_engine) {
+        _engine = [[CDNKEngine alloc] initWithHostName:@"173.208.240.146:8081"
+                                    customHeaderFields:@{@"holdlanguages-password" : @"holdlanguages-password-value"}];
+        [_engine useCache];
+    }
+    return _engine;
 }
 
 #pragma mark - Refresh & Load More

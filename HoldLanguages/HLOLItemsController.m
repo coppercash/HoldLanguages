@@ -54,10 +54,6 @@ static NSString * const gReuseDetailCell = @"RDC";
     [super viewDidLoad];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-}
-
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [Item removeInitItems];
@@ -232,32 +228,51 @@ static NSString * const gReuseDetailCell = @"RDC";
     //cancel    Right && downloading item
     //return    Right && (isDictionary || !downloading item)
     
-    Item *data = [_itemList objectAtIndex:indexPath.row];
-    
-    switch (direction) {
-        case UISwipeGestureRecognizerDirectionLeft:{
-            if ([data isKindOfClass:[NSDictionary class]] ||
-                ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusInit)) {
+    NSInteger index = indexPath.row;
+    if (index < _itemList.count) {
+        
+        Item *data = [_itemList objectAtIndex:index];
+        
+        switch (direction) {
+            case UISwipeGestureRecognizerDirectionLeft:{
+                if ([data isKindOfClass:[NSDictionary class]] ||
+                    ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusInit)) {
+                    
+                    [self downloadWithRowAtIndexPath:indexPath];
+                    
+                }
+            }break;
+            case UISwipeGestureRecognizerDirectionRight:
                 
-                [self downloadWithRowAtIndexPath:indexPath];
-            
-            }
-        }break;
-        case UISwipeGestureRecognizerDirectionRight:
-            
-            if ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusDownloading) {
+                if ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusDownloading) {
+                    
+                    [self cancelDownloadWithRowAtIndexPath:indexPath];
+                    
+                }else{
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
                 
-                [self cancelDownloadWithRowAtIndexPath:indexPath];
-            
-            }else{
+                }
+                
+                break;
+            default:
+                break;
+        }
+
+    } else {
+        
+        switch (direction) {
+            case UISwipeGestureRecognizerDirectionRight:
                 
                 [self.navigationController popViewControllerAnimated:YES];
-            }
-            
-            break;
-        default:
-            break;
+                
+                break;
+            default:
+                break;
+        }
+
     }
+    
 }
 
 #pragma mark - Detail

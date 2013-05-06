@@ -50,8 +50,9 @@ breakCapacity = _breakCapacity;
     [self.refreshControl beginRefreshing];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [_network cancel];
 }
 
 - (void)didReceiveMemoryWarning{
