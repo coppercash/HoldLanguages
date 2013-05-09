@@ -17,7 +17,7 @@
     _bigLabel.font = [UIFont boldSystemFontOfSize:30];
     _bigLabel.textColor = [UIColor whiteColor];
     _bigLabel.backgroundColor = [UIColor clearColor];
-    _bigLabel.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    _bigLabel.autoresizingMask = CDViewAutoresizingNoMaigin;
     _bigLabel.textAlignment = UITextAlignmentCenter;
     [self addSubview:_bigLabel];
 }

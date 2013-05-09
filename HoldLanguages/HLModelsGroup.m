@@ -8,15 +8,27 @@
 
 #import "HLModelsGroup.h"
 #import "LAHInterpreter.h"
+#import "LAHHeaders.h"
+
+@interface HLModelsGroup ()
+@property (nonatomic, assign)NSInteger currentIndex;
+@end
 
 @implementation HLModelsGroup 
 @synthesize name = _name;
+@synthesize currentIndex = _currentIndex;
 @dynamic isPenultDegree, itemOperation, ranger, initRange;
 
+- (id)initWithCommand:(NSString *)command key:(NSString *)key{
+    self = [super initWithCommand:command key:key];
+    if (self) {
+        self.currentIndex = 0;
+    }
+    return self;
+}
+
 - (void)setupOperationWithString:(NSString *)string key:(NSString *)key{
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    [LAHInterpreter interpretString:string intoDictionary:dictionary];
-    NSMutableArray *collector = [[NSMutableArray alloc] initWithCapacity:dictionary.count];
+    NSMutableArray *collector = [[NSMutableArray alloc] initWithCapacity:_containerCache.count];
     
     NSString *strOpe = key.copy;
     NSString *strRange = gHLMGKeyRange;
@@ -24,21 +36,17 @@
     do {
         
         NSString *keyOpe = [[NSString alloc] initWithFormat:@"%@%d",strOpe , collector.count];
-        ope = [dictionary objectForKey:keyOpe];
+        ope = _containerCache[keyOpe];
         if (!ope) continue;
         
-        ope.delegate = self;
-        
-        NSMutableDictionary *dicCollector = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ope, gHLMGKeyOperation, nil];
-        
         NSString *keyRange = [[NSString alloc] initWithFormat:@"%@%d",strRange , collector.count];
-        LAHRecognizer *ranger = [dictionary objectForKey:keyRange];
-        
+        LAHTag *ranger = _containerCache[keyRange];
+
+        NSMutableDictionary *dicCollector = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ope, gHLMGKeyOperation, nil];
         if (ranger) {
             [dicCollector setObject:ranger forKey:gHLMGKeyRange];
-            [dicCollector setObject:[NSValue valueWithRange:ranger.range] forKey:gHLMGKeyRangeInitValue];
+            [dicCollector setObject:[NSValue valueWithRange:ranger.singleRange] forKey:gHLMGKeyRangeInitValue];
         }
-        
         [collector addObject:dicCollector];
 
     } while (ope);
@@ -49,18 +57,10 @@
     
 }
 
-- (LAHOperation *)operationAtIndex:(NSInteger)index{
-    if (index < 0 || _operations.count <= index) return nil;
-    NSDictionary *dic = [_operations objectAtIndex:index];
-    LAHOperation *ope = [dic objectForKey:gHLMGKeyOperation];
-    [ope refresh];
-    [self resetRange];
-    return ope;
-}
-
-- (LAHRecognizer *)ranger{
+#pragma mark - Range
+- (LAHTag *)ranger{
     NSDictionary *dic = [_operations objectAtIndex:_currentIndex];
-    LAHRecognizer *ranger = [dic objectForKey:gHLMGKeyRange];
+    LAHTag *ranger = [dic objectForKey:gHLMGKeyRange];
     return ranger;
 }
 
@@ -75,17 +75,55 @@
 }
 
 - (void)resetRange{
-    self.ranger.range = self.initRange;
+    self.ranger.singleRange = self.initRange;
 }
 
+#pragma mark - Degree
 - (BOOL)isPenultDegree{
     BOOL is = _currentIndex == _operations.count - 2;
     return is;
 }
 
+#pragma mark - Operation
+- (LAHOperation *)operationAtIndex:(NSInteger)index{
+    if (index < 0 || _operations.count <= index) return nil;
+    NSDictionary *dic = [_operations objectAtIndex:index];
+    LAHOperation *ope = [dic objectForKey:gHLMGKeyOperation];
+    [ope refresh];
+    [self resetRange];
+    return ope;
+}
+
+- (LAHOperation *)operation{
+    LAHOperation *operation = [self operationAtIndex:_currentIndex];
+    return operation;
+}
+
 - (LAHOperation *)itemOperation{
     LAHOperation *itemOpe = [self operationAtIndex:_operations.count - 1];
     return itemOpe;
+}
+
+#pragma mark - Push & Pop
+- (void)pushWithLink:(NSString *)link{
+    NSInteger target = _currentIndex + 1;
+    LAHOperation *ope = [self operationAtIndex:target];
+    if (ope) {
+        self.currentIndex = target;
+        if (link) ope.page.link = link;
+    }
+}
+
+- (void)popNumberOfDegree:(NSUInteger)number{
+    NSInteger target = _currentIndex - number;
+    LAHOperation *ope = [self operationAtIndex:target];
+    if (ope) {
+        self.currentIndex = target;
+    }
+}
+
+- (void)pop{
+    [self popNumberOfDegree:1];
 }
 
 @end

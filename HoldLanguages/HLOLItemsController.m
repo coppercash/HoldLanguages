@@ -15,6 +15,7 @@
 #import "CDItemDetailTableCell.h"
 #import "CDLoadMoreControl.h"
 #import "HLModelsGroup.h"
+#import "LAHPage.h"
 
 static NSString * const gReuseCell = @"RC";
 static NSString * const gReuseDetailCell = @"RDC";
@@ -150,11 +151,11 @@ static NSString * const gReuseDetailCell = @"RDC";
     
     NSString *link = [dictionary objectForKey:@"link"];
     LAHOperation *ope = _models.itemOperation;
-    ope.link = link;
+    ope.page.link = link;
     
     __weak NSMutableArray *itemList = _itemList;
     [ope addCompletion:^(LAHOperation *operation) {
-        Item *item = [Item newItemWithDictionary:operation.container];
+        Item *item = [Item newItemWithDictionary:operation.data];
         NSAssert(item != nil, @"Can't new Item.");
         if (item == nil) return;
         

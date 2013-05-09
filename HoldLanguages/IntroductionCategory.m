@@ -24,7 +24,7 @@
 - (CDIntroductionView *)introductionView{
     if (!_introductionView) {
         self.introductionView = [[CDIntroductionView alloc] initWithFrame:self.view.bounds];
-        _introductionView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        _introductionView.autoresizingMask = CDViewAutoresizingNoMaigin;
     }
     if (!_introductionView.superview) {
         _introductionView.alpha = 0.0f;

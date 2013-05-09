@@ -24,7 +24,7 @@
 - (CDLyricsView *)lyricsView{
     if (!_lyricsView) {
         self.lyricsView = [[CDLyricsView alloc] initWithFrame:self.view.bounds];
-        _lyricsView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        _lyricsView.autoresizingMask = CDViewAutoresizingNoMaigin;
         _lyricsView.lyricsSource = self;
     }
     if (!_lyricsView.superview) {

@@ -21,9 +21,8 @@
 - (CDStoryView *)storyView{
     if (!_storyView) {
         self.storyView = [[CDStoryView alloc] initWithFrame:self.view.bounds];
-        _storyView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        _storyView.autoresizingMask = CDViewAutoresizingNoMaigin;
         [_storyView setItem:_item];
-        //[_storyView setContentString:_story];
     }
     if (!_storyView.superview) {
         _storyView.alpha = 0.0f;
@@ -61,11 +60,5 @@
     }
     return YES;
 }
-/*
-- (BOOL)openText:(NSString *)text{
-    self.story = text;
-    [self.storyView setContentString:text];
-    return YES;
-}*/
 
 @end

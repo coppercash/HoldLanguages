@@ -46,7 +46,7 @@
     
     _backgound = [[UIImageView alloc] initWithFrame:self.bounds];
     [self addSubview:_backgound];
-    _backgound.autoresizingMask = kViewAutoresizingNoMarginSurround;
+    _backgound.autoresizingMask = CDViewAutoresizingNoMaigin;
     _backgound.backgroundColor = [UIColor clearColor];
     _backgound.contentMode = UIViewContentModeCenter;
 }
