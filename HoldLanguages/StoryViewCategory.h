@@ -11,5 +11,4 @@
 @interface MainViewController (StoryViewCategory)
 - (void)removeStoryView;
 - (BOOL)openItem:(Item *)item;
-//- (BOOL)openText:(NSString *)text;
 @end

@@ -24,7 +24,7 @@
     if (!_holder) {
         _holder = [[CDHolder alloc] initWithFrame:view.bounds];
         _holder.delegate = self;
-        _holder.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        _holder.autoresizingMask = CDViewAutoresizingNoMaigin;
         NSValue *row0 = [NSValue valueWithCGSize:CGSizeMake(.0f, .25f)];
         NSValue *row1 = [NSValue valueWithCGSize:CGSizeMake(.25f, .25f)];
         NSValue *row2 = [NSValue valueWithCGSize:CGSizeMake(.5f, .5f)];

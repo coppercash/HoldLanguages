@@ -13,6 +13,8 @@
 #import "CDLoadMoreControl.h"
 #import "CDColorFinder.h"
 #import "HLCategoryTableCell.h"
+#import "LAHPage.h"
+#import "LAHTag.h"
 
 @interface HLOLCategoryController ()
 @end
@@ -93,7 +95,7 @@ breakCapacity = _breakCapacity;
 
 - (void)setModels:(HLModelsGroup *)models{
     _models = models;
-    self.firstPage = models.operation.link;
+    self.firstPage = models.operation.page.link;
     self.currentPage = _firstPage;
     self.breakCapacity = 9;
     self.entireCapacity = _models.initRange.length;
@@ -117,10 +119,10 @@ breakCapacity = _breakCapacity;
     
     __weak HLOLCategoryController *bSelf = self;
     LAHOperation *ope = _models.operation;
-    ope.link = _currentPage;
-    _models.ranger.range = limitedRange;
+    ope.page.link = _currentPage;
+    _models.ranger.singleRange = limitedRange;
     [ope addCompletion:^(LAHOperation *operation) {
-        [bSelf didRefreshWith:operation.container];
+        [bSelf didRefreshWith:operation.data];
     }];
     [ope addCorrector:^(LAHOperation *operation, NSError *error) {
         [self alertNetworkError];
@@ -157,10 +159,10 @@ breakCapacity = _breakCapacity;
     
     __weak HLOLCategoryController *bSelf = self;
     LAHOperation *ope = _models.operation;
-    ope.link = _currentPage;
-    _models.ranger.range = limitedRange;
+    ope.page.link = _currentPage;
+    _models.ranger.singleRange = limitedRange;
     [ope addCompletion:^(LAHOperation *operation) {
-        [bSelf didLoadMoreWith:operation.container];
+        [bSelf didLoadMoreWith:operation.data];
     }];
     [ope addCorrector:^(LAHOperation *operation, NSError *error) {
         [self alertNetworkError];
