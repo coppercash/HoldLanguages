@@ -129,7 +129,7 @@
     [super createPulledView];
     if (_mediaPicker == nil) {
         _mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAnyAudio];
-        _mediaPicker.view.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        _mediaPicker.view.autoresizingMask = CDViewAutoresizingNoMaigin;
     }
     _mediaPicker.view.frame = self.pulledView.bounds;
     _mediaPicker.delegate = self;

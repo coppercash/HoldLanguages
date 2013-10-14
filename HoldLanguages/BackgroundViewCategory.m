@@ -19,7 +19,7 @@
     UIView *view = self.view;
     if (!_backgroundView) {
         _backgroundView = [[CDBackgroundView alloc] initWithFrame:view.bounds];
-        _backgroundView.autoresizingMask = kViewAutoresizingNoMarginSurround;
+        _backgroundView.autoresizingMask = CDViewAutoresizingNoMaigin;
     }
     if (!_backgroundView.superview) {
         [view addSubview:_backgroundView];

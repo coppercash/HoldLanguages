@@ -9,8 +9,6 @@
 #ifndef HoldLanguages_MainViewControllerHeader_h
 #define HoldLanguages_MainViewControllerHeader_h
 
-#import "s"
-
 #import "CDLyrics.h"
 #import "CDLRCLyrics.h"
 #import "CDiTunesFinder.h"

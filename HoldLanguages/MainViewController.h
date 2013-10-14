@@ -26,7 +26,6 @@
     
     CDStoryView *_storyView;
     Item *_item;
-    //NSString *_story;
     
     CDIntroductionView *_introductionView;
     SEL _introductionRevert;

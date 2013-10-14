@@ -15,6 +15,7 @@
 #import "CDItemDetailTableCell.h"
 #import "CDLoadMoreControl.h"
 #import "HLModelsGroup.h"
+#import "LAHPage.h"
 
 static NSString * const gReuseCell = @"RC";
 static NSString * const gReuseDetailCell = @"RDC";
@@ -52,10 +53,6 @@ static NSString * const gReuseDetailCell = @"RDC";
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -154,11 +151,11 @@ static NSString * const gReuseDetailCell = @"RDC";
     
     NSString *link = [dictionary objectForKey:@"link"];
     LAHOperation *ope = _models.itemOperation;
-    ope.link = link;
+    ope.page.link = link;
     
     __weak NSMutableArray *itemList = _itemList;
     [ope addCompletion:^(LAHOperation *operation) {
-        Item *item = [Item newItemWithDictionary:operation.container];
+        Item *item = [Item newItemWithDictionary:operation.data];
         NSAssert(item != nil, @"Can't new Item.");
         if (item == nil) return;
         
@@ -232,32 +229,51 @@ static NSString * const gReuseDetailCell = @"RDC";
     //cancel    Right && downloading item
     //return    Right && (isDictionary || !downloading item)
     
-    Item *data = [_itemList objectAtIndex:indexPath.row];
-    
-    switch (direction) {
-        case UISwipeGestureRecognizerDirectionLeft:{
-            if ([data isKindOfClass:[NSDictionary class]] ||
-                ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusInit)) {
+    NSInteger index = indexPath.row;
+    if (index < _itemList.count) {
+        
+        Item *data = [_itemList objectAtIndex:index];
+        
+        switch (direction) {
+            case UISwipeGestureRecognizerDirectionLeft:{
+                if ([data isKindOfClass:[NSDictionary class]] ||
+                    ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusInit)) {
+                    
+                    [self downloadWithRowAtIndexPath:indexPath];
+                    
+                }
+            }break;
+            case UISwipeGestureRecognizerDirectionRight:
                 
-                [self downloadWithRowAtIndexPath:indexPath];
-            
-            }
-        }break;
-        case UISwipeGestureRecognizerDirectionRight:
-            
-            if ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusDownloading) {
+                if ([data isKindOfClass:[Item class]] && data.status.integerValue == ItemStatusDownloading) {
+                    
+                    [self cancelDownloadWithRowAtIndexPath:indexPath];
+                    
+                }else{
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
                 
-                [self cancelDownloadWithRowAtIndexPath:indexPath];
-            
-            }else{
+                }
+                
+                break;
+            default:
+                break;
+        }
+
+    } else {
+        
+        switch (direction) {
+            case UISwipeGestureRecognizerDirectionRight:
                 
                 [self.navigationController popViewControllerAnimated:YES];
-            }
-            
-            break;
-        default:
-            break;
+                
+                break;
+            default:
+                break;
+        }
+
     }
+    
 }
 
 #pragma mark - Detail

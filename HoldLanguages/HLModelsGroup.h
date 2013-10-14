@@ -8,15 +8,23 @@
 
 #import "LMHModelsGroup.h"
 
+@class LAHTag, LAHOperation;
 @interface HLModelsGroup : LMHModelsGroup {
     NSString *_name;
+    NSInteger _currentIndex;
 }
+@property(nonatomic, readonly)LAHOperation *operation;
 @property(nonatomic, copy)NSString *name;
 @property(nonatomic, readonly)BOOL isPenultDegree;
 @property(nonatomic, readonly)LAHOperation *itemOperation;
-@property(nonatomic, readonly)LAHRecognizer *ranger;
+@property(nonatomic, readonly)LAHTag *ranger;
 @property(nonatomic, readonly)NSRange initRange;
 - (void)resetRange;
+#pragma mark - Push & Pop
+- (void)pushWithLink:(NSString *)link;
+- (void)popNumberOfDegree:(NSUInteger)number;
+- (void)pop;
+
 @end
 
 extern NSString * const gHLMGJsonKeyName;

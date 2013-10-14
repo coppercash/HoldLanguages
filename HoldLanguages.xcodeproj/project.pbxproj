@@ -78,7 +78,6 @@
 		BE99CBCF16ACD5260090705D /* CDRepeatView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE99CBCD16ACD5260090705D /* CDRepeatView.m */; };
 		BE99CBD016ACD5260090705D /* CDRepeatView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE99CBCD16ACD5260090705D /* CDRepeatView.m */; };
 		BE9ABBCA16F2F09C001B0465 /* HLOLItemsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9ABBC916F2F09C001B0465 /* HLOLItemsController.m */; };
-		BE9ABC0016F322FA001B0465 /* CD51VOA.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9ABBFF16F322FA001B0465 /* CD51VOA.m */; };
 		BE9D814216A68AF800AD091F /* CDAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */; };
 		BE9D814316A68AF800AD091F /* CDAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */; };
 		BE9D814416A68AF800AD091F /* CDAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */; };
@@ -485,8 +484,6 @@
 		BE99CBCD16ACD5260090705D /* CDRepeatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDRepeatView.m; sourceTree = "<group>"; };
 		BE9ABBC816F2F09C001B0465 /* HLOLItemsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLOLItemsController.h; sourceTree = "<group>"; };
 		BE9ABBC916F2F09C001B0465 /* HLOLItemsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLOLItemsController.m; sourceTree = "<group>"; };
-		BE9ABBFE16F322FA001B0465 /* CD51VOA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CD51VOA.h; sourceTree = "<group>"; };
-		BE9ABBFF16F322FA001B0465 /* CD51VOA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CD51VOA.m; sourceTree = "<group>"; };
 		BE9B62AE16A4E1DE00484AE9 /* CDScrollLabel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CDScrollLabel.xcodeproj; path = ../CDScrollLabel/CDScrollLabel.xcodeproj; sourceTree = "<group>"; };
 		BE9D814016A68AF800AD091F /* CDAVAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAVAudioPlayer.h; sourceTree = "<group>"; };
 		BE9D814116A68AF800AD091F /* CDAVAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAVAudioPlayer.m; sourceTree = "<group>"; };
@@ -729,8 +726,8 @@
 			children = (
 				BE0F6C1116F2BB8E004933A5 /* libLazy_API_with_HTML.a */,
 				BE0F6C1316F2BB8E004933A5 /* libLAH_MKNetwork_Hpple.a */,
-				BE0F6C1516F2BB8E004933A5 /* LAHDemo.app */,
 				BE0F6C1716F2BB8E004933A5 /* Lazy_API_with_HTML_LogicTests.octest */,
+				BE0F6C1516F2BB8E004933A5 /* LAHDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1121,8 +1118,6 @@
 		BEA18AEA16FB1D5000FC1A26 /* LAH */ = {
 			isa = PBXGroup;
 			children = (
-				BE9ABBFE16F322FA001B0465 /* CD51VOA.h */,
-				BE9ABBFF16F322FA001B0465 /* CD51VOA.m */,
 				BEA329FE17183989005E098E /* HLModelsGroup.h */,
 				BEA329FF17183989005E098E /* HLModelsGroup.m */,
 			);
@@ -1854,7 +1849,6 @@
 				BEEAB27216BA145D00B9C39F /* CDImageMetroCell.m in Sources */,
 				BE0F6C7F16F2BE78004933A5 /* HoldLanguages.xcdatamodeld in Sources */,
 				BE9ABBCA16F2F09C001B0465 /* HLOLItemsController.m in Sources */,
-				BE9ABC0016F322FA001B0465 /* CD51VOA.m in Sources */,
 				BE9E2C6E16F7321E00B8B4E0 /* Image.m in Sources */,
 				BE9E2C7116F7321E00B8B4E0 /* Lyrics.m in Sources */,
 				BE9E2C7516F732F800B8B4E0 /* CoreDataModels.m in Sources */,
